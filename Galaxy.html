@@ -5585,7 +5585,7 @@ function closeUserPanel(){
   document.getElementById('m-adduser').classList.remove('open');
 }
 
-function saveUser(){
+function saveUser(){X
   const id    =parseInt(document.getElementById('up-id').value)||null;
   const first =document.getElementById('up-first').value.trim();
   const last  =document.getElementById('up-last').value.trim();
@@ -5620,6 +5620,7 @@ function saveUser(){
         toast('User added!','ok');
         closeUserPanel();renderUsersPage();
       }).catch(e=>toast(e.message||'Could not add user','err'));
+   }
   }
 
 function openViewUser(id){
