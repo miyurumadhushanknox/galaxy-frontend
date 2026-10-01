@@ -843,7 +843,7 @@
 
   async function loadKnoxAnnouncements() {
     try {
-      const res = await fetch('http://localhost:3001/api/knox-admin/announcements', {
+      const res = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/knox-admin/announcements', {
         headers: { 'x-knox-admin-key': 'KNOX_Admin_Galaxy_2026_SecureKey' }
       });
       if (!res.ok) return;
@@ -911,7 +911,7 @@
 
     window.addOrderItem = function(pid) {
       const token = localStorage.getItem('galaxy_token');
-      const baseUrl = 'http://localhost:3001';
+      const baseUrl = 'https://galaxy-backend-production-6a12.up.railway.app';
       if (_origAdd) _origAdd(pid);
       fetch(baseUrl + '/api/warehouses/stock/' + pid, {
         headers: { 'Authorization': 'Bearer ' + token }
