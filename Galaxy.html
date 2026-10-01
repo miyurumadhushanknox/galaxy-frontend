@@ -5410,9 +5410,9 @@ function renderUsersPage(){
   window.renderUsersPage = renderUsersPage;
   const root=document.getElementById('users-root');
   if(!root) return;
-  if(!systemUsers||!systemUsers.length){setTimeout(renderUsersPage,500);return;}
+  const _users = window.systemUsers || [];
 
-  const filtered=systemUsers.filter(u=>{
+  const filtered=_users.filter(u=>{
     if(!userSearch) return true;
     const s=userSearch.toLowerCase();
     return (u.firstName+' '+u.lastName).toLowerCase().includes(s)||u.username.toLowerCase().includes(s)||u.role.toLowerCase().includes(s);
