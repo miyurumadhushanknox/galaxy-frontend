@@ -5410,6 +5410,7 @@ function renderUsersPage(){
   window.renderUsersPage = renderUsersPage;
   const root=document.getElementById('users-root');
   if(!root) return;
+  if(!systemUsers||!systemUsers.length){setTimeout(renderUsersPage,500);return;}
 
   const filtered=systemUsers.filter(u=>{
     if(!userSearch) return true;
