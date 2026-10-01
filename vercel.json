@@ -1,1 +1,5 @@
-{"rewrites":[{"source":"/","destination":"/Galaxy.html"}]}
+{
+  "routes": [
+    { "src": "/", "dest": "/Galaxy.html" }
+  ]
+}
