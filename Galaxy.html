@@ -5605,22 +5605,24 @@ function saveUser(){
   const minCapOn  = document.getElementById('up-mincap-tgl')?.classList.contains('on')||false;
   const minCap    = parseInt(document.getElementById('up-comm-mincap')?.value)||0;
   const commission = {on:commOn, method:commMethod, percent:commPct, perUnit:commUnit, minCapOn, minCap};
-    if(id){
-    API.UsersAPI.update(id,{firstName:first,lastName:last,role,status,commission})
-      .then(()=>{
+  const token = (sessionStorage.getItem('galaxy_user') ? JSON.parse(sessionStorage.getItem('galaxy_user')).token : null);
+  const base = 'https://galaxy-backend-production-6a12.up.railway.app/api';
+  if(id){
+    fetch(`${base}/users/${id}`,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({firstName:first,lastName:last,role,status,commission})})
+      .then(r=>r.json()).then(()=>{
         const u=systemUsers.find(x=>x.id===id);
         if(u){u.firstName=first;u.lastName=last;u.email=email;u.username=uname;u.role=role;u.status=status;u.commission=commission;}
         toast('User updated!','ok');
         closeUserPanel();renderUsersPage();
-      }).catch(e=>toast(e.message||'Update failed','err'));
+      }).catch(e=>toast('Update failed','err'));
   } else {
-    API.UsersAPI.create({firstName:first,lastName:last,username:uname,password:pass,role,commission})
-      .then(u=>{
+    fetch(`${base}/users`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({firstName:first,lastName:last,username:uname,password:pass,role,commission})})
+      .then(r=>r.json()).then(u=>{
         systemUsers.push({id:u.id,firstName:first,lastName:last,email,username:uname,password:'',role,status:u.status!==false,lastLogin:'Never',commission});
         toast('User added!','ok');
         closeUserPanel();renderUsersPage();
-      }).catch(e=>toast(e.message||'Could not add user','err'));
-   }
+      }).catch(e=>toast('Could not add user','err'));
+  }
   }
 
 function openViewUser(id){
