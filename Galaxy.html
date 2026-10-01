@@ -6852,10 +6852,11 @@ function applyBizName(){
 
 
 // ── CLOCK ──
-setInterval(()=>{const el=document.getElementById("clock");if(!el)return;const d=new Date();el.textContent=d.toLocaleDateString("en-LK",{weekday:"short",day:"2-digit",month:"short",year:"numeric"})+" \u00b7 "+d.toLocaleTimeString("en-LK",{hour:"2-digit",minute:"2-digit"});},1000);
+setInterval(()=>{const el=document.getElementById("clock");if(!el)return;const d=new Date();el.textContent=d.toLocaleDateString("en-LK",
+{weekday:"short",day:"2-digit",month:"short",year:"numeric"})+" \u00b7 "+d.toLocaleTimeString("en-LK",{hour:"2-digit",minute:"2-digit"});},1000);
 </script>
 
-<div id="mob-bottom-nav">
+<div id="mob-bottom-nav"> 
   <button class="mob-nav-item" id="mob-nav-dashboard" onclick="navigate('dashboard');mobUpdateBottomNav('dashboard')">
     <svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="currentColor" opacity=".6"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="currentColor" opacity=".6"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/></svg>
     Dashboard
