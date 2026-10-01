@@ -3087,10 +3087,7 @@ function renderOrdersPage(){
 
     <!-- Toolbar -->
     <div class="toolbar" style="margin-bottom:12px">
-      <button class="btn-add" onclick="navigate('placeorder')">
-        <svg viewBox="0 0 16 16" fill="none" style="width:13px;height:13px"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-        Add Order
-      </button>
+      ${window._canAddOrder !== false ? `<button class="btn-add" onclick="navigate('placeorder')"><svg viewBox="0 0 16 16" fill="none" style="width:13px;height:13px"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>Add Order</button>` : ''}
       <div class="search-wrap">
         <svg class="search-icon" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <input class="search-input" type="text" id="mo-search" placeholder="Search orders…" value="${moSearch}" oninput="moSearch=this.value;renderOrdersPage()">
@@ -3113,10 +3110,10 @@ function renderOrdersPage(){
               <th style="min-width:100px">Order code</th>
               <th style="min-width:130px">Date &amp; Time</th>
               <th style="min-width:140px">Status</th>
-              <th>Purchase price</th>
+              ${window._canAddOrder !== false ? '<th>Purchase price</th>' : ''}
               <th>Sale price</th>
               <th>Qty</th>
-              <th>Profit</th>
+              ${window._canAddOrder !== false ? '<th>Profit</th>' : ''}
               <th style="min-width:120px">Added by</th>
             </tr>
           </thead>
@@ -3148,10 +3145,10 @@ function renderOrdersPage(){
                     <svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px;opacity:.6"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
                 </td>
-                <td style="color:#777">${L(pp)}</td>
+                ${window._canAddOrder !== false ? `<td style="color:#777">${L(pp)}</td>` : ''}
                 <td style="font-weight:700">${L(sp)}</td>
                 <td style="text-align:center">${o.items.reduce((a,i)=>a+i.qty,0)}</td>
-                <td style="color:${profit>=0?'#16a34a':'#e8220e'};font-weight:700">${L(profit)}</td>
+                ${window._canAddOrder !== false ? `<td style="color:${profit>=0?'#16a34a':'#e8220e'};font-weight:700">${L(profit)}</td>` : ''}
                 <td style="font-size:12px;color:#9090b8">${o.addedBy||'—'}</td>
               </tr>`;
             }).join('') : '<tr><td colspan="9" style="text-align:center;color:#c0c0d8;padding:48px;font-weight:700">No orders found</td></tr>'}
@@ -5696,6 +5693,7 @@ function can(action){
   const role = currentUser?.role||'staff';
   const rules = {
     // nav visibility
+    'nav.itemstock':     ['owner','admin','manager','stockkeeper','sales','accountant'],
     'nav.addproduct':    ['owner','admin','manager','stockkeeper'],
     'nav.warehouse':     ['owner','admin','manager','stockkeeper'],
     'nav.placeorder':    ['owner','admin','manager','sales'],
@@ -5732,6 +5730,7 @@ function applyPermissions(){
 
   // ── Sidebar nav items ──
   const navRules = {
+    'nav-itemstock':  can('nav.itemstock'),
     'nav-addproduct': can('nav.addproduct'),
     'nav-warehouse':  can('nav.warehouse'),
     'nav-placeorder': can('nav.placeorder'),
@@ -5759,6 +5758,7 @@ function applyPermissions(){
   window._canEditStock  = can('stock.edit');
 
   // ── Orders ──
+  window._canAddOrder   = can('order.place');
   window._canEditOrder  = can('order.edit');
   window._canCancelOrder= can('order.cancel');
   window._canChangeStatus=can('order.statuschange');
