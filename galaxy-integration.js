@@ -225,8 +225,8 @@
           commission: u.commission || {},
         }));
         if (typeof window.renderUsersPage === 'function') {
-          const usersSection = document.getElementById('users-section') || document.querySelector('[data-page="users"]');
-          if (usersSection && usersSection.style.display !== 'none') {
+          const usersSection = document.getElementById('page-users');
+          if (usersSection && usersSection.classList.contains('active')) {
             window.renderUsersPage();
           }
         }
