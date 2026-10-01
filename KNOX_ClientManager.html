@@ -448,7 +448,7 @@ tr:hover td{background:#fafafc}
 /* ============================================================
    CONFIG
    ============================================================ */
-const API_BASE = 'http://localhost:3001/api/knox-admin';
+const API_BASE = 'https://galaxy-backend-production-6a12.up.railway.app/api/knox-admin';
 const KNOX_KEY = 'KNOX_Admin_Galaxy_2026_SecureKey';
 // Simple local auth — username/password stored here (KNOX internal only)
 const KNOX_CREDENTIALS = { username: 'admin', password: 'knox123' };
@@ -1151,7 +1151,7 @@ function copyAllCredentials() {
   const username = document.getElementById('created-username')?.textContent?.trim() || '';
   const password = document.getElementById('created-password')?.textContent?.trim() || '';
   const bizName  = document.getElementById('created-biz-name')?.textContent?.trim() || '';
-  const text = `Galaxy Login — ${bizName}\n\nBusiness ID : ${bizId}\nUsername    : ${username}\nPassword    : ${password}\n\nLogin at: http://localhost:5500/Galaxy.html`;
+  const text = `Galaxy Login — ${bizName}\n\nBusiness ID : ${bizId}\nUsername    : ${username}\nPassword    : ${password}\n\nLogin at: https://galaxy-frontend-gilt.vercel.app/Galaxy.html`;
   navigator.clipboard.writeText(text).then(() => toast('All credentials copied!', 'ok'));
 }
 function toast(msg, type) {
