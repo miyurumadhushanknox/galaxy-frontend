@@ -5777,6 +5777,8 @@ function applyPermissions(){
 // ── Navigate guard ──
 const _origNavigate = navigate;
 navigate = function(page){
+  const alertBtn = document.getElementById('alert-btn');
+  if(alertBtn && window.currentUser) alertBtn.style.display = (window.currentUser.role==='delivery') ? 'none' : '';
   const blocked = {
     'addproduct': !can('nav.addproduct'),
     'warehouse':  !can('nav.warehouse'),
