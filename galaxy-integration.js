@@ -224,6 +224,12 @@
           lastLogin: u.last_login ? formatDateDMY(u.last_login) : '—',
           commission: u.commission || {},
         }));
+        if (typeof window.renderUsersPage === 'function') {
+          const usersSection = document.getElementById('users-section') || document.querySelector('[data-page="users"]');
+          if (usersSection && usersSection.style.display !== 'none') {
+            window.renderUsersPage();
+          }
+        }
       }
 
       // ── Finance ──
