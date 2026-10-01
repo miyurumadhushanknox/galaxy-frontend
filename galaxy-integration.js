@@ -618,7 +618,7 @@
       const role = document.getElementById('nu-role')?.value;
       if (!fn || !ln || !un || !pw || !role) { API.showToast('All fields required.', 'error'); return; }
       try {
-        const res = await API.UsersAPI.create({ first_name: fn, last_name: ln, username: un, password: pw, role });
+        const res = await API.UsersAPI.create({ firstName: fn, lastName: ln, username: un, password: pw, role });
         const u = res.user || res;
         if (!window.systemUsers) window.systemUsers = [];
         window.systemUsers.push({ id: u.id, firstName: fn, lastName: ln, username: un, password: '', role, status: true, lastLogin: '—' });
@@ -1036,7 +1036,7 @@
     // Patch navigate to remember last page
     const _origNav = window.navigate;
     window.navigate = function(page) {
-      if (page && page !== 'login') sessionStorage.setItem('_galaxy_last_page', page);
+      if (page && page !== 'login' && page !== 'dashboard') localStorage.setItem('_galaxy_last_page', page);
       if (_origNav) return _origNav(page);
     };
 
@@ -1050,10 +1050,15 @@
 
     // If already logged in via sessionStorage (JWT still valid), load real data
     const saved = sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user');
-    if (saved && API.Auth.isLoggedIn()) {
-      loadRealData().finally(function() {
+
+      if (saved && API.Auth.isLoggedIn()) {
+  var _lastPage = localStorage.getItem('_galaxy_last_page');
+  if (_lastPage) { setTimeout(function(){ if(window.navigate) window.navigate(_lastPage); }, 0); }
+  document.body.style.visibility = 'visible';
+  loadRealData().finally(function() {
+
+
         // After data loads, restore last page and re-render if needed
-        var _lastPage = sessionStorage.getItem('_galaxy_last_page');
         if (_lastPage) {
           var _restoreInterval = setInterval(function() {
             var navEl = document.querySelector('.nav-item[onclick*="\'' + _lastPage + '\'"]');
