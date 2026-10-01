@@ -3540,9 +3540,14 @@ function renderProfilePage(){
   const ini_=n=>n.split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
   const uid='#U'+String(currentUser.id).padStart(4,'0');
   const roleFeatures={
-    owner:  ['All features — full access'],
-    manager:['View & edit products','Place orders','Manage orders','Warehouses','View reports'],
-    staff:  ['Place orders','View orders'],
+    owner:     ['All features — full access'],
+    admin:     ['All features — full access'],
+    manager:   ['View & edit products','Place & manage orders','Warehouses','View reports','Manage users'],
+    accountant:['View reports','Finance management','View orders'],
+    sales:     ['Place orders','View own orders','View product stock','View own commission'],
+    stockkeeper:['Manage item stock','View & transfer stock between warehouses'],
+    delivery:  ['You can view and update status in Manage Orders'],
+    staff:     ['Place orders','View orders'],
   };
   const features=(roleFeatures[currentUser.role]||['Place orders']).map(f=>`<div style="font-size:13px;color:#555;padding:2px 0">${f}</div>`).join('');
 
@@ -3572,13 +3577,13 @@ function renderProfilePage(){
         <!-- User Details -->
         <div class="card" style="margin-bottom:16px">
           <div class="card-title">User Details</div>
-          <div style="margin-bottom:12px">
+          ${currentUser.role!=='delivery'?`<div style="margin-bottom:12px">
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Business name</label>
             <div style="position:relative">
               <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 4V3a3 3 0 016 0v1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
               <input id="pf-business" value="${pr.businessName||generalSettings.bizName||''}" placeholder="Your business name" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
-          </div>
+          </div>`:''}
           <div style="margin-bottom:12px">
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Username</label>
             <div style="position:relative">
@@ -5760,6 +5765,10 @@ function applyPermissions(){
   // ── Warehouse ──
   window._canEditWarehouse = can('warehouse.edit');
   window._canTransfer      = can('warehouse.transfer');
+
+  // ── Alert bell: hide for delivery ──
+  const alertBtn = document.getElementById('alert-btn');
+  if(alertBtn) alertBtn.style.display = (role==='delivery') ? 'none' : '';
 
   // ── Navigate guard: if current page not allowed, go to itemstock ──
   // (handled in navigate override below)
