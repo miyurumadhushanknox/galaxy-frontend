@@ -6533,6 +6533,60 @@ function renderDashboardPage(){
   if(!root) return;
   annShowBanner();
 
+  // ── Role-based dashboard ──
+  const _cu = currentUser || JSON.parse(sessionStorage.getItem('galaxy_user')||'{}');
+  const _role = _cu.role || 'sales';
+
+  // Stockkeeper & Delivery: welcome only
+  if(_role === 'stockkeeper' || _role === 'delivery'){
+    root.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:16px">
+      <div style="font-size:48px">👋</div>
+      <div style="font-size:24px;font-weight:800;color:#18182b">Welcome to Galaxy, ${_cu.name||_cu.username}!</div>
+      <div style="font-size:14px;color:#9090b8">Use the menu to access your tasks.</div>
+    </div>`;
+    return;
+  }
+
+  // Sales: limited dashboard
+  if(_role === 'sales'){
+    const _users = window.systemUsers || [];
+    const _salesUser = _users.find(u => u.username === _cu.username) || {};
+    const myOrders = (window.orders || orders || []).filter(o => o.salesperson === _cu.username || o.createdBy === _cu.username || o.userId === _cu.id);
+    const myRevenue = myOrders.filter(o=>o.status==='delivered').reduce((a,o)=>a+ordSubtotal(o),0);
+    const myCommission = _salesUser.commission && _salesUser.commission.on ? (
+      _salesUser.commission.method === 'percent'
+        ? myRevenue * (_salesUser.commission.percent||0) / 100
+        : myOrders.filter(o=>o.status==='delivered').reduce((a,o)=>a+o.items.reduce((b,i)=>b+i.qty,0),0) * (_salesUser.commission.perUnit||0)
+    ) : null;
+    const _prods = window.products || products || [];
+    const lowStock = _prods.filter(p=>{const q=Object.values(p.stock||{}).reduce((a,b)=>a+b,0);return p.low&&q<=p.low;});
+    root.innerHTML = `
+      <div style="padding:24px;max-width:900px;margin:0 auto">
+        <div style="font-size:20px;font-weight:800;color:#18182b;margin-bottom:20px">My Dashboard</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
+          <div style="background:#fff;border-radius:16px;padding:20px;border:1.5px solid #f0f0f8">
+            <div style="font-size:12px;font-weight:700;color:#9090b8;text-transform:uppercase;letter-spacing:.5px">My Orders</div>
+            <div style="font-size:28px;font-weight:800;color:#18182b;margin-top:8px">${myOrders.length}</div>
+          </div>
+          <div style="background:#fff;border-radius:16px;padding:20px;border:1.5px solid #f0f0f8">
+            <div style="font-size:12px;font-weight:700;color:#9090b8;text-transform:uppercase;letter-spacing:.5px">My Revenue</div>
+            <div style="font-size:28px;font-weight:800;color:#18182b;margin-top:8px">Rs ${myRevenue.toLocaleString()}</div>
+          </div>
+          ${myCommission !== null ? `<div style="background:#fff8f6;border-radius:16px;padding:20px;border:1.5px solid #fde8e4">
+            <div style="font-size:12px;font-weight:700;color:#e8220e;text-transform:uppercase;letter-spacing:.5px">My Commission</div>
+            <div style="font-size:28px;font-weight:800;color:#e8220e;margin-top:8px">Rs ${myCommission.toLocaleString()}</div>
+          </div>` : ''}
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:20px;border:1.5px solid #f0f0f8">
+          <div style="font-size:14px;font-weight:700;color:#18182b;margin-bottom:12px">Low Stock Alert</div>
+          ${lowStock.length === 0 ? '<div style="color:#9090b8;font-size:13px">All products well stocked</div>' :
+            lowStock.map(p=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f8;font-size:13px"><span style="font-weight:600;color:#18182b">${p.name}</span><span style="color:#e8220e;font-weight:700">Low stock</span></div>`).join('')
+          }
+        </div>
+      </div>`;
+    return;
+  }
+
   // ── Period state ──
   if(!window._dbPeriod) window._dbPeriod = 'month';
   const period = window._dbPeriod;
