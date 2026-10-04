@@ -844,13 +844,13 @@ tbody tr:hover .row-actions{display:flex}
               <th class="sc3 sortable" onclick="sortP('name')">Product name <span class="sort-ic" id="si-name">⇅</span></th>
               <th class="sortable" onclick="sortP('code')">Product code <span class="sort-ic" id="si-code">⇅</span></th>
               <th class="sortable" onclick="sortP('stock')">Available quantity <span class="sort-ic" id="si-stock">⇅</span></th>
-              <th class="sortable" onclick="sortP('sold')">Sales quantity <span class="sort-ic" id="si-sold">⇅</span></th>
+              <th id="th-sold" class="sortable" onclick="sortP('sold')">Sales quantity <span class="sort-ic" id="si-sold">↨</span></th>
               <th class="sortable" onclick="sortP('price')">Sales price <span class="sort-ic" id="si-price">⇅</span></th>
-              <th>Purchase price</th>
-              <th class="sortable" onclick="sortP('profit')">Profit (Each one) <span class="sort-ic" id="si-profit">⇅</span></th>
+              <th id="th-pp">Purchase price</th>
+              <th id="th-profit" class="sortable" onclick="sortP('profit')">Profit (Each one)...
               <th>Warehouse</th>
-              <th>Stock value (Purchase price)</th>
-              <th>Stock value (Sales price)</th>
+              <th id="th-svp">Stock value (Purchase price)</th>
+              <th id="th-svs">Stock value (Sales price)</th>
               <th class="sortable" onclick="sortP('date')">Add date <span class="sort-ic" id="si-date">⇅</span></th>
             </tr>
           </thead>
@@ -1891,26 +1891,26 @@ function renderProducts(){
     const profitEach=p.price-p.pp;
     const qtyStyle=qty===0?"color:#d92020;font-weight:700":qty<=p.low?"color:#c07800;font-weight:700":"font-weight:600";
     return "<tr class=\""+(chk?"row-selected":"")+"\">"+
-      "<td class=\"sc1\"><input type=\"checkbox\" "+(chk?"checked":"")+" onchange=\"toggleRowCheck("+p.id+",this)\" "+(currentUser.role==='accountant'?'style="pointer-events:none;opacity:0.4"':'')+"></td>"+
-      "<td class=\"sc2\"><div class=\"tgl "+(p.on?"on":"")+"\" onclick=\"toggleOn("+p.id+")\" style=\""+(currentUser.role==='accountant'?'opacity:0.4;pointer-events:none;cursor:not-allowed;':'')+"\">"+
+      "<td class=\"sc1\"><input type=\"checkbox\" "+(chk?"checked":"")+" onchange=\"toggleRowCheck("+p.id+",this)\" "+((currentUser.role==='accountant'||currentUser.role==='sales')?'style="pointer-events:none;opacity:0.4"':'')+"></td>"+
+      "<td class=\"sc2\"><div class=\"tgl "+(p.on?"on":"")+"\" onclick=\"toggleOn("+p.id+")\" style=\""+((currentUser.role==='accountant'||currentUser.role==='sales')?'opacity:0.4;pointer-events:none;cursor:not-allowed;':'')+"\">"+
       "<div class=\"tgl-dot\"></div></td>"+
       "<td class=\"sc-img\"><div style=\"width:40px;height:40px;border-radius:8px;overflow:hidden;margin:0 auto;border:1px solid #e4e4f0;background:#f5f5fa\"><img src=\""+(p.images&&p.images[0]?p.images[0]:PLACEHOLDER)+"\" style=\"width:100%;height:100%;object-fit:cover\" /></div></td>"+
       "<td class=\"sc3\"><div class=\"row-name-cell\"><span class=\"row-name-text\">"+p.name+(p.isVariant?"<span style=\"margin-left:5px;font-size:9px;padding:1px 5px;border-radius:4px;background:#fff0ec;color:#e8220e;font-weight:800;letter-spacing:.04em\">BATCH</span>":"")+
         "</span><div class=\"row-actions\">"+
-      (currentUser.role!=='accountant'?'<button class="ra-btn" onclick="editProduct('+p.id+')"><svg viewBox="0 0 12 12" fill="none"><ellipse cx="6" cy="6" rx="5" ry="3.5" stroke="currentColor" stroke-width="1.3"/></svg> Edit</button>':'')+
+      (currentUser.role!=='accountant'&&currentUser.role!=='sales'?'<button class="ra-btn" onclick="editProduct('+p.id+')"><svg viewBox="0 0 12 12" fill="none"><ellipse cx="6" cy="6" rx="5" ry="3.5" stroke="currentColor" stroke-width="1.3"/></svg> Edit</button>':'')+
       '<button class="ra-btn" onclick="viewProduct('+p.id+')"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6s2-4 5-4 5 4 5 4-2 4-5 4-5-4-5-4z" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg> View</button>'+
       '<button class="ra-btn" onclick="toast(\'Chart \u2014 coming soon!\')"><svg viewBox="0 0 12 12" fill="none"><path d="M1 9.5V6l3-3 3 2 3-4v9H1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Chart</button>'+
-    (currentUser.role!=='accountant'?'<button class="ra-btn" onclick="openRefill('+p.id+')"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v4M4 3l2-2 2 2" stroke="currentColor" stroke-width="1.2"/></svg> Refill</button>':'')+
+    (currentUser.role!=='accountant'&&currentUser.role!=='sales'?'<button class="ra-btn" onclick="openRefill('+p.id+')"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v4M4 3l2-2 2 2" stroke="currentColor" stroke-width="1.2"/></svg> Refill</button>':'')+
             "</div></div></td>"+
             "<td style=\"color:#aaa;font-size:12px\">"+( p.code||"\u2014")+"</td>"+
             "<td style=\""+qtyStyle+"\">"+N(qty)+"</td>"+
-            "<td>"+N(p.sold||0)+"</td>"+
+            (currentUser.role!=='sales'?"<td>"+N(p.sold||0)+"</td>":"")+
             "<td>"+L(p.price)+"</td>"+
-            "<td style=\"color:#777\">"+L(p.pp)+"</td>"+
-            "<td style=\"color:#16a34a;font-weight:600\">"+L(profitEach)+"</td>"+
+            (currentUser.role!=='sales'?"<td style=\"color:#777\">"+L(p.pp)+"</td>":"")+
+            (currentUser.role!=='sales'?"<td style=\"color:#16a34a;font-weight:600\">"+L(profitEach)+"</td>":"")+
             "<td style=\"font-size:12px;color:#777\">"+whStr+"</td>"+
-            "<td style=\"color:#777\">"+L(p.pp*qty)+"</td>"+
-            "<td style=\"font-weight:600\">"+L(p.price*qty)+"</td>"+
+            (currentUser.role!=='sales'?"<td style=\"color:#777\">"+L(p.pp*qty)+"</td>":"")+
+            (currentUser.role!=='sales'?"<td style=\"font-weight:600\">"+L(p.price*qty)+"</td>":"")+
             "<td style=\"color:#bbb;font-size:12px\">"+( p.dt||"\u2014")+"</td>"+
             "</tr>";
   }).join(""):"<tr><td colspan=\"14\" style=\"text-align:center;color:#c0c0d8;padding:48px;font-weight:700\">No products found</td></tr>";
