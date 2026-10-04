@@ -5764,6 +5764,15 @@ function applyPermissions(){
   if(addProdBtn) addProdBtn.style.display = can('stock.add') ? '' : 'none';
   const delBtn = document.getElementById('btn-delete-sel');
   if(delBtn) delBtn.style.display = role==='accountant' ? 'none' : '';
+  // — Hide Admin option in role dropdown for non-owners —
+  if(role!=='owner'){
+  const upRole=document.getElementById('up-role');
+  if(upRole){
+    Array.from(upRole.options).forEach(opt=>{
+      if(opt.value==='admin') opt.style.display='none';
+    });
+  }
+  }
   // — Stockkeeper: hide Analytics nav label and Reports —
   if(role==='stockkeeper'){
   document.querySelectorAll('.nav-label').forEach(el=>{
