@@ -5654,10 +5654,10 @@ function openViewUser(id){
         <span style="font-size:12px;font-weight:700;color:#18182b">${u.lastLogin}</span>
       </div>
     </div>
-    ${!(currentUser.role==='admin' && u.role==='owner')?`<button onclick="openEditUser('${u.id}')" style="width:100%;margin-top:18px;padding:10px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:
-    <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 10l8-8 2 2-8 8H2v-2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Edit user
-    </button>`:''}
+    ${!(currentUser.role==='admin' && u.role==='owner')?`<div style="display:flex;gap:10px;margin-top:18px">
+  <button onclick="openEditUser('${u.id}')" style="flex:1;padding:12px;background:#e8220e;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer">Edit user</button>
+  <button onclick="confirmDeleteUser('${u.id}')" style="flex:1;padding:12px;background:#f5f5f8;color:#e8220e;border:1.5px solid #e8220e;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer">Delete user</button>
+  </div>`:''}
   `;
   document.getElementById('m-viewuser').classList.add('open');
 }
@@ -5665,9 +5665,26 @@ function openViewUser(id){
 function closeViewUser(){
   document.getElementById('m-viewuser').classList.remove('open');
 }
+function confirmDeleteUser(id){
+  const u=(window.systemUsers||[]).find(x=>x.id===id);
+  if(!u)return;
+  document.getElementById('viewuser-body').innerHTML+=`
+    <div style="margin-top:14px;padding:12px 14px;background:#fff3f3;border:1.5px solid #ffd0d0;border-radius:10px;font-size:12px;color:#c0392b;font-weight:600;text-align:center">
+      This user will be deleted. They can't login or use any function.
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button onclick="deleteUser('${id}')" style="flex:1;padding:8px;background:#e8220e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">Yes, delete</button>
+        <button onclick="openViewUser('${id}')" style="flex:1;padding:8px;background:#f5f5f8;color:#555;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">Cancel</button>
+      </div>
+    </div>`;
+}
 
+function deleteUser(id){
+  window.systemUsers=(window.systemUsers||[]).filter(x=>x.id!==id);
+  closeViewUser();
+  renderUsersPage();
+}
 function toggleUserStatus(id){
-  const u=systemUsers.find(x=>x.id===id);
+  const u=(window.systemUsers||[]).find(x=>x.id===id);
   if(u){u.status=!u.status;renderUsersPage();}
 }
 
