@@ -285,6 +285,7 @@ tbody tr:hover .row-actions{display:flex}
 
 
 .sidebar-nav{flex:1;overflow-y:auto}
+  .delivery-role #gs-notif-section { display: none !important; }
 </style>
   <script src="api.js"></script>
   <script src="galaxy-integration.js?v=5"></script>
@@ -5690,6 +5691,7 @@ window._canTransfer     = true;
 // ══════════════ PERMISSION SYSTEM ══════════════
 function can(action){
   const role = currentUser?.role||'staff';
+  document.body.classList.toggle('delivery-role', role==='delivery');
   const rules = {
     // nav visibility
     'nav.itemstock':     ['owner','admin','manager','stockkeeper','sales','accountant'],
