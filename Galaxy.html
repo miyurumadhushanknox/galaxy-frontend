@@ -5680,7 +5680,7 @@ function confirmDeleteUser(id){
 
 function deleteUser(id){
   window.systemUsers=(window.systemUsers||[]).filter(x=>x.id!==id);
-  closeViewUser();
+  document.getElementById('m-viewuser').classList.remove('open');
   renderUsersPage();
 }
 function toggleUserStatus(id){
