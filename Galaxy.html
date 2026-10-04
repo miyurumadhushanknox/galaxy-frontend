@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Galaxy — Stock Management</title>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Rubik',sans-serif;background:#f2f2f7;color:#18182b;font-size:14px;min-height:100vh}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#f2f2f7;color:#18182b;font-size:14px;min-height:100vh}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#d0d0e8;border-radius:10px}
@@ -49,11 +49,11 @@ body{font-family:'Rubik',sans-serif;background:#f2f2f7;color:#18182b;font-size:1
 
 /* ════════ ITEM STOCK ════════ */
 .toolbar{display:flex;align-items:center;gap:10px;margin-bottom:15px}
-.btn-add{display:inline-flex;align-items:center;gap:7px;padding:9px 19px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:800;font-family:'Rubik',sans-serif;cursor:pointer;white-space:nowrap;letter-spacing:.01em}
+.btn-add{display:inline-flex;align-items:center;gap:7px;padding:9px 19px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;white-space:nowrap;letter-spacing:.01em}
 .btn-add svg{width:14px;height:14px;stroke-width:2.5}
 .search-wrap{flex:1;min-width:160px;position:relative}
 .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#bbb;pointer-events:none}
-.search-input{width:100%;padding:9px 12px 9px 33px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-weight:500;font-family:'Rubik',sans-serif;color:#18182b;background:#fff;outline:none}
+.search-input{width:100%;padding:9px 12px 9px 33px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-weight:500;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;background:#fff;outline:none}
 .search-input:focus{border-color:#e8220e}
 .search-input::placeholder{color:#c0c0d8;font-weight:400}
 .btn-icon{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;cursor:pointer;color:#aaa;flex-shrink:0}
@@ -61,7 +61,7 @@ body{font-family:'Rubik',sans-serif;background:#f2f2f7;color:#18182b;font-size:1
 .btn-icon svg{width:16px;height:16px}
 .table-card{background:#fff;border-radius:14px;border:1.5px solid #e4e4f0;box-shadow:0 2px 10px rgba(24,24,43,.06);display:flex;flex-direction:column;overflow:hidden;height:calc(100vh - 54px - 44px - 68px)}
 .table-scroll{overflow-x:auto;overflow-y:auto;flex:1;position:relative}
-table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-family:'Rubik',sans-serif;font-size:13px}
+table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px}
 th,td{padding:10px 13px;white-space:nowrap;vertical-align:middle;border-bottom:1px solid #ededf6}
 thead tr{background:#f5f5fa}
 th{font-size:10px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;border-bottom:1.5px solid #e4e4f0;background:#f5f5fa;user-select:none;cursor:default}
@@ -90,16 +90,16 @@ input[type="checkbox"]{width:15px;height:15px;cursor:pointer;accent-color:#e8220
 .row-name-text{font-weight:700;font-size:13px;color:#18182b}
 .row-actions{display:none;flex-direction:row;gap:4px}
 tbody tr:hover .row-actions{display:flex}
-.ra-btn{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:5px;border:1px solid #ddddf0;background:#f5f5fc;color:#5555aa;font-size:10px;font-weight:700;font-family:'Rubik',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
+.ra-btn{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:5px;border:1px solid #ddddf0;background:#f5f5fc;color:#5555aa;font-size:10px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
 .ra-btn svg{width:9px;height:9px;flex-shrink:0}
 .ra-btn:hover{background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border-color:transparent}
-.row-action-btn{padding:5px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;font-size:12px;font-weight:700;cursor:pointer;color:#18182b;font-family:"Rubik",sans-serif;transition:border-color .15s,color .15s}
+.row-action-btn{padding:5px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;font-size:12px;font-weight:700;cursor:pointer;color:#18182b;font-family:"Plus Jakarta Sans",sans-serif;transition:border-color .15s,color .15s}
 .row-action-btn:hover{border-color:#e8220e;color:#e8220e}
 .table-footer{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1.5px solid #ededf6;flex-shrink:0}
 .total-label{font-size:13px;color:#9090b8;font-weight:600}
 .total-label strong{color:#18182b;font-weight:800}
 .pagination{display:flex;align-items:center;gap:5px}
-.pg-btn{min-width:34px;height:34px;border-radius:9px;border:1.5px solid #e4e4f0;background:#fff;color:#7a7a9a;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'Rubik',sans-serif;padding:0 8px}
+.pg-btn{min-width:34px;height:34px;border-radius:9px;border:1.5px solid #e4e4f0;background:#fff;color:#7a7a9a;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif;padding:0 8px}
 .pg-btn:hover:not(:disabled){border-color:#ff5a30;color:#e8220e}
 .pg-btn.active{background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border-color:transparent;font-weight:800}
 .pg-btn.arrow{font-size:16px;color:#c0c0d8}
@@ -131,19 +131,19 @@ tbody tr:hover .row-actions{display:flex}
 .field{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
 .field:last-child{margin-bottom:0}
 .field label{font-size:12px;font-weight:800;color:#18182b}
-.field input,.field textarea{padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%}
+.field input,.field textarea{padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%}
 .field input:focus,.field textarea:focus{border-color:#e8220e}
 .field input::placeholder,.field textarea::placeholder{color:#c0c0d8;font-weight:400}
 .field textarea{resize:vertical;min-height:80px;line-height:1.6}
 .field-note{font-size:11px;color:#aaa;font-weight:500;margin-top:2px}
 .code-row{display:flex;gap:8px;align-items:center}
 .code-row input{flex:1}
-.regen-btn{padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;background:#f5f5fa;color:#7070a0;font-size:11px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif;white-space:nowrap;flex-shrink:0}
+.regen-btn{padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;background:#f5f5fa;color:#7070a0;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;flex-shrink:0}
 .regen-btn:hover{background:#fff0ec;border-color:#e8220e;color:#e8220e}
 .field-row{display:grid;grid-template-columns:155px 1fr;align-items:center;gap:12px;margin-bottom:13px}
 .field-row:last-child{margin-bottom:0}
 .field-row label{font-size:13px;font-weight:800;color:#18182b}
-.field-row input{padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none}
+.field-row input{padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none}
 .field-row input:focus{border-color:#e8220e}
 .field-row input::placeholder{color:#c0c0d8;font-weight:400}
 .wh-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -153,8 +153,8 @@ tbody tr:hover .row-actions{display:flex}
 .auto-row{display:grid;grid-template-columns:155px 1fr;align-items:center;gap:12px;margin-bottom:12px}
 .auto-row:last-child{margin-bottom:0}
 .auto-row label{font-size:13px;font-weight:800;color:#18182b}
-.auto-val{padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:15px;font-family:'Rubik',sans-serif;font-weight:900;color:#18182b;background:#f8f8fc;cursor:default}
-.submit-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:15px;font-weight:900;font-family:'Rubik',sans-serif;cursor:pointer;letter-spacing:.03em;margin-bottom:14px}
+.auto-val{padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;color:#18182b;background:#f8f8fc;cursor:default}
+.submit-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:15px;font-weight:900;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;letter-spacing:.03em;margin-bottom:14px}
 .submit-btn:hover{opacity:.9}
 .note-box{border-radius:10px;padding:13px 15px;margin-bottom:12px;display:none}
 .note-box.show{display:block}
@@ -174,7 +174,7 @@ tbody tr:hover .row-actions{display:flex}
 .profile-avatar img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .profile-avatar-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;border-radius:50%}
 .profile-avatar:hover .profile-avatar-overlay{display:flex}
-.toast{position:fixed;bottom:24px;right:24px;background:#18182b;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;font-family:'Rubik',sans-serif}
+.toast{position:fixed;bottom:24px;right:24px;background:#18182b;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;font-family:'Plus Jakarta Sans',sans-serif}
 .toast.show{opacity:1;transform:translateY(0)}
 .toast.ok{background:linear-gradient(135deg,#22c55e,#16a34a)}
 .toast.err{background:linear-gradient(135deg,#ff5a30,#e8220e)}
@@ -184,11 +184,11 @@ tbody tr:hover .row-actions{display:flex}
 .modal{background:#fff;border-radius:16px;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.18)}
 .modal-header{padding:20px 24px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between}
 .modal-title{font-size:16px;font-weight:900;color:#18182b}
-.modal-close{width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:#9090b8;font-family:'Rubik',sans-serif}
+.modal-close{width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif}
 .modal-close:hover{background:#fde8e8;color:#e8220e}
 .modal-body{padding:24px}
 .modal-footer{padding:16px 24px;border-top:1px solid #f0f0f6;display:flex;justify-content:flex-end;gap:10px}
-.btn-cancel{padding:9px 18px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif}
+.btn-cancel{padding:9px 18px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
 .btn-cancel:hover{background:#f5f5fa}
 
 /* ════════════════════════════════════════
@@ -277,7 +277,7 @@ tbody tr:hover .row-actions{display:flex}
 #mob-bottom-nav .mob-nav-item{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:3px;cursor:pointer;color:rgba(255,255,255,.45);font-size:9px;font-weight:700;
-  font-family:'Rubik',sans-serif;border:none;background:none;padding:0;transition:color .15s
+  font-family:'Plus Jakarta Sans',sans-serif;border:none;background:none;padding:0;transition:color .15s
 }
 #mob-bottom-nav .mob-nav-item.active,
 #mob-bottom-nav .mob-nav-item:active{color:#ff5a30}
@@ -396,7 +396,7 @@ tbody tr:hover .row-actions{display:flex}
   transition:all .2s;
   backdrop-filter:blur(10px);
   width:100%;
-  font-family:'Rubik',sans-serif;
+  font-family:'Plus Jakarta Sans',sans-serif;
   outline:none;
 }
 .login-form input::placeholder{color:rgba(255,255,255,.3)}
@@ -414,7 +414,7 @@ tbody tr:hover .row-actions{display:flex}
   border-radius:12px!important;
   box-shadow:0 1px 0 rgba(255,255,255,.2) inset!important;
   transition:all .2s!important;
-  font-family:'Rubik',sans-serif;
+  font-family:'Plus Jakarta Sans',sans-serif;
   cursor:pointer;
 }
 .btn-signin:hover{
@@ -774,14 +774,14 @@ tbody tr:hover .row-actions{display:flex}
         <!-- Alert bell -->
         <button onclick="toggleAlertPanel(event)" id="alert-btn" style="position:relative;width:36px;height:36px;border-radius:10px;border:1.5px solid #e4e4f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" onmouseenter="this.style.borderColor='#e8220e'" onmouseleave="this.style.borderColor='#e4e4f0'">
           <svg viewBox="0 0 16 16" fill="none" style="width:15px;height:15px;color:#18182b"><path d="M8 2a5 5 0 015 5v3l1 2H2l1-2V7a5 5 0 015-5zM6.5 13a1.5 1.5 0 003 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span id="alert-badge" style="position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:9px;font-weight:800;display:none;align-items:center;justify-content:center;font-family:'Rubik',sans-serif;padding:0 4px;border:1.5px solid #fff"></span>
+          <span id="alert-badge" style="position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:9px;font-weight:800;display:none;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;padding:0 4px;border:1.5px solid #fff"></span>
         </button>
 
         <!-- Alert dropdown -->
         <div id="alert-panel" style="display:none;position:absolute;top:54px;right:16px;width:360px;background:#fff;border-radius:14px;box-shadow:0 4px 32px rgba(0,0,0,.15);z-index:400;animation:mIn .15s ease;overflow:hidden">
           <div style="padding:14px 16px 10px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between">
             <div style="font-size:14px;font-weight:900;color:#18182b">Alerts</div>
-            <button onclick="clearAllAlerts()" style="font-size:11px;font-weight:700;color:#e8220e;background:none;border:none;cursor:pointer;font-family:'Rubik',sans-serif">Clear all</button>
+            <button onclick="clearAllAlerts()" style="font-size:11px;font-weight:700;color:#e8220e;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Clear all</button>
           </div>
           <div id="alert-list" style="max-height:400px;overflow-y:auto;padding:8px 0"></div>
         </div>
@@ -829,7 +829,7 @@ tbody tr:hover .row-actions{display:flex}
         <svg class="search-icon" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <input class="search-input" type="text" id="p-search" placeholder="Search" oninput="renderProducts()">
       </div>
-      <button onclick="openStockHistory()" style="display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif;white-space:nowrap">
+      <button onclick="openStockHistory()" style="display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
         <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/><path d="M8 4.5V8l2.5 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M2 8a6 6 0 018-5.66" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="2 2"/></svg>
         Stock History
       </button>
@@ -1024,30 +1024,30 @@ tbody tr:hover .row-actions{display:flex}
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
                 <div>
                   <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">First name</label>
-                  <input id="up-first" type="text" placeholder="First name" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                  <input id="up-first" type="text" placeholder="First name" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 </div>
                 <div>
                   <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Last name</label>
-                  <input id="up-last" type="text" placeholder="Last name" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                  <input id="up-last" type="text" placeholder="Last name" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 </div>
               </div>
               <div>
                 <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Email</label>
-                <input id="up-email" type="email" placeholder="user@example.com" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                <input id="up-email" type="email" placeholder="user@example.com" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
                 <div>
                   <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Username</label>
-                  <input id="up-username" type="text" placeholder="e.g. saman_01" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                  <input id="up-username" type="text" placeholder="e.g. saman_01" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 </div>
                 <div>
                   <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Password</label>
-                  <input id="up-password" type="password" placeholder="Set password" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                  <input id="up-password" type="password" placeholder="Set password" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 </div>
               </div>
               <div>
                 <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Role</label>
-                <select id="up-role" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                <select id="up-role" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                   <option value="owner">Owner</option>
                   <option value="admin">Admin</option>
                   <option value="manager">Manager</option>
@@ -1074,18 +1074,18 @@ tbody tr:hover .row-actions{display:flex}
                 <div id="up-comm-details" style="display:none;flex-direction:column;gap:10px">
                   <div>
                     <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Commission method</label>
-                    <select id="up-comm-method" onchange="upCommMethodChange()" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                    <select id="up-comm-method" onchange="upCommMethodChange()" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                       <option value="percent">Product percentage (%)</option>
                       <option value="perunit">Per product (fixed price)</option>
                     </select>
                   </div>
                   <div id="up-comm-pct-wrap">
                     <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Commission percentage (%)</label>
-                    <input id="up-comm-pct" type="number" min="0" max="100" step="0.5" placeholder="e.g. 5" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                    <input id="up-comm-pct" type="number" min="0" max="100" step="0.5" placeholder="e.g. 5" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                   </div>
                   <div id="up-comm-unit-wrap" style="display:none">
                     <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Commission per unit (LKR)</label>
-                    <input id="up-comm-unit" type="number" min="0" step="1" placeholder="e.g. 50" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                    <input id="up-comm-unit" type="number" min="0" step="1" placeholder="e.g. 50" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                   </div>
                   <!-- Minimum product cap -->
                   <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:#f8f8fc;border-radius:9px">
@@ -1101,15 +1101,15 @@ tbody tr:hover .row-actions{display:flex}
                   </div>
                   <div id="up-mincap-wrap" style="display:none">
                     <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Minimum products to sell before commission</label>
-                    <input id="up-comm-mincap" type="number" min="1" step="1" placeholder="e.g. 10" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                    <input id="up-comm-mincap" type="number" min="1" step="1" placeholder="e.g. 10" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                     <div style="font-size:10px;color:#9090b8;margin-top:4px">e.g. 10 means commission starts from the 11th product sold</div>
                   </div>
                 </div>
               </div>
             </div>
             <div style="padding:0 20px 20px;display:flex;gap:10px">
-              <button onclick="closeUserPanel()" style="flex:1;padding:11px 0;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#9090b8;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">Cancel</button>
-              <button onclick="saveUser()" style="flex:2;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
+              <button onclick="closeUserPanel()" style="flex:1;padding:11px 0;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#9090b8;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
+              <button onclick="saveUser()" style="flex:2;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
                 <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span id="up-save-lbl">Create user</span>
               </button>
@@ -1146,23 +1146,23 @@ tbody tr:hover .row-actions{display:flex}
             <div style="padding:16px 20px;display:flex;flex-direction:column;gap:13px">
               <div>
                 <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Type</label>
-                <select id="fin-add-type" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none">
+                <select id="fin-add-type" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none">
                   <option value="expense">Expense (e.g. Ad cost, WiFi bill)</option>
                   <option value="revenue">Revenue (e.g. Extra income)</option>
                 </select>
               </div>
               <div>
                 <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Title / Description</label>
-                <input id="fin-add-title" type="text" placeholder="e.g. Facebook ad cost, WiFi bill" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                <input id="fin-add-title" type="text" placeholder="e.g. Facebook ad cost, WiFi bill" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               </div>
               <div>
                 <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Amount (LKR)</label>
-                <input id="fin-add-amount" type="number" min="0" step="1" placeholder="e.g. 5000" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                <input id="fin-add-amount" type="number" min="0" step="1" placeholder="e.g. 5000" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               </div>
             </div>
             <div style="padding:0 20px 18px;display:flex;gap:10px">
-              <button onclick="document.getElementById('m-fin-add').classList.remove('open')" style="flex:1;padding:10px 0;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#9090b8;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">Cancel</button>
-              <button onclick="finConfirmAdd()" style="flex:2;padding:10px 0;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
+              <button onclick="document.getElementById('m-fin-add').classList.remove('open')" style="flex:1;padding:10px 0;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#9090b8;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
+              <button onclick="finConfirmAdd()" style="flex:2;padding:10px 0;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
                 <svg viewBox="0 0 14 14" fill="none" style="width:11px;height:11px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Add entry
               </button>
@@ -1209,35 +1209,35 @@ tbody tr:hover .row-actions{display:flex}
             <div class="card-title">Customer Details</div>
             <div style="position:relative;margin-bottom:12px">
               <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <input id="c-name" type="text" placeholder="Customer Name *" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="c-name" type="text" placeholder="Customer Name *" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <div style="position:relative;margin-bottom:12px">
               <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.79 1 4 2.79 4 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="5" r="1.5" fill="currentColor" opacity=".4"/></svg>
-              <input id="c-address" type="text" placeholder="Address" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="c-address" type="text" placeholder="Address" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <div style="position:relative;margin-bottom:12px">
               <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none;z-index:1" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.79 1 4 2.79 4 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="5" r="1.5" fill="currentColor" opacity=".4"/></svg>
-              <select id="c-city" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <select id="c-city" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 <option value="">Select city</option>
                 <option>Colombo</option><option>Dehiwala</option><option>Moratuwa</option><option>Sri Jayawardenepura Kotte</option><option>Negombo</option><option>Kandy</option><option>Galle</option><option>Trincomalee</option><option>Batticaloa</option><option>Jaffna</option><option>Anuradhapura</option><option>Polonnaruwa</option><option>Badulla</option><option>Ratnapura</option><option>Matara</option><option>Kurunegala</option><option>Puttalam</option><option>Kalmunai</option><option>Vavuniya</option><option>Mannar</option><option>Chilaw</option><option>Kalutara</option><option>Panadura</option><option>Horana</option><option>Gampaha</option><option>Kaduwela</option><option>Maharagama</option><option>Nugegoda</option><option>Piliyandala</option><option>Ragama</option><option>Wattala</option><option>Ja-Ela</option><option>Katunayake</option><option>Minuwangoda</option><option>Divulapitiya</option><option>Mirigama</option><option>Nittambuwa</option><option>Veyangoda</option><option>Kiribathgoda</option><option>Kelaniya</option><option>Peliyagoda</option><option>Kadawatha</option><option>Biyagama</option><option>Avissawella</option><option>Hanwella</option><option>Kegalle</option><option>Mawanella</option><option>Rambukkana</option><option>Alawwa</option><option>Kuliyapitiya</option><option>Wariyapola</option><option>Nikaweratiya</option><option>Dankotuwa</option><option>Wennappuwa</option><option>Marawila</option><option>Nattandiya</option><option>Narammala</option><option>Matugama</option><option>Bandaragama</option><option>Ingiriya</option><option>Agalawatta</option><option>Aluthgama</option><option>Bentota</option><option>Beruwala</option><option>Ambalangoda</option><option>Hikkaduwa</option><option>Elpitiya</option><option>Baddegama</option><option>Akuressa</option><option>Deniyaya</option><option>Dickwella</option><option>Weligama</option><option>Mirissa</option><option>Tangalle</option><option>Hambantota</option><option>Tissamaharama</option><option>Ampara</option><option>Akkaraipattu</option><option>Kattankudy</option><option>Muttur</option><option>Kantale</option><option>Tambuttegama</option><option>Medawachchiya</option><option>Kilinochchi</option><option>Mullaitivu</option><option>Point Pedro</option><option>Chavakachcheri</option><option>Matale</option><option>Dambulla</option><option>Sigiriya</option><option>Habarana</option><option>Hatton</option><option>Nuwara Eliya</option><option>Bandarawela</option><option>Haputale</option><option>Ella</option><option>Welimada</option><option>Monaragala</option><option>Bibila</option><option>Embilipitiya</option><option>Pelmadulla</option><option>Eheliyagoda</option><option>Balangoda</option><option>Paiyagala</option><option>Wadduwa</option>
               </select>
             </div>
             <div style="position:relative;margin-bottom:12px">
               <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M3.5 2h3l1 3-1.5 1.5a8 8 0 004.5 4.5L12 9.5l3 1v3A1.5 1.5 0 0113.5 15C6.5 15 1 9.5 1 2.5A1.5 1.5 0 012.5 1H5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <input id="c-phone1" type="tel" placeholder="Phone Number 01 *" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="c-phone1" type="tel" placeholder="Phone Number 01 *" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <div style="position:relative;margin-bottom:12px">
               <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M3.5 2h3l1 3-1.5 1.5a8 8 0 004.5 4.5L12 9.5l3 1v3A1.5 1.5 0 0113.5 15C6.5 15 1 9.5 1 2.5A1.5 1.5 0 012.5 1H5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <input id="c-phone2" type="tel" placeholder="Phone Number 02 (Optional)" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="c-phone2" type="tel" placeholder="Phone Number 02 (Optional)" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <div style="position:relative;margin-bottom:12px">
               <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 6l7 4 7-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <input id="c-email" type="email" placeholder="Email (Optional)" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="c-email" type="email" placeholder="Email (Optional)" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <!-- Special Note -->
             <div style="position:relative">
               <svg style="position:absolute;left:12px;top:13px;width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M2 2h12v10H9l-3 2v-2H2V2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-              <textarea id="c-note" placeholder="Special note (Optional)" rows="3" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;resize:vertical;line-height:1.5" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></textarea>
+              <textarea id="c-note" placeholder="Special note (Optional)" rows="3" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;resize:vertical;line-height:1.5" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></textarea>
             </div>
           </div>
 
@@ -1248,7 +1248,7 @@ tbody tr:hover .row-actions{display:flex}
                 <svg viewBox="0 0 16 16" fill="none" style="width:15px;height:15px"><rect x="1" y="5" width="9" height="7" rx="1.5" stroke="#e8220e" stroke-width="1.3"/><path d="M10 7l3 1.5V12h-3V7z" stroke="#e8220e" stroke-width="1.3" stroke-linejoin="round"/><circle cx="4" cy="13" r="1.2" stroke="#e8220e" stroke-width="1.2"/><circle cx="12" cy="13" r="1.2" stroke="#e8220e" stroke-width="1.2"/><path d="M1 9h9" stroke="#e8220e" stroke-width="1.2"/></svg>
                 Delivery method
               </div>
-              <select id="o-delivery" onchange="calcOrder()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%">
+              <select id="o-delivery" onchange="calcOrder()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%">
                 ${(generalSettings.deliveryMethods||[]).map(d=>`<option value="${d.price}">${d.name}${d.price>0?' — LKR '+d.price:''}</option>`).join('')}
               </select>
               <span id="o-delivery-cost" style="font-size:13px;font-weight:700;color:#18182b;min-width:85px;text-align:right"></span>
@@ -1258,7 +1258,7 @@ tbody tr:hover .row-actions{display:flex}
                 <svg viewBox="0 0 16 16" fill="none" style="width:15px;height:15px"><rect x="1" y="4" width="14" height="9" rx="2" stroke="#e8220e" stroke-width="1.3"/><circle cx="8" cy="8.5" r="2" stroke="#e8220e" stroke-width="1.2"/><path d="M3 6.5h.5M12.5 6.5H13M3 10.5h.5M12.5 10.5H13" stroke="#e8220e" stroke-width="1.2" stroke-linecap="round"/></svg>
                 Payment method
               </div>
-              <select id="o-payment" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%">
+              <select id="o-payment" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%">
                 ${(generalSettings.paymentMethods||[]).map(p=>`<option>${p}</option>`).join('')}
               </select>
               <span style="min-width:85px"></span>
@@ -1268,7 +1268,7 @@ tbody tr:hover .row-actions{display:flex}
                 <svg viewBox="0 0 16 16" fill="none" style="width:15px;height:15px"><circle cx="5" cy="5" r="2" stroke="#e8220e" stroke-width="1.3"/><circle cx="11" cy="11" r="2" stroke="#e8220e" stroke-width="1.3"/><path d="M13 3L3 13" stroke="#e8220e" stroke-width="1.3" stroke-linecap="round"/></svg>
                 Discount code
               </div>
-              <input type="text" id="o-discount-code" placeholder="Enter discount code" oninput="applyDiscount()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input type="text" id="o-discount-code" placeholder="Enter discount code" oninput="applyDiscount()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               <span id="o-discount-val" style="font-size:13px;font-weight:700;min-width:85px;text-align:right"></span>
             </div>
             <div style="height:1.5px;background:#e4e4f0;margin-bottom:12px"></div>
@@ -1326,7 +1326,7 @@ tbody tr:hover .row-actions{display:flex}
               </div>
             </div>
           </div>
-          <button onclick="submitOrder()" style="width:100%;padding:15px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:16px;font-weight:900;font-family:'Rubik',sans-serif;cursor:pointer;letter-spacing:.03em" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">Submit</button>
+          <button onclick="submitOrder()" style="width:100%;padding:15px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:16px;font-weight:900;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;letter-spacing:.03em" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">Submit</button>
         </div>
       </div>
       </div>
@@ -1341,7 +1341,7 @@ tbody tr:hover .row-actions{display:flex}
   <div style="background:#fff;border-radius:18px;width:520px;max-width:95vw;max-height:88vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.2);animation:mIn .18s ease">
     <div style="padding:20px 24px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between">
       <div style="font-size:16px;font-weight:900;color:#18182b" id="vp-name">Product</div>
-      <button onclick="document.getElementById('m-view').classList.remove('open')" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif">×</button>
+      <button onclick="document.getElementById('m-view').classList.remove('open')" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
     </div>
     <div style="padding:22px 24px">
       <!-- Product image -->
@@ -1394,8 +1394,8 @@ tbody tr:hover .row-actions{display:flex}
       <div style="font-size:11px;color:#aaa;font-weight:600;margin-bottom:18px" id="vp-date"></div>
     </div>
     <div style="padding:16px 24px;border-top:1px solid #f0f0f6;display:flex;justify-content:flex-end;gap:10px">
-      <button onclick="document.getElementById('m-view').classList.remove('open')" style="padding:9px 18px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:Rubik,sans-serif">Close</button>
-      <button onclick="editFromView()" style="padding:9px 22px;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:Rubik,sans-serif">Edit Product</button>
+      <button onclick="document.getElementById('m-view').classList.remove('open')" style="padding:9px 18px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Close</button>
+      <button onclick="editFromView()" style="padding:9px 22px;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Edit Product</button>
     </div>
   </div>
 </div>
@@ -1433,21 +1433,21 @@ tbody tr:hover .row-actions{display:flex}
         <div style="font-size:20px;font-weight:900;color:#18182b;margin-bottom:3px">Transfer stock</div>
         <div style="font-size:12px;color:#9090b8;font-weight:500">Move units between warehouses. Inventory updates instantly.</div>
       </div>
-      <button onclick="document.getElementById('m-transfer').classList.remove('open')" style="width:32px;height:32px;border-radius:9px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif;flex-shrink:0">×</button>
+      <button onclick="document.getElementById('m-transfer').classList.remove('open')" style="width:32px;height:32px;border-radius:9px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;flex-shrink:0">×</button>
     </div>
     <div style="padding:0 26px 4px;flex-shrink:0">
       <!-- From / To -->
       <div style="display:grid;grid-template-columns:1fr 44px 1fr;align-items:end;gap:8px;margin-bottom:5px">
         <div>
           <div style="font-size:12px;font-weight:800;color:#18182b;margin-bottom:7px">From</div>
-          <select id="tr-from" onchange="updateTransferInfo()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
+          <select id="tr-from" onchange="updateTransferInfo()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
         </div>
         <div style="display:flex;align-items:center;justify-content:center;padding-bottom:4px">
           <svg viewBox="0 0 22 16" fill="none" style="width:20px;height:15px"><path d="M1 4h20M15 1l5 3-5 3M21 12H1M7 9l-5 3 5 3" stroke="#e8220e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div>
           <div style="font-size:12px;font-weight:800;color:#18182b;margin-bottom:7px">To</div>
-          <select id="tr-to" onchange="updateTransferInfo()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
+          <select id="tr-to" onchange="updateTransferInfo()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 44px 1fr;gap:8px;margin-bottom:14px">
@@ -1463,8 +1463,8 @@ tbody tr:hover .row-actions{display:flex}
       <!-- Add new item dashed box -->
       <div style="border:2px dashed #e8220e;border-radius:12px;padding:12px 14px;background:#fff8f6">
         <div style="display:flex;gap:8px;align-items:center">
-          <select id="tr-add-product" style="flex:1;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
-          <button onclick="trAddProduct()" style="display:inline-flex;align-items:center;gap:5px;padding:9px 16px;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;white-space:nowrap">
+          <select id="tr-add-product" style="flex:1;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
+          <button onclick="trAddProduct()" style="display:inline-flex;align-items:center;gap:5px;padding:9px 16px;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
             <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             Add New Item
           </button>
@@ -1472,8 +1472,8 @@ tbody tr:hover .row-actions{display:flex}
       </div>
     </div>
     <div style="padding:12px 26px 20px;border-top:1px solid #f0f0f6;display:flex;justify-content:flex-end;gap:10px;flex-shrink:0">
-      <button onclick="document.getElementById('m-transfer').classList.remove('open')" style="padding:11px 20px;border:1.5px solid #e4e4f0;border-radius:11px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">Cancel</button>
-      <button onclick="confirmTransfer()" style="padding:11px 22px;border:none;border-radius:11px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;gap:7px">
+      <button onclick="document.getElementById('m-transfer').classList.remove('open')" style="padding:11px 20px;border:1.5px solid #e4e4f0;border-radius:11px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
+      <button onclick="confirmTransfer()" style="padding:11px 22px;border:none;border-radius:11px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:7px">
         <svg viewBox="0 0 22 16" fill="none" style="width:15px;height:11px"><path d="M1 4h20M15 1l5 3-5 3M21 12H1M7 9l-5 3 5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Confirm transfer
       </button>
@@ -1490,7 +1490,7 @@ tbody tr:hover .row-actions{display:flex}
         <div style="font-size:22px;font-weight:900;color:#18182b;margin-bottom:4px">Add warehouse</div>
         <div style="font-size:13px;color:#9090b8;font-weight:500">Create a new stock location.</div>
       </div>
-      <button onclick="document.getElementById('m-addwh').classList.remove('open')" style="width:32px;height:32px;border-radius:9px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif">×</button>
+      <button onclick="document.getElementById('m-addwh').classList.remove('open')" style="width:32px;height:32px;border-radius:9px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
     </div>
     <div style="padding:0 26px 20px">
       <!-- On/Off toggle -->
@@ -1509,35 +1509,35 @@ tbody tr:hover .row-actions{display:flex}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px">
         <div>
           <div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:8px">Warehouse name</div>
-          <input id="wf-name" type="text" placeholder="e.g. North DC" oninput="wfAutoCode()" style="width:100%;padding:12px 14px;border:1.5px solid #e4e4f0;border-radius:12px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          <input id="wf-name" type="text" placeholder="e.g. North DC" oninput="wfAutoCode()" style="width:100%;padding:12px 14px;border:1.5px solid #e4e4f0;border-radius:12px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
         </div>
         <div>
           <div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:8px">Code</div>
-          <input id="wf-code" type="text" placeholder="NOR" maxlength="4" style="width:100%;padding:12px 14px;border:1.5px solid #e4e4f0;border-radius:12px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:700;color:#9090b8;background:#fff;outline:none;text-transform:uppercase;letter-spacing:.08em" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          <input id="wf-code" type="text" placeholder="NOR" maxlength="4" style="width:100%;padding:12px 14px;border:1.5px solid #e4e4f0;border-radius:12px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#9090b8;background:#fff;outline:none;text-transform:uppercase;letter-spacing:.08em" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
         </div>
       </div>
       <!-- Location full width -->
       <div style="margin-bottom:18px">
         <div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:8px">Location</div>
-        <input id="wf-loc" type="text" placeholder="City, State" style="width:100%;padding:12px 14px;border:1.5px solid #e4e4f0;border-radius:12px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+        <input id="wf-loc" type="text" placeholder="City, State" style="width:100%;padding:12px 14px;border:1.5px solid #e4e4f0;border-radius:12px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
       </div>
       <!-- Type + Capacity -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div>
           <div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:8px">Type</div>
-          <select id="wf-type" style="width:100%;padding:12px 14px;border:1.5px solid #e8220e;border-radius:12px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none">
+          <select id="wf-type" style="width:100%;padding:12px 14px;border:1.5px solid #e8220e;border-radius:12px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none">
             <option>Distribution</option><option>Fulfillment</option><option>Retail</option><option>Storage</option>
           </select>
         </div>
         <div>
           <div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:8px">Capacity (units)</div>
-          <input id="wf-cap" type="number" placeholder="10000" value="10000" style="width:100%;padding:12px 14px;border:1.5px solid #e4e4f0;border-radius:12px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          <input id="wf-cap" type="number" placeholder="10000" value="10000" style="width:100%;padding:12px 14px;border:1.5px solid #e4e4f0;border-radius:12px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
         </div>
       </div>
     </div>
     <div style="padding:14px 26px 22px;background:#f8f8fc;border-radius:0 0 20px 20px;display:flex;justify-content:flex-end;gap:10px">
-      <button onclick="document.getElementById('m-addwh').classList.remove('open')" style="padding:12px 22px;border:1.5px solid #e4e4f0;border-radius:12px;background:#fff;color:#7a7a9a;font-size:14px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">Cancel</button>
-      <button onclick="saveWarehouse()" style="padding:12px 22px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;gap:7px">
+      <button onclick="document.getElementById('m-addwh').classList.remove('open')" style="padding:12px 22px;border:1.5px solid #e4e4f0;border-radius:12px;background:#fff;color:#7a7a9a;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
+      <button onclick="saveWarehouse()" style="padding:12px 22px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:7px">
         <svg viewBox="0 0 12 12" fill="none" style="width:12px;height:12px"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Create warehouse
       </button>
@@ -1554,7 +1554,7 @@ tbody tr:hover .row-actions{display:flex}
         <div style="font-size:20px;font-weight:900;color:#18182b;margin-bottom:3px">Edit warehouse</div>
         <div style="font-size:12px;color:#9090b8;font-weight:500">Update warehouse details.</div>
       </div>
-      <button onclick="document.getElementById('m-editwh').classList.remove('open')" style="width:32px;height:32px;border-radius:9px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif">×</button>
+      <button onclick="document.getElementById('m-editwh').classList.remove('open')" style="width:32px;height:32px;border-radius:9px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
     </div>
     <div style="padding:0 26px 18px">
       <!-- On/Off toggle -->
@@ -1572,33 +1572,33 @@ tbody tr:hover .row-actions{display:flex}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
         <div>
           <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:7px">Warehouse name</div>
-          <input id="ef-name" type="text" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          <input id="ef-name" type="text" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
         </div>
         <div>
           <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:7px">Code</div>
-          <input id="ef-code" type="text" maxlength="4" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-transform:uppercase;letter-spacing:.08em" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          <input id="ef-code" type="text" maxlength="4" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-transform:uppercase;letter-spacing:.08em" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
         </div>
       </div>
       <div style="margin-bottom:14px">
         <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:7px">Location</div>
-        <input id="ef-loc" type="text" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+        <input id="ef-loc" type="text" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <div>
           <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:7px">Manager</div>
-          <input id="ef-mgr" type="text" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          <input id="ef-mgr" type="text" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
         </div>
         <div>
           <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:7px">Type</div>
-          <select id="ef-type" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          <select id="ef-type" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             <option>Distribution</option><option>Fulfillment</option><option>Retail</option><option>Storage</option>
           </select>
         </div>
       </div>
     </div>
     <div style="padding:12px 26px 20px;background:#f8f8fc;border-radius:0 0 20px 20px;display:flex;justify-content:flex-end;gap:10px">
-      <button onclick="document.getElementById('m-editwh').classList.remove('open')" style="padding:11px 20px;border:1.5px solid #e4e4f0;border-radius:11px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">Cancel</button>
-      <button onclick="saveEditWarehouse()" style="padding:11px 22px;border:none;border-radius:11px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif">Save changes</button>
+      <button onclick="document.getElementById('m-editwh').classList.remove('open')" style="padding:11px 20px;border:1.5px solid #e4e4f0;border-radius:11px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
+      <button onclick="saveEditWarehouse()" style="padding:11px 22px;border:none;border-radius:11px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Save changes</button>
     </div>
   </div>
 </div>
@@ -1610,7 +1610,7 @@ tbody tr:hover .row-actions{display:flex}
         <div style="font-size:19px;font-weight:900;color:#18182b;margin-bottom:3px">Refill stock</div>
         <div style="font-size:12px;color:#9090b8;font-weight:500">Add new stock units to this product.</div>
       </div>
-      <button onclick="document.getElementById('m-refill').classList.remove('open')" style="width:30px;height:30px;border-radius:8px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif">×</button>
+      <button onclick="document.getElementById('m-refill').classList.remove('open')" style="width:30px;height:30px;border-radius:8px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
     </div>
     <div style="padding:0 26px 22px">
 
@@ -1646,16 +1646,16 @@ tbody tr:hover .row-actions{display:flex}
         <!-- Warehouse -->
         <div style="margin-bottom:14px">
           <label style="font-size:12px;font-weight:700;color:#18182b;display:block;margin-bottom:7px">Add to warehouse</label>
-          <select id="rf-warehouse" style="width:100%;padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
+          <select id="rf-warehouse" style="width:100%;padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
         </div>
 
         <!-- Quantity -->
         <div style="margin-bottom:14px">
           <label style="font-size:12px;font-weight:700;color:#18182b;display:block;margin-bottom:7px">Quantity to add</label>
           <div style="display:flex;align-items:center;gap:8px">
-            <button onclick="rfQtyAdj(-1)" style="width:36px;height:36px;border-radius:9px;border:1.5px solid #e4e4f0;background:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:Rubik,sans-serif;font-weight:700">−</button>
-            <input type="number" id="rf-qty" value="1" min="1" style="width:70px;text-align:center;padding:9px 8px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:15px;font-family:Rubik,sans-serif;font-weight:800;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-            <button onclick="rfQtyAdj(1)" style="width:36px;height:36px;border-radius:9px;border:1.5px solid #e4e4f0;background:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:Rubik,sans-serif;font-weight:700">+</button>
+            <button onclick="rfQtyAdj(-1)" style="width:36px;height:36px;border-radius:9px;border:1.5px solid #e4e4f0;background:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700">−</button>
+            <input type="number" id="rf-qty" value="1" min="1" style="width:70px;text-align:center;padding:9px 8px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+            <button onclick="rfQtyAdj(1)" style="width:36px;height:36px;border-radius:9px;border:1.5px solid #e4e4f0;background:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700">+</button>
           </div>
         </div>
 
@@ -1665,30 +1665,30 @@ tbody tr:hover .row-actions{display:flex}
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
               <label style="font-size:12px;font-weight:700;color:#18182b">Purchase price</label>
-              <button id="rf-pp-lock-btn" onclick="rfToggleLock('pp')" title="Lock price" style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:6px;background:#f5f5fa;font-size:10px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Rubik,sans-serif">
+              <button id="rf-pp-lock-btn" onclick="rfToggleLock('pp')" title="Lock price" style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:6px;background:#f5f5fa;font-size:10px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif">
                 <svg viewBox="0 0 10 12" fill="none" style="width:9px;height:10px"><rect x="2" y="5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
                 Same
               </button>
             </div>
-            <input type="number" id="rf-pp" placeholder="0" style="width:100%;padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+            <input type="number" id="rf-pp" placeholder="0" style="width:100%;padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
           </div>
           <!-- Selling price -->
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
               <label style="font-size:12px;font-weight:700;color:#18182b">Selling price</label>
-              <button id="rf-sp-lock-btn" onclick="rfToggleLock('sp')" title="Lock price" style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:6px;background:#f5f5fa;font-size:10px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Rubik,sans-serif">
+              <button id="rf-sp-lock-btn" onclick="rfToggleLock('sp')" title="Lock price" style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:6px;background:#f5f5fa;font-size:10px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif">
                 <svg viewBox="0 0 10 12" fill="none" style="width:9px;height:10px"><rect x="2" y="5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 5V3.5a2 2 0 014 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
                 Same
               </button>
             </div>
-            <input type="number" id="rf-sp" placeholder="0" style="width:100%;padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+            <input type="number" id="rf-sp" placeholder="0" style="width:100%;padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
           </div>
         </div>
       </div>
     </div>
     <div style="padding:14px 26px 20px;border-top:1px solid #f0f0f6;display:flex;justify-content:flex-end;gap:10px">
-      <button onclick="document.getElementById('m-refill').classList.remove('open')" style="padding:10px 20px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">Cancel</button>
-      <button onclick="confirmRefill()" style="padding:10px 22px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;gap:7px">
+      <button onclick="document.getElementById('m-refill').classList.remove('open')" style="padding:10px 20px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
+      <button onclick="confirmRefill()" style="padding:10px 22px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:7px">
         <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Add Stock
       </button>
@@ -1703,7 +1703,7 @@ tbody tr:hover .row-actions{display:flex}
       <div style="font-size:18px;font-weight:900;color:#18182b;margin-bottom:2px">Stock History</div>
       <div id="sh-subtitle" style="font-size:12px;color:#9090b8;font-weight:500">All stock movements</div>
     </div>
-    <button onclick="closeStockHistory()" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif">×</button>
+    <button onclick="closeStockHistory()" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
   </div>
   <div style="flex:1;overflow-y:auto;padding:14px 16px" id="sh-list"></div>
 </div>
@@ -1716,7 +1716,7 @@ tbody tr:hover .row-actions{display:flex}
       <div style="font-size:18px;font-weight:900;color:#18182b;margin-bottom:2px">Transfers</div>
       <div id="tp-subtitle" style="font-size:12px;color:#9090b8;font-weight:500">0 in transit · 0 total</div>
     </div>
-    <button onclick="closeTransfersPanel()" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif">×</button>
+    <button onclick="closeTransfersPanel()" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
   </div>
   <div style="flex:1;overflow-y:auto;padding:14px 16px" id="tp-list"></div>
 </div>
@@ -1738,12 +1738,12 @@ tbody tr:hover .row-actions{display:flex}
           <button onclick="drNavMonth(-1)" style="width:30px;height:30px;border-radius:8px;border:1.5px solid #e4e4f0;background:#fff;cursor:pointer;font-size:16px;color:#18182b;display:flex;align-items:center;justify-content:center">&lsaquo;</button>
           <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:24px">
             <div style="display:flex;align-items:center;gap:6px;justify-content:center">
-              <select id="dr-m1" onchange="drRender()" style="border:none;font-size:14px;font-weight:700;color:#18182b;cursor:pointer;outline:none;background:transparent;font-family:'Rubik',sans-serif"></select>
-              <select id="dr-y1" onchange="drRender()" style="border:none;font-size:14px;font-weight:700;color:#18182b;cursor:pointer;outline:none;background:transparent;font-family:'Rubik',sans-serif"></select>
+              <select id="dr-m1" onchange="drRender()" style="border:none;font-size:14px;font-weight:700;color:#18182b;cursor:pointer;outline:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif"></select>
+              <select id="dr-y1" onchange="drRender()" style="border:none;font-size:14px;font-weight:700;color:#18182b;cursor:pointer;outline:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif"></select>
             </div>
             <div style="display:flex;align-items:center;gap:6px;justify-content:center">
-              <select id="dr-m2" onchange="drRender()" style="border:none;font-size:14px;font-weight:700;color:#18182b;cursor:pointer;outline:none;background:transparent;font-family:'Rubik',sans-serif"></select>
-              <select id="dr-y2" onchange="drRender()" style="border:none;font-size:14px;font-weight:700;color:#18182b;cursor:pointer;outline:none;background:transparent;font-family:'Rubik',sans-serif"></select>
+              <select id="dr-m2" onchange="drRender()" style="border:none;font-size:14px;font-weight:700;color:#18182b;cursor:pointer;outline:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif"></select>
+              <select id="dr-y2" onchange="drRender()" style="border:none;font-size:14px;font-weight:700;color:#18182b;cursor:pointer;outline:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif"></select>
             </div>
           </div>
           <button onclick="drNavMonth(1)" style="width:30px;height:30px;border-radius:8px;border:1.5px solid #e4e4f0;background:#fff;cursor:pointer;font-size:16px;color:#18182b;display:flex;align-items:center;justify-content:center">&rsaquo;</button>
@@ -1760,8 +1760,8 @@ tbody tr:hover .row-actions{display:flex}
         </div>
         <div style="font-size:11px;color:#aaa;font-weight:500;margin-bottom:14px">Dates are shown in Colombo Time</div>
         <div style="display:flex;justify-content:flex-end;gap:10px">
-          <button onclick="document.getElementById('m-daterange').classList.remove('open')" style="padding:10px 22px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">Cancel</button>
-          <button onclick="drApply()" style="padding:10px 22px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif">Update</button>
+          <button onclick="document.getElementById('m-daterange').classList.remove('open')" style="padding:10px 22px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
+          <button onclick="drApply()" style="padding:10px 22px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Update</button>
         </div>
       </div>
     </div>
@@ -1773,7 +1773,7 @@ tbody tr:hover .row-actions{display:flex}
   <div style="background:#fff;border-radius:18px;width:560px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 48px rgba(0,0,0,.15);animation:mIn .18s ease">
     <div style="padding:20px 24px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between">
       <div style="font-size:17px;font-weight:900;color:#18182b">Order Details</div>
-      <button onclick="document.getElementById('m-vieworder').classList.remove('open')" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif">×</button>
+      <button onclick="document.getElementById('m-vieworder').classList.remove('open')" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
     </div>
     <div style="padding:20px 24px" id="m-vieworder-body"></div>
   </div>
@@ -1784,12 +1784,12 @@ tbody tr:hover .row-actions{display:flex}
   <div style="background:#fff;border-radius:16px;width:400px;max-width:95vw;box-shadow:0 8px 48px rgba(0,0,0,.15);animation:mIn .18s ease">
     <div style="padding:20px 22px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between">
       <div style="font-size:16px;font-weight:900;color:#18182b">Change status</div>
-      <button onclick="document.getElementById('m-statuschange').classList.remove('open')" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif">×</button>
+      <button onclick="document.getElementById('m-statuschange').classList.remove('open')" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
     </div>
     <div style="padding:20px 22px">
       <input type="hidden" id="sc-order-id">
       <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:8px">Select new status</div>
-      <select id="sc-status-select" onchange="scCheckReason()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none;margin-bottom:10px" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+      <select id="sc-status-select" onchange="scCheckReason()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none;margin-bottom:10px" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
       </select>
       <div id="sc-status-desc" style="font-size:12px;color:#9090b8;margin-bottom:14px"></div>
       <!-- Reason box — only shown for Cancelled, Returned, Refunded -->
@@ -1798,12 +1798,12 @@ tbody tr:hover .row-actions{display:flex}
           <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M6 4v3M6 8.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
           Reason required
         </div>
-        <textarea id="sc-reason" rows="3" placeholder="Enter reason for this status change…" style="width:100%;padding:10px 12px;border:1.5px solid #e8220e;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff8f6;outline:none;resize:vertical;line-height:1.5" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e8220e'"></textarea>
+        <textarea id="sc-reason" rows="3" placeholder="Enter reason for this status change…" style="width:100%;padding:10px 12px;border:1.5px solid #e8220e;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff8f6;outline:none;resize:vertical;line-height:1.5" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e8220e'"></textarea>
       </div>
     </div>
     <div style="padding:12px 22px 20px;border-top:1px solid #f0f0f6;display:flex;justify-content:flex-end;gap:10px">
-      <button onclick="document.getElementById('m-statuschange').classList.remove('open')" style="padding:10px 18px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">Cancel</button>
-      <button onclick="applyStatusChange()" style="padding:10px 20px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif">Confirm</button>
+      <button onclick="document.getElementById('m-statuschange').classList.remove('open')" style="padding:10px 18px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
+      <button onclick="applyStatusChange()" style="padding:10px 20px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Confirm</button>
     </div>
   </div>
 </div>
@@ -2276,12 +2276,12 @@ function renderOrderItems(){
 
     const pricePills=hasSiblings
       ?siblings.map(s=>
-        "<button onclick='swapOrderVariant("+item.pid+","+s.id+")' style='padding:3px 9px;border-radius:6px;font-size:10px;font-weight:800;cursor:pointer;font-family:Rubik,sans-serif;white-space:nowrap;border:1.5px solid "+(s.id===item.pid?"#e8220e":"#e4e4f0")+";background:"+(s.id===item.pid?"#fff8f6":"#fff")+";color:"+(s.id===item.pid?"#e8220e":"#9090b8")+"'>"+s.code+" · "+L(s.price)+"</button>"
+        "<button onclick='swapOrderVariant("+item.pid+","+s.id+")' style='padding:3px 9px;border-radius:6px;font-size:10px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;border:1.5px solid "+(s.id===item.pid?"#e8220e":"#e4e4f0")+";background:"+(s.id===item.pid?"#fff8f6":"#fff")+";color:"+(s.id===item.pid?"#e8220e":"#9090b8")+"'>"+s.code+" · "+L(s.price)+"</button>"
       ).join("")
       :"";
 
     return"<div style='display:flex;align-items:center;gap:10px'>"+
-      "<button onclick='removeOrderItem("+item.pid+")' style='width:24px;height:24px;border-radius:50%;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:Rubik,sans-serif;line-height:1'>×</button>"+
+      "<button onclick='removeOrderItem("+item.pid+")' style='width:24px;height:24px;border-radius:50%;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif;line-height:1'>×</button>"+
       "<div style='flex:1;border:1.5px solid "+(hasSiblings?"#e8220e":"#e4e4f0")+";border-radius:10px;padding:8px 12px;background:#fff'>"+
         "<div style='display:flex;align-items:center;gap:10px'>"+
           "<div style='width:38px;height:38px;border-radius:8px;overflow:hidden;border:1px solid #e4e4f0;background:#f5f5fa;flex-shrink:0'><img src='"+(p.images&&p.images[0]?p.images[0]:PLACEHOLDER)+"' style='width:100%;height:100%;object-fit:cover'></div>"+
@@ -2290,9 +2290,9 @@ function renderOrderItems(){
             "</div>"+
             "<div style='font-size:11px;color:#aaa;font-weight:600'>SKU: "+(p.code||"—")+"</div>"+
           "</div>"+
-          "<button onclick='changeQty("+item.pid+",-1)' style='width:26px;height:26px;border-radius:50%;border:1.5px solid #e4e4f0;background:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:Rubik,sans-serif;font-weight:700'>−</button>"+
-          "<input type='number' value='"+item.qty+"' min='1' onchange='setQty("+item.pid+",this.value)' style='width:40px;text-align:center;border:1.5px solid #e4e4f0;border-radius:8px;padding:4px;font-size:13px;font-family:Rubik,sans-serif;font-weight:800;color:#18182b;background:#fff;outline:none'>"+
-          "<button onclick='changeQty("+item.pid+",1)' style='width:26px;height:26px;border-radius:50%;border:1.5px solid #e4e4f0;background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:Rubik,sans-serif;font-weight:700'>+</button>"+
+          "<button onclick='changeQty("+item.pid+",-1)' style='width:26px;height:26px;border-radius:50%;border:1.5px solid #e4e4f0;background:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700'>−</button>"+
+          "<input type='number' value='"+item.qty+"' min='1' onchange='setQty("+item.pid+",this.value)' style='width:40px;text-align:center;border:1.5px solid #e4e4f0;border-radius:8px;padding:4px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:#18182b;background:#fff;outline:none'>"+
+          "<button onclick='changeQty("+item.pid+",1)' style='width:26px;height:26px;border-radius:50%;border:1.5px solid #e4e4f0;background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700'>+</button>"+
         "</div>"+
         (hasSiblings
           ?"<div style='display:flex;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f6;flex-wrap:wrap'>"+
@@ -2303,10 +2303,10 @@ function renderOrderItems(){
           :"<div style='display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f6'>"+
               "<span style='font-size:11px;color:#aaa;font-weight:600'>Unit price</span>"+
               (priceEditing
-                ?"<input type='number' value='"+usePrice+"' min='0' oninput='setCustomPrice("+item.pid+",this.value)' onblur='renderOrderItems()' style='width:100px;padding:4px 8px;border:1.5px solid #e8220e;border-radius:7px;font-size:13px;font-family:Rubik,sans-serif;font-weight:700;color:#e8220e;background:#fff8f6;outline:none'>"
-                  +"<button onclick='setCustomPrice("+item.pid+",null);renderOrderItems()' style='padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#f5f5fa;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Rubik,sans-serif'>Reset</button>"
+                ?"<input type='number' value='"+usePrice+"' min='0' oninput='setCustomPrice("+item.pid+",this.value)' onblur='renderOrderItems()' style='width:100px;padding:4px 8px;border:1.5px solid #e8220e;border-radius:7px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#e8220e;background:#fff8f6;outline:none'>"
+                  +"<button onclick='setCustomPrice("+item.pid+",null);renderOrderItems()' style='padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#f5f5fa;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif'>Reset</button>"
                 :"<span style='font-size:13px;font-weight:700;color:#18182b'>"+L(basePrice)+"</span>"
-                  +"<button onclick='orderItems.find(x=>x.pid==="+item.pid+").customPrice="+basePrice+";renderOrderItems()' style='padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#f5f5fa;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Rubik,sans-serif'>Edit</button>"
+                  +"<button onclick='orderItems.find(x=>x.pid==="+item.pid+").customPrice="+basePrice+";renderOrderItems()' style='padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#f5f5fa;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif'>Edit</button>"
               )+
               "<span style='margin-left:auto;font-size:13px;font-weight:800;color:#18182b'>"+L(lineTotal)+"</span>"+
             "</div>"
@@ -2466,11 +2466,11 @@ function renderWhMain(){
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
       <div style="font-size:13px;color:#9090b8;font-weight:500">${warehouses.length} locations · ${N(totalUnits)} total units</div>
       <div style="display:flex;gap:10px">
-        <button onclick="openTransferModal()" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">
+        <button onclick="openTransferModal()" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
           <svg viewBox="0 0 16 14" fill="none" style="width:14px;height:12px"><path d="M1 4h14M11 1l3 3-3 3M15 10H1M5 7l-3 3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Transfer stock
         </button>
-        <button onclick="document.getElementById('m-addwh').classList.add('open')" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">
+        <button onclick="document.getElementById('m-addwh').classList.add('open')" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
           <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Add warehouse
         </button>
@@ -2598,7 +2598,7 @@ function renderWhDetail(wid){
   });
 
   document.getElementById('wh-detail-view').innerHTML=`
-    <button onclick="whView=null;renderWhMain()" style="display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-size:13px;font-weight:700;color:#9090b8;font-family:Rubik,sans-serif;padding:0;margin-bottom:14px">
+    <button onclick="whView=null;renderWhMain()" style="display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-size:13px;font-weight:700;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif;padding:0;margin-bottom:14px">
       <svg viewBox="0 0 10 10" fill="none" style="width:10px;height:10px"><path d="M7 2L3 5l4 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       All warehouses
     </button>
@@ -2629,11 +2629,11 @@ function renderWhDetail(wid){
             <div style="flex:1;height:4px;background:#f0f0f6;border-radius:4px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#ff5a30,#e8220e);border-radius:4px;width:${pct}%"></div></div>
             <span style="font-size:11px;font-weight:700;color:#9090b8">${pct}%</span>
           </div>
-          <button onclick="openEditWh('${wid}')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#18182b;font-size:12px;font-weight:700;cursor:pointer;font-family:Rubik,sans-serif">
+          <button onclick="openEditWh('${wid}')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#18182b;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
             <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M1.5 9.5l2-2 5.5-5.5 1.5 1.5-5.5 5.5-2 .5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
             Edit
           </button>
-          <button onclick="openTransferFor('${wid}')" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:Rubik,sans-serif;white-space:nowrap">
+          <button onclick="openTransferFor('${wid}')" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
             <svg viewBox="0 0 16 14" fill="none" style="width:13px;height:11px"><path d="M1 4h14M11 1l3 3-3 3M15 10H1M5 7l-3 3 3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Transfer
           </button>
@@ -2652,7 +2652,7 @@ function renderWhDetail(wid){
         Low stock only
       </label>
       <!-- Sort by Name -->
-      <button onclick="whdSort='name';whdSortDir=whdSortDir===1?-1:1;renderWhDetail('${wid}')" style="display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border:1.5px solid ${whdSort==='name'?'#e8220e':'#e4e4f0'};border-radius:9px;background:${whdSort==='name'?'#fff8f6':'#fff'};font-size:12px;font-weight:700;cursor:pointer;font-family:Rubik,sans-serif;color:${whdSort==='name'?'#e8220e':'#18182b'}">
+      <button onclick="whdSort='name';whdSortDir=whdSortDir===1?-1:1;renderWhDetail('${wid}')" style="display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border:1.5px solid ${whdSort==='name'?'#e8220e':'#e4e4f0'};border-radius:9px;background:${whdSort==='name'?'#fff8f6':'#fff'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;color:${whdSort==='name'?'#e8220e':'#18182b'}">
         Name ${whdSort==='name'?(whdSortDir===1?'A→Z':'Z→A'):'A→Z'}
       </button>
       <span style="font-size:12px;color:#9090b8;font-weight:600;margin-left:auto">${filtered.length} items</span>
@@ -2698,7 +2698,7 @@ function renderWhDetail(wid){
                 <td style="font-size:12px;font-weight:700">${svSP}</td>
                 <td style="font-size:12px;color:#9090b8">${p.dt||'—'}</td>
                 <td><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;background:${bg};color:${clr}"><span style="width:5px;height:5px;border-radius:50%;background:${dot};display:inline-block"></span>${txt}</span></td>
-                <td><button onclick="openTransferFor('${wid}',${p.id})" style="display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:Rubik,sans-serif;color:#18182b;white-space:nowrap">
+                <td><button onclick="openTransferFor('${wid}',${p.id})" style="display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;white-space:nowrap">
                   <svg viewBox="0 0 12 10" fill="none" style="width:10px;height:8px"><path d="M1 3h10M8 1l2 2-2 2M11 7H1M4 5l-2 2 2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   Transfer
                 </button></td>
@@ -2805,7 +2805,7 @@ function renderTrItems(){
     const avail=p.stock[from]||0;
     const lineTotal=p.price*item.qty;
     return`<div style="display:flex;align-items:center;gap:10px">
-      <button onclick="trItems.splice(${i},1);renderTrItems()" style="width:22px;height:22px;border-radius:50%;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:Rubik,sans-serif;line-height:1">×</button>
+      <button onclick="trItems.splice(${i},1);renderTrItems()" style="width:22px;height:22px;border-radius:50%;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif;line-height:1">×</button>
       <div style="flex:1;border:1.5px solid #e4e4f0;border-radius:11px;padding:10px 12px;background:#fff">
         <div style="display:flex;align-items:center;gap:10px">
           <div style="width:38px;height:38px;border-radius:8px;overflow:hidden;border:1px solid #e4e4f0;background:#f5f5fa;flex-shrink:0"><img src="${(p.images&&p.images[0]?p.images[0]:PLACEHOLDER)}" style="width:100%;height:100%;object-fit:cover"></div>
@@ -2813,15 +2813,15 @@ function renderTrItems(){
             <div style="font-size:13px;font-weight:700;color:#18182b">${p.name}</div>
             <div style="font-size:11px;color:#9090b8;font-weight:600">SKU: ${p.code||'—'}</div>
           </div>
-          <button onclick="trItems[${i}].qty=Math.max(1,trItems[${i}].qty-1);renderTrItems()" style="width:28px;height:28px;border-radius:8px;border:1.5px solid #e4e4f0;background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:Rubik,sans-serif;font-weight:700">−</button>
-          <input type="number" value="${item.qty}" min="1" max="${avail}" onchange="trItems[${i}].qty=Math.max(1,Math.min(parseInt(this.value)||1,${avail}))" style="width:44px;text-align:center;border:1.5px solid #e4e4f0;border-radius:8px;padding:4px;font-size:13px;font-family:Rubik,sans-serif;font-weight:800;color:#18182b;background:#fff;outline:none">
-          <button onclick="trItems[${i}].qty=Math.min(trItems[${i}].qty+1,${avail});renderTrItems()" style="width:28px;height:28px;border-radius:8px;border:1.5px solid #e4e4f0;background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:Rubik,sans-serif;font-weight:700">+</button>
+          <button onclick="trItems[${i}].qty=Math.max(1,trItems[${i}].qty-1);renderTrItems()" style="width:28px;height:28px;border-radius:8px;border:1.5px solid #e4e4f0;background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700">−</button>
+          <input type="number" value="${item.qty}" min="1" max="${avail}" onchange="trItems[${i}].qty=Math.max(1,Math.min(parseInt(this.value)||1,${avail}))" style="width:44px;text-align:center;border:1.5px solid #e4e4f0;border-radius:8px;padding:4px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:#18182b;background:#fff;outline:none">
+          <button onclick="trItems[${i}].qty=Math.min(trItems[${i}].qty+1,${avail});renderTrItems()" style="width:28px;height:28px;border-radius:8px;border:1.5px solid #e4e4f0;background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700">+</button>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:7px;border-top:1px solid #f5f5fa">
           <span style="font-size:11px;color:#9090b8;font-weight:600">Unit price</span>
           <span style="font-size:12px;font-weight:700;color:#18182b">${L(p.price)}</span>
-          <button onclick="const el=this.nextElementSibling;el.style.display=el.style.display==='none'?'inline-flex':'none';this.textContent=el.style.display==='none'?'✏ Edit':'Done'" style="padding:2px 8px;border:1.5px solid #e4e4f0;border-radius:6px;background:#f5f5fa;font-size:10px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Rubik,sans-serif">✏ Edit</button>
-          <input type="number" style="display:none;width:90px;padding:3px 8px;border:1.5px solid #e8220e;border-radius:7px;font-size:12px;font-family:Rubik,sans-serif;font-weight:700;color:#e8220e;background:#fff8f6;outline:none" value="${item.customPrice!=null?item.customPrice:p.price}" onchange="trItems[${i}].customPrice=parseFloat(this.value)||null">
+          <button onclick="const el=this.nextElementSibling;el.style.display=el.style.display==='none'?'inline-flex':'none';this.textContent=el.style.display==='none'?'✏ Edit':'Done'" style="padding:2px 8px;border:1.5px solid #e4e4f0;border-radius:6px;background:#f5f5fa;font-size:10px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif">✏ Edit</button>
+          <input type="number" style="display:none;width:90px;padding:3px 8px;border:1.5px solid #e8220e;border-radius:7px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#e8220e;background:#fff8f6;outline:none" value="${item.customPrice!=null?item.customPrice:p.price}" onchange="trItems[${i}].customPrice=parseFloat(this.value)||null">
           <span style="margin-left:auto;font-size:13px;font-weight:800;color:#18182b">${L(lineTotal)}</span>
         </div>
       </div>
@@ -3171,11 +3171,11 @@ function renderOrdersPage(){
     <!-- Top bar: date range filter for cards -->
     <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-bottom:12px">
       <span style="font-size:12px;color:#9090b8;font-weight:600">${moDateFilter ? drFormatDate(moDateFilter.from)+' — '+drFormatDate(moDateFilter.to) : 'All time'}</span>
-      <button onclick="openDateRange()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1.5px solid ${moDateFilter?'#e8220e':'#e4e4f0'};border-radius:10px;background:${moDateFilter?'#fff8f6':'#fff'};color:${moDateFilter?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif;white-space:nowrap">
+      <button onclick="openDateRange()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1.5px solid ${moDateFilter?'#e8220e':'#e4e4f0'};border-radius:10px;background:${moDateFilter?'#fff8f6':'#fff'};color:${moDateFilter?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
         <svg viewBox="0 0 16 16" fill="none" style="width:13px;height:13px"><rect x="1.5" y="2.5" width="13" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 6h13M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         ${moDateFilter ? 'Change range' : 'Date range'}
       </button>
-      ${moDateFilter ? `<button onclick="moDateFilter=null;renderOrdersPage()" style="padding:8px 12px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#e8220e;font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">✕ Clear</button>` : ''}
+      ${moDateFilter ? `<button onclick="moDateFilter=null;renderOrdersPage()" style="padding:8px 12px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#e8220e;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">✕ Clear</button>` : ''}
     </div>
 
     <!-- Status stat cards — 7 statuses -->
@@ -3218,12 +3218,12 @@ function renderOrdersPage(){
         <svg class="search-icon" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <input class="search-input" type="text" id="mo-search" placeholder="Search orders…" value="${moSearch}" oninput="moSearch=this.value;renderOrdersPage()">
       </div>
-      <button onclick="openDateRange()" style="display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1.5px solid ${moDateFilter?'#e8220e':'#e4e4f0'};border-radius:10px;background:${moDateFilter?'#fff8f6':'#fff'};color:${moDateFilter?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif;white-space:nowrap">
+      <button onclick="openDateRange()" style="display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border:1.5px solid ${moDateFilter?'#e8220e':'#e4e4f0'};border-radius:10px;background:${moDateFilter?'#fff8f6':'#fff'};color:${moDateFilter?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
         <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px"><rect x="1.5" y="2.5" width="13" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 6h13M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         ${moDateFilter ? drFormatDate(moDateFilter.from)+' — '+drFormatDate(moDateFilter.to) : 'Date range'}
       </button>
-      ${moDateFilter?`<button onclick="moDateFilter=null;renderOrdersPage()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#e8220e;font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">✕ Clear</button>`:''}
-      ${moStatusFilter!=='all'?`<button onclick="moStatusFilter='all';renderOrdersPage()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#e8220e;font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">✕ ${ORDER_STATUSES.find(s=>s.key===moStatusFilter)?.label}</button>`:''}
+      ${moDateFilter?`<button onclick="moDateFilter=null;renderOrdersPage()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#e8220e;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">✕ Clear</button>`:''}
+      ${moStatusFilter!=='all'?`<button onclick="moStatusFilter='all';renderOrdersPage()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#e8220e;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">✕ ${ORDER_STATUSES.find(s=>s.key===moStatusFilter)?.label}</button>`:''}
     </div>
 
     <!-- Table -->
@@ -3266,7 +3266,7 @@ function renderOrdersPage(){
                 <td style="font-size:12px;font-weight:700;color:#e8220e">${o.code}</td>
                 <td style="font-size:12px;color:#9090b8;white-space:nowrap">${o.date}<br><span style="font-size:11px">${o.time||''}</span></td>
                 <td>
-                  <button onclick="openStatusChange('${o.id}')" title="Click to change status" style="display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;background:${st.bg};color:${st.color};white-space:nowrap;border:1.5px solid transparent;cursor:pointer;font-family:'Rubik',sans-serif;transition:border-color .15s" onmouseenter="this.style.borderColor='${st.color}'" onmouseleave="this.style.borderColor='transparent'">
+                  <button onclick="openStatusChange('${o.id}')" title="Click to change status" style="display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;background:${st.bg};color:${st.color};white-space:nowrap;border:1.5px solid transparent;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s" onmouseenter="this.style.borderColor='${st.color}'" onmouseleave="this.style.borderColor='transparent'">
                     <span style="width:6px;height:6px;border-radius:50%;background:${st.color};display:inline-block"></span>${st.label}
                     <svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px;opacity:.6"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
@@ -3374,7 +3374,7 @@ function openViewOrder(id){
     </div>
     <div style="display:flex;gap:10px;margin-top:16px">
       ${o.status==='processing'?`
-      <button onclick="openEditOrder('${o.id}');document.getElementById('m-vieworder').classList.remove('open')" style="flex:1;padding:11px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
+      <button onclick="openEditOrder('${o.id}');document.getElementById('m-vieworder').classList.remove('open')" style="flex:1;padding:11px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
         <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M1.5 9.5l2-2 5.5-5.5 1.5 1.5-5.5 5.5-2 .5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
         Edit Order
       </button>` : `<div style="font-size:12px;color:#aaa;font-weight:500;text-align:center;width:100%;padding:4px 0">Edit are only available for Processing orders.</div>`}
@@ -3596,7 +3596,7 @@ function drBuildCal(yr,mo){
     const isFrom=drSelFrom&&cur.getTime()===drSelFrom.getTime();
     const isTo=drSelTo&&cur.getTime()===drSelTo.getTime();
     const inRange=drSelFrom&&drSelTo&&cur>drSelFrom&&cur<drSelTo;
-    let style='width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;font-size:13px;font-weight:600;margin:1px auto;display:flex;align-items:center;justify-content:center;font-family:Rubik,sans-serif;transition:all .12s;';
+    let style='width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;font-size:13px;font-weight:600;margin:1px auto;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;transition:all .12s;';
     if(isFrom||isTo) style+='background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-weight:800;';
     else if(inRange) style+='background:#fff0ec;color:#e8220e;';
     else if(isToday) style+='border:2px solid #e8220e;color:#e8220e;background:#fff;';
@@ -3695,7 +3695,7 @@ function renderProfilePage(){
           <div>
             <div style="font-size:20px;font-weight:900;color:#18182b">${currentUser.name}</div>
             <div style="font-size:13px;color:#9090b8;font-weight:500;margin-top:2px;text-transform:capitalize">${currentUser.role}</div>
-            <button onclick="document.getElementById('avatar-input').click()" style="margin-top:8px;padding:5px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Rubik',sans-serif">
+            <button onclick="document.getElementById('avatar-input').click()" style="margin-top:8px;padding:5px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif">
               Change photo
             </button>
           </div>
@@ -3708,47 +3708,47 @@ function renderProfilePage(){
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Business name</label>
             <div style="position:relative">
               <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 4V3a3 3 0 016 0v1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <input id="pf-business" value="${pr.businessName||''}" placeholder="Your business name" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="pf-business" value="${pr.businessName||''}" placeholder="Your business name" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
           </div>
           <div style="margin-bottom:12px">
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Username</label>
             <div style="position:relative">
               <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <input value="${currentUser.username}" disabled style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#9090b8;background:#f8f8fc;outline:none">
+              <input value="${currentUser.username}" disabled style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#9090b8;background:#f8f8fc;outline:none">
             </div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">First name</label>
-              <input id="pf-firstname" value="${pr.firstName}" placeholder="First name" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="pf-firstname" value="${pr.firstName}" placeholder="First name" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Last name</label>
-              <input id="pf-lastname" value="${pr.lastName}" placeholder="Last name" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="pf-lastname" value="${pr.lastName}" placeholder="Last name" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
           </div>
           <div style="margin-bottom:12px">
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Email</label>
             <div style="position:relative">
               <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 6l7 4 7-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <input id="pf-email" value="${pr.email}" placeholder="Email" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="pf-email" value="${pr.email}" placeholder="Email" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">User role</label>
-              <input value="${currentUser.role.charAt(0).toUpperCase()+currentUser.role.slice(1)}" disabled style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#9090b8;background:#f8f8fc;outline:none">
+              <input value="${currentUser.role.charAt(0).toUpperCase()+currentUser.role.slice(1)}" disabled style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#9090b8;background:#f8f8fc;outline:none">
             </div>
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Phone number (Optional)</label>
               <div style="position:relative">
                 <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M3.5 2h3l1 3-1.5 1.5a8 8 0 004.5 4.5L12 9.5l3 1v3A1.5 1.5 0 0113.5 15C6.5 15 1 9.5 1 2.5A1.5 1.5 0 012.5 1H5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <input id="pf-phone" value="${pr.phone}" placeholder="Phone number" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                <input id="pf-phone" value="${pr.phone}" placeholder="Phone number" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               </div>
             </div>
           </div>
-          <button onclick="saveProfile()" style="width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif">
+          <button onclick="saveProfile()" style="width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
             Save changes
           </button>
         </div>
@@ -3761,14 +3761,14 @@ function renderProfilePage(){
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">From</label>
               <div style="position:relative">
                 <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 6h13M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-                <input id="pf-leave-from" type="date" value="${pr.leaveFrom}" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                <input id="pf-leave-from" type="date" value="${pr.leaveFrom}" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               </div>
             </div>
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">To</label>
               <div style="position:relative">
                 <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 6h13M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-                <input id="pf-leave-to" type="date" value="${pr.leaveTo}" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                <input id="pf-leave-to" type="date" value="${pr.leaveTo}" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               </div>
             </div>
           </div>
@@ -3776,10 +3776,10 @@ function renderProfilePage(){
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Reason</label>
             <div style="position:relative">
               <svg style="position:absolute;left:11px;top:13px;width:13px;height:13px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M2 2h12v10H9l-3 2v-2H2V2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-              <textarea id="pf-leave-reason" rows="4" placeholder="Reason for leave..." style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;resize:vertical;line-height:1.5" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">${pr.leaveReason}</textarea>
+              <textarea id="pf-leave-reason" rows="4" placeholder="Reason for leave..." style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;resize:vertical;line-height:1.5" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">${pr.leaveReason}</textarea>
             </div>
           </div>
-          <button onclick="submitLeave()" style="width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif">Submit</button>
+          <button onclick="submitLeave()" style="width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Submit</button>
         </div>
       </div>
 
@@ -3791,9 +3791,9 @@ function renderProfilePage(){
           <div style="display:flex;align-items:center;gap:12px">
             <div style="position:relative;flex:1">
               <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 14 16" fill="none"><rect x="2" y="7" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-              <input type="email" id="pf-reset-email" value="${pr.email}" placeholder="Email for reset link" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input type="email" id="pf-reset-email" value="${pr.email}" placeholder="Email for reset link" style="width:100%;padding:10px 12px 10px 32px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
-            <button onclick="sendPasswordReset()" style="padding:10px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;white-space:nowrap;display:flex;align-items:center;gap:6px">
+            <button onclick="sendPasswordReset()" style="padding:10px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;display:flex;align-items:center;gap:6px">
               <svg viewBox="0 0 14 16" fill="none" style="width:12px;height:13px"><rect x="2" y="7" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
               Send reset link
             </button>
@@ -4121,15 +4121,15 @@ function renderBillingPage(){
             </div>`).join('')}
           </div>
           ${isCurrent
-            ? `<button disabled style="width:100%;padding:9px 0;border-radius:10px;border:none;background:#f0f0f6;color:#9090b8;font-size:12px;font-weight:700;cursor:not-allowed;font-family:'Rubik',sans-serif">Active plan</button>`
+            ? `<button disabled style="width:100%;padding:9px 0;border-radius:10px;border:none;background:#f0f0f6;color:#9090b8;font-size:12px;font-weight:700;cursor:not-allowed;font-family:'Plus Jakarta Sans',sans-serif">Active plan</button>`
             : isLower
-              ? `<button disabled style="width:100%;padding:9px 0;border-radius:10px;border:none;background:#f5f5fa;color:#c0c0d8;font-size:12px;font-weight:700;cursor:not-allowed;font-family:'Rubik',sans-serif">Current plan is higher</button>`
+              ? `<button disabled style="width:100%;padding:9px 0;border-radius:10px;border:none;background:#f5f5fa;color:#c0c0d8;font-size:12px;font-weight:700;cursor:not-allowed;font-family:'Plus Jakarta Sans',sans-serif">Current plan is higher</button>`
               : plan.key==='stellar'
-                ? `<button onclick="alert('Contact KNOX: knoxwex@gmail.com')" style="width:100%;padding:9px 0;border-radius:10px;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
+                ? `<button onclick="alert('Contact KNOX: knoxwex@gmail.com')" style="width:100%;padding:9px 0;border-radius:10px;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
                   <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M7 1l1.5 3 3.5.5-2.5 2.4.6 3.5L7 9l-3.1 1.4.6-3.5L2 4.5l3.5-.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
                   Contact KNOX
                 </button>`
-                : `<button style="width:100%;padding:9px 0;border-radius:10px;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif">Upgrade to ${plan.name}</button>`
+                : `<button style="width:100%;padding:9px 0;border-radius:10px;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Upgrade to ${plan.name}</button>`
           }
         </div>`;
       }).join('')}
@@ -4190,7 +4190,7 @@ function renderBillingPage(){
     <div class="table-card">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;border-bottom:1.5px solid #e4e4f0">
         <div style="font-size:15px;font-weight:900;color:#18182b">Payment history</div>
-        <button onclick="downloadAllInvoices()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;font-size:12px;font-weight:700;cursor:pointer;color:#18182b;font-family:'Rubik',sans-serif">
+        <button onclick="downloadAllInvoices()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;font-size:12px;font-weight:700;cursor:pointer;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif">
           <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M7 2v7M4 7l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Download all
         </button>
@@ -4214,7 +4214,7 @@ function renderBillingPage(){
                   <span style="width:5px;height:5px;border-radius:50%;background:currentColor;display:inline-block"></span>
                   ${p.status==='paid'?'Paid':'Pending'}
                 </span></td>
-                <td><button onclick="downloadInvoice(event, '${p.inv}', '${p.period}', '${p.plan}', ${p.amount}, '${p.method}', '${p.date}')" style="padding:4px 10px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Rubik',sans-serif">
+                <td><button onclick="downloadInvoice(event, '${p.inv}', '${p.period}', '${p.plan}', ${p.amount}, '${p.method}', '${p.date}')" style="padding:4px 10px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif">
                   <svg viewBox="0 0 12 12" fill="none" style="width:10px;height:10px"><path d="M6 1v7M3 6l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button></td>
               </tr>`;
@@ -4553,29 +4553,29 @@ function renderGeneralPage(){
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:4px">Business logo</div>
-              <button onclick="document.getElementById('gs-logo-input').click()" style="padding:4px 11px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Rubik',sans-serif">Upload</button>
+              <button onclick="document.getElementById('gs-logo-input').click()" style="padding:4px 11px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif">Upload</button>
               <input type="file" id="gs-logo-input" accept="image/*" style="display:none" onchange="gsBizLogoUpload(this)">
             </div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Business name</label>
-              <input id="gs-biz-name" type="text" value="${gs.bizName}" placeholder="e.g. Saman Clothings" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="gs-biz-name" type="text" value="${gs.bizName}" placeholder="e.g. Saman Clothings" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Category</label>
-              <select id="gs-biz-cat" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <select id="gs-biz-cat" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 <option value="">Select</option>
                 ${BIZ_CATEGORIES.map(c=>`<option value="${c}" ${c===gs.bizCategory?'selected':''}>${c}</option>`).join('')}
               </select>
             </div>
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Address</label>
-              <input id="gs-biz-addr" type="text" value="${gs.bizAddress}" placeholder="Street, City" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="gs-biz-addr" type="text" value="${gs.bizAddress}" placeholder="Street, City" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Phone</label>
-              <input id="gs-biz-phone" type="text" value="${gs.bizPhone}" placeholder="07X XXX XXXX" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <input id="gs-biz-phone" type="text" value="${gs.bizPhone}" placeholder="07X XXX XXXX" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
 
             <!-- Delivery methods -->
@@ -4584,12 +4584,12 @@ function renderGeneralPage(){
               <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:7px">
                 ${(gs.deliveryMethods||[]).map((d,i)=>`
                   <div style="display:flex;gap:7px;align-items:center">
-                    <input type="text" value="${d.name}" placeholder="e.g. Koombiyo" oninput="gsUpdateDelivery(${i},'name',this.value)" style="flex:2;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-                    <input type="number" value="${d.price}" min="0" placeholder="Price" oninput="gsUpdateDelivery(${i},'price',this.value)" style="width:80px;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-                    <button onclick="gsRemoveDelivery(${i})" style="padding:6px 10px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:13px;font-family:'Rubik',sans-serif;font-weight:700;flex-shrink:0">✕</button>
+                    <input type="text" value="${d.name}" placeholder="e.g. Koombiyo" oninput="gsUpdateDelivery(${i},'name',this.value)" style="flex:2;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                    <input type="number" value="${d.price}" min="0" placeholder="Price" oninput="gsUpdateDelivery(${i},'price',this.value)" style="width:80px;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                    <button onclick="gsRemoveDelivery(${i})" style="padding:6px 10px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;flex-shrink:0">✕</button>
                   </div>`).join('')}
               </div>
-              <button onclick="gsAddDelivery()" style="padding:6px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">+ Add method</button>
+              <button onclick="gsAddDelivery()" style="padding:6px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add method</button>
             </div>
 
             <!-- Payment methods -->
@@ -4599,12 +4599,12 @@ function renderGeneralPage(){
                 ${(gs.paymentMethods||[]).map((p,i)=>`
                   <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1.5px solid #e4e4f0;border-radius:20px;background:#f8f8fc">
                     <span style="font-size:12px;font-weight:600;color:#18182b">${p}</span>
-                    <button onclick="gsRemovePayment(${i})" style="border:none;background:none;color:#e8220e;cursor:pointer;font-size:12px;padding:0;line-height:1;font-family:'Rubik',sans-serif">✕</button>
+                    <button onclick="gsRemovePayment(${i})" style="border:none;background:none;color:#e8220e;cursor:pointer;font-size:12px;padding:0;line-height:1;font-family:'Plus Jakarta Sans',sans-serif">✕</button>
                   </div>`).join('')}
               </div>
               <div style="display:flex;gap:7px">
-                <input id="gs-new-payment" type="text" placeholder="e.g. Mintpay" style="flex:1;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'" onkeydown="if(event.key==='Enter')gsAddPayment()">
-                <button onclick="gsAddPayment()" style="padding:7px 13px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">+ Add</button>
+                <input id="gs-new-payment" type="text" placeholder="e.g. Mintpay" style="flex:1;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'" onkeydown="if(event.key==='Enter')gsAddPayment()">
+                <button onclick="gsAddPayment()" style="padding:7px 13px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add</button>
               </div>
             </div>
 
@@ -4614,16 +4614,16 @@ function renderGeneralPage(){
               <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:7px">
                 ${(gs.discountCodes||[]).map((d,i)=>`
                   <div style="display:flex;gap:7px;align-items:center">
-                    <input type="text" value="${d.code}" placeholder="Code" oninput="gsUpdateDiscount(${i},'code',this.value)" style="flex:2;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Rubik',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-transform:uppercase" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-                    <select oninput="gsUpdateDiscount(${i},'type',this.value)" style="padding:7px 9px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none">
+                    <input type="text" value="${d.code}" placeholder="Code" oninput="gsUpdateDiscount(${i},'code',this.value)" style="flex:2;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-transform:uppercase" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                    <select oninput="gsUpdateDiscount(${i},'type',this.value)" style="padding:7px 9px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none">
                       <option value="percent" ${d.type==='percent'?'selected':''}>%</option>
                       <option value="fixed"   ${d.type==='fixed'?'selected':''}>LKR</option>
                     </select>
-                    <input type="number" value="${d.value}" min="0" placeholder="Value" oninput="gsUpdateDiscount(${i},'value',this.value)" style="width:70px;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-                    <button onclick="gsRemoveDiscount(${i})" style="padding:6px 10px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:13px;font-family:'Rubik',sans-serif;font-weight:700;flex-shrink:0">✕</button>
+                    <input type="number" value="${d.value}" min="0" placeholder="Value" oninput="gsUpdateDiscount(${i},'value',this.value)" style="width:70px;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                    <button onclick="gsRemoveDiscount(${i})" style="padding:6px 10px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;flex-shrink:0">✕</button>
                   </div>`).join('')}
               </div>
-              <button onclick="gsAddDiscount()" style="padding:6px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">+ Add code</button>
+              <button onclick="gsAddDiscount()" style="padding:6px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add code</button>
             </div>
 
           </div>
@@ -4635,15 +4635,15 @@ function renderGeneralPage(){
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Time zone</label>
-              <select id="gs-tz" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:12px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <select id="gs-tz" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 ${TIMEZONES.map(tz=>`<option value="${tz}" ${tz===gs.timezone||tz.startsWith(gs.timezone)?'selected':''}>${tz}</option>`).join('')}
               </select>
             </div>
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Time format</label>
               <div style="display:flex;gap:8px">
-                <button onclick="document.getElementById('gs-timefmt').value='24hr';this.style.background='#fff8f6';this.style.borderColor='#e8220e';this.style.color='#e8220e';this.nextElementSibling.style.background='#fff';this.nextElementSibling.style.borderColor='#e4e4f0';this.nextElementSibling.style.color='#18182b'" style="flex:1;padding:9px 0;border-radius:8px;border:${gs.timeFormat==='24hr'?'1.5px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.timeFormat==='24hr'?'#fff8f6':'#fff'};color:${gs.timeFormat==='24hr'?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">24-hour</button>
-                <button onclick="document.getElementById('gs-timefmt').value='12hr';this.style.background='#fff8f6';this.style.borderColor='#e8220e';this.style.color='#e8220e';this.previousElementSibling.style.background='#fff';this.previousElementSibling.style.borderColor='#e4e4f0';this.previousElementSibling.style.color='#18182b'" style="flex:1;padding:9px 0;border-radius:8px;border:${gs.timeFormat==='12hr'?'1.5px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.timeFormat==='12hr'?'#fff8f6':'#fff'};color:${gs.timeFormat==='12hr'?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">12-hour</button>
+                <button onclick="document.getElementById('gs-timefmt').value='24hr';this.style.background='#fff8f6';this.style.borderColor='#e8220e';this.style.color='#e8220e';this.nextElementSibling.style.background='#fff';this.nextElementSibling.style.borderColor='#e4e4f0';this.nextElementSibling.style.color='#18182b'" style="flex:1;padding:9px 0;border-radius:8px;border:${gs.timeFormat==='24hr'?'1.5px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.timeFormat==='24hr'?'#fff8f6':'#fff'};color:${gs.timeFormat==='24hr'?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">24-hour</button>
+                <button onclick="document.getElementById('gs-timefmt').value='12hr';this.style.background='#fff8f6';this.style.borderColor='#e8220e';this.style.color='#e8220e';this.previousElementSibling.style.background='#fff';this.previousElementSibling.style.borderColor='#e4e4f0';this.previousElementSibling.style.color='#18182b'" style="flex:1;padding:9px 0;border-radius:8px;border:${gs.timeFormat==='12hr'?'1.5px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.timeFormat==='12hr'?'#fff8f6':'#fff'};color:${gs.timeFormat==='12hr'?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">12-hour</button>
                 <input type="hidden" id="gs-timefmt" value="${gs.timeFormat}">
               </div>
             </div>
@@ -4655,7 +4655,7 @@ function renderGeneralPage(){
           <div class="card" style="margin-bottom:0;display:${_gsCanTime?'block':'none'}">
             <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Currency</div>
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Symbol</label>
-            <select id="gs-currency" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+            <select id="gs-currency" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               <option value="LKR" ${gs.currency==='LKR'?'selected':''}>LKR — Sri Lankan Rupee</option>
               <option value="USD" ${gs.currency==='USD'?'selected':''}>USD — US Dollar</option>
               <option value="EUR" ${gs.currency==='EUR'?'selected':''}>EUR — Euro</option>
@@ -4667,13 +4667,13 @@ function renderGeneralPage(){
           <div class="card" style="margin-bottom:0">
             <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Theme</div>
             <div style="display:flex;gap:8px">
-              <button class="theme-btn" data-theme="light" onclick="gsSetTheme('light')" style="flex:1;padding:11px 0;border-radius:9px;border:${gs.theme==='light'?'2px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.theme==='light'?'#fff8f6':'#fff'};cursor:pointer;font-family:'Rubik',sans-serif;position:relative">
+              <button class="theme-btn" data-theme="light" onclick="gsSetTheme('light')" style="flex:1;padding:11px 0;border-radius:9px;border:${gs.theme==='light'?'2px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.theme==='light'?'#fff8f6':'#fff'};cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;position:relative">
                 <div style="font-size:13px;font-weight:700;color:${gs.theme==='light'?'#e8220e':'#18182b'}">Light</div>
                 <div class="theme-check" style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-radius:50%;background:#e8220e;display:${gs.theme==='light'?'flex':'none'};align-items:center;justify-content:center">
                   <svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px"><path d="M2 5l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
               </button>
-              <button class="theme-btn" data-theme="dark" onclick="gsSetTheme('dark')" style="flex:1;padding:11px 0;border-radius:9px;border:${gs.theme==='dark'?'2px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.theme==='dark'?'#fff8f6':'#fff'};cursor:pointer;font-family:'Rubik',sans-serif;position:relative">
+              <button class="theme-btn" data-theme="dark" onclick="gsSetTheme('dark')" style="flex:1;padding:11px 0;border-radius:9px;border:${gs.theme==='dark'?'2px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.theme==='dark'?'#fff8f6':'#fff'};cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;position:relative">
                 <div style="font-size:13px;font-weight:700;color:${gs.theme==='dark'?'#e8220e':'#18182b'}">Dark</div>
                 <div class="theme-check" style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-radius:50%;background:#e8220e;display:${gs.theme==='dark'?'flex':'none'};align-items:center;justify-content:center">
                   <svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px"><path d="M2 5l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -4684,7 +4684,7 @@ function renderGeneralPage(){
         </div>
 
         <!-- Save button -->
-        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
+        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
           <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Save settings
         </button>
@@ -4696,7 +4696,7 @@ function renderGeneralPage(){
         <div style="flex:1;display:flex;flex-direction:column;gap:10px;overflow-y:auto">
           <div style="padding-bottom:12px;border-bottom:1px solid #f0f0f6">
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Low stock threshold (units)</label>
-            <input type="number" id="gs-lowstock" value="${gs.lowStockThreshold}" min="1" max="100" style="width:90px;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:14px;font-family:'Rubik',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-align:center" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+            <input type="number" id="gs-lowstock" value="${gs.lowStockThreshold}" min="1" max="100" style="width:90px;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-align:center" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             <div style="font-size:11px;color:#9090b8;margin-top:5px">Alert when stock falls to or below this number</div>
           </div>
           ${[
@@ -4808,13 +4808,13 @@ function renderReportsPage(){
 
   // shared tab bar + toolbar
   const TABS=[{key:'orders',label:'Orders'},{key:'stock',label:'Stock'},{key:'customers',label:'Customers'},{key:'users',label:'Users'},{key:'finance',label:'Finance'}];
-  const tabBar=TABS.map(t=>`<button onclick="setReportTab('${t.key}')" style="padding:7px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif;border:1.5px solid ${currentReportTab===t.key?'#e8220e':'#e4e4f0'};background:${currentReportTab===t.key?'#fff8f6':'#fff'};color:${currentReportTab===t.key?'#e8220e':'#18182b'}">${t.label}</button>`).join('');
+  const tabBar=TABS.map(t=>`<button onclick="setReportTab('${t.key}')" style="padding:7px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border:1.5px solid ${currentReportTab===t.key?'#e8220e':'#e4e4f0'};background:${currentReportTab===t.key?'#fff8f6':'#fff'};color:${currentReportTab===t.key?'#e8220e':'#18182b'}">${t.label}</button>`).join('');
 
   const toolbar=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
     <div style="display:flex;gap:8px">${tabBar}</div>
     <div style="display:flex;gap:8px;align-items:center">
 ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
-      <button onclick="openDateRange()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px solid ${reportDateFilter?'#e8220e':'#e4e4f0'};border-radius:9px;background:${reportDateFilter?'#fff8f6':'#fff'};color:${reportDateFilter?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">
+      <button onclick="openDateRange()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px solid ${reportDateFilter?'#e8220e':'#e4e4f0'};border-radius:9px;background:${reportDateFilter?'#fff8f6':'#fff'};color:${reportDateFilter?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
         <svg viewBox="0 0 16 16" fill="none" style="width:13px;height:13px"><rect x="1.5" y="2.5" width="13" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 6h13M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         ${reportDateFilter?drFormatDate(reportDateFilter.from)+' — '+drFormatDate(reportDateFilter.to):'All time'}
       </button>
@@ -4823,7 +4823,7 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
     </div>
   </div>`;
 
-  const exportBtn=(id,label)=>`<button onclick="exportChart('${id}','${label}')" style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">
+  const exportBtn=(id,label)=>`<button onclick="exportChart('${id}','${label}')" style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
     <svg viewBox="0 0 12 12" fill="none" style="width:10px;height:10px"><path d="M6 1v7M3 6l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>${label}</button>`;
 
   let content='';
@@ -4995,8 +4995,8 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
           <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
             <!-- Y axis selector -->
             <div style="display:flex;border:1.5px solid #e4e4f0;border-radius:8px;overflow:hidden">
-              <button onclick="scSetY('qty')" style="padding:5px 12px;border:none;background:${window._scYAxis!=='rev'?'linear-gradient(135deg,#ff5a30,#e8220e)':'#fff'};color:${window._scYAxis!=='rev'?'#fff':'#9090b8'};font-size:11px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">By Qty</button>
-              <button onclick="scSetY('rev')" style="padding:5px 12px;border:none;border-left:1.5px solid #e4e4f0;background:${window._scYAxis==='rev'?'linear-gradient(135deg,#ff5a30,#e8220e)':'#fff'};color:${window._scYAxis==='rev'?'#fff':'#9090b8'};font-size:11px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">By Revenue</button>
+              <button onclick="scSetY('qty')" style="padding:5px 12px;border:none;background:${window._scYAxis!=='rev'?'linear-gradient(135deg,#ff5a30,#e8220e)':'#fff'};color:${window._scYAxis!=='rev'?'#fff':'#9090b8'};font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">By Qty</button>
+              <button onclick="scSetY('rev')" style="padding:5px 12px;border:none;border-left:1.5px solid #e4e4f0;background:${window._scYAxis==='rev'?'linear-gradient(135deg,#ff5a30,#e8220e)':'#fff'};color:${window._scYAxis==='rev'?'#fff':'#9090b8'};font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">By Revenue</button>
             </div>
             <!-- Product search with dropdown -->
             <div style="position:relative">
@@ -5005,7 +5005,7 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
                 oninput="scSearchInput(this.value)"
                 onfocus="scShowDropdown(this.value)"
                 onblur="setTimeout(()=>scHideDropdown(),200)"
-                style="padding:5px 10px 5px 26px;border:1.5px solid ${window._scSearch?'#e8220e':'#e4e4f0'};border-radius:8px;font-size:11px;font-family:'Rubik',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:160px">
+                style="padding:5px 10px 5px 26px;border:1.5px solid ${window._scSearch?'#e8220e':'#e4e4f0'};border-radius:8px;font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:160px">
               <div id="sc-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;width:220px;background:#fff;border:1.5px solid #e4e4f0;border-radius:9px;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:999;max-height:180px;overflow-y:auto"></div>
             </div>
             ${window._scSearch?`<button onclick="scClearSearch()" style="padding:5px 8px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;font-size:11px;font-weight:700;cursor:pointer">✕</button>`:''}
@@ -5019,7 +5019,7 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
         </div>
         <!-- RIGHT: date range -->
         <div style="display:flex;gap:7px;align-items:center">
-          <button onclick="scOpenDate()" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1.5px solid ${window._scDateFilter?'#e8220e':'#e4e4f0'};border-radius:8px;background:${window._scDateFilter?'#fff8f6':'#fff'};color:${window._scDateFilter?'#e8220e':'#18182b'};font-size:11px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">
+          <button onclick="scOpenDate()" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1.5px solid ${window._scDateFilter?'#e8220e':'#e4e4f0'};border-radius:8px;background:${window._scDateFilter?'#fff8f6':'#fff'};color:${window._scDateFilter?'#e8220e':'#18182b'};font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
             <svg viewBox="0 0 14 14" fill="none" style="width:11px;height:11px"><rect x="1" y="2" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 5.5h12M4.5 1v2M9.5 1v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
             ${window._scDateFilter?drFormatDate(window._scDateFilter.from)+' — '+drFormatDate(window._scDateFilter.to):'Date range'}
           </button>
@@ -5080,7 +5080,7 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
           <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase">Cancelled & returned trend</div>
           <div style="display:flex;gap:6px;align-items:center">
-            <button onclick="crOpenDate()" style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border:1.5px solid ${window._crDateFilter?'#e8220e':'#e4e4f0'};border-radius:7px;background:${window._crDateFilter?'#fff8f6':'#fff'};color:${window._crDateFilter?'#e8220e':'#18182b'};font-size:10px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">
+            <button onclick="crOpenDate()" style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border:1.5px solid ${window._crDateFilter?'#e8220e':'#e4e4f0'};border-radius:7px;background:${window._crDateFilter?'#fff8f6':'#fff'};color:${window._crDateFilter?'#e8220e':'#18182b'};font-size:10px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
               <svg viewBox="0 0 14 14" fill="none" style="width:10px;height:10px"><rect x="1" y="2" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 5.5h12M4.5 1v2M9.5 1v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
               ${window._crDateFilter?drFormatDate(window._crDateFilter.from)+' — '+drFormatDate(window._crDateFilter.to):'Date range'}
             </button>
@@ -5318,7 +5318,7 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
     <!-- Month selector -->
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
       <div style="display:flex;gap:6px;flex-wrap:wrap">
-        ${months.map(m=>`<button onclick="activeFinanceMonth='${m}';renderReportsPage()" style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif;border:1.5px solid ${activeFinanceMonth===m?'#e8220e':'#e4e4f0'};background:${activeFinanceMonth===m?'#fff8f6':'#fff'};color:${activeFinanceMonth===m?'#e8220e':'#18182b'}">${monthShort[m]}</button>`).join('')}
+        ${months.map(m=>`<button onclick="activeFinanceMonth='${m}';renderReportsPage()" style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border:1.5px solid ${activeFinanceMonth===m?'#e8220e':'#e4e4f0'};background:${activeFinanceMonth===m?'#fff8f6':'#fff'};color:${activeFinanceMonth===m?'#e8220e':'#18182b'}">${monthShort[m]}</button>`).join('')}
       </div>
 
     </div>
@@ -5336,7 +5336,7 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
     <div class="card" style="margin-bottom:14px;padding:14px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
           <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase">${monthLabels[activeFinanceMonth]} — finance breakdown</div>
-          <button onclick="finOpenAdd()" style="display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">
+          <button onclick="finOpenAdd()" style="display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
             <svg viewBox="0 0 14 14" fill="none" style="width:11px;height:11px"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Add
           </button>
         </div>
@@ -5352,7 +5352,7 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
             <td><span style="padding:2px 8px;border-radius:20px;font-size:10px;font-weight:800;background:${e.type==='expense'?'#fff8f6':'#e6f9ed'};color:${e.type==='expense'?'#e8220e':'#16a34a'}">Manual</span></td>
             <td style="font-weight:600">${e.label}</td>
             <td style="font-weight:700;color:${e.type==='expense'?'#e8220e':'#16a34a'}">${e.type==='expense'?'−':'+'}${L(e.amount)}</td>
-            <td><button onclick="finRemoveEntry(${e.id})" style="padding:3px 8px;border:1.5px solid #fde8e8;border-radius:7px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:11px;font-family:'Rubik',sans-serif;font-weight:700">✕</button></td>
+            <td><button onclick="finRemoveEntry(${e.id})" style="padding:3px 8px;border:1.5px solid #fde8e8;border-radius:7px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700">✕</button></td>
           </tr>`).join('')}
           <!-- Total row -->
           <tr style="border-top:2px solid #e4e4f0">
@@ -5599,7 +5599,7 @@ function renderUsersPage(){
                 <td>
                   <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
                     <span style="font-weight:800;color:#18182b;font-size:13px">${u.firstName} ${u.lastName}</span>
-                    <button onclick="openViewUser(${u.id})" style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border:1.5px solid #e4e4f0;border-radius:20px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Rubik',sans-serif;transition:border-color .15s,color .15s" onmouseenter="this.style.borderColor='#e8220e';this.style.color='#e8220e'" onmouseleave="this.style.borderColor='#e4e4f0';this.style.color='#9090b8'">
+                    <button onclick="openViewUser(${u.id})" style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border:1.5px solid #e4e4f0;border-radius:20px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s,color .15s" onmouseenter="this.style.borderColor='#e8220e';this.style.color='#e8220e'" onmouseleave="this.style.borderColor='#e4e4f0';this.style.color='#9090b8'">
                       <svg viewBox="0 0 12 12" fill="none" style="width:10px;height:10px"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 10c0-2 2-3.5 5-3.5s5 1.5 5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
                       View
                     </button>
@@ -5787,7 +5787,7 @@ function openViewUser(id){
         <span style="font-size:12px;font-weight:700;color:#18182b">${u.lastLogin}</span>
       </div>
     </div>
-    <button onclick="openEditUser(${u.id})" style="width:100%;margin-top:18px;padding:10px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
+    <button onclick="openEditUser(${u.id})" style="width:100%;margin-top:18px;padding:10px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
       <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 10l8-8 2 2-8 8H2v-2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Edit user
     </button>
@@ -6551,7 +6551,7 @@ function renderHelpPage(){
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Type</label>
               <div style="display:flex;gap:6px">
                 ${['Complaint','Recommendation','Question'].map(t=>`
-                  <button onclick="helpSetType('${t}')" id="help-type-${t.toLowerCase()}" style="flex:1;padding:7px 0;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif;transition:all .15s">${t}</button>
+                  <button onclick="helpSetType('${t}')" id="help-type-${t.toLowerCase()}" style="flex:1;padding:7px 0;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s">${t}</button>
                 `).join('')}
               </div>
             </div>
@@ -6559,11 +6559,11 @@ function renderHelpPage(){
             <div>
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Message</label>
               <textarea id="help-msg" placeholder="Describe your issue or suggestion…" rows="5"
-                style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Rubik',sans-serif;font-weight:500;color:#18182b;background:#fff;outline:none;resize:vertical;box-sizing:border-box"
+                style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;color:#18182b;background:#fff;outline:none;resize:vertical;box-sizing:border-box"
                 onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></textarea>
             </div>
             <!-- Send -->
-            <button onclick="helpSend()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Rubik',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
+            <button onclick="helpSend()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
               <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M1 7l12-5-5 12-2-5-5-2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
               Send feedback
             </button>
@@ -6575,7 +6575,7 @@ function renderHelpPage(){
             </div>
             <div style="font-size:15px;font-weight:900;color:#18182b;margin-bottom:6px">Feedback sent!</div>
             <div style="font-size:12px;color:#9090b8;margin-bottom:16px">We'll get back to you at hello@knoxlive.com</div>
-            <button onclick="helpReset()" style="padding:8px 20px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#9090b8;font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">Send another</button>
+            <button onclick="helpReset()" style="padding:8px 20px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#9090b8;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Send another</button>
           </div>
         </div>
 
@@ -6778,7 +6778,7 @@ function renderDashboardPage(){
   <div style="display:flex;gap:8px;margin-bottom:14px;align-items:center">
     <div style="font-size:13px;font-weight:700;color:#18182b;margin-right:6px">Dashboard</div>
     ${['today','yesterday','month'].map(p=>`
-      <button onclick="window._dbPeriod='${p}';renderDashboardPage()" style="padding:6px 14px;border-radius:8px;border:1.5px solid ${window._dbPeriod===p?'#e8220e':'#e4e4f0'};background:${window._dbPeriod===p?'#fff8f6':'#fff'};color:${window._dbPeriod===p?'#e8220e':'#9090b8'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Rubik',sans-serif">
+      <button onclick="window._dbPeriod='${p}';renderDashboardPage()" style="padding:6px 14px;border-radius:8px;border:1.5px solid ${window._dbPeriod===p?'#e8220e':'#e4e4f0'};background:${window._dbPeriod===p?'#fff8f6':'#fff'};color:${window._dbPeriod===p?'#e8220e':'#9090b8'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
         ${p==='today'?'Today':p==='yesterday'?'Yesterday':'This month'}
       </button>`).join('')}
   </div>
