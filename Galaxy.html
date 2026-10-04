@@ -5625,7 +5625,7 @@ function saveUser(){
   }
 
 function openViewUser(id){
-  const u=systemUsers.find(x=>x.id===id);if(!u)return;
+  const u=(window.systemUsers||[]).find(x=>x.id===id);if(!u)return;
   const r=roleInfo(u.role);
   const initials=getInitials(u);
   document.getElementById('viewuser-body').innerHTML=`
