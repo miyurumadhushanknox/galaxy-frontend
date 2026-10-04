@@ -286,6 +286,12 @@ tbody tr:hover .row-actions{display:flex}
 
 .sidebar-nav{flex:1;overflow-y:auto}
   .delivery-role #gs-notif-section { display: none !important; }
+  .accountant-role .ra-btn { display: none !important; }
+  .accountant-role .wh-edit-btn { display: none !important; }
+  .accountant-role .wh-transfer-btn { display: none !important; }
+  .accountant-role .wh-delete-btn { display: none !important; }
+  .accountant-role .order-edit-btn { display: none !important; }
+  .accountant-role .order-status-select { pointer-events: none !important; opacity: 0.5 !important; }
 </style>
   <script src="api.js"></script>
   <script src="galaxy-integration.js?v=5"></script>
@@ -1761,7 +1767,7 @@ tbody tr:hover .row-actions{display:flex}
     <div style="padding:20px 22px">
       <input type="hidden" id="sc-order-id">
       <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:8px">Select new status</div>
-      <select id="sc-status-select" onchange="scCheckReason()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;foolor:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none;margin-bottom:10px" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+      <select id="sc-status-select" class="order-status-select" onchange="scCheckReason()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;foolor:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none;margin-bottom:10px" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
       </select>
       <div id="sc-status-desc" style="font-size:12px;color:#9090b8;margin-bottom:14px"></div>
       <!-- Reason box — only shown for Cancelled, Returned, Refunded -->
@@ -2498,11 +2504,11 @@ function renderWhDetail(wid){
             <div style="flex:1;height:4px;background:#f0f0f6;border-radius:4px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#ff5a30,#e8220e);border-radius:4px;width:${pct}%"></div></div>
             <span style="font-size:11px;font-weight:700;color:#9090b8">${pct}%</span>
           </div>
-          <button onclick="openEditWh('${wid}')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#18182b;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
+          <button onclick="openEditWh('${wid}')" class="wh-edit-btn" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid #e4e4f0;border-radius:9px;background:#fff;color:#18182b;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
             <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M1.5 9.5l2-2 5.5-5.5 1.5 1.5-5.5 5.5-2 .5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
             Edit
           </button>
-          <button onclick="openTransferFor('${wid}')" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
+          <button onclick="openTransferFor('${wid}')" class="wh-transfer-btn" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
             <svg viewBox="0 0 16 14" fill="none" style="width:13px;height:11px"><path d="M1 4h14M11 1l3 3-3 3M15 10H1M5 7l-3 3 3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Transfer
           </button>
@@ -3243,7 +3249,7 @@ function openViewOrder(id){
     </div>
     <div style="display:flex;gap:10px;margin-top:16px">
       ${o.status==='processing'?`
-      <button onclick="openEditOrder('${o.id}');document.getElementById('m-vieworder').classList.remove('open')" style="flex:1;padding:11px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
+      <button onclick="openEditOrder('${o.id}');document.getElementById('m-vieworder').classList.remove('open')" class="order-edit-btn" style="flex:1;padding:11px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
         <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M1.5 9.5l2-2 5.5-5.5 1.5 1.5-5.5 5.5-2 .5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
         Edit Order
       </button>` : `<div style="font-size:12px;color:#aaa;font-weight:500;text-align:center;width:100%;padding:4px 0">Edit are only available for Processing orders.</div>`}
@@ -5692,6 +5698,7 @@ window._canTransfer     = true;
 function can(action){
   const role = currentUser?.role||'staff';
   document.body.classList.toggle('delivery-role', role==='delivery');
+  document.body.classList.toggle('accountant-role', role==='accountant');
   const rules = {
     // nav visibility
     'nav.itemstock':     ['owner','admin','manager','stockkeeper','sales','accountant'],
