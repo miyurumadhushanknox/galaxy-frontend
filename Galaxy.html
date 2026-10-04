@@ -5654,10 +5654,10 @@ function openViewUser(id){
         <span style="font-size:12px;font-weight:700;color:#18182b">${u.lastLogin}</span>
       </div>
     </div>
-    <button onclick="openEditUser(${u.id})" style="width:100%;margin-top:18px;padding:10px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
-      <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 10l8-8 2 2-8 8H2v-2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Edit user
-    </button>
+    ${!(currentUser.role==='admin' && u.role==='owner')?`<button onclick="openEditUser(${u.id})" style="width:100%;margin-top:18px;padding:10px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:
+    <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 10l8-8 2 2-8 8H2v-2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Edit user
+    </button>`:''}
   `;
   document.getElementById('m-viewuser').classList.add('open');
 }
@@ -5698,7 +5698,7 @@ function can(action){
     'nav.reports':       ['owner','admin','manager','accountant'],
     'nav.users':         ['owner','admin'],
     'nav.general':       ['owner','admin','manager','sales','stockkeeper','delivery','accountant'],
-    'nav.billing':       ['owner','accountant'],
+    'nav.billing':       ['owner','accountant','admin'],
     // item stock
     'stock.viewprice':   ['owner','admin','manager','stockkeeper','accountant'],
     'stock.edit':        ['owner','admin','manager','stockkeeper'],
