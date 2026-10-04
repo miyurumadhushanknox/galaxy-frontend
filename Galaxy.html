@@ -5759,6 +5759,12 @@ if(role==='delivery'){
     if(el.textContent.trim()==='Inventory') el.style.display='none';
   });
 }
+// Manager: show Analytics nav label
+if(role==='manager'){
+  document.querySelectorAll('.nav-label').forEach(el=>{
+    if(el.textContent.trim()==='Analytics') el.style.display='';
+  });
+}
 
   // ── Item Stock: hide purchase price + profit columns ──
   // We'll set a global flag used by renderProducts
