@@ -1892,8 +1892,8 @@ function renderProducts(){
     const qtyStyle=qty===0?"color:#d92020;font-weight:700":qty<=p.low?"color:#c07800;font-weight:700":"font-weight:600";
     return "<tr class=\""+(chk?"row-selected":"")+"\">"+
       "<td class=\"sc1\"><input type=\"checkbox\" "+(chk?"checked":"")+" onchange=\"toggleRowCheck("+p.id+",this)\"></td>"+
-      "<td class=\"sc2\"><div class=\"tgl "+(p.on?"on":"")+"\" onclick=\"toggleOn("+p.id+")\" style=\""+(currentUser.role==='accountant'?'opacity:0.4;pointer-events:none;cursor:not-allowed;':'')+"\
-        ><div class=\"tgl-dot\"></div></div></td>"+
+      "<td class=\"sc2\"><div class=\"tgl "+(p.on?"on":"")+"\" onclick=\"toggleOn("+p.id+")\" style=\""+(currentUser.role==='accountant'?'opacity:0.4;pointer-events:none;cursor:not-allowed;':'')+"\">"+
+      "<div class=\"tgl-dot\"></div></td>"+
       "<td class=\"sc-img\"><div style=\"width:40px;height:40px;border-radius:8px;overflow:hidden;margin:0 auto;border:1px solid #e4e4f0;background:#f5f5fa\"><img src=\""+(p.images&&p.images[0]?p.images[0]:PLACEHOLDER)+"\" style=\"width:100%;height:100%;object-fit:cover\" /></div></td>"+
       "<td class=\"sc3\"><div class=\"row-name-cell\"><span class=\"row-name-text\">"+p.name+(p.isVariant?"<span style=\"margin-left:5px;font-size:9px;padding:1px 5px;border-radius:4px;background:#fff0ec;color:#e8220e;font-weight:800;letter-spacing:.04em\">BATCH</span>":"")+
         "</span><div class=\"row-actions\">"+
