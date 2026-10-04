@@ -93,12 +93,6 @@ tbody tr:hover .row-actions{display:flex}
 .ra-btn{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:5px;border:1px solid #ddddf0;background:#f5f5fc;color:#5555aa;font-size:10px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
 .ra-btn svg{width:9px;height:9px;flex-shrink:0}
 .ra-btn:hover{background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border-color:transparent}
-.accountant-role .ra-btn{display:none !important}
-.accountant-role .ra-btn.view-allowed{display:inline-flex !important}
-.accountant-role .wh-edit-btn,.accountant-role .wh-transfer-btn,.accountant-role .wh-delete-btn{display:none !important}
-.accountant-role .order-edit-btn{display:none !important}
-.accountant-role .order-status-select{pointer-events:none !important;opacity:0.5 !important}
-.delivery-role #gs-notif-section{display:none !important}
 .row-action-btn{padding:5px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;font-size:12px;font-weight:700;cursor:pointer;color:#18182b;font-family:"Plus Jakarta Sans",sans-serif;transition:border-color .15s,color .15s}
 .row-action-btn:hover{border-color:#e8220e;color:#e8220e}
 .table-footer{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1.5px solid #ededf6;flex-shrink:0}
@@ -5828,8 +5822,6 @@ window._canTransfer     = true;
 // ══════════════ PERMISSION SYSTEM ══════════════
 function can(action){
   const role = currentUser?.role||'staff';
-  document.body.classList.toggle('delivery-role', role==='delivery');
-  document.body.classList.toggle('accountant-role', role==='accountant');
   const rules = {
     // nav visibility
     'nav.addproduct':    ['owner','admin','manager','stockkeeper'],
