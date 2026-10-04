@@ -5808,6 +5808,11 @@ navigate = function(page){
   }
   applyPermissions();
   _origNavigate.apply(this, arguments);
+  // Hide gs-notif-section for delivery after page renders
+  setTimeout(function(){
+    const gsN = document.getElementById('gs-notif-section');
+    if(gsN && window.currentUser) gsN.style.display = (window.currentUser.role==='delivery') ? 'none' : '';
+  }, 50);
 };
 
 
