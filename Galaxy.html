@@ -5750,7 +5750,15 @@ function applyPermissions(){
   // — Stockkeeper: hide Analytics nav label and Reports —
   if(role==='stockkeeper'){
   document.querySelectorAll('.nav-label').forEach(el=>{
-    if(el.textContent.trim()==='Analytics') el.style.display='none';
+        if(el.textContent.trim()==='Analytics') el.style.display='none';
+  });
+}
+  // Delivery: hide Inventory nav label
+  if(role==='delivery'){
+  document.querySelectorAll('.nav-label').forEach(el=>{
+    if(el.textContent.trim()==='Inventory') el.style.display='none';
+  });
+}
   });
 }
 
