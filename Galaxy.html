@@ -5536,7 +5536,7 @@ function openAddUser(){
 }
 
 function openEditUser(id){
-  const u=systemUsers.find(x=>x.id===id);if(!u)return;
+  const u=(window.systemUsers||[]).find(x=>x.id===id);
   closeViewUser();
   document.getElementById('user-panel-title').textContent='Edit user';
   document.getElementById('up-save-lbl').textContent='Save changes';
