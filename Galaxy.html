@@ -4561,8 +4561,8 @@ function renderGeneralPage(){
         </button>
       </div>
 
-      <!-- ═══ RIGHT: Notifications ═══ -->
-${currentUser&&currentUser.role==='delivery'?'':`      <div class="card" style="margin-bottom:0;display:flex;flex-direction:column;overflow:hidden;height:fit-content">`}
+        <!-- ═══ RIGHT: Notifications ═══ -->
+        <div id="gs-notif-section"><div class="card" style="margin-bottom:0;display:flex;flex-direction:column;overflow:hidden;height:fit-content">
         <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Notifications</div>
         <div style="flex:1;display:flex;flex-direction:column;gap:10px;overflow-y:auto">
           <div style="padding-bottom:12px;border-bottom:1px solid #f0f0f6">
@@ -5766,9 +5766,16 @@ function applyPermissions(){
   window._canEditWarehouse = can('warehouse.edit');
   window._canTransfer      = can('warehouse.transfer');
 
+  // ── Notifications section: hide for delivery ──
+  const notifSection = document.querySelector('[data-section="notifications"]');
+  if(notifSection) notifSection.style.display = (role==='delivery') ? 'none' : '';
+
   // ── Alert bell: hide for delivery ──
   const alertBtn = document.getElementById('alert-btn');
   if(alertBtn) alertBtn.style.display = (role==='delivery') ? 'none' : '';
+  const gsNotif = document.getElementById('gs-notif-section');
+  if(gsNotif) gsNotif.style.display = (role==='delivery') ? 'none' : '';
+
 
   // ── Sidebar nav labels: hide Inventory & Analytics for delivery ──
   document.querySelectorAll('.nav-label').forEach(el => {
