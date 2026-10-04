@@ -293,6 +293,8 @@ tbody tr:hover .row-actions{display:flex}
   .accountant-role .wh-delete-btn { display: none !important; }
   .accountant-role .order-edit-btn { display: none !important; }
 .accountant-role .vp-edit-btn { display: none !important; }
+.accountant-role .wh-transfer-modal-btn { display: none !important; }
+.accountant-role .wh-add-btn { display: none !important; }
 .accountant-role .ra-btn.view-allowed { display: inline-flex !important; }
   .accountant-role .order-status-select { pointer-events: none !important; opacity: 0.5 !important; }
 </style>
@@ -2344,11 +2346,11 @@ function renderWhMain(){
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
       <div style="font-size:13px;color:#9090b8;font-weight:500">${warehouses.length} locations · ${N(totalUnits)} total units</div>
       <div style="display:flex;gap:10px">
-        <button onclick="openTransferModal()" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
+        <button onclick="openTransferModal()" class="wh-transfer-modal-btn" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
           <svg viewBox="0 0 16 14" fill="none" style="width:14px;height:12px"><path d="M1 4h14M11 1l3 3-3 3M15 10H1M5 7l-3 3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Transfer stock
         </button>
-        <button onclick="document.getElementById('m-addwh').classList.add('open')" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
+        <button onclick="document.getElementById('m-addwh').classList.add('open')" class="wh-add-btn" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
           <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Add warehouse
         </button>
