@@ -2422,11 +2422,10 @@ function renderWhMain(){
           </div>
         </div>`;
       }).join('')}
-      <div class="card" style="margin-bottom:0;border:1.5px dashed #e4e4f0;background:transparent;box-shadow:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:160px;transition:border-color .15s" onclick="document.getElementById('m-addwh').classList.add('open')" onmouseenter="this.style.borderColor='#ff5a30'" onmouseleave="this.style.borderColor='#e4e4f0'">
-        <div style="font-size:24px;color:#e8220e;font-weight:300;margin-bottom:5px">+</div>
-        <div style="font-size:12px;font-weight:700;color:#e8220e">Add warehouse</div>
-      </div>
-    </div>
+      ${currentUser.role!=='accountant'?`<div class="card" style="margin-bottom:0;border:1.5px dashed #e4e4f0;background:transparent;box-shadow:none;cursor:pointer;display:flex;flex-direction:column;align-items
+       <div style="font-size:24px;color:#e8220e;font-weight:300;margin-bottom:5px">+</div>
+       <div style="font-size:12px;font-weight:700;color:#e8220e">Add warehouse</div>
+      </div>`:''}
   `;
 }
 
