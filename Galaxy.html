@@ -3133,7 +3133,7 @@ function renderOrdersPage(){
                     <span class="row-name-text">${ordFirstName(o)}</span>
                     <div style="font-size:11px;color:#aaa;font-weight:500">${o.customer} · ${o.city}</div>
                     <div class="row-actions">
-                      ${window._canAddOrder !== false ? `<button class="ra-btn" onclick="openViewOrder('${o.id}')"><svg viewBox="0 0 12 12" fill="none"><ellipse cx="6" cy="6" rx="5" ry="3.5" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg>View order</button>` : ""}
+                      <button class="ra-btn view-allowed" onclick="openViewOrder('${o.id}')"><svg viewBox="0 0 12 12" fill="none"><ellipse cx="6" cy="6" rx="5" ry="3.5" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg>View order</button>
 
                     </div>
                   </div>
