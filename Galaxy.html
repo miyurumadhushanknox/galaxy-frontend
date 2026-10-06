@@ -1036,9 +1036,10 @@ tbody tr:hover .row-actions{display:flex}
                   <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Username</label>
                   <input id="up-username" type="text" placeholder="e.g. saman_01" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 </div>
-                <div>
-                  <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Password</label>
-                  <input id="up-password" type="password" placeholder="Set password" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                <div id="up-pw-section">
+                <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Password</label>
+                <label style="font-size:11px;color:#9090b8;display:flex;align-items:center;gap:6px;margin-bottom:6px;cursor:pointer"><input type="checkbox" id="up-change-pw-chk" onchange="document.getElementById('up-password').style.display=this.checked?'block':'none'"> Change password</label>
+                <input id="up-password" type="password" placeholder="Set new password" style="display:none;width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif">
                 </div>
               </div>
               <div>
@@ -5531,7 +5532,8 @@ function openAddUser(){
   document.getElementById('up-last').value='';
   document.getElementById('up-email').value='';
   document.getElementById('up-username').value='';
-  document.getElementById('up-password').value='';
+  document.getElementById('up-change-pw-chk').checked=false;
+  document.getElementById('up-password').style.display='block';
   document.getElementById('up-role').value='sales';
   const tgl=document.getElementById('up-status-tgl');
   tgl.classList.add('on');
@@ -5550,7 +5552,9 @@ function openEditUser(id){
   document.getElementById('up-last').value=u.lastName;
   document.getElementById('up-email').value=u.email||'';
   document.getElementById('up-username').value=u.username;
-  document.getElementById('up-password').value=u.password;
+  document.getElementById('up-password').value='';
+  document.getElementById('up-change-pw-chk').checked=false;
+  document.getElementById('up-password').style.display='none';
   document.getElementById('up-role').value=u.role;
   document.getElementById('up-commission-section').style.display=u.role==='sales'?'block':'none';
   // Load commission
