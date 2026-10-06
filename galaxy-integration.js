@@ -946,9 +946,85 @@
         }, 100);
       }
     };
-    window._integrationSubmitOrder = function() {
-    window.submitOrder();
-  };
+    window._integrationSubmitOrder = async function() {
+  const customerName    = document.getElementById('c-name')?.value.trim()     || '';
+  const customerPhone   = document.getElementById('c-phone1')?.value.trim()   || '';
+  const customerPhone2  = document.getElementById('c-phone2')?.value.trim()   || '';
+  const customerCity    = document.getElementById('c-city')?.value.trim()     || '';
+  const customerAddress = document.getElementById('c-address')?.value.trim()  || '';
+  const customerEmail   = document.getElementById('c-email')?.value.trim()    || '';
+  const customerNote    = document.getElementById('c-note')?.value.trim()     || '';
+  const deliveryId      = document.getElementById('o-delivery')?.value        || '';
+  const paymentMethod   = document.getElementById('o-payment')?.value         || '';
+  const discountCode    = document.getElementById('o-discount-code')?.value?.trim() || '';
+
+  let items = window._galaxyOrderItems || [];
+
+  const red = [];
+  if (!customerName)  red.push('Customer name is required.');
+  if (!customerPhone) red.push('Phone number is required.');
+  if (!items.length)  red.push('Add at least one product to the order.');
+  if (!paymentMethod) red.push('Select a payment method.');
+
+  const noteEl = document.getElementById('order-note');
+  if (red.length) {
+    if (noteEl) {
+      noteEl.classList.add('show');
+      const li = noteEl.querySelector('ul,div');
+      if (li) li.innerHTML = red.map(r => '<div>' + r + '</div>').join('');
+    }
+    return;
+  }
+  if (noteEl) noteEl.classList.remove('show');
+
+  const delivMethods = window.generalSettings?.deliveryMethods || [];
+  const dm = delivMethods.find(d => String(d.id) === String(deliveryId) || d.name === deliveryId);
+  const deliveryName  = dm ? dm.name  : (deliveryId || 'No Delivery');
+  const deliveryPrice = dm ? dm.price : 0;
+
+  const btn = document.querySelector('#page-placeorder button[onclick="submitOrder()"]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Placing…'; }
+
+  try {
+    const payload = {
+      customer_name:    customerName,
+      customer_phone:   customerPhone,
+      customer_phone2:  customerPhone2,
+      customer_city:    customerCity,
+      customer_address: customerAddress,
+      customer_email:   customerEmail,
+      note:             customerNote,
+      delivery_method:  deliveryName,
+      delivery_cost:    deliveryPrice,
+      payment_method:   paymentMethod,
+      discount_code:    discountCode || null,
+      items: items.map(i => ({
+        product_id: i.pid || i.id,
+        quantity:   i.qty,
+        unit_price: i.sp || i.price,
+      })),
+    };
+
+    const res = await API.OrdersAPI.create(payload);
+
+    const newOrder = mapApiOrder(res.order || res);
+    if (!window.orders) window.orders = [];
+    window.orders.unshift(newOrder);
+    try { orders = window.orders; } catch(e) {}
+
+    API.showToast('Order placed! ' + (res.order?.order_code || res.order_code || ''), 'success');
+
+    setTimeout(() => {
+      if (typeof window.initOrder === 'function') window.initOrder();
+      if (typeof window.renderOrdersPage === 'function') window.renderOrdersPage();
+      window.navigate('manageorders');
+    }, 1200);
+  } catch (err) {
+    API.showToast(err.message || 'Order failed.', 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Submit'; }
+  }
+};
     // Intercept submit button click before Galaxy's inline onclick runs
     document.addEventListener('click', function(e) {
       const btn = e.target.closest('button[onclick="submitOrder()"]');
