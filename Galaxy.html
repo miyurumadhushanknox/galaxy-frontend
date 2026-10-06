@@ -5057,7 +5057,7 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
 
     // Commission
     const empWithComm=empData2.map(emp=>{
-      const sysUser=systemUsers.find(u=>(u.firstName+' '+u.lastName)===emp.name);
+      const sysUser=(window.systemUsers||systemUsers||[]).find(u=>(u.firstName+' '+u.lastName)===emp.name);
       const cm=sysUser?.commission||{on:false};
       let commission=0;
       if(cm.on){
