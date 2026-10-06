@@ -189,6 +189,7 @@
           firstName: u.first_name,
           lastName:  u.last_name,
           username:  u.username,
+          email:     u.email||'',
           password:  '',  // never sent from backend
           role:      u.role,
           status:    u.status !== false,
