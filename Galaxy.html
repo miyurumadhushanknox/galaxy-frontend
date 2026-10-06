@@ -6624,7 +6624,7 @@ function renderDashboardPage(){
     const myCommission = _salesUser.commission && _salesUser.commission.on ? (
       _salesUser.commission.method === 'percent'
         ? myRevenue * (_salesUser.commission.percent||0) / 100
-        : myOrders.filter(o=>o.status==='delivered').reduce((a,o)=>a+o.items.reduce((b,i)=>b+i.qty,0),0) * (_salesUser.commission.perUnit||0)
+        : Math.max(0, myOrders.filter(o=>o.status==='delivered').reduce((a,o)=>a+o.items.reduce((b,i)=>b+i.qty,0),0) - (_salesUser.commission.minCapOn?(_salesUser.commission.minCap||0):0)) * (_salesUser.commission.perUnit||0)
     ) : null;
     const _prods = window.products || products || [];
     const lowStock = _prods.filter(p=>{const q=Object.values(p.stock||{}).reduce((a,b)=>a+b,0);return p.low&&q<=p.low;});
