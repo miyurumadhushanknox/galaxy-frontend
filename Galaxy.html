@@ -287,7 +287,7 @@ tbody tr:hover .row-actions{display:flex}
 .sidebar-nav{flex:1;overflow-y:auto}
 </style>
   <script src="api.js"></script>
-  <script src="galaxy-integration.js?v=9"></script>
+  <script src="galaxy-integration.js?v=12"></script>
 </head>
 <body>
 <!-- LOGIN -->
@@ -5800,7 +5800,12 @@ if(role==='manager'){
     if(el.textContent.trim()==='Analytics') el.style.display='';
   });
 }
-
+// Sales: hide Analytics nav label
+if(role==='sales'){
+  document.querySelectorAll('.nav-label').forEach(el=>{
+    if(el.textContent.trim()==='Analytics') el.style.display='none';
+  });
+}
   // ── Item Stock: hide purchase price + profit columns ──
   // We'll set a global flag used by renderProducts
   window._hidePriceProfit = !can('stock.viewprice');
