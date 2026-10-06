@@ -3890,14 +3890,16 @@ const _origApplyStatusChange = applyStatusChange;
 applyStatusChange = function(){
   const id=document.getElementById('sc-order-id')?.value;
   const s=document.getElementById('sc-status-select')?.value;
-  _origApplyStatusChange.apply(this, arguments);
-  if(id&&s){
-    const st=ORDER_STATUSES.find(x=>x.key===s);
-    if(s==='cancelled') addAlert('cancelled','Order Cancelled','Order '+id+' was cancelled');
-    else if(s==='returned') addAlert('returned','Order Returned','Order '+id+' has been returned');
-    else if(s==='delivered') addAlert('delivered','Order Delivered','Order '+id+' has been delivered');
-  }
-};
+    _origApplyStatusChange.apply(this, arguments);
+    if(id&&s){
+      const token=localStorage.getItem('galaxy_token');
+      fetch(`https://galaxy-backend-production-6a12.up.railway.app/api/orders/${id}/status`,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({status:s})}).catch(e=>console.error('Status save failed',e));
+      const st=ORDER_STATUSES.find(x=>x.key===s);
+      if(s==='cancelled') addAlert('cancelled','Order Cancelled','Order '+id+' was cancelled');
+      else if(s==='returned') addAlert('returned','Order Returned','Order '+id+' has been returned');
+      else if(s==='delivered') addAlert('delivered','Order Delivered','Order '+id+' has been delivered');
+    }
+  };
 
 // Low stock check on product load
 setTimeout(()=>{
