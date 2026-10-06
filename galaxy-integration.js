@@ -832,7 +832,7 @@
       reason:   o.status_reason || '',
       date:     o.created_at ? formatDateDMY(o.created_at) : '',
       time:     o.created_at ? new Date(o.created_at).toLocaleTimeString('en-LK', { hour: '2-digit', minute: '2-digit', hour12: false }) : '',
-      addedBy:  o.created_by_name || '',
+      addedBy: (o.added_by_name || o.created_by_name || '').trim(),
       note:     o.note || '',
       _raw:     o,
     };
