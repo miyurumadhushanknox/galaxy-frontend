@@ -287,7 +287,7 @@ tbody tr:hover .row-actions{display:flex}
 .sidebar-nav{flex:1;overflow-y:auto}
 </style>
   <script src="api.js"></script>
-  <script src="galaxy-integration.js?v=13"></script>
+  <script src="galaxy-integration.js?v=14"></script>
 </head>
 <body>
 <!-- LOGIN -->
@@ -6633,10 +6633,10 @@ function renderDashboardPage(){
             <div style="font-size:28px;font-weight:800;color:#18182b;margin-top:8px">${myOrders.length}</div>
           </div>
           <div style="background:#fff;border-radius:16px;padding:20px;border:1.5px solid #f0f0f8">
-            <div style="font-size:12px;font-weight:700;color:#9090b8;text-transform:uppercase;letter-spacing:.5px">My Revenue</div>
-            <div style="font-size:28px;font-weight:800;color:#18182b;margin-top:8px">Rs ${myRevenue.toLocaleString()}</div>
+            <div style="font-size:12px;font-weight:700;color:#9090b8;text-transform:uppercase;letter-spacing:.5px">My Commission</div>
+            <div style="font-size:28px;font-weight:800;color:#18182b;margin-top:8px">Rs ${myCommission !== null ? myCommission.toLocaleString() : '0'}</div>
           </div>
-          ${myCommission !== null ? `<div style="background:#fff8f6;border-radius:16px;padding:20px;border:1.5px solid #fde8e4">
+          ${false ? `<div style="background:#fff8f6;border-radius:16px;padding:20px;border:1.5px solid #fde8e4">
             <div style="font-size:12px;font-weight:700;color:#e8220e;text-transform:uppercase;letter-spacing:.5px">My Commission</div>
             <div style="font-size:28px;font-weight:800;color:#e8220e;margin-top:8px">Rs ${myCommission.toLocaleString()}</div>
           </div>` : ''}
