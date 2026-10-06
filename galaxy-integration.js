@@ -46,7 +46,7 @@
         name:     data.user.firstName + ' ' + data.user.lastName,
         username: data.user.username,
         role:     data.user.role,
-        bizId:    data.business.id,
+        bizId: data.user.businessId,
       };
 
       if (errEl) errEl.classList.remove('show');
