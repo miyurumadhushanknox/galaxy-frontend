@@ -5742,7 +5742,14 @@ function can(action){
 
 function applyPermissions(){
   const role = currentUser?.role||'staff';
-
+  
+  // — Hide columns for sales role —
+if(role==='sales'){
+  ['th-sold','th-pp','th-profit','th-svp','th-svs'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.style.display='none';
+  });
+}
   // ── Sidebar nav items ──
   const navRules = {
     'nav-itemstock':  can('nav.itemstock'),
