@@ -287,7 +287,7 @@ tbody tr:hover .row-actions{display:flex}
 .sidebar-nav{flex:1;overflow-y:auto}
 </style>
   <script src="api.js"></script>
-  <script src="galaxy-integration.js?v=14"></script>
+  <script src="galaxy-integration.js?v=16"></script>
 </head>
 <body>
 <!-- LOGIN -->
@@ -5549,6 +5549,7 @@ function openEditUser(id){
   document.getElementById('up-username').value=u.username;
   document.getElementById('up-password').value=u.password;
   document.getElementById('up-role').value=u.role;
+  document.getElementById('up-commission-section').style.display=u.role==='sales'?'block':'none';
   // Load commission
   const cm = u.commission||{on:false,method:'percent',percent:0,perUnit:0};
   const commTgl = document.getElementById('up-comm-tgl');
