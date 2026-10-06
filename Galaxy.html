@@ -3032,7 +3032,7 @@ function renderOrdersPage(){
   const filtered = getFilteredOrders();
 
   // Apply date filter to stat cards too
-  const _baseOrders = currentUser.role==='sales'?orders.filter(o=>o.addedBy===currentUser.name):orders;
+  const _baseOrders = currentUser.role==='sales'?orders.filter(o=>o.addedBy.trim()===currentUser.name.trim()):orders;
   const statOrders = moDateFilter ? _baseOrders.filter(o=>{
   const parts=o.date.split('.');
   const d=new Date(parts[2],parts[1]-1,parts[0]);
@@ -3158,7 +3158,7 @@ function renderOrdersPage(){
 
 function getFilteredOrders(){
   return orders.filter(o=>{
-    if(currentUser.role==='sales' && o.addedBy!==currentUser.name) return false;
+    if(currentUser.role==='sales' && o.addedBy.trim()!==currentUser.name.trim()) return false;
     if(moStatusFilter!=='all' && o.status!==moStatusFilter) return false;
     if(moSearch){
       const q=moSearch.toLowerCase();

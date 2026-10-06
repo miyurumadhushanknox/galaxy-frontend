@@ -948,7 +948,7 @@
     };
     window._integrationSubmitOrder = function() {
     window.submitOrder();
-    };
+  };
     // Intercept submit button click before Galaxy's inline onclick runs
     document.addEventListener('click', function(e) {
       const btn = e.target.closest('button[onclick="submitOrder()"]');
