@@ -287,7 +287,7 @@ tbody tr:hover .row-actions{display:flex}
 .sidebar-nav{flex:1;overflow-y:auto}
 </style>
   <script src="api.js"></script>
-  <script src="galaxy-integration.js?v=7"></script>
+  <script src="galaxy-integration.js?v=9"></script>
 </head>
 <body>
 <!-- LOGIN -->
@@ -3207,10 +3207,10 @@ function openViewOrder(id){
         <span style="font-size:13px;font-weight:700;color:#18182b">${i.name} <span style="color:#9090b8;font-weight:500;font-size:11px">${i.code}</span></span>
         <span style="font-size:12px;font-weight:600;color:#9090b8">×${i.qty} · ${L(i.sp)} = <b style="color:#18182b">${L(i.sp*i.qty)}</b></span>
       </div>`).join('')}
-      <div style="display:flex;justify-content:space-between;margin-top:8px">
-        <span style="font-size:12px;color:#9090b8">Profit</span>
-        <span style="font-size:13px;font-weight:800;color:${profit>=0?'#16a34a':'#e8220e'}">${L(profit)}</span>
-      </div>
+      ${currentUser.role!=='sales'?`<div style="display:flex;justify-content:space-between;margin-top:8px">
+      <span style="font-size:12px;color:#9090b8">Profit</span>
+      <span style="font-size:13px;font-weight:800;color:${profit>=0?'#16a34a':'#e8220e'}">${L(profit)}</span>
+      </div>`:''}
     </div>
     <!-- Customer -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
@@ -3234,9 +3234,9 @@ function openViewOrder(id){
       <div style="display:flex;justify-content:space-between;padding:5px 0">
         <span style="font-size:12px;color:#9090b8">Items total</span><span style="font-size:13px;font-weight:700">${L(sp)}</span>
       </div>
-      <div style="display:flex;justify-content:space-between;padding:5px 0">
-        <span style="font-size:12px;color:#9090b8">Purchase total</span><span style="font-size:12px;color:#9090b8">${L(pp)}</span>
-      </div>
+      ${currentUser.role!=='sales'?`<div style="display:flex;justify-content:space-between;padding:5px 0">
+      <span style="font-size:12px;color:#9090b8">Purchase total</span><span style="font-size:12px;color:#9090b8">${L(pp)}</span>
+      </div>`:''}
       <div style="display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid #f0f0f6;margin-top:4px">
         <span style="font-size:13px;font-weight:900">Total</span><span style="font-size:15px;font-weight:900;color:#e8220e">${L(ordSubtotal(o))}</span>
       </div>
