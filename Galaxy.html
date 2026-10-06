@@ -5611,7 +5611,7 @@ function saveUser(){
   const token = localStorage.getItem('galaxy_token');
   const base = 'https://galaxy-backend-production-6a12.up.railway.app/api';
   if(id){
-    fetch(`${base}/users/${id}`,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({firstName:first,lastName:last,role,status,commission})})
+    fetch(`${base}/users/${id}`,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({firstName:first,lastName:last,email,role,status,commission})})
       .then(r=>r.json()).then(()=>{
         const u=systemUsers.find(x=>x.id===id);
         if(u){u.firstName=first;u.lastName=last;u.email=email;u.username=uname;u.role=role;u.status=status;u.commission=commission;}
@@ -5619,7 +5619,7 @@ function saveUser(){
         closeUserPanel();renderUsersPage();
       }).catch(e=>toast('Update failed','err'));
   } else {
-    fetch(`${base}/users`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({firstName:first,lastName:last,username:uname,password:pass,role,commission})})
+    fetch(`${base}/users`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({firstName:first,lastName:last,email,username:uname,password:pass,role,commission})})
       .then(r=>r.json()).then(u=>{
         const newUser={id:u.id,firstName:first,lastName:last,email,username:uname,password:'',role,status:u.status!==false,lastLogin:'Never',commission};
              systemUsers.push(newUser);
