@@ -1898,9 +1898,9 @@ function renderProducts(){
       "<td class=\"sc3\"><div class=\"row-name-cell\"><span class=\"row-name-text\">"+p.name+(p.isVariant?"<span style=\"margin-left:5px;font-size:9px;padding:1px 5px;border-radius:4px;background:#fff0ec;color:#e8220e;font-weight:800;letter-spacing:.04em\">BATCH</span>":"")+
         "</span><div class=\"row-actions\">"+
       (currentUser.role!=='accountant'&&currentUser.role!=='sales'?'<button class="ra-btn" onclick="editProduct('+p.id+')"><svg viewBox="0 0 12 12" fill="none"><ellipse cx="6" cy="6" rx="5" ry="3.5" stroke="currentColor" stroke-width="1.3"/></svg> Edit</button>':'')+
-      '<button class="ra-btn" onclick="viewProduct('+p.id+')"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6s2-4 5-4 5 4 5 4-2 4-5 4-5-4-5-4z" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg> View</button>'+
-      '<button class="ra-btn" onclick="toast(\'Chart \u2014 coming soon!\')"><svg viewBox="0 0 12 12" fill="none"><path d="M1 9.5V6l3-3 3 2 3-4v9H1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Chart</button>'+
-    (currentUser.role!=='accountant'&&currentUser.role!=='sales'?'<button class="ra-btn" onclick="openRefill('+p.id+')"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v4M4 3l2-2 2 2" stroke="currentColor" stroke-width="1.2"/></svg> Refill</button>':'')+
+      (currentUser.role!=='sales'?'<button class="ra-btn" onclick="viewProduct(\''+p.id+'\')"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6s2-4 5-4 5 4 5 4-2 4-5 4-5-4-5-4z" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg> View</button>':'')+
+      (currentUser.role!=='sales'?'<button class="ra-btn" onclick="toast(\'Chart \u2014 coming soon!\')"><svg viewBox="0 0 12 12" fill="none"><path d="M1 9.5V6l3-3 3 2 3-4v9H1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Chart</button>':'')+
+      (currentUser.role!=='accountant'&&currentUser.role!=='sales'?'<button class="ra-btn" onclick="openRefill('+p.id+')"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v4M4 3l2-2 2 2" stroke="currentColor" stroke-width="1.2"/></svg> Refill</button>':'')+
             "</div></div></td>"+
             "<td style=\"color:#aaa;font-size:12px\">"+( p.code||"\u2014")+"</td>"+
             "<td style=\""+qtyStyle+"\">"+N(qty)+"</td>"+
