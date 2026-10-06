@@ -3074,7 +3074,7 @@ function renderOrdersPage(){
         <div style="font-size:24px;font-weight:900;color:#18182b">${statOrders.length}</div>
         <div style="font-size:11px;color:#9090b8;font-weight:600;margin-top:2px">${moDateFilter?"In range":"All time"}</div>
       </div>
-      ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<div class="card" style="margin-bottom:0;padding:14px 16px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">Revenue (delivered)</div><div style="font-size:24px;font-weight:900;color:#16a34a">${L(totalRev)}</div><div style="font-size:11px;color:#16a34a;font-weight:600;margin-top:2px">Profit: ${L(totalProfit)}</div></div>` : ""}
+      ${window._canAddOrder !== false && currentUser.role!=='sales' && currentUser.role!=='delivery' ? `<div class="card" style="margin-bottom:0;padding:14px 16px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">Revenue (delivered)</div><div style="font-size:24px;font-weight:900;color:#16a34a">${L(totalRev)}</div><div style="font-size:11px;color:#16a34a;font-weight:600;margin-top:2px">Profit: ${L(totalProfit)}</div></div>` : ""}
       <div class="card" style="margin-bottom:0;padding:14px 16px">
         <div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">Cancelled orders</div>
         <div style="font-size:24px;font-weight:900;color:#e8220e">${totalCancel}</div>
