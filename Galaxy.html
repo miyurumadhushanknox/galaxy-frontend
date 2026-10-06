@@ -3107,10 +3107,10 @@ function renderOrdersPage(){
               <th style="min-width:100px">Order code</th>
               <th style="min-width:130px">Date &amp; Time</th>
               <th style="min-width:140px">Status</th>
-              ${window._canAddOrder !== false ? '<th>Purchase price</th>' : ''}
+              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th>Purchase price</th>' : ''}
               <th>Sale price</th>
               <th>Qty</th>
-              ${window._canAddOrder !== false ? '<th>Profit</th>' : ''}
+              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th>Profit</th>' : ''}
               <th style="min-width:120px">Added by</th>
             </tr>
           </thead>
@@ -3139,10 +3139,10 @@ function renderOrdersPage(){
                     <svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px;opacity:.6"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
                 </td>
-                ${window._canAddOrder !== false ? `<td style="color:#777">${L(pp)}</td>` : ''}
+                ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:#777">${L(pp)}</td>` : ''}
                 <td style="font-weight:700">${L(sp)}</td>
                 <td style="text-align:center">${o.items.reduce((a,i)=>a+i.qty,0)}</td>
-                ${window._canAddOrder !== false ? `<td style="color:${profit>=0?'#16a34a':'#e8220e'};font-weight:700">${L(profit)}</td>` : ''}
+                ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:${profit>=0?'#16a34a':'#e8220e'};font-weight:700">${L(profit)}</td>` : ''}
                 <td style="font-size:12px;color:#9090b8">${o.addedBy||'—'}</td>
               </tr>`;
             }).join('') : '<tr><td colspan="9" style="text-align:center;color:#c0c0d8;padding:48px;font-weight:700">No orders found</td></tr>'}
