@@ -1043,7 +1043,7 @@ tbody tr:hover .row-actions{display:flex}
               </div>
               <div>
                 <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Role</label>
-                <select id="up-role" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+                <select id="up-role" onchange="document.getElementById('up-commission-section').style.display=this.value==='sales'?'block':'none'" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                   
                   ${currentUser.role!=='owner'?'':'<option value="admin">Admin</option>'}
                   <option value="manager">Manager</option>
@@ -1055,7 +1055,7 @@ tbody tr:hover .row-actions{display:flex}
 
               </div>
               <!-- Commission -->
-              <div style="border-top:1px solid #f0f0f6;padding-top:13px">
+              <div id="up-commission-section" style="border-top:1px solid #f0f0f6;padding-top:13px">
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:#f8f8fc;border-radius:10px;margin-bottom:10px">
                   <div>
                     <div style="font-size:13px;font-weight:800;color:#18182b;margin-bottom:2px">Commission</div>
