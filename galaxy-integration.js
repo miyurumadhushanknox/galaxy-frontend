@@ -222,7 +222,7 @@
           role:      u.role,
           status:    u.status !== false,
           lastLogin: u.last_login ? formatDateDMY(u.last_login) : '—',
-          commission: u.commission || {},
+          commission: { on: u.commission_on||false, method: u.commission_method||'percent', percent: u.commission_percent||0, perUnit: u.commission_per_unit||0, minCapOn: u.commission_min_cap_on||false, minCap: u.commission_min_cap||0 },
         }));
         if (typeof window.renderUsersPage === 'function') {
           const usersSection = document.getElementById('page-users');
