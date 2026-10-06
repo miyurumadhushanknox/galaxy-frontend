@@ -287,7 +287,7 @@ tbody tr:hover .row-actions{display:flex}
 .sidebar-nav{flex:1;overflow-y:auto}
 </style>
   <script src="api.js"></script>
-  <script src="galaxy-integration.js?v=12"></script>
+  <script src="galaxy-integration.js?v=13"></script>
 </head>
 <body>
 <!-- LOGIN -->
@@ -6615,7 +6615,7 @@ function renderDashboardPage(){
   if(_role === 'sales'){
     const _users = window.systemUsers || [];
     const _salesUser = _users.find(u => u.username === _cu.username) || {};
-    const myOrders = (window.orders || orders || []).filter(o => o.salesperson === _cu.username || o.createdBy === _cu.username || o.userId === _cu.id);
+    const myOrders = (window.orders || orders || []).filter(o => o.salesperson === _cu.username || o.createdBy === _cu.username || o.userId === _cu.id || o.addedBy?.trim() === _cu.name?.trim());
     const myRevenue = myOrders.filter(o=>o.status==='delivered').reduce((a,o)=>a+ordSubtotal(o),0);
     const myCommission = _salesUser.commission && _salesUser.commission.on ? (
       _salesUser.commission.method === 'percent'
