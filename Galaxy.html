@@ -5598,7 +5598,7 @@ function saveUser(){
   const role  =document.getElementById('up-role').value;
   const status=document.getElementById('up-status-tgl').classList.contains('on');
   if(!first||!uname||!pass){toast('Please fill all required fields','err');return;}
-  const dup=systemUsers.find(u=>u.username===uname&&u.id!==id);
+  const dup=(window.systemUsers||systemUsers||[]).find(u=>u.username===uname&&u.id!==id);
   if(dup){toast('Username already taken','err');return;}
   // collect commission
   const commOn    = document.getElementById('up-comm-tgl')?.classList.contains('on')||false;
