@@ -3032,11 +3032,12 @@ function renderOrdersPage(){
   const filtered = getFilteredOrders();
 
   // Apply date filter to stat cards too
-  const statOrders = moDateFilter ? orders.filter(o=>{
-    const parts=o.date.split('.');
-    const d=new Date(parts[2],parts[1]-1,parts[0]);
-    return d>=moDateFilter.from && d<=moDateFilter.to;
-  }) : orders;
+  const _baseOrders = currentUser.role==='sales'?orders.filter(o=>o.addedBy===currentUser.name):orders;
+  const statOrders = moDateFilter ? _baseOrders.filter(o=>{
+  const parts=o.date.split('.');
+  const d=new Date(parts[2],parts[1]-1,parts[0]);
+  return d>=moDateFilter.from && d<=moDateFilter.to;
+}) : _baseOrders;
   const counts = {};
   ORDER_STATUSES.forEach(s=>counts[s.key]=0);
   statOrders.forEach(o=>{ if(counts[o.status]!==undefined) counts[o.status]++; });
