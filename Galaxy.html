@@ -3157,6 +3157,7 @@ function renderOrdersPage(){
 
 function getFilteredOrders(){
   return orders.filter(o=>{
+    if(currentUser.role==='sales' && o.addedBy!==currentUser.name) return false;
     if(moStatusFilter!=='all' && o.status!==moStatusFilter) return false;
     if(moSearch){
       const q=moSearch.toLowerCase();
