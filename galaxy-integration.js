@@ -23,50 +23,22 @@
    * Patch the login screen to add Business ID field and use real API
    */
   function patchLoginScreen() {
-    // Add Business ID input above the username field
-    const loginBox = document.querySelector('.login-box form, .login-box');
-    const usernameField = document.getElementById('l-user');
-    if (usernameField && !document.getElementById('l-bizid')) {
-      const bizDiv = document.createElement('div');
-      bizDiv.className = 'fg';
-      bizDiv.innerHTML = '<label>Business ID</label><input id="l-bizid" type="text" placeholder="Enter your Business ID" autocomplete="off">';
-      usernameField.closest('.fg').before(bizDiv);
-
-      // Pre-fill if already saved
-      const savedBizId = API.Auth.getBusinessId();
-      if (savedBizId) {
-        document.getElementById('l-bizid').value = savedBizId;
-      }
-
-      // Enter key flow: bizid → username → password → login
-      document.getElementById('l-bizid').addEventListener('keydown', e => {
-        if (e.key === 'Enter') usernameField.focus();
-      });
-    }
-  }
+  // Business ID removed — login by username or email only
+}
 
   /**
    * Override the fake doLogin() with a real API call
    */
   window.doLogin = async function () {
-    const bizId    = (document.getElementById('l-bizid')?.value || '').trim();
-    const username = (document.getElementById('l-user')?.value  || '').trim();
-    const password =  document.getElementById('l-pass')?.value  || '';
-    const errEl    =  document.getElementById('login-err');
-
-    if (!bizId) {
-      if (errEl) { errEl.textContent = 'Please enter your Business ID.'; errEl.classList.add('show'); }
-      return;
-    }
-
-    // Store businessId for API calls
-    API.Auth.setBusinessId(bizId);
+    const login    = (document.getElementById('l-user')?.value || '').trim();
+    const password =  document.getElementById('l-pass')?.value || '';
+    const errEl    =  document.getElementById('login-err');  
 
     const btn = document.querySelector('.login-box button[onclick="doLogin()"], .login-box button');
     if (btn) { btn.disabled = true; btn.textContent = 'Signing in…'; }
 
     try {
-      const data = await API.AuthAPI.login(username, password);
+      const data = await API.AuthAPI.login(login, password);
 
       // Map backend user to the shape Galaxy.html expects
       const user = {
@@ -75,7 +47,6 @@
         username: data.user.username,
         role:     data.user.role,
         bizId:    data.business.id,
-        bizName:  data.business.name,
       };
 
       if (errEl) errEl.classList.remove('show');

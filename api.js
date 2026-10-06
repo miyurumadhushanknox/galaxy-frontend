@@ -62,14 +62,11 @@ async function apiFetch(path, options = {}) {
 // AUTH API
 // ══════════════════════════════════════════
 const AuthAPI = {
-  login: async (username, password) => {
-    const businessId = Auth.getBusinessId();
-    if (!businessId) throw new Error('No business ID set');
-
-    const data = await apiFetch('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ username, password, businessId })
-    });
+  login: async (login, password) => {
+  const data = await apiFetch('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ login, password })
+  });
 
     Auth.setToken(data.token);
     Auth.setUser(data.user);
