@@ -5558,6 +5558,13 @@ function openEditUser(id){
   document.getElementById('up-password').style.display='none';
   document.getElementById('up-role').value=u.role;
   document.getElementById('up-commission-section').style.display=u.role==='sales'?'block':'none';
+
+  if(u.role==='owner'){
+  document.getElementById('up-role').innerHTML='<option value="owner">Owner</option>';
+  document.getElementById('up-role').disabled=true;
+  } else {
+  document.getElementById('up-role').disabled=false;
+  }
   // Load commission
   const cm = u.commission||{on:false,method:'percent',percent:0,perUnit:0};
   const commTgl = document.getElementById('up-comm-tgl');
