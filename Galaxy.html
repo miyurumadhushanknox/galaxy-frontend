@@ -5534,7 +5534,10 @@ function openAddUser(){
   document.getElementById('up-username').value='';
   document.getElementById('up-pw-chk-label').style.display='none';
   document.getElementById('up-password').style.display='block';
+  document.getElementById('up-role').innerHTML='<option value="admin">Admin</option><option value="manager">Manager</option><option value="sales">Sales</option><option value="stockkeeper">Stock Keeper</option><option value="delivery">Delivery</option><option value="accountant">Accountant</option>';
+  document.getElementById('up-role').disabled=false;
   document.getElementById('up-role').value='sales';
+  
   const tgl=document.getElementById('up-status-tgl');
   tgl.classList.add('on');
   document.getElementById('up-off-lbl').style.color='#9090b8';
