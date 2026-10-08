@@ -178,16 +178,25 @@
           discountCodes:     (s.discountCodes   || []).map(dc => ({ id: dc.id, code: dc.code, type: dc.type, value: dc.value })),
         };
         // Update biz name in sidebar/topbar
-            if (typeof window.applyBizName === 'function') window.applyBizName();
-        // Update UI dropdowns to match loaded settings
-            setTimeout(function() {
-             var tzEl = document.getElementById('gs-tz');
-             if (tzEl) tzEl.value = window.generalSettings.timezone;
-             var fmtEl = document.getElementById('gs-timefmt');
-             if (fmtEl) fmtEl.value = window.generalSettings.timeFormat;
-             var curEl = document.getElementById('gs-currency');
-             if (curEl) curEl.value = window.generalSettings.currency;
-             }, 500);
+                if (typeof window.applyBizName === 'function') window.applyBizName();
+    // Patch navigate to always restore dropdowns when visiting General page
+    (function() {
+      var _origNav = window.navigate;
+      window.navigate = function(page) {
+        if (_origNav) _origNav(page);
+        if (page === 'general') {
+          setTimeout(function() {
+            var gs = window.generalSettings || {};
+            var tzEl = document.getElementById('gs-tz');
+            if (tzEl) tzEl.value = gs.timezone || 'Asia/Colombo';
+            var fmtEl = document.getElementById('gs-timefmt');
+            if (fmtEl) fmtEl.value = gs.timeFormat || '24hr';
+            var curEl = document.getElementById('gs-currency');
+            if (curEl) curEl.value = gs.currency || 'LKR';
+          }, 100);
+        }
+      };
+    })();
           }
 
       // ── System Users ──
@@ -1188,26 +1197,5 @@
     _installSearchItems();
   setTimeout(_installSearchItems, 500);
   setTimeout(_installSearchItems, 1500);
-
-  // Patch navigate to restore settings dropdowns when visiting General page
-  (function() {
-    var _origNav = window.navigate;
-    if (_origNav) {
-      window.navigate = function(page) {
-        _origNav(page);
-        if (page === 'general') {
-          setTimeout(function() {
-            var gs = window.generalSettings || {};
-            var tzEl = document.getElementById('gs-tz');
-            if (tzEl) tzEl.value = gs.timezone || 'Asia/Colombo';
-            var fmtEl = document.getElementById('gs-timefmt');
-            if (fmtEl) fmtEl.value = gs.timeFormat || '24hr';
-            var curEl = document.getElementById('gs-currency');
-            if (curEl) curEl.value = gs.currency || 'LKR';
-          }, 100);
-        }
-      };
-    }
-  })();
 
 })();
