@@ -5532,7 +5532,7 @@ function openAddUser(){
   document.getElementById('up-last').value='';
   document.getElementById('up-email').value='';
   document.getElementById('up-username').value='';
-  document.getElementById('up-change-pw-chk').checked=false;
+  document.getElementById('up-change-pw-chk').style.display='none';
   document.getElementById('up-password').style.display='block';
   document.getElementById('up-role').value='sales';
   const tgl=document.getElementById('up-status-tgl');
@@ -5554,6 +5554,7 @@ function openEditUser(id){
   document.getElementById('up-username').value=u.username;
   document.getElementById('up-password').value='';
   document.getElementById('up-change-pw-chk').checked=false;
+  document.getElementById('up-change-pw-chk').style.display='';
   document.getElementById('up-password').style.display='none';
   document.getElementById('up-role').value=u.role;
   document.getElementById('up-commission-section').style.display=u.role==='sales'?'block':'none';
