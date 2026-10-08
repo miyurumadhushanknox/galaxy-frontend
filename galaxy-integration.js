@@ -178,8 +178,17 @@
           discountCodes:     (s.discountCodes   || []).map(dc => ({ id: dc.id, code: dc.code, type: dc.type, value: dc.value })),
         };
         // Update biz name in sidebar/topbar
-        if (typeof window.applyBizName === 'function') window.applyBizName();
-      }
+            if (typeof window.applyBizName === 'function') window.applyBizName();
+        // Update UI dropdowns to match loaded settings
+            setTimeout(function() {
+             var tzEl = document.getElementById('gs-tz');
+             if (tzEl) tzEl.value = window.generalSettings.timezone;
+             var fmtEl = document.getElementById('gs-timefmt');
+             if (fmtEl) fmtEl.value = window.generalSettings.timeFormat;
+             var curEl = document.getElementById('gs-currency');
+             if (curEl) curEl.value = window.generalSettings.currency;
+             }, 500);
+          }
 
       // ── System Users ──
       if (usersRes.status === 'fulfilled' && usersRes.value) {
