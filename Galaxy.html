@@ -287,7 +287,7 @@ tbody tr:hover .row-actions{display:flex}
 .sidebar-nav{flex:1;overflow-y:auto}
 </style>
   <script src="api.js"></script>
-  <script src="galaxy-integration.js?v=23"></script>
+  <script src="galaxy-integration.js?v=24"></script>
 </head>
 <body>
 <!-- LOGIN -->
@@ -4534,12 +4534,12 @@ function renderGeneralPage(){
             <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Currency</div>
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Symbol</label>
             <select id="gs-currency" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-              <option value="LKR" ${gs.currency==='LKR'?'selected':''}>${generalSettings.currency}  — Sri Lankan Rupee</option>
-              <option value="USD" ${gs.currency==='USD'?'selected':''}>USD — US Dollar</option>
-              <option value="EUR" ${gs.currency==='EUR'?'selected':''}>EUR — Euro</option>
-              <option value="GBP" ${gs.currency==='GBP'?'selected':''}>GBP — British Pound</option>
-              <option value="AUD" ${gs.currency==='AUD'?'selected':''}>AUD — Australian Dollar</option>
-              <option value="AED" ${gs.currency==='AED'?'selected':''}>AED — UAE Dirham</option>
+              <option value="LKR" ${gs.currency==='LKR'?'selected="selected"':''}>LKR — Sri Lankan Rupee</option>
+              <option value="USD" ${gs.currency==='USD'?'selected="selected"':''}>USD — US Dollar</option>
+              <option value="EUR" ${gs.currency==='EUR'?'selected="selected"':''}>EUR — Euro</option>
+              <option value="GBP" ${gs.currency==='GBP'?'selected="selected"':''}>GBP — British Pound</option>
+              <option value="AUD" ${gs.currency==='AUD'?'selected="selected"':''}>AUD — Australian Dollar</option>
+              <option value="AED" ${gs.currency==='AED'?'selected="selected"':''}>AED — UAE Dirham</option>
             </select>
           </div>
           <div class="card" style="margin-bottom:0">
