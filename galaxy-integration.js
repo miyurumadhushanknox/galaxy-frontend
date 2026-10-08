@@ -655,12 +655,15 @@ if (typeof window.renderGeneralPage === 'function') {
       window.saveGeneralSettings = async function () {
         // Let original collect values into generalSettings first
         // Read currency directly from dropdown before origSave
-        var _currencyEl = document.getElementById('gs-currency');
-        if (_currencyEl && _currencyEl.value) {
-        window.generalSettings = window.generalSettings || {};
-        window.generalSettings.currency = _currencyEl.value;
-        }
-        _origSave();
+            var _currencyEl = document.getElementById('gs-currency');
+            var _tzEl = document.getElementById('gs-tz');
+      var _fmtEl = document.getElementById('gs-timefmt');
+      var _wgs = window.generalSettings || {};
+      if (_currencyEl && _currencyEl.value) _wgs.currency = _currencyEl.value;
+      if (_tzEl && _tzEl.value) _wgs.timezone = _tzEl.value;
+      if (_fmtEl && _fmtEl.value) _wgs.timeFormat = _fmtEl.value;
+      window.generalSettings = _wgs;
+      _origSave();
        const gs = window.generalSettings || {};
         try {
           await Promise.all([
