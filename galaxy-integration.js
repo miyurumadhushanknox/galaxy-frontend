@@ -667,7 +667,7 @@ if (typeof window.renderGeneralPage === 'function') {
        const gs = window.generalSettings || {};
         try {
           await Promise.all([
-            API.SettingsAPI.updateGeneral({
+             GalaxyAPI.SettingsAPI.updateGeneral({
               currency:            gs.currency,
               timezone:            gs.timezone,
               date_format:         gs.dateFormat,
@@ -676,16 +676,16 @@ if (typeof window.renderGeneralPage === 'function') {
               email_alerts:        gs.emailAlerts,
               order_alerts:        gs.orderAlerts,
             }),
-            API.SettingsAPI.updateBusiness({
+            GalaxyAPI.SettingsAPI.updateBusiness({
               name:     gs.bizName,
               category: gs.bizCategory,
               address:  gs.bizAddress,
               phone:    gs.bizPhone,
             }),
           ]);
-          API.showToast('Settings saved!', 'success');
+          GalaxyAPI.showToast('Settings saved!', 'success');
         } catch (err) {
-          API.showToast('Settings saved locally (sync failed).', 'info');
+          GalaxyAPI.showToast('Settings saved locally (sync failed).', 'info');
         }
       };
     }
