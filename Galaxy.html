@@ -4339,11 +4339,11 @@ function applyTheme(theme){
 function saveGeneralSettings(){
   // collect all values
   if(can('settings.timecurr')){
-    generalSettings.timezone   = document.getElementById('gs-tz')?.value||generalSettings.timezone;
-    // (currency saved above in timecurr block)
-    generalSettings.timeFormat = document.getElementById('gs-timefmt')?.value||generalSettings.timeFormat;
-    generalSettings.currency = document.getElementById('gs-currency')?.value||generalSettings.currency;
+  generalSettings.timezone   = document.getElementById('gs-tz')?.value||generalSettings.timezone;
+  // (currency saved above in timecurr block)
+  generalSettings.timeFormat = document.getElementById('gs-timefmt')?.value||generalSettings.timeFormat;
   }
+    generalSettings.currency = document.getElementById('gs-currency')?.value||generalSettings.currency;
   generalSettings.dateFormat = document.getElementById('gs-datefmt')?.value||generalSettings.dateFormat;
   // (timeFormat saved above)
   // (currency saved above in timecurr block)
