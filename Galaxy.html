@@ -5559,6 +5559,7 @@ function openEditUser(id){
   document.getElementById('up-role').value=u.role;
   document.getElementById('up-commission-section').style.display=u.role==='sales'?'block':'none';
 
+  document.getElementById('up-role').innerHTML=`${currentUser.role!=='owner'?'':'<option value="admin">Admin</option>'}<option value="manager">Manager</option><option value="sales">Sales</option><option value="stockkeeper">Stock Keeper</option><option value="delivery">Delivery</option><option value="accountant">Accountant</option>`;
   if(u.role==='owner'){
   document.getElementById('up-role').innerHTML='<option value="owner">Owner</option>';
   document.getElementById('up-role').disabled=true;
