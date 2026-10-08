@@ -5616,7 +5616,8 @@ function saveUser(){
   const base = 'https://galaxy-backend-production-6a12.up.railway.app/api';
   if(id){
     fetch(`${base}/users/${id}`,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({firstName:first,lastName:last,email,username:uname,role,status,commission,newPassword:pass})})
-      .then(r=>r.json()).then(()=>{
+      .then(r=>r.json()).then(data=>{
+      if(data.error){toast(data.error,'err');return;}
         const u=systemUsers.find(x=>x.id===id);
         if(u){u.firstName=first;u.lastName=last;u.email=email;u.username=uname;u.role=role;u.status=status;u.commission=commission;}
         toast('User updated!','ok');
@@ -5625,6 +5626,7 @@ function saveUser(){
   } else {
     fetch(`${base}/users`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({firstName:first,lastName:last,email,username:uname,password:pass,role,commission})})
       .then(r=>r.json()).then(u=>{
+      if(u.error){toast(u.error,'err');return;}
         const newUser={id:u.id,firstName:first,lastName:last,email,username:uname,password:'',role,status:u.status!==false,lastLogin:'Never',commission};
              systemUsers.push(newUser);
              if(window.systemUsers) window.systemUsers.push(newUser);
