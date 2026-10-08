@@ -159,24 +159,25 @@
       // ── Settings ──
       if (settingsRes.status === 'fulfilled' && settingsRes.value) {
         const s = settingsRes.value;
-        const gs = window.generalSettings || {};
-        window.generalSettings = {
-          ...gs,
-          currency:          s.settings?.currency || 'LKR',
-          timezone:          s.settings?.timezone || 'Asia/Colombo',
-          dateFormat:        s.settings?.date_format || 'DD.MM.YYYY',
-          timeFormat:        s.settings?.time_format || '24hr',
-          lowStockThreshold: s.settings?.low_stock_threshold || 5,
-          emailAlerts:       s.settings?.email_alerts !== false,
-          orderAlerts:       s.settings?.order_alerts !== false,
-          bizName:           s.business?.name || gs.bizName || '',
-          bizCategory:       s.business?.category || gs.bizCategory || '',
-          bizAddress:        s.business?.address || gs.bizAddress || '',
-          bizPhone:          s.business?.phone || gs.bizPhone || '',
-          deliveryMethods:   (s.deliveryMethods || []).map(d => ({ id: d.id, name: d.name, price: d.price || 0 })),
-          paymentMethods:    (s.paymentMethods  || []).map(m => m.name),
-          discountCodes:     (s.discountCodes   || []).map(dc => ({ id: dc.id, code: dc.code, type: dc.type, value: dc.value })),
-        };
+        var _gs = window.generalSettings;
+if (!_gs) { _gs = {}; window.generalSettings = _gs; }
+Object.assign(_gs, {
+  currency:   s.settings?.currency   || 'LKR',
+  timezone:   s.settings?.timezone   || 'Asia/Colombo',
+  dateFormat: s.settings?.date_format || 'DD.MM.YYYY',
+  timeFormat: s.settings?.time_format || '24hr',
+  lowStockThreshold: s.settings?.low_stock_threshold || 5,
+  emailAlerts: s.settings?.email_alerts !== false,
+  orderAlerts: s.settings?.order_alerts !== false,
+  bizName:    s.business?.name     || _gs.bizName    || '',
+  bizCategory: s.business?.category || _gs.bizCategory || '',
+  bizAddress: s.business?.address  || _gs.bizAddress  || '',
+  bizPhone:   s.business?.phone    || _gs.bizPhone    || '',
+  deliveryMethods: (s.deliveryMethods || []).map(d => ({ id: d.id, name: d.name, price: d.price || 0 })),
+  paymentMethods:  (s.paymentMethods  || []).map(m => m.name),
+  discountCodes:   (s.discountCodes   || []).map(dc => ({ id: dc.id, code: dc.code, type: dc.type, value: dc.value })),
+});
+if (typeof generalSettings !== 'undefined') Object.assign(generalSettings, _gs);
         // Update biz name in sidebar/topbar
                 if (typeof window.applyBizName === 'function') window.applyBizName();
     // Re-render General page now if user is already on it
