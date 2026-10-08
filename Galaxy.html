@@ -4341,6 +4341,7 @@ function saveGeneralSettings(){
   if(can('settings.timecurr')){
     generalSettings.timezone   = document.getElementById('gs-tz')?.value||generalSettings.timezone;
     // (currency saved above in timecurr block)
+    generalSettings.timeFormat = document.getElementById('gs-timefmt')?.value||generalSettings.timeFormat;
   }
   generalSettings.dateFormat = document.getElementById('gs-datefmt')?.value||generalSettings.dateFormat;
   // (timeFormat saved above)
