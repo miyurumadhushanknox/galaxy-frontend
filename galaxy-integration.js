@@ -179,24 +179,27 @@
         };
         // Update biz name in sidebar/topbar
                 if (typeof window.applyBizName === 'function') window.applyBizName();
-    // Patch navigate to always restore dropdowns when visiting General page
-    (function() {
-      var _origNav = window.navigate;
-      window.navigate = function(page) {
-        if (_origNav) _origNav(page);
-        if (page === 'general') {
-          setTimeout(function() {
-            var gs = window.generalSettings || {};
-            var tzEl = document.getElementById('gs-tz');
-            if (tzEl) tzEl.value = gs.timezone || 'Asia/Colombo';
-            var fmtEl = document.getElementById('gs-timefmt');
-            if (fmtEl) fmtEl.value = gs.timeFormat || '24hr';
-            var curEl = document.getElementById('gs-currency');
-            if (curEl) curEl.value = gs.currency || 'LKR';
-          }, 100);
+    // Re-render General page now if user is already on it
+if (typeof window.renderGeneralPage === 'function') {
+  var activePage = document.querySelector('.page.active');
+  if (activePage && activePage.id === 'page-general') {
+    window.renderGeneralPage();
+  }
+}
+// Patch navigate to re-render General page with fresh settings
+(function() {
+  var _origNav = window.navigate;
+  window.navigate = function(page) {
+    if (_origNav) _origNav(page);
+    if (page === 'general') {
+      setTimeout(function() {
+        if (typeof window.renderGeneralPage === 'function') {
+          window.renderGeneralPage();
         }
-      };
-    })();
+      }, 50);
+    }
+  };
+})();
           }
 
       // ── System Users ──
