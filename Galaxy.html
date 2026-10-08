@@ -5556,6 +5556,8 @@ function openEditUser(id){
   document.getElementById('up-change-pw-chk').checked=false;
   document.getElementById('up-pw-chk-label').style.display='';
   document.getElementById('up-password').style.display='none';
+  document.getElementById('up-role').value=u.role;
+  document.getElementById('up-commission-section').style.display=u.role==='sales'?'block':'none';
 
   document.getElementById('up-role').innerHTML='<option value="admin">Admin</option><option value="manager">Manager</option><option value="sales">Sales</option><option value="stockkeeper">Stock Keeper</option><option value="delivery">Delivery</option><option value="accountant">Accountant</option>';
   if(u.role==='owner'){
@@ -5564,10 +5566,6 @@ function openEditUser(id){
   } else {
   document.getElementById('up-role').disabled=false;
   }
-  }
-  document.getElementById('up-role').value=u.role;
-  document.getElementById('up-commission-section').style.display=u.role==='sales'?'block':'none';
-
   // Load commission
   const cm = u.commission||{on:false,method:'percent',percent:0,perUnit:0};
   const commTgl = document.getElementById('up-comm-tgl');
