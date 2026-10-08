@@ -179,7 +179,7 @@
         };
         // Update biz name in sidebar/topbar
         if (typeof window.applyBizName === 'function') window.applyBizName();
-        if (typeof window.applyGeneralSettings === 'function') window.applyGeneralSettings();
+        setTimeout(function(){ var p=document.querySelector('.page.active'); if(p) { var pg=p.id.replace('page-',''); if(typeof window.navigate==='function') window.navigate(pg); } }, 300);
       }
 
       // ── System Users ──
