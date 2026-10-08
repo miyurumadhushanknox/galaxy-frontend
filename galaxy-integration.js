@@ -1185,8 +1185,29 @@
       }).join('');
     };
   }
-  _installSearchItems();
+    _installSearchItems();
   setTimeout(_installSearchItems, 500);
   setTimeout(_installSearchItems, 1500);
+
+  // Patch navigate to restore settings dropdowns when visiting General page
+  (function() {
+    var _origNav = window.navigate;
+    if (_origNav) {
+      window.navigate = function(page) {
+        _origNav(page);
+        if (page === 'general') {
+          setTimeout(function() {
+            var gs = window.generalSettings || {};
+            var tzEl = document.getElementById('gs-tz');
+            if (tzEl) tzEl.value = gs.timezone || 'Asia/Colombo';
+            var fmtEl = document.getElementById('gs-timefmt');
+            if (fmtEl) fmtEl.value = gs.timeFormat || '24hr';
+            var curEl = document.getElementById('gs-currency');
+            if (curEl) curEl.value = gs.currency || 'LKR';
+          }, 100);
+        }
+      };
+    }
+  })();
 
 })();
