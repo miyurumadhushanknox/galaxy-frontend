@@ -5608,7 +5608,7 @@ function saveUser(){
   const email =document.getElementById('up-email').value.trim();
   const uname =document.getElementById('up-username').value.trim();
   const pass  =document.getElementById('up-password').value.trim();
-  const role  =document.getElementById('up-role').value;
+  const role  =document.getElementById('up-role').value||document.getElementById('up-role').options[0]?.value;
   const status=document.getElementById('up-status-tgl').classList.contains('on');
   if(!first||!uname||(id===null&&!pass)){toast('Please fill all required fields','err');return;}
   const dup= id ? (window.systemUsers||systemUsers||[]).find(u=>u.username===uname&&u.id!==id) : (window.systemUsers||systemUsers||[]).find(u=>u.username===uname);
