@@ -1130,10 +1130,6 @@ if (typeof window.renderGeneralPage === 'function') {
   if (_lastPage) { setTimeout(function(){ if(window.navigate) window.navigate(_lastPage); }, 0); }
   document.body.style.visibility = 'visible';
   loadRealData().finally(function() {
-       // Re-render General page with correct settings if already there
-      if (typeof window.renderGeneralPage === 'function') {
-        setTimeout(window.renderGeneralPage, 500);
-      }
 
         // After data loads, restore last page and re-render if needed
         if (_lastPage) {
