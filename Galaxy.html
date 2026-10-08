@@ -7000,7 +7000,7 @@ function applyBizName(){
 
 
 // ── CLOCK ──
-setInterval(()=>{const el=document.getElementById("clock");if(!el)return;const d=new Date();const tz=(generalSettings?.timezone||'Asia/Colombo').split(' ')[0];el.textContent=d.toLocaleDateString("en-US",{weekday:"short",day:"2-digit",month:"short",year:"numeric",timeZone:tz})+" \u00b7 "+d.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",timeZone:tz});},1000);
+setInterval(()=>{const el=document.getElementById("clock");if(!el)return;const d=new Date();const tz=(generalSettings?.timezone||'Asia/Colombo').split(' ')[0];el.textContent=d.toLocaleDateString("en-US",{weekday:"short",day:"2-digit",month:"short",year:"numeric",timeZone:tz})+" \u00b7 "+d.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",timeZone:tz,hour12:generalSettings?.timeFormat!=='24hr'});},1000);
 </script>
 
 <div id="mob-bottom-nav"> 
