@@ -660,7 +660,7 @@ if (typeof window.renderGeneralPage === 'function') {
       var _fmtEl = document.getElementById('gs-timefmt');
       var _wgs = window.generalSettings || {};
       if (_currencyEl && _currencyEl.value) _wgs.currency = _currencyEl.value;
-      if (_tzEl && _tzEl.value) _wgs.timezone = _tzEl.value;
+      if (_tzEl && _tzEl.value) _wgs.timezone = _tzEl.value.replace(/\s*\(.*\)$/, '').trim();
       if (_fmtEl && _fmtEl.value) _wgs.timeFormat = _fmtEl.value;
       window.generalSettings = _wgs;
       _origSave();
