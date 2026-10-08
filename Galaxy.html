@@ -5593,7 +5593,7 @@ function closeUserPanel(){
 }
 
 function saveUser(){
-  const id = document.getElementById('up-id').value ? parseInt(document.getElementById('up-id').value) : null;
+  const id = document.getElementById('up-id').value || null;
   const first =document.getElementById('up-first').value.trim();
   const last  =document.getElementById('up-last').value.trim();
   const email =document.getElementById('up-email').value.trim();
@@ -5602,7 +5602,7 @@ function saveUser(){
   const role  =document.getElementById('up-role').value;
   const status=document.getElementById('up-status-tgl').classList.contains('on');
   if(!first||!uname||(id===null&&!pass)){toast('Please fill all required fields','err');return;}
-  const dup= id ? (window.systemUsers||systemUsers||[]).find(u=>u.username===uname&&u.id!=id) : (window.systemUsers||systemUsers||[]).find(u=>u.username===uname);
+  const dup= id ? (window.systemUsers||systemUsers||[]).find(u=>u.username===uname&&u.id!==id) : (window.systemUsers||systemUsers||[]).find(u=>u.username===uname);
   if(dup){toast('Username already taken','err');return;}
   // collect commission
   const commOn    = document.getElementById('up-comm-tgl')?.classList.contains('on')||false;
