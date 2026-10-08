@@ -670,11 +670,11 @@ if (typeof window.renderGeneralPage === 'function') {
              GalaxyAPI.SettingsAPI.updateGeneral({
               currency:            gs.currency,
               timezone:            gs.timezone,
-              date_format:         gs.dateFormat,
-              time_format:         gs.timeFormat,
-              low_stock_threshold: gs.lowStockThreshold,
-              email_alerts:        gs.emailAlerts,
-              order_alerts:        gs.orderAlerts,
+              dateFormat:           gs.dateFormat,
+              timeFormat:           gs.timeFormat,
+              lowStockThreshold:    gs.lowStockThreshold,
+              emailAlerts:          gs.emailAlerts,
+              orderAlerts:          gs.orderAlerts,
             }),
             GalaxyAPI.SettingsAPI.updateBusiness({
               name:     gs.bizName,
