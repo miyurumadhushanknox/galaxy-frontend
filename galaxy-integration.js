@@ -645,8 +645,14 @@
     if (_origSave) {
       window.saveGeneralSettings = async function () {
         // Let original collect values into generalSettings first
+        // Read currency directly from dropdown before origSave
+        var _currencyEl = document.getElementById('gs-currency');
+        if (_currencyEl && _currencyEl.value) {
+        window.generalSettings = window.generalSettings || {};
+        window.generalSettings.currency = _currencyEl.value;
+        }
         _origSave();
-        const gs = window.generalSettings || {};
+       const gs = window.generalSettings || {};
         try {
           await Promise.all([
             API.SettingsAPI.updateGeneral({
