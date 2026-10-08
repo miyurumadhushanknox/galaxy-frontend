@@ -909,7 +909,7 @@ tbody tr:hover .row-actions{display:flex}
             <input type="number" id="f-purchase" placeholder="0" min="0" oninput="autoCalc()">
           </div>
           <div class="field-row" style="margin-top:12px">
-            <label>Selling price (LKR) *</label>
+            <label>Selling price (${generalSettings.currency}) *</label>
             <input type="number" id="f-selling" placeholder="0" min="0" oninput="autoCalc()">
           </div>
         </div>
@@ -939,9 +939,9 @@ tbody tr:hover .row-actions{display:flex}
         <div class="selling-card">
           <div class="selling-title">Selling Details</div>
           <div class="selling-sub">Auto calculated · Read only</div>
-          <div class="auto-row"><label>Profit (Each one)</label><div class="auto-val" id="g-profit">LKR 0</div></div>
-          <div class="auto-row"><label>Stock value (Purchase)</label><div class="auto-val" id="g-stk-pp">LKR 0</div></div>
-          <div class="auto-row"><label>Stock value (Selling)</label><div class="auto-val" id="g-stk-sp">LKR 0</div></div>
+          <div class="auto-row"><label>Profit (Each one)</label><div class="auto-val" id="g-profit">${generalSettings.currency}  0</div></div>
+          <div class="auto-row"><label>Stock value (Purchase)</label><div class="auto-val" id="g-stk-pp">${generalSettings.currency}  0</div></div>
+          <div class="auto-row"><label>Stock value (Selling)</label><div class="auto-val" id="g-stk-sp">${generalSettings.currency}  0</div></div>
           <div class="auto-row"><label>Total quantity</label><div class="auto-val" id="g-qty">0 units</div></div>
         </div>
         <div class="card">
@@ -1081,7 +1081,7 @@ tbody tr:hover .row-actions{display:flex}
                     <input id="up-comm-pct" type="number" min="0" max="100" step="0.5" placeholder="e.g. 5" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                   </div>
                   <div id="up-comm-unit-wrap" style="display:none">
-                    <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Commission per unit (LKR)</label>
+                    <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Commission per unit (${generalSettings.currency})</label>
                     <input id="up-comm-unit" type="number" min="0" step="1" placeholder="e.g. 50" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                   </div>
                   <!-- Minimum product cap -->
@@ -1153,7 +1153,7 @@ tbody tr:hover .row-actions{display:flex}
                 <input id="fin-add-title" type="text" placeholder="e.g. Facebook ad cost, WiFi bill" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               </div>
               <div>
-                <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Amount (LKR)</label>
+                <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Amount (${generalSettings.currency})</label>
                 <input id="fin-add-amount" type="number" min="0" step="1" placeholder="e.g. 5000" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               </div>
             </div>
@@ -1246,7 +1246,7 @@ tbody tr:hover .row-actions{display:flex}
                 Delivery method
               </div>
               <select id="o-delivery" onchange="calcOrder()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%">
-                ${(generalSettings.deliveryMethods||[]).map(d=>`<option value="${d.price}">${d.name}${d.price>0?' — LKR '+d.price:''}</option>`).join('')}
+                ${(generalSettings.deliveryMethods||[]).map(d=>`<option value="${d.price}">${d.name}${d.price>0?' — ${generalSettings.currency} '+d.price:''}</option>`).join('')}
               </select>
               <span id="o-delivery-cost" style="font-size:13px;font-weight:700;color:#18182b;min-width:85px;text-align:right"></span>
             </div>
@@ -1271,7 +1271,7 @@ tbody tr:hover .row-actions{display:flex}
             <div style="height:1.5px;background:#e4e4f0;margin-bottom:12px"></div>
             <div style="display:flex;justify-content:space-between;align-items:center">
               <span style="font-size:14px;font-weight:900;color:#18182b">Subtotal</span>
-              <span id="o-subtotal" style="font-size:17px;font-weight:900;color:#e8220e">LKR 0</span>
+              <span id="o-subtotal" style="font-size:17px;font-weight:900;color:#e8220e">${generalSettings.currency}  0</span>
             </div>
           </div>
 
@@ -1311,15 +1311,15 @@ tbody tr:hover .row-actions{display:flex}
               <div id="od-items-rows" style="display:flex;flex-direction:column;gap:0"></div>
               <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
                 <span style="font-size:12px;font-weight:700;color:#9090b8">Delivery charge</span>
-                <span id="od-delivery" style="font-size:13px;font-weight:600;color:#18182b">LKR 0</span>
+                <span id="od-delivery" style="font-size:13px;font-weight:600;color:#18182b">${generalSettings.currency}  0</span>
               </div>
               <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
                 <span style="font-size:12px;font-weight:700;color:#9090b8">Discount</span>
-                <span id="od-discount" style="font-size:13px;font-weight:600;color:#16a34a">LKR 0</span>
+                <span id="od-discount" style="font-size:13px;font-weight:600;color:#16a34a">${generalSettings.currency}  0</span>
               </div>
               <div style="display:flex;justify-content:space-between;padding:10px 0">
                 <span style="font-size:14px;font-weight:900;color:#18182b">Total</span>
-                <span id="od-total" style="font-size:16px;font-weight:900;color:#e8220e">LKR 0</span>
+                <span id="od-total" style="font-size:16px;font-weight:900;color:#e8220e">${generalSettings.currency}  0</span>
               </div>
             </div>
           </div>
@@ -2215,15 +2215,15 @@ function calcOrder(){
   if(discount>0){discEl.textContent="− LKR "+discount.toLocaleString();discEl.style.color="#16a34a";}
   else if(codeVal&&!DISCOUNT_CODES[codeVal]){discEl.textContent="Invalid code";discEl.style.color="#aaa";}
   else{discEl.textContent="";}
-  document.getElementById("o-subtotal").textContent="LKR "+subtotal.toLocaleString();
+  document.getElementById("o-subtotal").textContent=(generalSettings.currency||"LKR")+" "+subtotal.toLocaleString();
   // Update Order Details panel on right
   const odDel=document.getElementById("od-delivery");
   const odDisc=document.getElementById("od-discount");
   const odTotal=document.getElementById("od-total");
   const odItemsRows=document.getElementById("od-items-rows");
-  if(odDel)odDel.textContent="LKR "+deliveryCost.toLocaleString();
+  if(odDel)odDel.textContent=(generalSettings.currency||"LKR")+" "+deliveryCost.toLocaleString();
   if(odDisc)odDisc.textContent=discount>0?"− LKR "+discount.toLocaleString():"LKR 0";
-  if(odTotal)odTotal.textContent="LKR "+subtotal.toLocaleString();
+  if(odTotal)odTotal.textContent=(generalSettings.currency||"LKR")+" "+subtotal.toLocaleString();
   if(odItemsRows)odItemsRows.innerHTML=orderItems.map(item=>{
     const p=products.find(x=>x.id===item.pid);if(!p)return"";
     const price=item.customPrice!==null?item.customPrice:p.price;
@@ -3335,7 +3335,7 @@ function openEditOrder(id){
     document.getElementById('c-city').value    = o.city||'';
 
     // Pre-fill delivery, payment, discount
-    const delMap = {'No Delivery':'0','Koombiyo — LKR 400':'400','Lanka Courier — LKR 350':'350','DHL — LKR 500':'500','Domex — LKR 300':'300'};
+    const delMap = {'No Delivery':'0','Koombiyo — ${generalSettings.currency} 400':'400','Lanka Courier — ${generalSettings.currency} 350':'350','DHL — ${generalSettings.currency} 500':'500','Domex — ${generalSettings.currency} 300':'300'};
     const delSel = document.getElementById('o-delivery');
     if(delSel){
       // find matching value
@@ -3981,7 +3981,7 @@ function renderBillingPage(){
             <div style="font-size:16px;font-weight:900;color:${isCurrent?plan.color:'#18182b'}">${plan.name}</div>
             ${isCurrent?`<span style="font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px;background:${plan.bg};color:${plan.textColor};letter-spacing:.05em;text-transform:uppercase">Active</span>`:''}
           </div>
-          <div style="font-size:22px;font-weight:900;color:#18182b;margin-bottom:2px">${plan.price?'LKR '+N(plan.price):'Custom'}</div>
+          <div style="font-size:22px;font-weight:900;color:#18182b;margin-bottom:2px">${plan.price?(generalSettings.currency||'LKR')+' '+N(plan.price):'Custom'}</div>
           <div style="font-size:11px;color:#9090b8;font-weight:500;margin-bottom:14px">${plan.price?'/month':'pricing'}</div>
           <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;flex:1">
             ${plan.features.map(f=>`<div style="display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#18182b">
@@ -4184,11 +4184,11 @@ function downloadInvoice(e, inv, period, plan, amount, method, date){
         <td>Galaxy Stock Management System — Monthly subscription</td>
         <td>${plan}</td>
         <td>${period}</td>
-        <td style="text-align:right;font-weight:700">LKR ${amount.toLocaleString()}</td>
+        <td style="text-align:right;font-weight:700">${generalSettings.currency}  ${amount.toLocaleString()}</td>
       </tr>
       <tr class="total-row">
         <td colspan="3">Total</td>
-        <td style="text-align:right" class="total-amount">LKR ${amount.toLocaleString()}</td>
+        <td style="text-align:right" class="total-amount">${generalSettings.currency}  ${amount.toLocaleString()}</td>
       </tr>
     </tbody>
   </table>
@@ -4342,6 +4342,7 @@ function saveGeneralSettings(){
     generalSettings.timezone   = document.getElementById('gs-tz')?.value||generalSettings.timezone;
     // (currency saved above in timecurr block)
     generalSettings.timeFormat = document.getElementById('gs-timefmt')?.value||generalSettings.timeFormat;
+    generalSettings.currency = document.getElementById('gs-currency')?.value||generalSettings.currency;
   }
   generalSettings.dateFormat = document.getElementById('gs-datefmt')?.value||generalSettings.dateFormat;
   // (timeFormat saved above)
@@ -4494,7 +4495,7 @@ function renderGeneralPage(){
                     <input type="text" value="${d.code}" placeholder="Code" oninput="gsUpdateDiscount(${i},'code',this.value)" style="flex:2;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-transform:uppercase" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                     <select oninput="gsUpdateDiscount(${i},'type',this.value)" style="padding:7px 9px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none">
                       <option value="percent" ${d.type==='percent'?'selected':''}>%</option>
-                      <option value="fixed"   ${d.type==='fixed'?'selected':''}>LKR</option>
+                      <option value="fixed"   ${d.type==='fixed'?'selected':''}>${generalSettings.currency} </option>
                     </select>
                     <input type="number" value="${d.value}" min="0" placeholder="Value" oninput="gsUpdateDiscount(${i},'value',this.value)" style="width:70px;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                     <button onclick="gsRemoveDiscount(${i})" style="padding:6px 10px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;flex-shrink:0">✕</button>
@@ -4533,7 +4534,7 @@ function renderGeneralPage(){
             <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Currency</div>
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Symbol</label>
             <select id="gs-currency" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-              <option value="LKR" ${gs.currency==='LKR'?'selected':''}>LKR — Sri Lankan Rupee</option>
+              <option value="LKR" ${gs.currency==='LKR'?'selected':''}>${generalSettings.currency}  — Sri Lankan Rupee</option>
               <option value="USD" ${gs.currency==='USD'?'selected':''}>USD — US Dollar</option>
               <option value="EUR" ${gs.currency==='EUR'?'selected':''}>EUR — Euro</option>
               <option value="GBP" ${gs.currency==='GBP'?'selected':''}>GBP — British Pound</option>
@@ -5110,7 +5111,7 @@ ${(currentReportTab!=='stock'&&currentReportTab!=='orders')?`
               const role=e.sysUser?.role||'—';
               const rInfo=ROLES?.find(r=>r.key===role);
               const cm=e.cm;
-              const rateLabel=cm.on?(cm.method==='percent'?(cm.percent||0)+'% of rev':'LKR '+(cm.perUnit||0)+'/unit'):'No commission';
+              const rateLabel=cm.on?(cm.method==='percent'?(cm.percent||0)+'% of rev':(generalSettings.currency||'LKR')+' '+(cm.perUnit||0)+'/unit'):'No commission';
               const capLabel=cm.on&&cm.minCapOn?` · min ${cm.minCap} units`:'';
               return`<tr>
                 <td><div style="font-weight:800;font-size:13px">${e.name}</div><div style="font-size:10px;color:#9090b8">${rateLabel}${capLabel}</div></td>
@@ -5951,7 +5952,7 @@ function gsAddDiscount(){
 function finAddEntry(type){
   const label = prompt((type==='expense'?'Expense':'Revenue')+' label:');
   if(!label) return;
-  const amt = parseFloat(prompt('Amount (LKR):'));
+  const amt = parseFloat(prompt('Amount (${generalSettings.currency}):'));
   if(isNaN(amt)||amt<=0) return;
   financeExpenditures.push({id:financeIdCtr++, month:activeFinanceMonth, label, amount:amt, type});
   renderReportsPage();
@@ -6123,7 +6124,7 @@ function drawRevTrendChart(ordersToPlot){
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': LKR '+Math.round(ctx.parsed.y).toLocaleString()}}},
       scales:{
         x:{grid:{display:false},ticks:{font:{size:10},color:'#9090b8',maxRotation:45,autoSkip:true,maxTicksLimit:15}},
-        y:{grid:{color:'#f5f5fa'},ticks:{font:{size:10},color:'#9090b8',callback:v=>'LKR '+Math.round(v/1000)+'K'}}
+        y:{grid:{color:'#f5f5fa'},ticks:{font:{size:10},color:'#9090b8',callback:v=>(generalSettings.currency||'LKR')+' '+Math.round(v/1000)+'K'}}
       }
     }
   });
@@ -6293,7 +6294,7 @@ function drawSalesChart(){
         x:{grid:{display:false},ticks:{font:{size:9},color:'#9090b8',maxRotation:45,autoSkip:true,
           maxTicksLimit:labels.length<=7?labels.length:labels.length<=28?labels.length:20}},
         y:{grid:{color:'#f5f5fa'},ticks:{font:{size:10},color:'#9090b8',
-          callback:v=>'LKR '+Math.round(v/1000)+'K'}}
+          callback:v=>(generalSettings.currency||'LKR')+' '+Math.round(v/1000)+'K'}}
       }
     };
   }
@@ -6929,7 +6930,7 @@ function drawDashboardCharts(labels,rev,profit,statusCounts,scColors){
     ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': LKR '+Math.round(ctx.parsed.y).toLocaleString()}}},
       scales:{x:{grid:{display:false},ticks:{font:{size:9},color:'#9090b8',autoSkip:true,maxTicksLimit:10}},
-              y:{grid:{color:'#f5f5fa'},ticks:{font:{size:9},color:'#9090b8',callback:v=>'LKR '+Math.round(v/1000)+'K'}}}}});
+              y:{grid:{color:'#f5f5fa'},ticks:{font:{size:9},color:'#9090b8',callback:v=>(generalSettings.currency||'LKR')+' '+Math.round(v/1000)+'K'}}}}});
   }
 
   const dc=document.getElementById('db-donut');
