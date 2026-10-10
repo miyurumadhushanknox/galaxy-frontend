@@ -4246,10 +4246,9 @@ function downloadInvoice(e, inv, period, plan, amount, method, date){
 </div>
 </body>
 </html>`;
-  const win = window.open('', '_blank');
-  win.document.write(html);
-  win.document.close();
-  win.focus();
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, '_blank');
   setTimeout(()=>{ win.focus(); }, 300);
   toast('Invoice '+inv+' downloaded!','ok');
 }
