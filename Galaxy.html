@@ -287,7 +287,7 @@ tbody tr:hover .row-actions{display:flex}
 .sidebar-nav{flex:1;overflow-y:auto}
 </style>
   <script src="api.js"></script>
-  <script src="galaxy-integration.js?v=36"></script>
+  <script src="galaxy-integration.js?v=38"></script>
 </head>
 <body>
 <!-- LOGIN -->
@@ -4136,6 +4136,8 @@ function downloadInvoice(e, inv, period, plan, amount, method, date){
   .footer-left{font-size:11px;color:#9090b8;line-height:1.7}
   .footer-right{text-align:right;font-size:11px;color:#9090b8}
   .paid-stamp{display:inline-block;border:3px solid #16a34a;color:#16a34a;font-size:20px;font-weight:900;padding:8px 20px;border-radius:4px;letter-spacing:.12em;transform:rotate(-8deg);margin-top:12px}
+
+@media print { .mob-nav, .sidebar, nav, #bottom-nav { display:none!important; } }
 </style>
 </head>
 <body>
@@ -4205,10 +4207,10 @@ function downloadInvoice(e, inv, period, plan, amount, method, date){
   </div>
   <div class="footer">
     <div class="footer-left">
-      <strong>KNOX (Pvt) Ltd.</strong><br>
+      <strong>KNOX</strong><br>
       Biyagama, Western Province<br>
       Sri Lanka<br>
-      knoxwex@gmail.com
+      hello@knoxlive.com
     </div>
     <div class="footer-right">
       Invoice No. ${inv}<br>
