@@ -4184,11 +4184,12 @@ function downloadInvoice(e, inv, period, plan, amount, method, date){
         <td>Galaxy Stock Management System — Monthly subscription</td>
         <td>${plan}</td>
         <td>${period}</td>
-        <td style="text-align:right;font-weight:700">${generalSettings.currency}  ${amount.toLocaleString()}</td>
+        <td style="text-align:right;font-weight:700">>LKR ${amount.toLocaleString()}</td>
+
       </tr>
       <tr class="total-row">
         <td colspan="3">Total</td>
-        <td style="text-align:right" class="total-amount">${generalSettings.currency}  ${amount.toLocaleString()}</td>
+        <td style="text-align:right" class="total-amount">LKR ${amount.toLocaleString()}</td>
       </tr>
     </tbody>
   </table>
