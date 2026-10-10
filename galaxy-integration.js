@@ -1129,6 +1129,18 @@ if (typeof window.renderGeneralPage === 'function') {
     patchFinance();
     patchOrderItems();
 
+    setTimeout(function() {
+    var _origNavigate = window.navigate;
+    if (_origNavigate) {
+    window.navigate = function(page) {
+      _origNavigate(page);
+      if (page === 'billing' && typeof window.renderBillingPage === 'function') {
+        setTimeout(window.renderBillingPage, 100);
+      }
+    };
+    }
+    }, 1000);
+
     // If already logged in via sessionStorage (JWT still valid), load real data
     const saved = sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user');
 
