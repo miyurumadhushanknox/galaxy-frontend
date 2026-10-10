@@ -186,6 +186,13 @@ if (typeof window.renderGeneralPage === 'function') {
   if (activePage && activePage.id === 'page-general') {
     window.renderGeneralPage();
   }
+  if (typeof window.renderBillingPage === 'function') {
+  var _billingPage = document.querySelector('.page.active');
+  if (_billingPage && _billingPage.id === 'page-billing') {
+    window.renderBillingPage();
+  }
+  }
+  
 }
 
           }
