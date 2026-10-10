@@ -4247,7 +4247,7 @@ function downloadInvoice(e, inv, period, plan, amount, method, date){
   win.document.write(html);
   win.document.close();
   win.focus();
-  setTimeout(()=>{ win.print(); win.onafterprint = ()=>{ win.close(); }; }, 500);
+  setTimeout(()=>{ win.focus(); win.print(); }, 800);
   toast('Invoice '+inv+' downloaded!','ok');
 }
 
