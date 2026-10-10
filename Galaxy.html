@@ -287,7 +287,7 @@ tbody tr:hover .row-actions{display:flex}
 .sidebar-nav{flex:1;overflow-y:auto}
 </style>
   <script src="api.js"></script>
-  <script src="galaxy-integration.js?v=33"></script>
+  <script src="galaxy-integration.js?v=34"></script>
 </head>
 <body>
 <!-- LOGIN -->
@@ -3981,7 +3981,7 @@ function renderBillingPage(){
             <div style="font-size:16px;font-weight:900;color:${isCurrent?plan.color:'#18182b'}">${plan.name}</div>
             ${isCurrent?`<span style="font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px;background:${plan.bg};color:${plan.textColor};letter-spacing:.05em;text-transform:uppercase">Active</span>`:''}
           </div>
-          <div style="font-size:22px;font-weight:900;color:#18182b;margin-bottom:2px">${plan.price?(generalSettings.currency||'LKR')+' '+N(plan.price):'Custom'}</div>
+          <div style="font-size:22px;font-weight:900;color:#18182b;margin-bottom:2px">${plan.price?'LKR '+N(plan.price):'Custom'}</div>
           <div style="font-size:11px;color:#9090b8;font-weight:500;margin-bottom:14px">${plan.price?'/month':'pricing'}</div>
           <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;flex:1">
             ${plan.features.map(f=>`<div style="display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#18182b">
