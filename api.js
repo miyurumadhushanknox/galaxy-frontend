@@ -283,7 +283,7 @@ function showToast(message, type = 'success') {
     toast.id = 'galaxy-toast';
     toast.style.cssText = `
       position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:10px;
-      font-size:13px;font-weight:700;font-family:'Rubik',sans-serif;
+      font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;
       z-index:99999;transition:all .3s;box-shadow:0 4px 20px rgba(0,0,0,.15);
       max-width:320px;
     `;
