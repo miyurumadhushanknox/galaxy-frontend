@@ -86,10 +86,12 @@
       const data = await API.AuthAPI.login(login, password);
 
     // Patch plan into stored user
-      if (data.business && data.business.plan) {
-      var stored = API.Auth.getUser();
-      if (stored) { stored.plan = data.business.plan; API.Auth.setUser(stored); }
-      }
+    if (data.business && data.business.plan) {
+    try {
+      var _gu = JSON.parse(localStorage.getItem('galaxy_user') || 'null');
+      if (_gu) { _gu.plan = data.business.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu)); }
+      } catch(e) {}
+    }
 
       // Map backend user to the shape Galaxy.html expects
       const user = {
@@ -104,6 +106,13 @@
       if (errEl) errEl.classList.remove('show');
       // Galaxy's built-in session + UI flow
       sessionStorage.setItem(window.SESSION_KEY || 'galaxy_user', JSON.stringify(user));
+      // Patch plan into localStorage user (set by api.js above)
+      if (data.business && data.business.plan) {
+      try {
+        var _gu = JSON.parse(localStorage.getItem('galaxy_user') || 'null');
+        if (_gu) { _gu.plan = data.business.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu)); }
+      } catch(e) {}
+      }
       if (window._stopGalaxy) window._stopGalaxy();
       // Call showApp — try window.showApp first, fall back to direct call
       if (typeof window.showApp === 'function') {
