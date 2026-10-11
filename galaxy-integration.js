@@ -15,6 +15,56 @@
 
   const API = window.GalaxyAPI;
 
+  // Fix billing page to show correct plan from DB (CLIENT_PLAN is hardcoded in Galaxy.html)
+  (function() {
+    var _billingFn = null;
+    Object.defineProperty(window, 'renderBillingPage', {
+      configurable: true,
+      get: function() { return _billingFn; },
+      set: function(fn) {
+        _billingFn = function() {
+          fn.apply(this, arguments);
+          setTimeout(function() {
+            try {
+              var planMap = {monthly2k:'Basic', monthly5k:'Nova', stellar:'Stellar', basic:'Basic', nova:'Nova'};
+              var u = JSON.parse(sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
+              var realName = planMap[u.plan];
+              if (!realName) return;
+              var root = document.getElementById('billing-root');
+              if (!root) return;
+              root.querySelectorAll('div[style*="flex:1"]').forEach(function(card) {
+                var nameDiv = card.querySelector('div[style*="font-weight:900"]');
+                if (!nameDiv) return;
+                var cardName = nameDiv.textContent.trim();
+                var shouldBeActive = (cardName === realName);
+                var headerRow = nameDiv.parentElement;
+                var span = headerRow ? headerRow.querySelector('span') : null;
+                var btn = card.querySelector('button');
+                if (shouldBeActive) {
+                  if (!span) {
+                    var s = document.createElement('span');
+                    s.style.cssText = 'font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px;background:#e8f0fe;color:#1a56db;letter-spacing:.05em;text-transform:uppercase';
+                    s.textContent = 'Active';
+                    if (headerRow) headerRow.appendChild(s);
+                  }
+                  if (btn) { btn.textContent = 'Active plan'; btn.disabled = true; btn.style.background = '#f0f0f6'; btn.style.color = '#9090b8'; btn.style.cursor = 'not-allowed'; }
+                } else {
+                  if (span && span.textContent.trim() === 'Active') span.remove();
+                  if (btn && btn.textContent.trim() === 'Active plan') {
+                    btn.textContent = 'Upgrade to ' + cardName;
+                    btn.disabled = false;
+                    btn.style.background = 'linear-gradient(135deg,#ff5a30,#e8220e)';
+                    btn.style.color = '#fff';
+                    btn.style.cursor = 'pointer';
+                  }
+                }
+              });
+            } catch(e) {}
+          }, 50);
+        };
+      }
+    });
+  })();
   // ══════════════════════════════════════════════════
   // 1. LOGIN — Add Business ID field & wire to real API
   // ══════════════════════════════════════════════════
@@ -47,6 +97,7 @@
         username: data.user.username,
         role:     data.user.role,
         bizId: data.user.businessId,
+        plan:  data.business.plan,
       };
 
       if (errEl) errEl.classList.remove('show');
