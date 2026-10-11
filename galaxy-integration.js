@@ -84,6 +84,8 @@
 
     try {
       const data = await API.AuthAPI.login(login, password);
+      console.log('LOGIN DATA:', JSON.stringify(data));
+      
 
     // Patch plan into stored user
     if (data.business && data.business.plan) {
