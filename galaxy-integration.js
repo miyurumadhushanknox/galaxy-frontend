@@ -1165,6 +1165,7 @@ setTimeout(function() {
             if (navEl) {
               clearInterval(_restoreInterval);
               navEl.click();
+              if (_lastPage === 'dashboard' && typeof window.renderDashboardPage === 'function') setTimeout(function(){ window.renderDashboardPage(); }, 100);
               if (_lastPage === 'manageorders') {
                 setTimeout(function() {
                   if (typeof window.renderOrdersPage === 'function') window.renderOrdersPage();
