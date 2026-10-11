@@ -126,7 +126,6 @@
       if (_gu) { _gu.plan = d.business.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu)); }
       }
       }).catch(function(){});
-      } catch(e) {}
       // Call showApp — try window.showApp first, fall back to direct call
       if (typeof window.showApp === 'function') {
         window.showApp(user);
