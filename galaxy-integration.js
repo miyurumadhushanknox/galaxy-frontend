@@ -255,25 +255,7 @@ if (typeof window.renderGeneralPage === 'function') {
     }
   }
 
-  // ══════════════════════════════════════════════════
-  // 3. PATCH initApp to load real data after UI init
-  // ══════════════════════════════════════════════════
 
-  const _origInitApp = window.initApp;
-  window.initApp = function () {
-  if (_origInitApp) _origInitApp();
-  var loader = document.getElementById('_galaxy_loader');
-if (loader) loader.style.display = 'flex';
-loadRealData().finally(function() {
-  var loader = document.getElementById('_galaxy_loader');
-  if (loader) loader.remove();
-});
-// Fallback: remove loader after 8 seconds no matter what
-setTimeout(function() {
-  var loader = document.getElementById('_galaxy_loader');
-  if (loader) loader.remove();
-}, 8000);
-};
 
   // ══════════════════════════════════════════════════
   // 4. PRODUCTS — wire Add / Edit / Delete / Toggle
@@ -940,7 +922,8 @@ setTimeout(function() {
     // Navigate patch - show "—" on Place Order page
     const _origNavigate = window.navigate;
     window.navigate = function(page) {
-  
+      if (page !== 'dashboard') { var b = document.getElementById('ann-banner'); if (b) b.style.display = 'none'; }
+      if (page === 'dashboard') localStorage.removeItem('_galaxy_last_page'); else localStorage.setItem('_galaxy_last_page', page);
       if (_origNavigate) _origNavigate(page);
       if (page === 'placeorder') {
         setTimeout(function() {
