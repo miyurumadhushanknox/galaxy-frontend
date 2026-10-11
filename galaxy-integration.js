@@ -103,25 +103,27 @@
     }
 
       // Map backend user to the shape Galaxy.html expects
+      const biz = data.business || {};
       const user = {
-        id:       data.user.id,
-        name:     data.user.firstName + ' ' + data.user.lastName,
-        username: data.user.username,
-        role:     data.user.role,
-        bizId: data.user.businessId,
-        plan:  data.business ? data.business.plan : null,
+      id:       data.user.id,
+      name:     data.user.firstName + ' ' + data.user.lastName,
+      username: data.user.username,
+      role:     data.user.role,
+      bizId:    biz.id || data.user.businessId,
+      bizName:  biz.name || '',
+      plan:     biz.plan || null,
       };
 
       if (errEl) errEl.classList.remove('show');
       // Galaxy's built-in session + UI flow
       sessionStorage.setItem(window.SESSION_KEY || 'galaxy_user', JSON.stringify(user));
-      // Patch plan into localStorage user (set by api.js above)
-      if (data.business && data.business.plan) {
+      // Save plan to localStorage
+      setTimeout(function() {
       try {
-        var _gu = JSON.parse(localStorage.getItem('galaxy_user') || 'null');
-        if (_gu) { _gu.plan = data.business.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu)); }
+      var _gu = JSON.parse(localStorage.getItem('galaxy_user') || 'null');
+      if (_gu && biz.plan) { _gu.plan = biz.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu)); }
       } catch(e) {}
-      }
+      }, 200);
       if (window._stopGalaxy) window._stopGalaxy();
       // Call showApp — try window.showApp first, fall back to direct call
       if (typeof window.showApp === 'function') {
