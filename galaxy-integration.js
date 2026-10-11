@@ -97,7 +97,7 @@
         username: data.user.username,
         role:     data.user.role,
         bizId: data.user.businessId,
-        plan:  data.business.plan,
+        plan:  data.business ? data.business.plan : null,
       };
 
       if (errEl) errEl.classList.remove('show');
