@@ -266,15 +266,13 @@ if (typeof window.renderGeneralPage === 'function') {
   const _origInitApp = window.initApp;
   window.initApp = function () {
   if (_origInitApp) _origInitApp();
-  // Hide content while real data loads
-  var appShell = document.getElementById('app-shell');
-  if (appShell) appShell.style.opacity = '0';
-  loadRealData().finally(function() {
+  var loader = document.getElementById('_galaxy_loader');
+if (loader) loader.style.display = 'flex';
+loadRealData().finally(function() {
   var loader = document.getElementById('_galaxy_loader');
   if (loader) loader.remove();
-  if (appShell) appShell.style.opacity = '1';
 });
-  };
+};
 
   // ══════════════════════════════════════════════════
   // 4. PRODUCTS — wire Add / Edit / Delete / Toggle
