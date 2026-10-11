@@ -255,7 +255,26 @@ if (typeof window.renderGeneralPage === 'function') {
     }
   }
 
+  // ══════════════════════════════════════════════════
+  // 3. PATCH initApp to load real data after UI init
+  // ══════════════════════════════════════════════════
 
+  const _origInitApp = window.initApp;
+  window.initApp = function () {
+  if (_origInitApp) _origInitApp();
+  var loader = document.getElementById('_galaxy_loader');
+if (loader) loader.style.display = 'flex';
+loadRealData().finally(function() {
+  var loader = document.getElementById('_galaxy_loader');
+  if (loader) loader.remove();
+  if (typeof window.renderDashboardPage === 'function' && document.getElementById('page-dashboard')?.classList.contains('active')) window.renderDashboardPage();
+});
+// Fallback: remove loader after 8 seconds no matter what
+setTimeout(function() {
+  var loader = document.getElementById('_galaxy_loader');
+  if (loader) loader.remove();
+}, 8000);
+};
 
   // ══════════════════════════════════════════════════
   // 4. PRODUCTS — wire Add / Edit / Delete / Toggle
