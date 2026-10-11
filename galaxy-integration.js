@@ -263,8 +263,11 @@ if (typeof window.renderGeneralPage === 'function') {
   window.initApp = function () {
   if (_origInitApp) _origInitApp();
   var loader = document.getElementById('_galaxy_loader');
-if (loader) loader.style.display = 'flex';
-loadRealData().finally(function() {
+  if (loader) loader.style.display = 'flex';
+  var _styleHideAnn = document.createElement('style');
+  _styleHideAnn.textContent = '#ann-banner { display: none !important; }';
+  document.head.appendChild(_styleHideAnn);
+  loadRealData().finally(function() {
   var loader = document.getElementById('_galaxy_loader');
   if (loader) loader.remove();
   setTimeout(function() {
