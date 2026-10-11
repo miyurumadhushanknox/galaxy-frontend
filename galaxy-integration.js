@@ -265,9 +265,13 @@ if (typeof window.renderGeneralPage === 'function') {
 
   const _origInitApp = window.initApp;
   window.initApp = function () {
-    if (_origInitApp) _origInitApp();
-    // Load real data in background, then refresh UI
-    loadRealData();
+  if (_origInitApp) _origInitApp();
+  // Hide content while real data loads
+  var appShell = document.getElementById('app-shell');
+  if (appShell) appShell.style.opacity = '0';
+  loadRealData().finally(function() {
+    if (appShell) appShell.style.opacity = '1';
+  });
   };
 
   // ══════════════════════════════════════════════════
