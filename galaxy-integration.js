@@ -268,9 +268,19 @@ if (typeof window.renderGeneralPage === 'function') {
   if (_origInitApp) _origInitApp();
   // Hide content while real data loads
   var appShell = document.getElementById('app-shell');
-  if (appShell) appShell.style.opacity = '0';
+  if (appShell) {
+  appShell.style.opacity = '0';
+  // Show loading overlay
+  var loader = document.createElement('div');
+  loader.id = '_galaxy_loader';
+  loader.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#0f1117;display:flex;align-items:center;justify-content:center;z-index:9999;';
+  loader.innerHTML = '<div style="color:#6c63ff;font-family:Plus Jakarta Sans,sans-serif;font-size:16px;font-weight:600;letter-spacing:1px;">Loading...</div>';
+  document.body.appendChild(loader);
+  }
   loadRealData().finally(function() {
-    if (appShell) appShell.style.opacity = '1';
+  var loader = document.getElementById('_galaxy_loader');
+  if (loader) loader.remove();
+  if (appShell) { appShell.style.transition = 'opacity 0.3s'; appShell.style.opacity = '1'; }
   });
   };
 
