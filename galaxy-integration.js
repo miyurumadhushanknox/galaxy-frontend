@@ -85,6 +85,12 @@
     try {
       const data = await API.AuthAPI.login(login, password);
 
+    // Patch plan into stored user
+      if (data.business && data.business.plan) {
+      var stored = API.Auth.getUser();
+      if (stored) { stored.plan = data.business.plan; API.Auth.setUser(stored); }
+      }
+
       // Map backend user to the shape Galaxy.html expects
       const user = {
         id:       data.user.id,
