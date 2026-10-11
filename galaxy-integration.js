@@ -267,7 +267,9 @@ if (loader) loader.style.display = 'flex';
 loadRealData().finally(function() {
   var loader = document.getElementById('_galaxy_loader');
   if (loader) loader.remove();
+  setTimeout(function() {
   if (typeof window.renderDashboardPage === 'function' && document.getElementById('page-dashboard')?.classList.contains('active')) window.renderDashboardPage();
+  }, 300);
 });
 // Fallback: remove loader after 8 seconds no matter what
 setTimeout(function() {
