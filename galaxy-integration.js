@@ -24,6 +24,7 @@
       setTimeout(function() {
         try {
           var planMap = {monthly2k:'Basic', monthly5k:'Nova', stellar:'Stellar', basic:'Basic', nova:'Nova', unlimited:'Stellar'};
+          var planRank = {Basic:1, Nova:2, Stellar:3};
           var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
           var realName = planMap[u.plan];
           if (!realName) return;
@@ -46,15 +47,25 @@
               }
               if (btn) { btn.textContent = 'Active plan'; btn.disabled = true; btn.style.background = '#f0f0f6'; btn.style.color = '#9090b8'; btn.style.cursor = 'not-allowed'; }
             } else {
-              if (span && span.textContent.trim() === 'Active') span.remove();
-              if (btn && btn.textContent.trim() === 'Active plan') {
-                btn.textContent = 'Upgrade to ' + cardName;
-                btn.disabled = false;
-                btn.style.background = 'linear-gradient(135deg,#ff5a30,#e8220e)';
-                btn.style.color = '#fff';
-                btn.style.cursor = 'pointer';
-              }
-            }
+  if (span && span.textContent.trim() === 'Active') span.remove();
+  if (btn) {
+    var cardRank = planRank[cardName] || 0;
+    var myRank = planRank[realName] || 0;
+    if (cardRank < myRank) {
+      btn.textContent = 'Current plan is higher';
+      btn.disabled = true;
+      btn.style.background = '#f0f0f6';
+      btn.style.color = '#9090b8';
+      btn.style.cursor = 'not-allowed';
+    } else {
+      btn.textContent = 'Upgrade to ' + cardName;
+      btn.disabled = false;
+      btn.style.background = 'linear-gradient(135deg,#ff5a30,#e8220e)';
+      btn.style.color = '#fff';
+      btn.style.cursor = 'pointer';
+    }
+  }
+}
           });
         } catch(e) {}
       }, 50);
