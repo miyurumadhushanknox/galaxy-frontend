@@ -939,6 +939,17 @@ setTimeout(function() {
 
     // Navigate patch - show "—" on Place Order page
     const _origNavigate = window.navigate;
+    window.navigate = function(page) {
+      if (page !== 'dashboard') { var b = document.getElementById('ann-banner'); if (b) b.style.display = 'none'; }
+      if (page === 'dashboard') localStorage.removeItem('_galaxy_last_page'); else localStorage.setItem('_galaxy_last_page', page);
+      if (_origNavigate) _origNavigate(page);
+      if (page === 'placeorder') {
+        setTimeout(function() {
+          const idEl = document.getElementById('o-id');
+          if (idEl) idEl.textContent = '—';
+        }, 100);
+      }
+    };
     window._integrationSubmitOrder = async function() {
   const customerName    = document.getElementById('c-name')?.value.trim()     || '';
   const customerPhone   = document.getElementById('c-phone1')?.value.trim()   || '';
