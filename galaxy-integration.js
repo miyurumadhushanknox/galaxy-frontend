@@ -940,8 +940,7 @@ setTimeout(function() {
     // Navigate patch - show "—" on Place Order page
     const _origNavigate = window.navigate;
     window.navigate = function(page) {
-      if (page !== 'dashboard') { var b = document.getElementById('ann-banner'); if (b) b.style.display = 'none'; }
-      if (page === 'dashboard') localStorage.removeItem('_galaxy_last_page'); else localStorage.setItem('_galaxy_last_page', page);
+  
       if (_origNavigate) _origNavigate(page);
       if (page === 'placeorder') {
         setTimeout(function() {
