@@ -13,6 +13,9 @@
 (function () {
   'use strict';
 
+  // Override annShowBanner to do nothing (hide dummy announcement)
+  window.annShowBanner = function() {};
+
   const API = window.GalaxyAPI;
 
   // ══════════════════════════════════════════════════
