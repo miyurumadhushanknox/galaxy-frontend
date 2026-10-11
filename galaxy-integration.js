@@ -270,8 +270,10 @@ if (typeof window.renderGeneralPage === 'function') {
   var appShell = document.getElementById('app-shell');
   if (appShell) appShell.style.opacity = '0';
   loadRealData().finally(function() {
-    if (appShell) { appShell.style.transition = 'opacity 0.3s'; appShell.style.opacity = '1'; }
-  });
+  var loader = document.getElementById('_galaxy_loader');
+  if (loader) loader.remove();
+  if (appShell) appShell.style.opacity = '1';
+});
   };
 
   // ══════════════════════════════════════════════════
