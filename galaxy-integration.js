@@ -84,15 +84,22 @@
 
     try {
       const data = await API.AuthAPI.login(login, password);
-      console.log('LOGIN DATA:', JSON.stringify(data));
       
 
-    // Patch plan into stored user
     if (data.business && data.business.plan) {
     try {
-      var _gu = JSON.parse(localStorage.getItem('galaxy_user') || 'null');
-      if (_gu) { _gu.plan = data.business.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu)); }
-      } catch(e) {}
+    var _gu = JSON.parse(localStorage.getItem('galaxy_user') || 'null');
+    if (_gu) { _gu.plan = data.business.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu)); }
+    } catch(e) {}
+    } else {
+    // Fallback: fetch plan from /auth/me
+    try {
+    var _me = await API.AuthAPI.me();
+    if (_me && _me.business && _me.business.plan) {
+      var _gu2 = JSON.parse(localStorage.getItem('galaxy_user') || 'null');
+      if (_gu2) { _gu2.plan = _me.business.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu2)); }
+    }
+    } catch(e) {}
     }
 
       // Map backend user to the shape Galaxy.html expects
