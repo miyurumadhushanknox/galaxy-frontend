@@ -233,8 +233,8 @@ if (typeof window.renderGeneralPage === 'function') {
       }
 
       // Re-render all visible pages with real data
-      if (typeof window.renderProducts      === 'function') window.renderProducts();
-      if (typeof window.renderDashboardPage === 'function') window.renderDashboardPage();
+      if (typeof window.renderProducts === 'function' && document.getElementById('page-itemstock')?.classList.contains('active')) window.renderProducts();
+      if (typeof window.renderDashboardPage === 'function' && document.getElementById('page-dashboard')?.classList.contains('active')) window.renderDashboardPage();
       if (typeof window.renderWhMain === 'function' && document.getElementById('page-warehouse')?.classList.contains('active')) window.renderWhMain();
       if (typeof window.renderWarehousePage === 'function' && document.getElementById('page-warehouse')?.classList.contains('active')) window.renderWarehousePage();
 
@@ -1210,5 +1210,9 @@ if (typeof window.renderGeneralPage === 'function') {
     _installSearchItems();
   setTimeout(_installSearchItems, 500);
   setTimeout(_installSearchItems, 1500);
+// Keep backend alive
+setInterval(function() {
+  fetch(baseUrl + '/api/health').catch(function(){});
+}, 5 * 60 * 1000);
 
 })();
