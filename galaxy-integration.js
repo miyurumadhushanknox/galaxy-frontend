@@ -23,7 +23,7 @@
       _orig.apply(this, arguments);
       setTimeout(function() {
         try {
-          var planMap = {monthly2k:'Basic', monthly5k:'Nova', stellar:'Stellar', basic:'Basic', nova:'Nova'};
+          var planMap = {monthly2k:'Basic', monthly5k:'Nova', stellar:'Stellar', basic:'Basic', nova:'Nova', unlimited:'Stellar'};
           var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
           var realName = planMap[u.plan];
           if (!realName) return;
