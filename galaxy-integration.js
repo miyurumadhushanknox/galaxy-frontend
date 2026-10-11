@@ -272,6 +272,11 @@ loadRealData().finally(function() {
   var loader = document.getElementById('_galaxy_loader');
   if (loader) loader.remove();
 });
+// Fallback: remove loader after 8 seconds no matter what
+setTimeout(function() {
+  var loader = document.getElementById('_galaxy_loader');
+  if (loader) loader.remove();
+}, 8000);
 };
 
   // ══════════════════════════════════════════════════
