@@ -13,9 +13,6 @@
 (function () {
   'use strict';
 
-  // Override annShowBanner to do nothing (hide dummy announcement)
-  window.annShowBanner = function() {};
-
   const API = window.GalaxyAPI;
 
   // ══════════════════════════════════════════════════
@@ -1230,7 +1227,7 @@ setTimeout(function() {
   setTimeout(_installSearchItems, 1500);
 // Keep backend alive
 setInterval(function() {
-  fetch(baseUrl + '/api/health').catch(function(){});
+  fetch('https://galaxy-backend-production-6a12.up.railway.app/api/health').catch(function(){});
 }, 5 * 60 * 1000);
 
 })();
