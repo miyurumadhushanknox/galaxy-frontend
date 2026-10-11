@@ -265,25 +265,19 @@ if (typeof window.renderGeneralPage === 'function') {
 
   const _origInitApp = window.initApp;
   window.initApp = function () {
-  // Show loader BEFORE initApp renders fake data
-  var appShell = document.getElementById('app-shell');
-  var loader = document.createElement('div');
-  loader.id = '_galaxy_loader';
-  loader.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#0f1117;display:flex;align-items:center;justify-content:center;z-index:9999;';
-  loader.innerHTML = '<div style="color:#6c63ff;font-family:Plus Jakarta Sans,sans-serif;font-size:16px;font-weight:600;letter-spacing:1px;">Loading...</div>';
-  document.body.appendChild(loader);
   if (_origInitApp) _origInitApp();
+  // Hide content while real data loads
+  var appShell = document.getElementById('app-shell');
+  if (appShell) appShell.style.opacity = '0';
   loadRealData().finally(function() {
-    var loader = document.getElementById('_galaxy_loader');
-    if (loader) loader.remove();
     if (appShell) { appShell.style.transition = 'opacity 0.3s'; appShell.style.opacity = '1'; }
   });
-};
+  };
 
   // ══════════════════════════════════════════════════
   // 4. PRODUCTS — wire Add / Edit / Delete / Toggle
   // ══════════════════════════════════════════════════
-x
+
   /**
    * Patch submitProduct to call real API
    */
