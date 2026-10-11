@@ -1158,9 +1158,10 @@ setTimeout(function() {
   var _lastPage = localStorage.getItem('_galaxy_last_page');
   if (_lastPage) { setTimeout(function(){ if(window.navigate) window.navigate(_lastPage); }, 0); }
   document.body.style.visibility = 'visible';
+  
   loadRealData().finally(function() {
-
         // After data loads, restore last page and re-render if needed
+        if (typeof window.renderDashboardPage === 'function') setTimeout(function(){ window.renderDashboardPage(); }, 300);
         if (_lastPage) {
           var _restoreInterval = setInterval(function() {
             var navEl = document.querySelector('.nav-item[onclick*="\'' + _lastPage + '\'"]');
