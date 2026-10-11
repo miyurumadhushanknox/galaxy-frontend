@@ -872,8 +872,9 @@ setTimeout(function() {
           window.annSliderRender();
           window.annSliderStart();
         }
-        // Show banner if images exist
-        if (typeof window.annShowBanner === 'function' && document.getElementById('page-dashboard')?.classList.contains('active')) window.annShowBanner();
+        // Hide dummy announcement banner
+        var _annBanner = document.getElementById('ann-banner');
+        if (_annBanner) _annBanner.style.display = 'none';
       }
 
       // ── 2. Notifications → Galaxy alert panel ──
