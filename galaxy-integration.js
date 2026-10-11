@@ -865,7 +865,7 @@ if (typeof window.renderGeneralPage === 'function') {
           window.annSliderStart();
         }
         // Show banner if images exist
-        if (typeof window.annShowBanner === 'function') window.annShowBanner();
+        if (typeof window.annShowBanner === 'function' && document.getElementById('page-dashboard')?.classList.contains('active')) window.annShowBanner();
       }
 
       // ── 2. Notifications → Galaxy alert panel ──
