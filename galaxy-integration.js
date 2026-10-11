@@ -109,8 +109,8 @@
       name:     data.user.firstName + ' ' + data.user.lastName,
       username: data.user.username,
       role:     data.user.role,
-      bizId:    biz.id || data.user.businessId,
-      bizName:  biz.name || '',
+      bizId:    data.user.businessId,
+      bizName:  biz.name || data.user.firstName || '',
       plan:     biz.plan || null,
       };
 
