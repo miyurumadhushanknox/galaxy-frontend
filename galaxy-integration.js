@@ -117,13 +117,15 @@
       if (errEl) errEl.classList.remove('show');
       // Galaxy's built-in session + UI flow
       sessionStorage.setItem(window.SESSION_KEY || 'galaxy_user', JSON.stringify(user));
-      // Save plan to localStorage after api.js sets galaxy_user
-      setTimeout(function() {
-      try {
+      // Fetch plan after login
+      fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+      headers: { 'Authorization': 'Bearer ' + GalaxyAPI.Auth.getToken() }
+      }).then(function(r){ return r.json(); }).then(function(d){
+      if (d && d.business && d.business.plan) {
       var _gu = JSON.parse(localStorage.getItem('galaxy_user') || 'null');
-      if (_gu && biz.plan) { _gu.plan = biz.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu)); }
-      } catch(e) {}
-      }, 300);
+      if (_gu) { _gu.plan = d.business.plan; localStorage.setItem('galaxy_user', JSON.stringify(_gu)); }
+      }
+      }).catch(function(){});
       } catch(e) {}
       // Call showApp — try window.showApp first, fall back to direct call
       if (typeof window.showApp === 'function') {
