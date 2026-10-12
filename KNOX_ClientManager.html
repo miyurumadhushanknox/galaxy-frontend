@@ -717,7 +717,7 @@ function renderClientTable() {
   const search = document.getElementById('client-search').value.trim().toLowerCase();
   let list = clients.filter(c=>{
     if(statusFilter!=='all' && getStatus(c)!==statusFilter) return false;
-    if(search && !c.name.toLowerCase().includes(search) && !c.contact.toLowerCase().includes(search)) return false;
+    if(search && !c.name.toLowerCase().includes(search)) return false;
     return true;
   });
   const tbody = document.getElementById('client-tbody');
