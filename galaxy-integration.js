@@ -1403,7 +1403,14 @@ setInterval(function() {
   }
 
   var observer = new MutationObserver(hideTransferBtn);
+if (document.body) {
   observer.observe(document.body, { childList: true, subtree: true });
-  hideTransferBtn();
+} else {
+  document.addEventListener('DOMContentLoaded', function() {
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+}
+hideTransferBtn();
+setInterval(hideTransferBtn, 500);
 })();
 })();
