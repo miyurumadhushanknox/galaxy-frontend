@@ -1446,7 +1446,25 @@ setInterval(hideTransferBtn, 500);
   function applyRenewalPatch() {
     var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
     var startDate = (u.business && u.business.trialStartsAt) || u.trialStartsAt;
-    if (!startDate) return;
+    // Patch CLIENT_PLAN
+    var pm = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
+    var plan = pm[u.plan] || 'basic';
+    window.CLIENT_PLAN = plan;
+        if (!startDate) {
+      var token = localStorage.getItem('galaxy_token') || sessionStorage.getItem('galaxy_token');
+      if (!token) return;
+      fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      }).then(function(res){ return res.json(); }).then(function(data) {
+        var start = data.business && (data.business.trial_starts_at || data.business.trialStartsAt);
+        if (!start) return;
+        var r = calcNextRenewal(start);
+        window.PLAN_RENEWAL = r.dateStr;
+        window.PLAN_RENEWAL_DAYS = r.daysLeft;
+        if (typeof window.renderBillingPage === 'function') window.renderBillingPage();
+      }).catch(function(){});
+      return;
+    }
     var r = calcNextRenewal(startDate);
     window.PLAN_RENEWAL = r.dateStr;
     window.PLAN_RENEWAL_DAYS = r.daysLeft;
