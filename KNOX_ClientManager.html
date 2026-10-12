@@ -307,6 +307,7 @@ tr:hover td{background:#fafafc}
         <option value="yearly2k">Yearly — Rs. 20,000/year (2K package)</option>
         <option value="yearly5k">Yearly — Rs. 50,000/year (5K package)</option>
         <option value="unlimited">Unlimited — Rs. 7/order (500+ orders/month)</option>
+        <option value="trial">7-day free trial (Full access)</option>
       </select>
     </div>
     <div class="note-box" id="plan-note"></div>
@@ -336,13 +337,6 @@ tr:hover td{background:#fafafc}
       </div>
       <div class="note-box" style="margin-top:4px">The Business ID will be auto-generated. Give these credentials to the client to log in to Galaxy.</div>
 
-    <div class="toggle-row" style="margin-top:4px">
-      <div>
-        <div class="t-lbl">7-day free trial</div>
-        <div class="t-desc">Client gets 7 days before first payment is due</div>
-      </div>
-      <div class="tgl" id="c-trial-tgl" onclick="toggleClientTrial()"><div class="tgl-dot"></div></div>
-    </div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('m-client')">Cancel</button>
       <button class="btn btn-primary" id="save-client-btn" onclick="saveClient()">✓ Save client</button>
@@ -837,10 +831,10 @@ async function saveClient() {
     category: document.getElementById('c-category').value.trim(),
     address: document.getElementById('c-address').value.trim(),
     phone,
-    plan: document.getElementById('c-plan').value,
+    plan: document.getElementById('c-plan').value === 'trial' ? 'monthly2k' : document.getElementById('c-plan').value,
     start: document.getElementById('c-start').value,
     setupMethod: document.getElementById('c-setup-method').value,
-    trial: document.getElementById('c-trial-tgl').classList.contains('on'),
+    trial: document.getElementById('c-plan').value === 'trial',
     ...(isNew ? {
     ownerFirstName: document.getElementById('c-firstname').value.trim(),
     ownerLastName: document.getElementById('c-lastname').value.trim(),
