@@ -781,9 +781,28 @@ function openEditClient(id) {
   openModal('m-client');
 }
 function toggleClientTrial() {
-  document.getElementById('c-trial-tgl').classList.toggle('on');
+  const tgl = document.getElementById('c-trial-tgl');
+  const isOn = tgl.classList.toggle('on');
+  const planSelect = document.getElementById('c-plan');
+  const planNote = document.getElementById('plan-note');
+  if (isOn) {
+    planSelect.value = '';
+    planSelect.disabled = true;
+    planSelect.style.opacity = '0.4';
+    planNote.innerHTML = '<b>7-day full access trial.</b> Assign a plan after trial ends.';
+  } else {
+    planSelect.disabled = false;
+    planSelect.style.opacity = '1';
+    onPlanChange();
+  }
 }
 function onPlanChange() {
+  // If a plan is selected, turn off trial
+  const tgl = document.getElementById('c-trial-tgl');
+  if (document.getElementById('c-plan').value && tgl.classList.contains('on')) {
+  tgl.classList.remove('on');
+  }
+
   const plan = PLANS[document.getElementById('c-plan').value];
   const note = document.getElementById('plan-note');
   let subLine;
