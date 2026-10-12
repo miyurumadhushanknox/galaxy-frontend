@@ -121,8 +121,10 @@
       username: data.user.username,
       role:     data.user.role,
       bizId:    data.user.businessId,
-      bizName:  biz.name || data.user.firstName || '',
-      plan:     biz.plan || null,
+      bizName:     biz.name || data.user.firstName || '',
+      bizCategory: biz.category || '',
+      bizAddress:  biz.address || '',
+      plan:        biz.plan || null,
       };
 
       if (errEl) errEl.classList.remove('show');
