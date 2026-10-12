@@ -293,12 +293,10 @@ tr:hover td{background:#fafafc}
     <input type="hidden" id="c-id">
     <div class="field-row">
       <div class="field"><label>Business name</label><input id="c-name" placeholder="e.g. Expo Ceylon"></div>
-      <div class="field"><label>Contact person</label><input id="c-contact" placeholder="e.g. Mr. Perera"></div>
+      <div class="field"><label>Category</label><input id="c-category" placeholder="e.g. Retail, Restaurant"></div>
     </div>
-    <div class="field-row">
-      <div class="field"><label>Phone</label><input id="c-phone" placeholder="07X XXX XXXX"></div>
-      <div class="field"><label>Email (optional)</label><input id="c-email" placeholder="client@example.com"></div>
-    </div>
+    <div class="field"><label>Address</label><input id="c-address" placeholder="e.g. 123 Main St, Colombo"></div>
+    <div class="field"><label>Phone</label><input id="c-phone" placeholder="07X XXX XXXX"></div>
     <div class="field">
       <label>Plan</label>
       <select id="c-plan" onchange="onPlanChange()">
@@ -326,11 +324,15 @@ tr:hover td{background:#fafafc}
       <div style="height:1px;background:#f0f0f6;margin:16px 0"></div>
       <div class="card-title" style="margin-bottom:12px">Galaxy Login Credentials</div>
       <div class="field-row">
+        <div class="field"><label>First name</label><input id="c-firstname" placeholder="e.g. Kamal"></div>
+        <div class="field"><label>Last name</label><input id="c-lastname" placeholder="e.g. Perera"></div>
+      </div>
+      <div class="field"><label>Email</label><input id="c-email" placeholder="client@example.com"></div>
+      <div class="field-row">
         <div class="field"><label>Username</label><input id="c-username" placeholder="e.g. admin" autocomplete="off"></div>
         <div class="field"><label>Password</label><input id="c-password" type="text" placeholder="e.g. pass123" autocomplete="off"></div>
       </div>
       <div class="note-box" style="margin-top:4px">The Business ID will be auto-generated. Give these credentials to the client to log in to Galaxy.</div>
-    </div>
 
     <div class="toggle-row" style="margin-top:4px">
       <div>
@@ -339,7 +341,6 @@ tr:hover td{background:#fafafc}
       </div>
       <div class="tgl" id="c-trial-tgl" onclick="toggleClientTrial()"><div class="tgl-dot"></div></div>
     </div>
-    <div class="field"><label>Notes (optional)</label><textarea id="c-notes" rows="2" placeholder="Anything specific about this client…"></textarea></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('m-client')">Cancel</button>
       <button class="btn btn-primary" id="save-client-btn" onclick="saveClient()">✓ Save client</button>
@@ -742,13 +743,15 @@ function openAddClient() {
   document.getElementById('client-modal-title').textContent = 'Add Client';
   document.getElementById('c-id').value = '';
   document.getElementById('c-name').value = '';
-  document.getElementById('c-contact').value = '';
+  document.getElementById('c-category').value = '';
+  document.getElementById('c-address').value = '';
   document.getElementById('c-phone').value = '';
+  document.getElementById('c-firstname').value = '';
+  document.getElementById('c-lastname').value = '';
   document.getElementById('c-email').value = '';
   document.getElementById('c-plan').value = 'monthly2k';
   document.getElementById('c-start').value = new Date().toISOString().slice(0,10);
   document.getElementById('c-setup-method').value = 'full';
-  document.getElementById('c-notes').value = '';
   document.getElementById('c-username').value = '';
   document.getElementById('c-password').value = '';
   document.getElementById('c-trial-tgl').classList.remove('on');
@@ -762,13 +765,12 @@ function openEditClient(id) {
   document.getElementById('client-modal-title').textContent = 'Edit Client';
   document.getElementById('c-id').value = c.id;
   document.getElementById('c-name').value = c.name;
-  document.getElementById('c-contact').value = c.contact;
+  document.getElementById('c-category').value = c.category || '';
+  document.getElementById('c-address').value = c.address || '';
   document.getElementById('c-phone').value = c.phone;
-  document.getElementById('c-email').value = c.email;
   document.getElementById('c-plan').value = c.plan;
   document.getElementById('c-start').value = c.start;
   document.getElementById('c-setup-method').value = c.setupMethod;
-  document.getElementById('c-notes').value = c.notes;
   document.getElementById('c-trial-tgl').classList.toggle('on', c.trial);
   document.getElementById('galaxy-creds-section').style.display = 'none'; // don't show on edit
   onPlanChange();
@@ -809,17 +811,19 @@ async function saveClient() {
 
   const payload = {
     businessName: name,
-    contact: document.getElementById('c-contact').value.trim(),
+    category: document.getElementById('c-category').value.trim(),
+    address: document.getElementById('c-address').value.trim(),
     phone,
-    email: document.getElementById('c-email').value.trim(),
     plan: document.getElementById('c-plan').value,
     start: document.getElementById('c-start').value,
     setupMethod: document.getElementById('c-setup-method').value,
     trial: document.getElementById('c-trial-tgl').classList.contains('on'),
-    notes: document.getElementById('c-notes').value.trim(),
     ...(isNew ? {
-      ownerUsername: document.getElementById('c-username').value.trim(),
-      ownerPassword: document.getElementById('c-password').value.trim()
+    ownerFirstName: document.getElementById('c-firstname').value.trim(),
+    ownerLastName: document.getElementById('c-lastname').value.trim(),
+    ownerEmail: document.getElementById('c-email').value.trim(),
+    ownerUsername: document.getElementById('c-username').value.trim(),
+    ownerPassword: document.getElementById('c-password').value.trim()
     } : {})
   };
 
