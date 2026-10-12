@@ -1351,10 +1351,14 @@ setInterval(function() {
     var old = document.getElementById('plan-lock-overlay');
     if (old) old.remove();
     Array.from(root.children).forEach(function(el) {
-      el.style.filter = 'blur(4px)';
-      el.style.pointerEvents = 'none';
-      el.style.userSelect = 'none';
-    });
+  if (el.id === 'plan-lock-overlay') return;
+  // Don't blur the tab bar
+  var isTabBar = el.querySelector && el.querySelector('[onclick*="setReportTab"]');
+  if (isTabBar) return;
+  el.style.filter = 'blur(4px)';
+  el.style.pointerEvents = 'none';
+  el.style.userSelect = 'none';
+});
     var overlay = document.createElement('div');
     overlay.id = 'plan-lock-overlay';
     overlay.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;';
