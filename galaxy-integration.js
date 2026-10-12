@@ -1386,4 +1386,24 @@ setInterval(function() {
     applyReportLock();
   }
 })();
+// Hide Transfer stock button for Basic plan
+(function() {
+  function hideTransferBtn() {
+    var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
+    var pm = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
+    var plan = pm[u.plan] || 'basic';
+    if (plan !== 'basic') return;
+
+    var btns = document.querySelectorAll('button');
+    btns.forEach(function(btn) {
+      if (btn.textContent.trim().includes('Transfer stock')) {
+        btn.style.display = 'none';
+      }
+    });
+  }
+
+  var observer = new MutationObserver(hideTransferBtn);
+  observer.observe(document.body, { childList: true, subtree: true });
+  hideTransferBtn();
+})();
 })();
