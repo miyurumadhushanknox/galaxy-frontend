@@ -1338,7 +1338,7 @@ setInterval(function() {
       btns.forEach(function(btn) {
         var match = btn.getAttribute('onclick').match(/setReportTab\(['"](\w+)['"]\)/);
         if (match && LOCKED_TABS.indexOf(match[1]) !== -1) {
-          btn.onclick = function(e) { e.stopPropagation(); if (orig) orig.call(window, match[1]); showLockOverlay(); return false; };
+          btn.onclick = function(e) { if (orig) orig.call(window, match[1]); showLockOverlay(); };
         }
       });
     }
