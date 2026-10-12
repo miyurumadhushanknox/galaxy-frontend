@@ -1326,12 +1326,11 @@ setInterval(function() {
     // Override setReportTab
     var orig = window.setReportTab;
     window.setReportTab = function(t) {
-      if (LOCKED_TABS.indexOf(t) !== -1) {
-        showLockOverlay();
-        return;
-      }
-      if (orig) orig.apply(this, arguments);
-    };
+  if (orig) orig.apply(this, arguments);
+  if (LOCKED_TABS.indexOf(t) !== -1) {
+    showLockOverlay();
+  }
+};
 
     // Also intercept tab button clicks directly
     function interceptTabButtons() {
@@ -1339,23 +1338,30 @@ setInterval(function() {
       btns.forEach(function(btn) {
         var match = btn.getAttribute('onclick').match(/setReportTab\(['"](\w+)['"]\)/);
         if (match && LOCKED_TABS.indexOf(match[1]) !== -1) {
-          btn.onclick = function(e) { e.preventDefault(); e.stopPropagation(); showLockOverlay(); return false; };
+          btn.onclick = function(e) { e.stopPropagation(); if (orig) orig.call(window, match[1]); showLockOverlay(); return false; };
         }
       });
     }
 
     function showLockOverlay() {
-      var root = document.getElementById('reports-root');
-      if (!root) return;
-      root.style.position = 'relative';
-      root.innerHTML = '<div style="filter:blur(4px);pointer-events:none;opacity:0.4;height:400px;background:#f5f5f5;border-radius:12px;"></div>'
-        + '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">'
-        + '<div style="font-size:32px;margin-bottom:12px;">🔒</div>'
-        + '<div style="font-size:16px;font-weight:700;color:#1a1a2e;margin-bottom:8px;">Your plan can\'t access this report</div>'
-        + '<div style="font-size:13px;color:#666;margin-bottom:16px;">Upgrade to Nova or Stellar to unlock all reports</div>'
-        + '<button onclick="navigate(\'billing\')" style="background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:700;cursor:pointer;">Upgrade Now →</button>'
-        + '</div>';
-    }
+  var root = document.getElementById('reports-root');
+  if (!root) return;
+  setTimeout(function() {
+    root.style.position = 'relative';
+    var old = document.getElementById('plan-lock-overlay');
+    if (old) old.remove();
+    Array.from(root.children).forEach(function(el) {
+      el.style.filter = 'blur(4px)';
+      el.style.pointerEvents = 'none';
+      el.style.userSelect = 'none';
+    });
+    var overlay = document.createElement('div');
+    overlay.id = 'plan-lock-overlay';
+    overlay.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;';
+    overlay.innerHTML = '<div style="text-align:center;background:#fff;padding:32px 40px;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.12);"><div style="font-size:36px;margin-bottom:12px;">🔒</div><div style="font-size:16px;font-weight:700;color:#1a1a2e;margin-bottom:8px;">Your plan can\'t access this report</div><div style="font-size:13px;color:#666;margin-bottom:16px;">Upgrade to Nova or Stellar to unlock all reports</div><button onclick="navigate(\'billing\')" style="background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:700;cursor:pointer;">Upgrade Now →</button></div>';
+    root.appendChild(overlay);
+  }, 100);
+}
 
     interceptTabButtons();
 
