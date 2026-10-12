@@ -1396,11 +1396,19 @@ setInterval(function() {
 
     var btns = document.querySelectorAll('button');
     btns.forEach(function(btn) {
-      if (btn.textContent.trim().includes('Transfer stock') || btn.textContent.trim() === 'Transfer') {
-        btn.style.display = 'none';
-      }
+    if (btn.textContent.trim().includes('Transfer stock') || btn.textContent.trim() === 'Transfer') {
+    btn.style.display = 'none';
+    btn.setAttribute('data-hidden', 'true');
+    }
     });
-  }
+    // Inject CSS to permanently hide
+    if (!document.getElementById('galaxy-basic-hide')) {
+    var style = document.createElement('style');
+    style.id = 'galaxy-basic-hide';
+    style.textContent = 'button[data-hidden="true"] { display: none !important; }';
+    document.head.appendChild(style);
+    }
+    }
 
   var observer = new MutationObserver(hideTransferBtn);
 if (document.body) {
