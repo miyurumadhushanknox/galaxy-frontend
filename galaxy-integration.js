@@ -1396,7 +1396,7 @@ setInterval(function() {
 
     var btns = document.querySelectorAll('button');
     btns.forEach(function(btn) {
-      if (btn.textContent.trim().includes('Transfer stock')) {
+      if (btn.textContent.trim().includes('Transfer stock') || btn.textContent.trim() === 'Transfer') {
         btn.style.display = 'none';
       }
     });
