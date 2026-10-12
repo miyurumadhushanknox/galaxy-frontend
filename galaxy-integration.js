@@ -1389,26 +1389,30 @@ setInterval(function() {
 // Hide Transfer stock button for Basic plan
 (function() {
   function hideTransferBtn() {
-    var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
-    var pm = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
-    var plan = pm[u.plan] || 'basic';
-    if (plan !== 'basic') return;
+  var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
+  var pm = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
+  var plan = pm[u.plan] || 'basic';
+  if (plan !== 'basic') return;
 
-    var btns = document.querySelectorAll('button');
-    btns.forEach(function(btn) {
-    if (btn.textContent.trim().includes('Transfer stock') || btn.textContent.trim() === 'Transfer') {
-    btn.style.display = 'none';
-    btn.setAttribute('data-hidden', 'true');
-    }
-    });
-    // Inject CSS to permanently hide
-    if (!document.getElementById('galaxy-basic-hide')) {
+  // Add class to body once
+  document.body.classList.add('galaxy-basic-plan');
+
+  // Inject CSS once
+  if (!document.getElementById('galaxy-basic-hide')) {
     var style = document.createElement('style');
     style.id = 'galaxy-basic-hide';
-    style.textContent = 'button[data-hidden="true"] { display: none !important; }';
+    style.textContent = '.galaxy-basic-plan button[onclick*="transfer"], .galaxy-basic-plan button[onclick*="Transfer"] { display: none !important; }';
     document.head.appendChild(style);
+  }
+
+  // Also force hide by text
+  document.querySelectorAll('button').forEach(function(btn) {
+    var t = btn.textContent.trim();
+    if (t.includes('Transfer stock') || t === 'Transfer') {
+      btn.style.setProperty('display', 'none', 'important');
     }
-    }
+  });
+}
 
   var observer = new MutationObserver(hideTransferBtn);
 if (document.body) {
