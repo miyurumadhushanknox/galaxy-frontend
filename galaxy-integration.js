@@ -1425,4 +1425,49 @@ if (document.body) {
 hideTransferBtn();
 setInterval(hideTransferBtn, 500);
 })();
+// Fix billing renewal date — dynamic from trialStartsAt
+(function() {
+  function calcNextRenewal(startDateStr) {
+    var start = new Date(startDateStr);
+    var dayOfMonth = start.getDate();
+    var now = new Date();
+    var candidate = new Date(now.getFullYear(), now.getMonth(), dayOfMonth);
+    if (candidate <= now) {
+      candidate = new Date(now.getFullYear(), now.getMonth() + 1, dayOfMonth);
+    }
+    var diffDays = Math.ceil((candidate - now) / (1000 * 60 * 60 * 24));
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return {
+      dateStr: candidate.getDate() + ' ' + months[candidate.getMonth()] + ' ' + candidate.getFullYear(),
+      daysLeft: diffDays
+    };
+  }
+
+  function applyRenewalPatch() {
+    var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
+    var startDate = (u.business && u.business.trialStartsAt) || u.trialStartsAt;
+    if (!startDate) return;
+    var r = calcNextRenewal(startDate);
+    window.PLAN_RENEWAL = r.dateStr;
+    window.PLAN_RENEWAL_DAYS = r.daysLeft;
+  }
+
+  var _hooked = false;
+  function hookRenderBilling() {
+    if (_hooked || typeof window.renderBillingPage !== 'function') return;
+    var orig = window.renderBillingPage;
+    window.renderBillingPage = function() {
+      applyRenewalPatch();
+      return orig.apply(this, arguments);
+    };
+    _hooked = true;
+  }
+
+  var iv = setInterval(function() {
+    if (typeof window.renderBillingPage === 'function') {
+      hookRenderBilling();
+      clearInterval(iv);
+    }
+  }, 200);
+})();
 })();
