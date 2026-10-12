@@ -3934,9 +3934,9 @@ const BILLING_PLANS = [
 
 let CLIENT_PLAN = 'nova'; // overridden by galaxy-integration.js
 const PLAN_RENEWAL = '';
-const PLAN_RENEWAL_DAYS = 0;
+const PLAN_RENEWAL_DAYS = null;
 const PLAN_START = '';
-const PLAN_MONTHS = 0;
+const PLAN_MONTHS = null;
 
 const PAYMENT_HISTORY = [
   {inv:'INV-0041', period:'Jun 2026', plan:'Nova', amount:5000, method:'Bank transfer', date:'01 Jun 2026', status:'paid'},
@@ -4017,8 +4017,8 @@ function renderBillingPage(){
           <div style="font-size:11px;font-weight:700;color:#9090b8">Next renewal</div>
         </div>
         <div style="font-size:17px;font-weight:900;color:#18182b;margin-bottom:4px">${PLAN_RENEWAL}</div>
-        <div style="font-size:11px;color:${PLAN_RENEWAL_DAYS<=7?'#e8220e':PLAN_RENEWAL_DAYS<=14?'#f59e0b':'#9090b8'};font-weight:600">
-          ${PLAN_RENEWAL_DAYS<=7?'⚠ ':''}${PLAN_RENEWAL_DAYS} days left
+        <div style="font-size:11px;color:${PLAN_RENEWAL_DAYS&&PLAN_RENEWAL_DAYS<=7?'#e8220e':PLAN_RENEWAL_DAYS&&PLAN_RENEWAL_DAYS<=14?'#f59e0b':'#9090b8'};font-weight:600">
+        ${PLAN_RENEWAL_DAYS?((PLAN_RENEWAL_DAYS<=7?'⚠ ':'')+PLAN_RENEWAL_DAYS+' days left'):'Loading...'}
         </div>
       </div>
 
@@ -4030,7 +4030,7 @@ function renderBillingPage(){
         </div>
         <div style="font-size:22px;font-weight:900;color:#18182b;margin-bottom:3px">${N(totalOrders)}</div>
         <div style="font-size:11px;color:#9090b8;font-weight:600">orders processed with Galaxy</div>
-        <div style="font-size:10px;color:#16a34a;font-weight:700;margin-top:5px">↑ across ${PLAN_MONTHS} active months</div>
+        <div style="font-size:10px;color:#16a34a;font-weight:700;margin-top:5px">${PLAN_MONTHS?'↑ across '+PLAN_MONTHS+' active months':''}</div>
       </div>
 
       <!-- Orders this month -->
