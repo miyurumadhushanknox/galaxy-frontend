@@ -1313,5 +1313,29 @@ setTimeout(function() {
 setInterval(function() {
   fetch('https://galaxy-backend-production-6a12.up.railway.app/api/health').catch(function(){});
 }, 5 * 60 * 1000);
-
+// Lock report tabs for Basic plan
+(function() {
+  var _orig = window.setReportTab;
+  window.setReportTab = function(t) {
+    var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
+    var planMap = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
+    var plan = planMap[u.plan] || 'basic';
+    var allowedTabs = (plan === 'basic') ? ['orders'] : null;
+    if (allowedTabs && !allowedTabs.includes(t)) {
+      var root = document.getElementById('reports-root');
+      if (root) {
+        root.style.position = 'relative';
+        root.innerHTML = '<div style="filter:blur(4px);pointer-events:none;opacity:0.4;height:400px;background:#f5f5f5;border-radius:12px;"></div>'
+          + '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">'
+          + '<div style="font-size:32px;margin-bottom:12px;">🔒</div>'
+          + '<div style="font-size:16px;font-weight:700;color:#1a1a2e;margin-bottom:8px;">Your plan can\'t access this report</div>'
+          + '<div style="font-size:13px;color:#666;margin-bottom:16px;">Upgrade to Nova or Stellar to unlock all reports</div>'
+          + '<button onclick="navigate(\'billing\')" style="background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:700;cursor:pointer;">Upgrade Now →</button>'
+          + '</div>';
+      }
+      return;
+    }
+    if (_orig) _orig.apply(this, arguments);
+  };
+})();
 })();
