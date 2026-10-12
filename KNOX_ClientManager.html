@@ -844,8 +844,9 @@ async function saveClient() {
     if(isNew) {
       const username = document.getElementById('c-username').value.trim();
       const password = document.getElementById('c-password').value.trim();
-      const data = await api('/clients', { method: 'POST', body: JSON.stringify(payload) });
-      if (!data.client) { toast(data.error || 'Failed to create client', 'err'); btn.disabled = false; btn.innerHTML = 'Save client'; return; }
+      let data;
+      try { data = await api('/clients', { method: 'POST', body: JSON.stringify(payload) }); }
+      catch(apiErr) { toast(apiErr.message || 'Failed to create client', 'err'); btn.disabled = false; btn.innerHTML = 'Save client'; return; }
       const newClient = mapClient(data.client);
       clients.unshift(newClient);
       closeModal('m-client');
