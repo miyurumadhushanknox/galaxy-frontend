@@ -1319,8 +1319,8 @@ setInterval(function() {
   window.setReportTab = function(t) {
     var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
     var planMap = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
-    var plan = planMap[u.plan] || 'basic';
-    var allowedTabs = (plan === 'basic') ? ['orders'] : null;
+    var plan = planMap[u.plan] || 'basic'; 'monthly2'
+    var allowedTabs = (plan === 'basic', 'monthly2') ? ['orders'] : null;
     if (allowedTabs && !allowedTabs.includes(t)) {
       var root = document.getElementById('reports-root');
       if (root) {
