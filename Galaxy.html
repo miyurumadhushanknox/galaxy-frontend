@@ -287,7 +287,7 @@ tbody tr:hover .row-actions{display:flex}
 .sidebar-nav{flex:1;overflow-y:auto}
 </style>
   <script src="api.js"></script>
-  <script src="galaxy-integration.js?v=71"></script>
+  <script src="galaxy-integration.js?v=72"></script>
 </head>
 <body>
   <!-- LOGIN -->
@@ -3932,11 +3932,11 @@ const BILLING_PLANS = [
   },
 ];
 
-const CLIENT_PLAN = 'nova'; // current client plan
-const PLAN_RENEWAL = '30 Jun 2026';
-const PLAN_RENEWAL_DAYS = 17;
-const PLAN_START = 'Jan 2026';
-const PLAN_MONTHS = 6;
+let CLIENT_PLAN = 'nova'; // overridden by galaxy-integration.js
+const PLAN_RENEWAL = '';
+const PLAN_RENEWAL_DAYS = 0;
+const PLAN_START = '';
+const PLAN_MONTHS = 0;
 
 const PAYMENT_HISTORY = [
   {inv:'INV-0041', period:'Jun 2026', plan:'Nova', amount:5000, method:'Bank transfer', date:'01 Jun 2026', status:'paid'},
