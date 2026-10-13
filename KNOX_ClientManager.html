@@ -873,7 +873,9 @@ async function saveClient() {
     } else {
       const ownerEmail = document.getElementById('c-email').value.trim();
       const ownerUsername = document.getElementById('c-username-edit').value.trim();
-      const data = await api('/clients/'+id, { method:'PUT', body: JSON.stringify({...payload, ownerEmail, ownerUsername}) });
+      let data;
+      try { data = await api('/clients/'+id, { method:'PUT', body: JSON.stringify({...payload, ownerEmail, ownerUsername}) }); }
+      catch(apiErr) { toast(apiErr.message || 'Failed to update client', 'err'); btn.disabled = false; btn.innerHTML = '✓ Save client'; return; }
       const idx = clients.findIndex(x=>x.id===id);
       if(idx !== -1) clients[idx] = mapClient(data.client);
       toast('Client updated!','ok');
