@@ -785,6 +785,7 @@ function openEditClient(id) {
   document.getElementById('edit-username-field').style.display = '';
   document.getElementById('c-email').value = c.email || '';
   document.getElementById('c-username-edit').value = c.username || '';
+  document.getElementById('c-plan').disabled = false;
   onPlanChange();
   openModal('m-client');
 }
