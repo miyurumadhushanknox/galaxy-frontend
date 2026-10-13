@@ -761,6 +761,8 @@ function openAddClient() {
   document.getElementById('c-password').value = '';
   document.getElementById('galaxy-creds-section').style.display = 'block';
   document.getElementById('new-client-fields').style.display = '';
+  document.getElementById('c-start').disabled = false;
+  document.getElementById('c-setup-method').disabled = false;
   document.getElementById('edit-username-field').style.display = 'none';
   onPlanChange();
   openModal('m-client');
