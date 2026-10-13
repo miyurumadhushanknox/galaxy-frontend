@@ -342,7 +342,34 @@ tr:hover td{background:#fafafc}
         </div>
       <div class="note-box" style="margin-top:4px">The Business ID will be auto-generated. Give these credentials to the client to log in to Galaxy.</div>
 
-    <div class="modal-actions">
+    <!-- Trial tracker — shown only for active trial clients in edit mode -->
+<div id="trial-tracker-section" style="display:none">
+  <div style="height:1px;background:#f0f0f6;margin:16px 0"></div>
+  <div class="card-title" style="margin-bottom:12px">Trial Status</div>
+  <div id="trial-days-row" style="display:flex;gap:8px;margin-bottom:16px"></div>
+  <button class="btn" style="width:100%;margin-bottom:8px;color:#e05a2b;border-color:#e05a2b" onclick="cancelTrial()">Cancel Trial</button>
+</div>
+
+<!-- Cancel trial / blocked state — show block or select plan -->
+<div id="trial-action-section" style="display:none">
+  <div style="height:1px;background:#f0f0f6;margin:16px 0"></div>
+  <div class="card-title" style="margin-bottom:12px;color:#e05a2b">Trial Ended</div>
+  <div class="field" style="margin-bottom:8px">
+    <label>Select a plan to activate</label>
+    <select id="trial-new-plan">
+      <option value="">— Select plan —</option>
+      <option value="monthly2k">Monthly — Rs. 2,000/month</option>
+      <option value="monthly5k">Monthly — Rs. 5,000/month</option>
+      <option value="yearly">Yearly</option>
+    </select>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button class="btn" style="flex:1;background:#e05a2b;color:#fff;border-color:#e05a2b" onclick="blockClient()">Block client</button>
+    <button class="btn btn-primary" style="flex:1" onclick="activatePlan()">Activate plan</button>
+  </div>
+</div>
+
+<div class="modal-actions">
       <button class="btn" onclick="closeModal('m-client')">Cancel</button>
       <button class="btn btn-primary" id="save-client-btn" onclick="saveClient()">✓ Save client</button>
     </div>
@@ -787,6 +814,24 @@ function openEditClient(id) {
   document.getElementById('c-username-edit').value = c.username || '';
   document.getElementById('c-plan').disabled = false;
   onPlanChange();
+  // Trial tracker
+const now = new Date();
+const trialEnd = c.trialEndsAt ? new Date(c.trialEndsAt) : null;
+const isActiveTrial = trialEnd && trialEnd > now;
+const isExpiredTrial = trialEnd && trialEnd <= now;
+document.getElementById('trial-tracker-section').style.display = isActiveTrial ? '' : 'none';
+document.getElementById('trial-action-section').style.display = (isExpiredTrial || c.blocked) ? '' : 'none';
+document.getElementById('save-client-btn').style.display = (isExpiredTrial || c.blocked) ? 'none' : '';
+if (isActiveTrial) {
+  const start = new Date(c.start);
+  const daysPassed = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+  const row = document.getElementById('trial-days-row');
+  row.innerHTML = '';
+  for (let i = 1; i <= 7; i++) {
+    const done = i <= daysPassed;
+    row.innerHTML += `<div style="flex:1;text-align:center;padding:8px 4px;border-radius:8px;background:${done?'#e05a2b':'#f0f0f6'};color:${done?'#fff':'#999'};font-size:12px;font-weight:600">Day ${i}</div>`;
+  }
+}
   openModal('m-client');
 }
 function toggleClientTrial() {
@@ -895,7 +940,41 @@ async function saveClient() {
     btn.innerHTML = '✓ Save client';
   }
 }
+async function cancelTrial() {
+  const id = document.getElementById('edit-client-id').value;
+  if (!id) return;
+  try {
+    await api('/clients/'+id+'/cancel-trial', { method:'POST' });
+    document.getElementById('trial-tracker-section').style.display = 'none';
+    document.getElementById('trial-action-section').style.display = '';
+    document.getElementById('save-client-btn').style.display = 'none';
+    toast('Trial cancelled', 'ok');
+    await loadClients();
+  } catch(e) { toast(e.message || 'Failed', 'err'); }
+}
 
+async function blockClient() {
+  const id = document.getElementById('edit-client-id').value;
+  if (!id) return;
+  try {
+    await api('/clients/'+id, { method:'PUT', body: JSON.stringify({ isBlocked: true }) });
+    closeModal('m-client');
+    toast('Client blocked', 'ok');
+    await loadClients();
+  } catch(e) { toast(e.message || 'Failed', 'err'); }
+}
+
+async function activatePlan() {
+  const id = document.getElementById('edit-client-id').value;
+  const plan = document.getElementById('trial-new-plan').value;
+  if (!plan) { toast('Select a plan first', 'err'); return; }
+  try {
+    await api('/clients/'+id+'/activate-plan', { method:'POST', body: JSON.stringify({ plan }) });
+    closeModal('m-client');
+    toast('Plan activated!', 'ok');
+    await loadClients();
+  } catch(e) { toast(e.message || 'Failed', 'err'); }
+}
 /* ============================================================
    CLIENT DETAIL / PAYMENT TRACKER
    ============================================================ */
