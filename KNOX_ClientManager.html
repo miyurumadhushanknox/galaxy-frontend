@@ -299,7 +299,7 @@ tr:hover td{background:#fafafc}
           <div class="field"><label>Address</label><input id="c-address" placeholder="e.g. 123 Main St, Colombo"></div>
           <div class="field"><label>Phone</label><input id="c-phone" placeholder="07X XXX XXXX"></div>
         </div>
-    <div class="field">
+    <div class="field" id="plan-field">
       <label>Plan</label>
       <select id="c-plan" onchange="onPlanChange()">
         <option value="monthly2k">Monthly — Rs. 2,000/month</option>
@@ -347,7 +347,17 @@ tr:hover td{background:#fafafc}
   <div style="height:1px;background:#f0f0f6;margin:16px 0"></div>
   <div class="card-title" style="margin-bottom:12px">Trial Status</div>
   <div id="trial-days-row" style="display:flex;gap:8px;margin-bottom:16px"></div>
-  <button class="btn" style="width:100%;margin-bottom:8px;color:#e05a2b;border-color:#e05a2b" onclick="cancelTrial()">Cancel Trial</button>
+  <div class="field" style="margin-bottom:8px">
+  <label>Action</label>
+  <select id="trial-cancel-action">
+    <option value="">— Select action —</option>
+    <option value="monthly2k">Activate — Monthly Rs. 2,000/mo</option>
+    <option value="monthly5k">Activate — Monthly Rs. 5,000/mo</option>
+    <option value="yearly">Activate — Yearly</option>
+    <option value="block">Block client</option>
+  </select>
+</div>
+<button class="btn" style="width:100%;background:#e05a2b;color:#fff;border-color:#e05a2b" onclick="cancelTrial()">Save</button>
 </div>
 
 <!-- Cancel trial / blocked state — show block or select plan -->
@@ -814,11 +824,14 @@ function openEditClient(id) {
   document.getElementById('c-username-edit').value = c.username || '';
   document.getElementById('c-plan').disabled = false;
   onPlanChange();
+  
   // Trial tracker
 const now = new Date();
 const trialEnd = c.trialEndsAt ? new Date(c.trialEndsAt) : null;
 const isActiveTrial = trialEnd && trialEnd > now;
 const isExpiredTrial = trialEnd && trialEnd <= now;
+// Hide plan field during active trial
+document.getElementById('plan-field').style.display = isActiveTrial ? 'none' : '';
 document.getElementById('trial-tracker-section').style.display = isActiveTrial ? '' : 'none';
 document.getElementById('trial-action-section').style.display = (isExpiredTrial || c.blocked) ? '' : 'none';
 document.getElementById('save-client-btn').style.display = (isExpiredTrial || c.blocked) ? 'none' : '';
@@ -942,13 +955,19 @@ async function saveClient() {
 }
 async function cancelTrial() {
   const id = document.getElementById('edit-client-id').value;
+  const action = document.getElementById('trial-cancel-action').value;
+  if (!action) { toast('Select an action first', 'err'); return; }
   if (!id) return;
   try {
     await api('/clients/'+id+'/cancel-trial', { method:'POST' });
-    document.getElementById('trial-tracker-section').style.display = 'none';
-    document.getElementById('trial-action-section').style.display = '';
-    document.getElementById('save-client-btn').style.display = 'none';
-    toast('Trial cancelled', 'ok');
+    if (action === 'block') {
+      await api('/clients/'+id, { method:'PUT', body: JSON.stringify({ isBlocked: true }) });
+      toast('Trial cancelled — client blocked', 'ok');
+    } else {
+      await api('/clients/'+id+'/activate-plan', { method:'POST', body: JSON.stringify({ plan: action }) });
+      toast('Trial cancelled — plan activated!', 'ok');
+    }
+    closeModal('m-client');
     await loadClients();
   } catch(e) { toast(e.message || 'Failed', 'err'); }
 }
