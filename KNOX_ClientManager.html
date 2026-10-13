@@ -326,15 +326,20 @@ tr:hover td{background:#fafafc}
     <div id="galaxy-creds-section">
       <div style="height:1px;background:#f0f0f6;margin:16px 0"></div>
       <div class="card-title" style="margin-bottom:12px">Galaxy Login Credentials</div>
-      <div class="field-row">
-        <div class="field"><label>First name</label><input id="c-firstname" placeholder="e.g. Kamal"></div>
-        <div class="field"><label>Last name</label><input id="c-lastname" placeholder="e.g. Perera"></div>
-      </div>
-      <div class="field"><label>Email</label><input id="c-email" placeholder="client@example.com"></div>
-      <div class="field-row">
-        <div class="field"><label>Username</label><input id="c-username" placeholder="e.g. admin" autocomplete="off"></div>
-        <div class="field"><label>Password</label><input id="c-password" type="text" placeholder="e.g. pass123" autocomplete="off"></div>
-      </div>
+              <div id="new-client-fields">
+          <div class="field-row">
+            <div class="field"><label>First name</label><input id="c-firstname" placeholder="e.g. Kamal"></div>
+            <div class="field"><label>Last name</label><input id="c-lastname" placeholder="e.g. Perera"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Username</label><input id="c-username" placeholder="e.g. admin" autocomplete="off"></div>
+            <div class="field"><label>Password</label><input id="c-password" type="text" placeholder="e.g. pass123" autocomplete="off"></div>
+          </div>
+        </div>
+        <div class="field"><label>Email</label><input id="c-email" placeholder="client@example.com"></div>
+        <div id="edit-username-field" style="display:none">
+          <div class="field"><label>Username</label><input id="c-username-edit" placeholder="e.g. admin" autocomplete="off"></div>
+        </div>
       <div class="note-box" style="margin-top:4px">The Business ID will be auto-generated. Give these credentials to the client to log in to Galaxy.</div>
 
     <div class="modal-actions">
@@ -753,6 +758,8 @@ function openAddClient() {
   document.getElementById('c-username').value = '';
   document.getElementById('c-password').value = '';
   document.getElementById('galaxy-creds-section').style.display = 'block';
+  document.getElementById('new-client-fields').style.display = '';
+  document.getElementById('edit-username-field').style.display = 'none';
   onPlanChange();
   openModal('m-client');
 }
@@ -768,7 +775,10 @@ function openEditClient(id) {
   document.getElementById('c-plan').value = c.plan;
   document.getElementById('c-start').value = c.start;
   document.getElementById('c-setup-method').value = c.setupMethod;
-  document.getElementById('galaxy-creds-section').style.display = 'none'; // don't show on edit
+  document.getElementById('new-client-fields').style.display = 'none';
+  document.getElementById('edit-username-field').style.display = '';
+  document.getElementById('c-email').value = c.email || '';
+  document.getElementById('c-username-edit').value = c.username || '';
   onPlanChange();
   openModal('m-client');
 }
@@ -859,7 +869,9 @@ async function saveClient() {
       document.getElementById('created-password').textContent = password;
       document.getElementById('m-created').classList.add('open');
     } else {
-      const data = await api('/clients/'+id, { method:'PUT', body: JSON.stringify(payload) });
+      const ownerEmail = document.getElementById('c-email').value.trim();
+      const ownerUsername = document.getElementById('c-username-edit').value.trim();
+      const data = await api('/clients/'+id, { method:'PUT', body: JSON.stringify({...payload, ownerEmail, ownerUsername}) });
       const idx = clients.findIndex(x=>x.id===id);
       if(idx !== -1) clients[idx] = mapClient(data.client);
       toast('Client updated!','ok');
