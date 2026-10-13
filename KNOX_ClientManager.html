@@ -955,7 +955,7 @@ async function saveClient() {
   }
 }
 async function cancelTrial() {
-  const id = document.getElementById('edit-client-id').value;
+  const id = document.getElementById('c-id').value;
   const action = document.getElementById('trial-cancel-action').value;
   if (!action) { toast('Select an action first', 'err'); return; }
   if (!id) return;
@@ -974,7 +974,7 @@ async function cancelTrial() {
 }
 
 async function blockClient() {
-  const id = document.getElementById('edit-client-id').value;
+  const id = document.getElementById('c-id').value;
   if (!id) return;
   try {
     await api('/clients/'+id, { method:'PUT', body: JSON.stringify({ isBlocked: true }) });
@@ -985,7 +985,7 @@ async function blockClient() {
 }
 
 async function activatePlan() {
-  const id = document.getElementById('edit-client-id').value;
+  const id = document.getElementById('c-id').value;
   const plan = document.getElementById('trial-new-plan').value;
   if (!plan) { toast('Select a plan first', 'err'); return; }
   try {
