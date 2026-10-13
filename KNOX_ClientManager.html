@@ -969,7 +969,7 @@ async function cancelTrial() {
       toast('Trial cancelled — plan activated!', 'ok');
     }
     closeModal('m-client');
-    await loadClients();
+    await initApp();
   } catch(e) { toast(e.message || 'Failed', 'err'); }
 }
 
@@ -980,7 +980,7 @@ async function blockClient() {
     await api('/clients/'+id, { method:'PUT', body: JSON.stringify({ isBlocked: true }) });
     closeModal('m-client');
     toast('Client blocked', 'ok');
-    await loadClients();
+    await initApp();
   } catch(e) { toast(e.message || 'Failed', 'err'); }
 }
 
@@ -992,7 +992,7 @@ async function activatePlan() {
     await api('/clients/'+id+'/activate-plan', { method:'POST', body: JSON.stringify({ plan }) });
     closeModal('m-client');
     toast('Plan activated!', 'ok');
-    await loadClients();
+    await initApp();
   } catch(e) { toast(e.message || 'Failed', 'err'); }
 }
 /* ============================================================
