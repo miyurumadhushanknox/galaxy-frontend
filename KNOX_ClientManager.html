@@ -567,7 +567,9 @@ function mapClient(b) {
     setupPaid: b.knox_setup_paid || [false,false,false,false],
     subPayments: b.knox_sub_payments || {},
     subAmounts: b.knox_sub_amounts || {},
-    notes: b.knox_notes || ''
+    category: b.category || '',
+    address: b.address || '',
+    username: b.owner_username || ''
   };
 }
 
