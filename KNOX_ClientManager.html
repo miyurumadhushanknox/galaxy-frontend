@@ -826,7 +826,7 @@ async function saveClient() {
     businessName: name,
     category: document.getElementById('c-category').value.trim(),
     address: document.getElementById('c-address').value.trim(),
-    phone,
+    phone: document.getElementById('c-phone').value.trim(),
     plan: document.getElementById('c-plan').value === 'trial' ? 'monthly2k' : document.getElementById('c-plan').value,
     start: document.getElementById('c-start').value,
     setupMethod: document.getElementById('c-setup-method').value,
