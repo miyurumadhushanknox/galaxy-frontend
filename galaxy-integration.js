@@ -1472,29 +1472,6 @@ setInterval(hideTransferBtn, 500);
 })();
 // Fix billing renewal date — dynamic from trialStartsAt
 (function() {
-  function calcNextRenewal(startDateStr, isYearly) {
-    var start = new Date(startDateStr);
-    var dayOfMonth = start.getDate();
-    var now = new Date();
-    var candidate;
-    if (isYearly) {
-      candidate = new Date(start.getFullYear() + 1, start.getMonth(), dayOfMonth);
-      while (candidate <= now) {
-        candidate = new Date(candidate.getFullYear() + 1, candidate.getMonth(), dayOfMonth);
-      }
-    } else {
-      candidate = new Date(now.getFullYear(), now.getMonth(), dayOfMonth);
-      if (candidate <= now) {
-        candidate = new Date(now.getFullYear(), now.getMonth() + 1, dayOfMonth);
-      }
-    }
-    var diffDays = Math.ceil((candidate - now) / (1000 * 60 * 60 * 24));
-    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    return {
-      dateStr: candidate.getDate() + ' ' + months[candidate.getMonth()] + ' ' + candidate.getFullYear(),
-      daysLeft: diffDays
-    };
-  }
 
   var _renewalFetched = false;
   function applyRenewalPatch() {
@@ -1518,12 +1495,6 @@ setInterval(hideTransferBtn, 500);
   window.PLAN_RENEWAL = data.nextDueDate;
   var diffDays = Math.ceil((new Date(data.business.next_due_date) - new Date()) / (1000 * 60 * 60 * 24));
   window.PLAN_RENEWAL_DAYS = diffDays;
-} else {
-  var isYearly = (data.business && data.business.plan && data.business.plan.indexOf('yearly') !== -1);
-  var r = calcNextRenewal(start, isYearly);
-  window.PLAN_RENEWAL = r.dateStr;
-  window.PLAN_RENEWAL_DAYS = r.daysLeft;
-}
            try {
                         var uu = JSON.parse(localStorage.getItem('galaxy_user') || '{}');
            if (!uu.business) uu.business = {};
@@ -1539,18 +1510,13 @@ setInterval(hideTransferBtn, 500);
            setTimeout(function() {
              document.querySelectorAll('*').forEach(function(el) {
                if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
-                 el.textContent = r.dateStr;
+                 el.textContent = window.PLAN_RENEWAL;
                }
              });
            }, 1500);
       }).catch(function(){});
       return;
     }
-    var rawPlan = (u.business && u.business.plan) || u.plan || '';
-    var isYearly = rawPlan.indexOf('yearly') !== -1;
-    var r = calcNextRenewal(startDate, isYearly);
-    window.PLAN_RENEWAL = r.dateStr;
-    window.PLAN_RENEWAL_DAYS = r.daysLeft;
   }
 
   var _hooked = false;
