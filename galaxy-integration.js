@@ -1510,11 +1510,14 @@ setInterval(hideTransferBtn, 500);
                    window.PLAN_RENEWAL = r.dateStr;
            window.PLAN_RENEWAL_DAYS = r.daysLeft;
            try {
-             var uu = JSON.parse(localStorage.getItem('galaxy_user') || '{}');
-             if (!uu.business) uu.business = {};
-             uu.business.knoxStartDate = start;
-             uu.knoxStartDate = start;
-             localStorage.setItem('galaxy_user', JSON.stringify(uu));
+                        var uu = JSON.parse(localStorage.getItem('galaxy_user') || '{}');
+           if (!uu.business) uu.business = {};
+           uu.business.knoxStartDate = start;
+           uu.business.knox_start_date = start;
+           uu.business.trialStartsAt = start;
+           uu.business.trial_starts_at = start;
+           uu.knoxStartDate = start;
+           localStorage.setItem('galaxy_user', JSON.stringify(uu));
            } catch(e){}
            if (typeof window._origRenderBilling === 'function') window._origRenderBilling();
                       // DOM patch fallback
@@ -1524,7 +1527,7 @@ setInterval(hideTransferBtn, 500);
                  el.textContent = r.dateStr;
                }
              });
-           }, 500);
+           }, 1500);
       }).catch(function(){});
       return;
     }
