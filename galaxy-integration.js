@@ -10,7 +10,6 @@
  * That's the ONLY change needed in Galaxy.html.
  */
 function showBlockedPage() {
-  localStorage.removeItem('galaxy_token');
   document.getElementById('app-shell').innerHTML = '';
   document.getElementById('login-screen').style.display = '';
   document.querySelector('.login-box').innerHTML = `
