@@ -52,7 +52,9 @@ async function apiFetch(path, options = {}) {
   const data = await res.json();
 
   if (!res.ok) {
-    throw new Error(data.error || 'Request failed');
+    const err = new Error(data.error || 'Request failed');
+    err.isBlocked = data.isBlocked || false;
+    throw err;
   }
 
   return data;
