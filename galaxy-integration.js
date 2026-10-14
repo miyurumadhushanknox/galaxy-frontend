@@ -1490,7 +1490,7 @@ setInterval(hideTransferBtn, 500);
 
   function applyRenewalPatch() {
     var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
-    var startDate = (u.business && u.business.trialStartsAt) || u.trialStartsAt;
+    var startDate = (u.business && (u.business.knoxStartDate || u.business.trialStartsAt)) || u.knoxStartDate || u.trialStartsAt;
     // Patch CLIENT_PLAN
     var pm = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
     var plan = pm[u.plan] || 'basic';
