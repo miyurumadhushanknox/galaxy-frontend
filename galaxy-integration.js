@@ -1514,10 +1514,16 @@ setInterval(hideTransferBtn, 500);
       }).then(function(res){ return res.json(); }).then(function(data) {
         var start = data.business && (data.business.knox_start_date || data.business.knoxStartDate || data.business.trial_starts_at || data.business.trialStartsAt);
         if (!start) return;
-        var isYearly = (data.business && data.business.plan && data.business.plan.indexOf('yearly') !== -1);
-        var r = calcNextRenewal(start, isYearly);
-                   window.PLAN_RENEWAL = r.dateStr;
-           window.PLAN_RENEWAL_DAYS = r.daysLeft;
+        if (data.nextDueDate) {
+  window.PLAN_RENEWAL = data.nextDueDate;
+  var diffDays = Math.ceil((new Date(data.business.next_due_date) - new Date()) / (1000 * 60 * 60 * 24));
+  window.PLAN_RENEWAL_DAYS = diffDays;
+} else {
+  var isYearly = (data.business && data.business.plan && data.business.plan.indexOf('yearly') !== -1);
+  var r = calcNextRenewal(start, isYearly);
+  window.PLAN_RENEWAL = r.dateStr;
+  window.PLAN_RENEWAL_DAYS = r.daysLeft;
+}
            try {
                         var uu = JSON.parse(localStorage.getItem('galaxy_user') || '{}');
            if (!uu.business) uu.business = {};
@@ -1540,7 +1546,8 @@ setInterval(hideTransferBtn, 500);
       }).catch(function(){});
       return;
     }
-    var isYearly = (u.plan && u.plan.indexOf('yearly') !== -1);
+    var rawPlan = (u.business && u.business.plan) || u.plan || '';
+    var isYearly = rawPlan.indexOf('yearly') !== -1;
     var r = calcNextRenewal(startDate, isYearly);
     window.PLAN_RENEWAL = r.dateStr;
     window.PLAN_RENEWAL_DAYS = r.daysLeft;
