@@ -358,7 +358,6 @@ tr:hover td{background:#fafafc}
   <option value="block">Block client</option>
 </select>
 </div>
-<button class="btn" style="width:100%;background:#e05a2b;color:#fff;border-color:#e05a2b" onclick="cancelTrial()">Save</button>
 </div>
 
 <!-- Cancel trial / blocked state — show block or select plan -->
@@ -943,6 +942,16 @@ async function saveClient() {
       const idx = clients.findIndex(x=>x.id===id);
       if(idx !== -1) clients[idx] = mapClient(data.client);
       toast('Client updated!','ok');
+      // Handle trial action if selected
+      const trialAction = document.getElementById('trial-cancel-action')?.value;
+      if (trialAction) {
+      await api('/clients/'+id+'/cancel-trial', { method:'POST' });
+      if (trialAction === 'block') {
+      await api('/clients/'+id, { method:'PUT', body: JSON.stringify({ isBlocked: true }) });
+      } else {
+      await api('/clients/'+id+'/activate-plan', { method:'POST', body: JSON.stringify({ plan: trialAction }) });
+      }
+      }
       closeModal('m-client');
       renderClientTable();
       renderChart();
