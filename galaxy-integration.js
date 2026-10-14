@@ -9,7 +9,21 @@
  *
  * That's the ONLY change needed in Galaxy.html.
  */
-
+function showBlockedPage() {
+  localStorage.removeItem('galaxy_token');
+  document.getElementById('app-shell').innerHTML = '';
+  document.getElementById('login-screen').style.display = '';
+  document.querySelector('.login-box').innerHTML = `
+    <div style="text-align:center">
+      <div style="font-size:48px;margin-bottom:16px">🔒</div>
+      <div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:8px">Account Blocked</div>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:8px">Your account has been temporarily suspended.</p>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:24px">Please clear any outstanding payments or renew your subscription to regain access.</p>
+      <div style="background:rgba(224,90,43,0.15);border:1px solid rgba(224,90,43,0.4);border-radius:12px;padding:16px;color:#ff7a4d;font-weight:600;font-size:15px">
+        📞 Contact us: 075 273 1474
+      </div>
+    </div>`;
+}
 (function () {
   'use strict';
 
@@ -128,19 +142,7 @@
       };
       // Check if business is blocked
       if (data.business && data.business.isBlocked) {
-      document.getElementById('app-shell').innerHTML = '';
-document.getElementById('login-screen').style.display = '';
-document.querySelector('.login-box').innerHTML = `
-  <div style="text-align:center">
-    <div style="font-size:48px;margin-bottom:16px">🔒</div>
-    <div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:8px">Account Blocked</div>
-    <p style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:8px">Your account has been temporarily suspended.</p>
-    <p style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:24px">Please clear any outstanding payments or renew your subscription to regain access.</p>
-    <div style="background:rgba(224,90,43,0.15);border:1px solid rgba(224,90,43,0.4);border-radius:12px;padding:16px;color:#ff7a4d;font-weight:600;font-size:15px">
-      📞 Contact us: 075 273 1474
-    </div>
-  </div>`;
-      return;
+      showBlockedPage(); return;
       }
       if (errEl) errEl.classList.remove('show');
       // Galaxy's built-in session + UI flow
@@ -165,21 +167,11 @@ document.querySelector('.login-box').innerHTML = `
         if (typeof window.applyBizName === 'function') window.applyBizName();
         if (typeof window.initApp === 'function') window.initApp();
       }
-    } catch (err) {
-      if (err.isBlocked) {
-  document.getElementById('app-shell').innerHTML = '';
-  document.getElementById('login-screen').style.display = '';
-  document.querySelector('.login-box').innerHTML = `
-    <div style="text-align:center">
-      <div style="font-size:48px;margin-bottom:16px">🔒</div>
-      <div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:8px">Account Blocked</div>
-      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:8px">Your account has been temporarily suspended.</p>
-      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:24px">Please clear any outstanding payments or renew your subscription to regain access.</p>
-      <div style="background:rgba(224,90,43,0.15);border:1px solid rgba(224,90,43,0.4);border-radius:12px;padding:16px;color:#ff7a4d;font-weight:600;font-size:15px">
-        📞 Contact us: 075 273 1474
-      </div>
-    </div>`;
-} else if (errEl) {
+      } catch (err) {
+    if (err.isBlocked) {
+      showBlockedPage();
+    } else if (errEl) {
+
      errEl.textContent = err.message === 'Invalid credentials' ? 'Wrong username or password.' : (err.message || 'Login failed.');
      errEl.classList.add('show');
     }
@@ -213,6 +205,14 @@ document.querySelector('.login-box').innerHTML = `
    */
   async function loadRealData() {
     try {
+            // Check if business is blocked
+      try {
+        const meData = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+          headers: { 'Authorization': 'Bearer ' + GalaxyAPI.Auth.getToken() }
+        }).then(r => r.json());
+        if (meData && meData.business && meData.business.is_blocked) { showBlockedPage(); return; }
+      } catch(e) {}
+      
       // Load in parallel for speed
       const [warehousesRes, productsRes, ordersRes, settingsRes, usersRes, financeRes] = await Promise.allSettled([
         API.WarehousesAPI.list(),
