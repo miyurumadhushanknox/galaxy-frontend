@@ -1509,6 +1509,7 @@ setInterval(hideTransferBtn, 500);
         var r = calcNextRenewal(start);
         window.PLAN_RENEWAL = r.dateStr;
         window.PLAN_RENEWAL_DAYS = r.daysLeft;
+        if (typeof window._origRenderBilling === 'function') window._origRenderBilling();
       }).catch(function(){});
       return;
     }
@@ -1521,6 +1522,7 @@ setInterval(hideTransferBtn, 500);
   function hookRenderBilling() {
     if (_hooked || typeof window.renderBillingPage !== 'function') return;
     var orig = window.renderBillingPage;
+    window._origRenderBilling = orig;
     window.renderBillingPage = function() {
       applyRenewalPatch();
       return orig.apply(this, arguments);
