@@ -207,9 +207,11 @@ function showBlockedPage() {
     try {
             // Check if business is blocked
       try {
-        const meData = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
-          headers: { 'Authorization': 'Bearer ' + GalaxyAPI.Auth.getToken() }
-        }).then(r => r.json());
+        const meRes = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+        headers: { 'Authorization': 'Bearer ' + GalaxyAPI.Auth.getToken() }
+        });
+        const meData = await meRes.json();
+        if (meRes.status === 403) { showBlockedPage(); return; }
         if ((meData && meData.business && meData.business.is_blocked) || (meData && meData.isBlocked)) { showBlockedPage(); return; }
       } catch(e) {}
 
