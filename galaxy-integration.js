@@ -1540,7 +1540,8 @@ setInterval(hideTransferBtn, 500);
       }).catch(function(){});
       return;
     }
-    var r = calcNextRenewal(startDate);
+    var isYearly = (u.plan && u.plan.indexOf('yearly') !== -1);
+    var r = calcNextRenewal(startDate, isYearly);
     window.PLAN_RENEWAL = r.dateStr;
     window.PLAN_RENEWAL_DAYS = r.daysLeft;
   }
