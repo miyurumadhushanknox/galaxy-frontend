@@ -1507,9 +1507,22 @@ setInterval(hideTransferBtn, 500);
         var start = data.business && (data.business.knox_start_date || data.business.knoxStartDate || data.business.trial_starts_at || data.business.trialStartsAt);
         if (!start) return;
         var r = calcNextRenewal(start);
-        window.PLAN_RENEWAL = r.dateStr;
-        window.PLAN_RENEWAL_DAYS = r.daysLeft;
-        if (typeof window._origRenderBilling === 'function') window._origRenderBilling();
+                   window.PLAN_RENEWAL = r.dateStr;
+           window.PLAN_RENEWAL_DAYS = r.daysLeft;
+           try {
+             var uu = JSON.parse(localStorage.getItem('galaxy_user') || '{}');
+             if (!uu.business) uu.business = {};
+             uu.business.knoxStartDate = start;
+             uu.knoxStartDate = start;
+             localStorage.setItem('galaxy_user', JSON.stringify(uu));
+           } catch(e){}
+           if (typeof window._origRenderBilling === 'function') window._origRenderBilling();
+           // DOM patch fallback
+           document.querySelectorAll('*').forEach(function(el) {
+             if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
+               el.textContent = r.dateStr;
+             }
+           });
       }).catch(function(){});
       return;
     }
