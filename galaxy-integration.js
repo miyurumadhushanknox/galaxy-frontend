@@ -1440,7 +1440,7 @@ setInterval(function() {
   if (plan !== 'basic') return;
 
   // Add class to body once
-  document.body.classList.add('galaxy-basic-plan');
+  if (document.body) document.body.classList.add('galaxy-basic-plan');
 
   // Inject CSS once
   if (!document.getElementById('galaxy-basic-hide')) {
