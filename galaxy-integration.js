@@ -210,9 +210,9 @@ function showBlockedPage() {
         const meData = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
           headers: { 'Authorization': 'Bearer ' + GalaxyAPI.Auth.getToken() }
         }).then(r => r.json());
-        if (meData && meData.business && meData.business.is_blocked) { showBlockedPage(); return; }
+        if ((meData && meData.business && meData.business.is_blocked) || (meData && meData.isBlocked)) { showBlockedPage(); return; }
       } catch(e) {}
-      
+
       // Load in parallel for speed
       const [warehousesRes, productsRes, ordersRes, settingsRes, usersRes, financeRes] = await Promise.allSettled([
         API.WarehousesAPI.list(),
