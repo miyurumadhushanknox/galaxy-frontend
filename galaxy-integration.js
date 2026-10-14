@@ -167,21 +167,19 @@ document.querySelector('.login-box').innerHTML = `
       }
     } catch (err) {
       if (err.isBlocked) {
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app-shell').style.display = 'flex';
-      document.getElementById('app-shell').innerHTML = `
-     <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#f8f8fc">
-      <div style="max-width:480px;width:90%;background:#fff;border-radius:20px;padding:40px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.1)">
-        <div style="font-size:48px;margin-bottom:16px">🔒</div>
-        <h2 style="color:#e05a2b;margin-bottom:12px">Account Blocked</h2>
-        <p style="color:#555;margin-bottom:8px">Your account has been temporarily suspended.</p>
-        <p style="color:#555;margin-bottom:24px">Please clear any outstanding payments or renew your subscription to regain access.</p>
-        <div style="background:#fff8f5;border:1px solid #f0c4b0;border-radius:12px;padding:16px;color:#e05a2b;font-weight:600;font-size:15px">
-          📞 Contact us: 075 273 1474
-        </div>
+  document.getElementById('app-shell').innerHTML = '';
+  document.getElementById('login-screen').style.display = '';
+  document.querySelector('.login-box').innerHTML = `
+    <div style="text-align:center">
+      <div style="font-size:48px;margin-bottom:16px">🔒</div>
+      <div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:8px">Account Blocked</div>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:8px">Your account has been temporarily suspended.</p>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:24px">Please clear any outstanding payments or renew your subscription to regain access.</p>
+      <div style="background:rgba(224,90,43,0.15);border:1px solid rgba(224,90,43,0.4);border-radius:12px;padding:16px;color:#ff7a4d;font-weight:600;font-size:15px">
+        📞 Contact us: 075 273 1474
       </div>
-      </div>`;
-     } else if (errEl) {
+    </div>`;
+} else if (errEl) {
      errEl.textContent = err.message === 'Invalid credentials' ? 'Wrong username or password.' : (err.message || 'Login failed.');
      errEl.classList.add('show');
     }
