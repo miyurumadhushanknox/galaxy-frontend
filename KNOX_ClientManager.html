@@ -814,8 +814,8 @@ const isExpiredTrial = trialEnd && trialEnd <= now;
 // Hide plan field during active trial
 document.getElementById('plan-field').style.display = isActiveTrial ? 'none' : '';
 document.getElementById('trial-tracker-section').style.display = isActiveTrial ? '' : 'none';
-document.getElementById('trial-action-section').style.display = (isExpiredTrial || c.blocked) ? '' : 'none';
-document.getElementById('save-client-btn').style.display = (isExpiredTrial || c.blocked) ? 'none' : '';
+const tas = document.getElementById('trial-action-section'); if (tas) tas.style.display = (isExpiredTrial || c.blocked) ? '' : 'none';
+const scb = document.getElementById('save-client-btn'); if (scb) scb.style.display = (isExpiredTrial || c.blocked) ? 'none' : '';
 if (isActiveTrial) {
   const start = new Date(c.start);
   const daysPassed = Math.floor((now - start) / (1000 * 60 * 60 * 24));
