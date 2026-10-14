@@ -1488,6 +1488,7 @@ setInterval(hideTransferBtn, 500);
     };
   }
 
+  var _renewalFetched = false;
   function applyRenewalPatch() {
     var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
     var startDate = (u.business && (u.business.knoxStartDate || u.business.trialStartsAt)) || u.knoxStartDate || u.trialStartsAt;
@@ -1495,9 +1496,11 @@ setInterval(hideTransferBtn, 500);
     var pm = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
     var plan = pm[u.plan] || 'basic';
     window.CLIENT_PLAN = plan;
-        if (!startDate) {
-      var token = localStorage.getItem('galaxy_token') || sessionStorage.getItem('galaxy_token');
-      if (!token) return;
+    if (!startDate) {
+    if (_renewalFetched) return;
+    _renewalFetched = true;
+    var token = localStorage.getItem('galaxy_token') || sessionStorage.getItem('galaxy_token');
+    if (!token) return;
       fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
         headers: { 'Authorization': 'Bearer ' + token }
       }).then(function(res){ return res.json(); }).then(function(data) {
