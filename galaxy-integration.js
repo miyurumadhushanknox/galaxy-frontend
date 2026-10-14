@@ -25,6 +25,17 @@ function showBlockedPage() {
 }
 (function () {
   'use strict';
+  // Immediate block check on page load
+(async function checkBlockOnLoad() {
+  const token = localStorage.getItem('galaxy_token');
+  if (!token) return;
+  try {
+    const meRes = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (meRes.status === 403) { showBlockedPage(); }
+  } catch(e) {}
+})();
 
   const API = window.GalaxyAPI;
 
