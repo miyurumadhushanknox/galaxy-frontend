@@ -207,13 +207,16 @@ function showBlockedPage() {
     try {
             // Check if business is blocked
       try {
-        const meRes = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
-        headers: { 'Authorization': 'Bearer ' + GalaxyAPI.Auth.getToken() }
-        });
-        const meData = await meRes.json();
-        if (meRes.status === 403) { showBlockedPage(); return; }
-        if ((meData && meData.business && meData.business.is_blocked) || (meData && meData.isBlocked)) { showBlockedPage(); return; }
-      } catch(e) {}
+  const token = GalaxyAPI.Auth.getToken();
+  if (token) {
+    const meRes = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const meData = await meRes.json();
+    if (meRes.status === 403) { showBlockedPage(); return; }
+    if ((meData && meData.business && meData.business.is_blocked) || (meData && meData.isBlocked)) { showBlockedPage(); return; }
+  }
+} catch(e) {}
 
       // Load in parallel for speed
       const [warehousesRes, productsRes, ordersRes, settingsRes, usersRes, financeRes] = await Promise.allSettled([
