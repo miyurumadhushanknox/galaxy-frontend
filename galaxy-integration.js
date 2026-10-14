@@ -141,7 +141,7 @@ function showBlockedPage() {
       plan:        biz.plan || null,
       };
       // Check if business is blocked
-      if (data.business && data.business.isBlocked) {
+      if (data.business && (data.business.is_blocked || data.business.isBlocked)) {
       showBlockedPage(); return;
       }
       if (errEl) errEl.classList.remove('show');
