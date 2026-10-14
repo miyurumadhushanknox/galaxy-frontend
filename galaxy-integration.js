@@ -1517,12 +1517,14 @@ setInterval(hideTransferBtn, 500);
              localStorage.setItem('galaxy_user', JSON.stringify(uu));
            } catch(e){}
            if (typeof window._origRenderBilling === 'function') window._origRenderBilling();
-           // DOM patch fallback
-           document.querySelectorAll('*').forEach(function(el) {
-             if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
-               el.textContent = r.dateStr;
-             }
-           });
+                      // DOM patch fallback
+           setTimeout(function() {
+             document.querySelectorAll('*').forEach(function(el) {
+               if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
+                 el.textContent = r.dateStr;
+               }
+             });
+           }, 500);
       }).catch(function(){});
       return;
     }
