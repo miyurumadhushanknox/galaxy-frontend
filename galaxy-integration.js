@@ -1501,7 +1501,7 @@ setInterval(hideTransferBtn, 500);
       fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
         headers: { 'Authorization': 'Bearer ' + token }
       }).then(function(res){ return res.json(); }).then(function(data) {
-        var start = data.business && (data.business.trial_starts_at || data.business.trialStartsAt);
+        var start = data.business && (data.business.knox_start_date || data.business.knoxStartDate || data.business.trial_starts_at || data.business.trialStartsAt);
         if (!start) return;
         var r = calcNextRenewal(start);
         window.PLAN_RENEWAL = r.dateStr;
