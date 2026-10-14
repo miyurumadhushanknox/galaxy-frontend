@@ -823,7 +823,7 @@ if (isActiveTrial) {
   row.innerHTML = '';
   for (let i = 1; i <= 7; i++) {
     const done = i <= daysPassed;
-    row.innerHTML += `<div style="flex:1;text-align:center;padding:8px 4px;border-radius:8px;background:${done?'#e05a2b':'#f0f0f6'};color:${done?'#fff':'#999'};font-size:12px;font-weight:600">Day ${i}</div>`;
+    row.innerHTML += `<div style="flex:1;text-align:center;padding:8px 4px;border-radius:8px;background:${done?'linear-gradient(135deg,#f97316,#e05a2b)':'#f0f0f6'};color:${done?'#fff':'#999'};font-size:12px;font-weight:600">Day ${i}</div>`;
   }
 }
   openModal('m-client');
