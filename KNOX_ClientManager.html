@@ -360,25 +360,6 @@ tr:hover td{background:#fafafc}
 </div>
 </div>
 
-<!-- Cancel trial / blocked state — show block or select plan -->
-<div id="trial-action-section" style="display:none">
-  <div style="height:1px;background:#f0f0f6;margin:16px 0"></div>
-  <div class="card-title" style="margin-bottom:12px;color:#e05a2b">Trial Ended</div>
-  <div class="field" style="margin-bottom:8px">
-    <label>Select a plan to activate</label>
-    <select id="trial-new-plan">
-      <option value="">— Select plan —</option>
-      <option value="monthly2k">Monthly — Rs. 2,000/month</option>
-      <option value="monthly5k">Monthly — Rs. 5,000/month</option>
-      <option value="yearly">Yearly</option>
-    </select>
-  </div>
-  <div style="display:flex;gap:8px">
-    <button class="btn" style="flex:1;background:#e05a2b;color:#fff;border-color:#e05a2b" onclick="blockClient()">Block client</button>
-    <button class="btn btn-primary" style="flex:1" onclick="activatePlan()">Activate plan</button>
-  </div>
-</div>
-
 <div class="modal-actions">
       <button class="btn" onclick="closeModal('m-client')">Cancel</button>
       <button class="btn btn-primary" id="save-client-btn" onclick="saveClient()">✓ Save client</button>
