@@ -1472,13 +1472,21 @@ setInterval(hideTransferBtn, 500);
 })();
 // Fix billing renewal date — dynamic from trialStartsAt
 (function() {
-  function calcNextRenewal(startDateStr) {
+  function calcNextRenewal(startDateStr, isYearly) {
     var start = new Date(startDateStr);
     var dayOfMonth = start.getDate();
     var now = new Date();
-    var candidate = new Date(now.getFullYear(), now.getMonth(), dayOfMonth);
-    if (candidate <= now) {
-      candidate = new Date(now.getFullYear(), now.getMonth() + 1, dayOfMonth);
+    var candidate;
+    if (isYearly) {
+      candidate = new Date(start.getFullYear() + 1, start.getMonth(), dayOfMonth);
+      while (candidate <= now) {
+        candidate = new Date(candidate.getFullYear() + 1, candidate.getMonth(), dayOfMonth);
+      }
+    } else {
+      candidate = new Date(now.getFullYear(), now.getMonth(), dayOfMonth);
+      if (candidate <= now) {
+        candidate = new Date(now.getFullYear(), now.getMonth() + 1, dayOfMonth);
+      }
     }
     var diffDays = Math.ceil((candidate - now) / (1000 * 60 * 60 * 24));
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -1506,7 +1514,8 @@ setInterval(hideTransferBtn, 500);
       }).then(function(res){ return res.json(); }).then(function(data) {
         var start = data.business && (data.business.knox_start_date || data.business.knoxStartDate || data.business.trial_starts_at || data.business.trialStartsAt);
         if (!start) return;
-        var r = calcNextRenewal(start);
+        var isYearly = (data.business && data.business.plan && data.business.plan.indexOf('yearly') !== -1);
+        var r = calcNextRenewal(start, isYearly);
                    window.PLAN_RENEWAL = r.dateStr;
            window.PLAN_RENEWAL_DAYS = r.daysLeft;
            try {
