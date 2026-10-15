@@ -3963,7 +3963,7 @@ function renderBillingPage(){
     const d = await r.json();
     const biz = d.business || d;
     const sp = biz.knox_sub_payments||{};
-    const sf = Array.isArray(biz.setup_paid)?biz.setup_paid:[false,false,false,false];
+    const sf = Array.isArray(biz.knox_setup_paid)?biz.knox_setup_paid:[false,false,false,false];
     const start = biz.knox_start_date?new Date(biz.knox_start_date):null;
     const amt = biz.knox_plan_amount||2000;
     let total = 0;
@@ -3978,7 +3978,7 @@ function renderBillingPage(){
         d2.setMonth(d2.getMonth()+1);
       }
     }
-    
+
     setTimeout(function(){
      const allCards=document.querySelectorAll('#billing-root .card');
      const outCard=Array.from(allCards).find(c=>c.textContent.includes('Outstanding'));
