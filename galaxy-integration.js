@@ -1497,12 +1497,31 @@ setInterval(hideTransferBtn, 500);
         var diffDays = Math.ceil((new Date(data.business.next_due_date) - new Date()) / (1000 * 60 * 60 * 24));
         window.PLAN_RENEWAL_DAYS = diffDays;
         var _patchInterval = setInterval(function() {
-          document.querySelectorAll('*').forEach(function(el) {
-            if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
-              el.textContent = window.PLAN_RENEWAL;
-            }
-          });
-        }, 500);
+  var found = false;
+  document.querySelectorAll('*').forEach(function(el) {
+    if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
+      el.textContent = window.PLAN_RENEWAL;
+      found = true;
+    }
+  });
+  // Patch subtitle: find the small text under the renewal date and show days left
+  if (window.PLAN_RENEWAL && window.PLAN_RENEWAL_DAYS !== undefined) {
+    document.querySelectorAll('*').forEach(function(el) {
+      if (el.children.length === 0 && el.textContent.trim() === window.PLAN_RENEWAL) {
+        // Check if this is the subtitle (not the big date itself)
+        var parent = el.parentElement;
+        if (parent) {
+          var siblings = Array.from(parent.children);
+          var idx = siblings.indexOf(el);
+          // If there's a sibling before us showing the same date, we're the subtitle
+          if (siblings.some(function(s, i) { return i < idx && s.textContent.trim() === window.PLAN_RENEWAL; })) {
+            el.textContent = window.PLAN_RENEWAL_DAYS + ' days left';
+          }
+        }
+      }
+    });
+  }
+}, 500);
         setTimeout(function(){ clearInterval(_patchInterval); }, 10000);
       }
       try {
