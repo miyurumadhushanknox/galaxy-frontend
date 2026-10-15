@@ -1030,7 +1030,7 @@ function openClientDetail(id) {
 
   const installAmt = 20000/4;
 let installHtml = '';
-if(c.setupMethod==='full'){
+if(c.setupMethod==='full' || plan.type==='yearly'){
   const paid = c.setupPaid[0];
   installHtml = `<div class="install-row">
     <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
@@ -1112,7 +1112,12 @@ function getSubPeriods(c) {
     const startYear = start.getFullYear();
     const nowYear = now.getFullYear();
     for(let y=startYear+1; y<=nowYear; y++){
-      periods.push({key:y+'', label:y+' (annual)', amount: plan.amount||0});
+      const periodStart = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+      periodStart.setFullYear(y);
+      const periodEnd = new Date(start.getFullYear(), start.getMonth(), start.getDate()-1);
+      periodEnd.setFullYear(y+1);
+      const fmt = dt => dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+      periods.push({key:y+'', label:y+' (annual)', amount: plan.amount||0, dateRange: fmt(periodStart)+' – '+fmt(periodEnd)});
     }
   }
   return periods;
