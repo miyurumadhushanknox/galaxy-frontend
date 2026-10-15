@@ -1534,6 +1534,7 @@ setInterval(hideTransferBtn, 500);
     var orig = window.renderBillingPage;
     window._origRenderBilling = orig;
     window.renderBillingPage = function() {
+      _renewalFetched = false;
       applyRenewalPatch();
       return orig.apply(this, arguments);
     };
