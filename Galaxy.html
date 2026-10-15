@@ -3938,14 +3938,7 @@ const PLAN_RENEWAL_DAYS = null;
 const PLAN_START = '';
 const PLAN_MONTHS = null;
 
-const PAYMENT_HISTORY = [
-  {inv:'INV-0041', period:'Jun 2026', plan:'Nova', amount:5000, method:'Bank transfer', date:'01 Jun 2026', status:'paid'},
-  {inv:'INV-0036', period:'May 2026', plan:'Nova', amount:5000, method:'Cash', date:'01 May 2026', status:'paid'},
-  {inv:'INV-0031', period:'Apr 2026', plan:'Nova', amount:5000, method:'Bank transfer', date:'01 Apr 2026', status:'paid'},
-  {inv:'INV-0025', period:'Mar 2026', plan:'Basic', amount:2000, method:'Cash', date:'01 Mar 2026', status:'paid'},
-  {inv:'INV-0019', period:'Feb 2026', plan:'Basic', amount:2000, method:'Bank transfer', date:'01 Feb 2026', status:'paid'},
-  {inv:'INV-0014', period:'Jan 2026', plan:'Basic', amount:2000, method:'Cash', date:'01 Jan 2026', status:'paid'},
-];
+const PAYMENT_HISTORY = [];
 
 function renderBillingPage(){
   const root = document.getElementById('billing-root'); if(!root) return;
