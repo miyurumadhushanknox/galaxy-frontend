@@ -3965,7 +3965,7 @@ function renderBillingPage(){
     const sp = biz.knox_sub_payments||{};
     const sf = Array.isArray(biz.knox_setup_paid)?biz.knox_setup_paid:[false,false,false,false];
     const start = biz.knox_start_date?new Date(biz.knox_start_date):null;
-    const amt = biz.knox_plan_amount||2000;
+    const amt = biz.knox_sub_amounts||2000;
     let total = 0;
     sf.forEach(p=>{if(!p)total+=5000;});
     if(start){
