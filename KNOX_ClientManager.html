@@ -1073,8 +1073,8 @@ function openClientDetail(id) {
       const paid = !!c.subPayments[p.key];
       return `<div class="install-row">
         <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
-        <div class="i-info"><div class="i-month">${p.label}</div><div class="i-amt">Rs. ${plan.amount.toLocaleString()}</div></div>
-        <button class="btn btn-sm ${paid?'':'btn-primary'}" onclick="markSubPaid('${p.key}')">${paid?'Mark unpaid':'Mark paid'}</button>
+        <div class="i-info"><div class="i-month">${p.label}</div><div class="i-amt">${p.free ? '<span style="color:#16a34a;font-weight:700">Free</span>' : 'Rs. '+plan.amount.toLocaleString()}</div></div>
+        ${p.free ? '' : `<button class="btn btn-sm ${paid?'':'btn-primary'}" onclick="markSubPaid('${p.key}')">${paid?'Mark unpaid':'Mark paid'}</button>`}
       </div>`;
     }).join('');
   }
