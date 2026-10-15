@@ -726,10 +726,12 @@ function nextDueText(c) {
   }
 function setupFeeProgress(c) {
   const paid = (c.setupPaid||[]).filter(Boolean).length;
-  if(c.setupMethod==='full')
+  if(c.setupMethod==='full'){
     return paid===4?'<span style="color:#16a34a;font-weight:700">✓ Paid</span>':'<span style="color:#d97706;font-weight:700">Pending</span>';
-    if(paid===4) return '<span style="color:#16a34a;font-weight:700">✓ Paid</span>';
-    return `<span style="font-weight:700">${paid}/4</span> <span style="color:#9090b8;font-size:10.5px">months</span>`;
+  }
+  if(paid===4) return '<span style="color:#16a34a;font-weight:700">✓ Paid</span>';
+  return `<span style="font-weight:700">${paid}/4</span> <span style="color:#9090b8;font-size:10.5px">months</span>`;
+}
 function thisMonthStatus(c) {
   const plan = PLANS[c.plan];
   if(!plan) return '—';
