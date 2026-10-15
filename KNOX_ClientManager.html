@@ -1068,7 +1068,7 @@ if(c.setupMethod==='full' || plan.type==='yearly'){
       <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
       <div class="i-info">
         <div class="i-month">${p.label}<br><small style="color:#888;font-weight:400">${p.dateRange}</small></div>
-        <div class="i-amt">${isCurrentPeriod ? '<span style="color:#9090b8">In progress</span>' : 'Rs. '+amt.toLocaleString()+' <small style="color:#888">('+deliveredCount+' orders)</small>'}</div>
+        <div class="i-amt">${isCurrentPeriod ? '<span style="color:#9090b8">Rs. '+amt.toLocaleString()+'</span> <small style="color:#9090b8">('+deliveredCount+' delivered so far)</small>' : 'Rs. '+amt.toLocaleString()+' <small style="color:#888">('+deliveredCount+' orders)</small>'}</div>
       </div>
       ${isCurrentPeriod ? '<span style="color:#9090b8;font-size:11px">Period not ended</span>' : paid ? '' : `<button class="btn btn-sm btn-primary" onclick="markSubPaid('${p.key}')">Mark paid</button>`}
     </div>`;
