@@ -1495,6 +1495,7 @@ setInterval(hideTransferBtn, 500);
   window.PLAN_RENEWAL = data.nextDueDate;
   var diffDays = Math.ceil((new Date(data.business.next_due_date) - new Date()) / (1000 * 60 * 60 * 24));
   window.PLAN_RENEWAL_DAYS = diffDays;
+        }
            try {
                         var uu = JSON.parse(localStorage.getItem('galaxy_user') || '{}');
            if (!uu.business) uu.business = {};
