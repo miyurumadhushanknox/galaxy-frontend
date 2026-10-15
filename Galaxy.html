@@ -4143,7 +4143,7 @@ function renderBillingPage(){
 `;
 }
 function openOutstandingModal() {
-  const items = _outstandingItems;
+  const items = window._knoxOutstandingItems || [];
   const body = document.getElementById('outstanding-modal-body');
   if(!body) return;
   body.innerHTML = items.length === 0
