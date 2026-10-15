@@ -1514,8 +1514,16 @@ setInterval(hideTransferBtn, 500);
                  el.textContent = window.PLAN_RENEWAL;
                }
              });
-           }, 1500);
-      }).catch(function(){});
+           }, 500);
+           var _patchInterval = setInterval(function() {
+           document.querySelectorAll('*').forEach(function(el) {
+           if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
+           el.textContent = window.PLAN_RENEWAL;
+           }
+           });
+           }, 1000);
+           setTimeout(function(){ clearInterval(_patchInterval); }, 10000);
+           }).catch(function(){});
       return;
     }
   }
