@@ -589,7 +589,8 @@ function mapClient(b) {
     subAmounts: b.knox_sub_amounts || {},
     category: b.category || '',
     address: b.address || '',
-    username: b.owner_username || ''
+    username: b.owner_username || '',
+    nextDue: b.next_due_date || null,
   };
 }
 
@@ -713,14 +714,16 @@ function nextDueText(c) {
   const plan = PLANS[c.plan];
   if(!plan) return '—';
   if(plan.type==='monthly'||plan.type==='perorder'){
-    const start = new Date(c.start);
-    const due = new Date(start.getFullYear(), start.getMonth()+1, start.getDate());
-    return due.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+  if(c.nextDue) return new Date(c.nextDue).toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+  const start = new Date(c.start);
+  const due = new Date(start.getFullYear(), start.getMonth()+1, start.getDate());
+  return due.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
   }
+  if(c.nextDue) return new Date(c.nextDue).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
   const start = new Date(c.start);
   const due = new Date(start.getFullYear()+1, start.getMonth(), start.getDate());
   return due.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-}
+  }
 function setupFeeProgress(c) {
   const paid = (c.setupPaid||[]).filter(Boolean).length;
   if(c.setupMethod==='full')
