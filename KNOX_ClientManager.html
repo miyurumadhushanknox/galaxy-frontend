@@ -1142,8 +1142,14 @@ async function saveClientBilling(clientId) {
 async function markSetupPaid(idx) {
   const c = clients.find(x=>x.id===activeDetailId);
   if(!c) return;
+  const plan = PLANS[c.plan];
+  if(plan && plan.type==='yearly'){
+  const newVal = !c.setupPaid[0];
+  c.setupPaid = [newVal, newVal, newVal, newVal];
+  } else {
   c.setupPaid[idx] = !c.setupPaid[idx];
-  toast(c.setupPaid[idx]?'Marked as paid':'Marked as unpaid','ok');
+  }
+  toast(c.setupPaid[0]?'Marked as paid':'Marked as unpaid','ok');
   await saveClientBilling(activeDetailId);
   openClientDetail(activeDetailId);
   renderClientTable();
