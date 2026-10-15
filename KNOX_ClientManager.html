@@ -773,7 +773,7 @@ function deleteSelectedClients() {
   const ids = Array.from(document.querySelectorAll('.client-checkbox:checked')).map(cb => cb.value);
   if (!ids.length) return;
   if (!confirm('This will permanently delete the selected client(s) and all their data. This action cannot be undone.\n\nClick OK to confirm or Cancel to go back.')) return;
-  Promise.all(ids.map(id => supabase.from('businesses').delete().eq('id', id)))
+  Promise.all(ids.map(id => api('/clients/' + id, { method: 'DELETE' })))
     .then(() => { clients = clients.filter(c => !ids.includes(c.id)); renderClientTable(); })
     .catch(e => alert('Error deleting: ' + e.message));
 }
