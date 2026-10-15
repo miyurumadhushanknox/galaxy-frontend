@@ -1487,7 +1487,7 @@ setInterval(hideTransferBtn, 500);
     _renewalFetched = true;
     var token = localStorage.getItem('galaxy_token') || sessionStorage.getItem('galaxy_token');
     if (!token) return;
-    fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+    fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me?t=' + Date.now(), {
       headers: { 'Authorization': 'Bearer ' + token }
     }).then(function(res){ return res.json(); }).then(function(data) {
       var start = data.business && (data.business.knox_start_date || data.business.knoxStartDate || data.business.trial_starts_at || data.business.trialStartsAt);
