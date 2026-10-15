@@ -1111,7 +1111,7 @@ function getSubPeriods(c) {
     // yearly: first year free (year 2 onwards billed)
     const startYear = start.getFullYear();
     const nowYear = now.getFullYear();
-    for(let y=startYear+1; y<=nowYear; y++){
+    for(let y=startYear; y<=nowYear; y++){
       const periodStart = new Date(start.getFullYear(), start.getMonth(), start.getDate());
       periodStart.setFullYear(y);
       const periodEnd = new Date(start.getFullYear(), start.getMonth(), start.getDate()-1);
