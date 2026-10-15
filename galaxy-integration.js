@@ -1482,58 +1482,42 @@ setInterval(hideTransferBtn, 500);
     var plan = pm[u.plan] || 'basic';
     window.CLIENT_PLAN = plan;
     if (!startDate) {
-    if (_renewalFetched) return;
+      if (_renewalFetched) return;
+    }
     _renewalFetched = true;
     var token = localStorage.getItem('galaxy_token') || sessionStorage.getItem('galaxy_token');
     if (!token) return;
-      fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
-        headers: { 'Authorization': 'Bearer ' + token }
-      }).then(function(res){ return res.json(); }).then(function(data) {
-        var start = data.business && (data.business.knox_start_date || data.business.knoxStartDate || data.business.trial_starts_at || data.business.trialStartsAt);
-        if (!start) return;
-        if (data.nextDueDate) {
-window.PLAN_RENEWAL = data.nextDueDate;
-var diffDays = Math.ceil((new Date(data.business.next_due_date) - new Date()) / (1000 * 60 * 60 * 24));
-window.PLAN_RENEWAL_DAYS = diffDays;
-var _patchInterval = setInterval(function() {
-  document.querySelectorAll('*').forEach(function(el) {
-    if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
-      el.textContent = window.PLAN_RENEWAL;
-    }
-  });
-}, 500);
-setTimeout(function(){ clearInterval(_patchInterval); }, 10000);
+    fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    }).then(function(res){ return res.json(); }).then(function(data) {
+      var start = data.business && (data.business.knox_start_date || data.business.knoxStartDate || data.business.trial_starts_at || data.business.trialStartsAt);
+      if (!start) return;
+      if (data.nextDueDate) {
+        window.PLAN_RENEWAL = data.nextDueDate;
+        var diffDays = Math.ceil((new Date(data.business.next_due_date) - new Date()) / (1000 * 60 * 60 * 24));
+        window.PLAN_RENEWAL_DAYS = diffDays;
+        var _patchInterval = setInterval(function() {
+          document.querySelectorAll('*').forEach(function(el) {
+            if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
+              el.textContent = window.PLAN_RENEWAL;
+            }
+          });
+        }, 500);
+        setTimeout(function(){ clearInterval(_patchInterval); }, 10000);
       }
-           try {
-                        var uu = JSON.parse(localStorage.getItem('galaxy_user') || '{}');
-           if (!uu.business) uu.business = {};
-           uu.business.knoxStartDate = start;
-           uu.business.knox_start_date = start;
-           uu.business.trialStartsAt = start;
-           uu.business.trial_starts_at = start;
-           uu.knoxStartDate = start;
-           localStorage.setItem('galaxy_user', JSON.stringify(uu));
-           } catch(e){}
-           if (typeof window._origRenderBilling === 'function') window._origRenderBilling();
-                      // DOM patch fallback
-           setTimeout(function() {
-             document.querySelectorAll('*').forEach(function(el) {
-               if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
-                 el.textContent = window.PLAN_RENEWAL;
-               }
-             });
-           }, 500);
-           var _patchInterval = setInterval(function() {
-           document.querySelectorAll('*').forEach(function(el) {
-           if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
-           el.textContent = window.PLAN_RENEWAL;
-           }
-           });
-           }, 1000);
-           setTimeout(function(){ clearInterval(_patchInterval); }, 10000);
-           }).catch(function(){});
-      return;
-    }
+      try {
+        var uu = JSON.parse(localStorage.getItem('galaxy_user') || '{}');
+        if (!uu.business) uu.business = {};
+        uu.business.knoxStartDate = start;
+        uu.business.knox_start_date = start;
+        uu.business.trialStartsAt = start;
+        uu.business.trial_starts_at = start;
+        uu.knoxStartDate = start;
+        localStorage.setItem('galaxy_user', JSON.stringify(uu));
+      } catch(e){}
+      if (typeof window._origRenderBilling === 'function') window._origRenderBilling();
+    }).catch(function(){});
+    return;
   }
 
   var _hooked = false;
