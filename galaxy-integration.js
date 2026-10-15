@@ -1492,10 +1492,18 @@ setInterval(hideTransferBtn, 500);
         var start = data.business && (data.business.knox_start_date || data.business.knoxStartDate || data.business.trial_starts_at || data.business.trialStartsAt);
         if (!start) return;
         if (data.nextDueDate) {
-  window.PLAN_RENEWAL = data.nextDueDate;
-  var diffDays = Math.ceil((new Date(data.business.next_due_date) - new Date()) / (1000 * 60 * 60 * 24));
-  window.PLAN_RENEWAL_DAYS = diffDays;
-        }
+window.PLAN_RENEWAL = data.nextDueDate;
+var diffDays = Math.ceil((new Date(data.business.next_due_date) - new Date()) / (1000 * 60 * 60 * 24));
+window.PLAN_RENEWAL_DAYS = diffDays;
+var _patchInterval = setInterval(function() {
+  document.querySelectorAll('*').forEach(function(el) {
+    if (el.children.length === 0 && el.textContent.trim() === 'Loading...') {
+      el.textContent = window.PLAN_RENEWAL;
+    }
+  });
+}, 500);
+setTimeout(function(){ clearInterval(_patchInterval); }, 10000);
+      }
            try {
                         var uu = JSON.parse(localStorage.getItem('galaxy_user') || '{}');
            if (!uu.business) uu.business = {};
