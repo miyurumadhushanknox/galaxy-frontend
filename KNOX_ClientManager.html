@@ -1073,7 +1073,7 @@ function openClientDetail(id) {
       const paid = !!c.subPayments[p.key];
       return `<div class="install-row">
         <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
-        <div class="i-info"><div class="i-month">${p.label}</div><div class="i-amt">${p.free ? '<span style="color:#16a34a;font-weight:700">Free</span>' : 'Rs. '+plan.amount.toLocaleString()}</div></div>
+        <div class="i-info"><div class="i-month">${p.label}<br><small style="color:#888;font-weight:400">${p.dateRange}</small></div><div class="i-amt">${p.free ? '<span style="color:#16a34a;font-weight:700">Free</span>' : 'Rs. '+plan.amount.toLocaleString()}</div></div>
         ${p.free ? '' : `<button class="btn btn-sm ${paid?'':'btn-primary'}" onclick="markSubPaid('${p.key}')">${paid?'Mark unpaid':'Mark paid'}</button>`}
       </div>`;
     }).join('');
@@ -1099,7 +1099,12 @@ function getSubPeriods(c) {
     while(d <= now){
       const key = d.toISOString().slice(0,7);
       const label = d.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-      periods.push({key, label, amount: plan.amount||0, free: periods.length===0});
+      const startDay = start.getDate();
+      const periodStart = new Date(d.getFullYear(), d.getMonth(), startDay);
+      const periodEnd = new Date(d.getFullYear(), d.getMonth()+1, startDay-1);
+      const fmt = dt => dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+      const dateRange = fmt(periodStart) + ' – ' + fmt(periodEnd);
+      periods.push({key, label, amount: plan.amount||0, free: periods.length===0, dateRange});
       d = new Date(d.getFullYear(), d.getMonth()+1, 1);
     }
   } else {
