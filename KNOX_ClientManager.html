@@ -1049,7 +1049,7 @@ function openClientDetail(id) {
   }
   document.getElementById('d-installments').innerHTML = installHtml;
 
-  const periods = getRecentPeriods(c, 6);
+  const periods = getSubPeriods(c);
   let subHtml = '';
   if(plan.type==='perorder'){
     subHtml = periods.map(p=>{
@@ -1087,17 +1087,28 @@ function openClientDetail(id) {
   openModal('m-detail');
 }
 
-function getRecentPeriods(c, count) {
+function getSubPeriods(c) {
   const plan = PLANS[c.plan] || {type:'monthly'};
-  const periods = [], now = new Date();
+  const periods = [];
+  if(!c.start) return periods;
+  const start = new Date(c.start);
+  const now = new Date();
   if(plan.type==='monthly'||plan.type==='perorder'){
-    for(let i=count-1;i>=0;i--){
-      const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
-      periods.push({key:d.toISOString().slice(0,7), label:d.toLocaleDateString('en-GB',{month:'long',year:'numeric'})});
+    // month 1 is free, start from month 2
+    let d = new Date(start.getFullYear(), start.getMonth()+1, 1);
+    while(d <= now){
+      const key = d.toISOString().slice(0,7);
+      const label = d.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+      periods.push({key, label, amount: plan.amount||0});
+      d = new Date(d.getFullYear(), d.getMonth()+1, 1);
     }
   } else {
-    const startYear = new Date(c.start).getFullYear();
-    for(let y=startYear;y<=now.getFullYear();y++) periods.push({key:y+'',label:y+' (annual)'});
+    // yearly: first year free (year 2 onwards billed)
+    const startYear = start.getFullYear();
+    const nowYear = now.getFullYear();
+    for(let y=startYear+1; y<=nowYear; y++){
+      periods.push({key:y+'', label:y+' (annual)', amount: plan.amount||0});
+    }
   }
   return periods;
 }
