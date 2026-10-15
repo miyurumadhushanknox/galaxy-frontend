@@ -1026,18 +1026,18 @@ function openClientDetail(id) {
     trialNote.textContent = `On 7-day free trial — ${trialDaysLeft(c)} day(s) remaining.`;
   } else { trialNote.style.display='none'; }
 
-  document.getElementById('d-setup-total').textContent = plan.setupFee.toLocaleString();
+  document.getElementById('d-setup-total').textContent = (20000).toLocaleString();
 
-  const installAmt = plan.setupFee/4;
-  let installHtml = '';
-  if(c.setupMethod==='full'){
-    const paid = c.setupPaid[0];
-    installHtml = `<div class="install-row">
-      <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
-      <div class="i-info"><div class="i-month">Full setup payment</div><div class="i-amt">Rs. ${plan.setupFee.toLocaleString()}</div></div>
-      <button class="btn btn-sm ${paid?'':'btn-primary'}" onclick="markSetupPaid(0)">${paid?'Mark unpaid':'Mark paid'}</button>
-    </div>`;
-  } else {
+  const installAmt = 20000/4;
+let installHtml = '';
+if(c.setupMethod==='full'){
+  const paid = c.setupPaid[0];
+  installHtml = `<div class="install-row">
+    <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
+    <div class="i-info"><div class="i-month">Full setup payment</div><div class="i-amt">Rs. ${(20000).toLocaleString()}</div></div>
+    <button class="btn btn-sm ${paid?'':'btn-primary'}" onclick="markSetupPaid(0)">${paid?'Mark unpaid':'Mark paid'}</button>
+  </div>`;
+} else {
     installHtml = [0,1,2,3].map(i=>{
       const paid = c.setupPaid[i];
       return `<div class="install-row">
