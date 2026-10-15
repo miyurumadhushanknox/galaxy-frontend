@@ -258,6 +258,7 @@ tr:hover td{background:#fafafc}
     <div class="card">
       <div class="toolbar">
         <div class="filter-pills" id="status-pills"></div>
+        <button id="delete-selected-btn" onclick="deleteSelectedClients()" style="display:none;background:#e8220e;color:#fff;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600">🗑 Delete Selected</button>
         <div class="search-bar">
           <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           <input id="client-search" placeholder="Search clients…" oninput="renderClientTable()">
@@ -266,7 +267,7 @@ tr:hover td{background:#fafafc}
       <div style="overflow-x:auto">
         <table id="client-table">
           <thead>
-            <tr><th>Client</th><th>Plan</th><th>Status</th><th>Setup fee</th><th>This month</th><th>Next due</th><th></th></tr>
+            <tr><th style="width:32px"><input type="checkbox" id="select-all-clients" onclick="toggleSelectAll(this)"></th><th>Client</th><th>Plan</th><th>Status</th><th>Setup fee</th><th>This month</th><th>Next due</th><th></th></tr>
           </thead>
           <tbody id="client-tbody"></tbody>
         </table>
@@ -747,8 +748,8 @@ function renderClientTable() {
   empty.style.display='none';
   const plan = k => PLANS[k] || {label:k,badge:'badge-plan-m'};
   tbody.innerHTML = list.map(c=>`
-    <tr style="cursor:pointer" onclick="openClientDetail('${c.id}')">
-      <td><div style="font-weight:700">${c.name}</div><div style="font-size:11px;color:#9090b8">${c.contact||'—'}</div></td>
+    <tr>
+<td onclick="event.stopPropagation()"><input type="checkbox" class="client-checkbox" value="${c.id}" onchange="updateDeleteBtn()"></td>
       <td><span class="badge ${plan(c.plan).badge}">${plan(c.plan).label}</span></td>
       <td>${statusBadge(getStatus(c))}</td>
       <td>${setupFeeProgress(c)}</td>
@@ -758,7 +759,22 @@ function renderClientTable() {
     </tr>`).join('');
   renderStatCards();
 }
-
+function toggleSelectAll(el) {
+  document.querySelectorAll('.client-checkbox').forEach(cb => cb.checked = el.checked);
+  updateDeleteBtn();
+}
+function updateDeleteBtn() {
+  const any = document.querySelectorAll('.client-checkbox:checked').length > 0;
+  document.getElementById('delete-selected-btn').style.display = any ? 'inline-block' : 'none';
+}
+function deleteSelectedClients() {
+  const ids = Array.from(document.querySelectorAll('.client-checkbox:checked')).map(cb => cb.value);
+  if (!ids.length) return;
+  if (!confirm('This will permanently delete the selected client(s) and all their data. This action cannot be undone.\n\nClick OK to confirm or Cancel to go back.')) return;
+  Promise.all(ids.map(id => supabase.from('businesses').delete().eq('id', id)))
+    .then(() => { loadClients(); })
+    .catch(e => alert('Error deleting: ' + e.message));
+}
 /* ============================================================
    ADD / EDIT CLIENT
    ============================================================ */
