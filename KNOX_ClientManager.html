@@ -1095,11 +1095,11 @@ function getSubPeriods(c) {
   const now = new Date();
   if(plan.type==='monthly'||plan.type==='perorder'){
     // month 1 is free, start from month 2
-    let d = new Date(start.getFullYear(), start.getMonth()+1, 1);
+    let d = new Date(start.getFullYear(), start.getMonth(), 1);
     while(d <= now){
       const key = d.toISOString().slice(0,7);
       const label = d.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-      periods.push({key, label, amount: plan.amount||0});
+      periods.push({key, label, amount: plan.amount||0, free: periods.length===0});
       d = new Date(d.getFullYear(), d.getMonth()+1, 1);
     }
   } else {
