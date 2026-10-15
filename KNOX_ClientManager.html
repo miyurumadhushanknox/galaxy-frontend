@@ -1037,7 +1037,7 @@ if(c.setupMethod==='full' || plan.type==='yearly'){
   installHtml = `<div class="install-row">
     <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
     <div class="i-info"><div class="i-month">Full setup payment</div><div class="i-amt">Rs. ${(20000).toLocaleString()}</div></div>
-    <button class="btn btn-sm ${paid?'':'btn-primary'}" onclick="markSetupPaid(0)">${paid?'Mark unpaid':'Mark paid'}</button>
+    ${paid ? '' : `<button class="btn btn-sm btn-primary" onclick="markSetupPaid(0)">Mark paid</button>`}
   </div>`;
 } else {
     installHtml = [0,1,2,3].map(i=>{
@@ -1045,7 +1045,7 @@ if(c.setupMethod==='full' || plan.type==='yearly'){
       return `<div class="install-row">
         <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':(i+1)}</div>
         <div class="i-info"><div class="i-month">Month ${i+1} of 4</div><div class="i-amt">Rs. ${installAmt.toLocaleString()}</div></div>
-        <button class="btn btn-sm ${paid?'':'btn-primary'}" onclick="markSetupPaid(${i})">${paid?'Mark unpaid':'Mark paid'}</button>
+        ${paid ? '' : `<button class="btn btn-sm btn-primary" onclick="markSetupPaid(${i})">Mark paid</button>`}
       </div>`;
     }).join('');
   }
@@ -1067,7 +1067,7 @@ if(c.setupMethod==='full' || plan.type==='yearly'){
               onchange="saveSubAmount('${p.key}',this.value)">
           </div>
         </div>
-        <button class="btn btn-sm ${paid?'':'btn-primary'}" onclick="markSubPaid('${p.key}')">${paid?'Mark unpaid':'Mark paid'}</button>
+        ${paid ? '' : `<button class="btn btn-sm btn-primary" onclick="markSubPaid('${p.key}')">Mark paid</button>`}
       </div>`;
     }).join('');
   } else {
@@ -1076,7 +1076,7 @@ if(c.setupMethod==='full' || plan.type==='yearly'){
       return `<div class="install-row">
         <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
         <div class="i-info"><div class="i-month">${p.label}<br><small style="color:#888;font-weight:400">${p.dateRange}</small></div><div class="i-amt">${p.free ? '<span style="color:#16a34a;font-weight:700">Free</span>' : 'Rs. '+plan.amount.toLocaleString()}</div></div>
-        ${p.free ? '' : `<button class="btn btn-sm ${paid?'':'btn-primary'}" onclick="markSubPaid('${p.key}')">${paid?'Mark unpaid':'Mark paid'}</button>`}
+        ${p.free || paid ? '' : `<button class="btn btn-sm btn-primary" onclick="markSubPaid('${p.key}')">Mark paid</button>`}
       </div>`;
     }).join('');
   }
