@@ -3979,9 +3979,10 @@ function renderBillingPage(){
       }
     }
     setTimeout(function(){
-     const amtEl=document.querySelector('#billing-root [style*="Outstanding"]')?.closest('.card')?.querySelector('[style*="font-size:17px"]');
-     const subEl=document.querySelector('#billing-root [style*="Outstanding"]')?.closest('.card')?.querySelector('[style*="font-weight:600"]');
-     const outCard=document.querySelector('#billing-root [style*="Outstanding"]')?.closest('.card');
+     const allCards=document.querySelectorAll('#billing-root .card');
+     const outCard=Array.from(allCards).find(c=>c.textContent.includes('Outstanding'));
+     const amtEl=outCard?.querySelector('[style*="font-size:17px"]');
+     const subEl=outCard?.querySelector('[style*="font-weight:600"]');
      if(amtEl) amtEl.innerHTML=total>0?'LKR '+total.toLocaleString():'LKR 0';
      if(subEl){subEl.textContent=total>0?'Payment due — tap to view':'All cleared ✓';subEl.style.color=total>0?'#e8220e':'#16a34a';}
      if(amtEl) amtEl.style.color=total>0?'#e8220e':'#16a34a';
