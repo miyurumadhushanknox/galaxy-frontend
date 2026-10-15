@@ -1012,7 +1012,7 @@ async function activatePlan() {
 /* ============================================================
    CLIENT DETAIL / PAYMENT TRACKER
    ============================================================ */
-function openClientDetail(id) {
+async function openClientDetail(id) {
   activeDetailId = id;
   const c = clients.find(x=>x.id===id);
   if(!c) return;
@@ -1054,22 +1054,25 @@ if(c.setupMethod==='full' || plan.type==='yearly'){
   const periods = getSubPeriods(c);
   let subHtml = '';
   if(plan.type==='perorder'){
-    subHtml = periods.map(p=>{
-      const paid = !!c.subPayments[p.key];
-      const amt = c.subAmounts[p.key];
-      return `<div class="install-row">
-        <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
-        <div class="i-info">
-          <div class="i-month">${p.label}</div>
-          <div class="i-amt" style="display:flex;align-items:center;gap:6px;margin-top:3px">
-            Rs. <input type="number" min="0" value="${amt!==undefined?amt:''}" placeholder="enter bill"
-              id="amt-${p.key}" style="width:90px;padding:4px 7px;border:1.5px solid #e4e4f0;border-radius:7px;font-size:11.5px;font-weight:700"
-              onchange="saveSubAmount('${p.key}',this.value)">
-          </div>
-        </div>
-        ${paid ? '' : `<button class="btn btn-sm btn-primary" onclick="markSubPaid('${p.key}')">Mark paid</button>`}
-      </div>`;
-    }).join('');
+  const ordersRes = await api('/orders?business_id='+c.id+'&limit=9999');
+  const allOrders = ordersRes||[];
+  subHtml = periods.map(p=>{
+    const paid = !!c.subPayments[p.key];
+    const pStart = new Date(c.start);
+    const periodStart = new Date(pStart.getFullYear(), pStart.getMonth() + (parseInt(p.key.slice(5,7))-pStart.getMonth() + (parseInt(p.key.slice(0,4))-pStart.getFullYear())*12), pStart.getDate());
+    const periodEnd = new Date(periodStart.getFullYear(), periodStart.getMonth()+1, periodStart.getDate());
+    const deliveredCount = allOrders.filter(o=> o.status==='delivered' && o.delivered_at && new Date(o.delivered_at) >= periodStart && new Date(o.delivered_at) < periodEnd).length;
+    const amt = deliveredCount * (plan.perOrder||7);
+    const isCurrentPeriod = periods.indexOf(p) === periods.length-1;
+    return `<div class="install-row">
+      <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
+      <div class="i-info">
+        <div class="i-month">${p.label}<br><small style="color:#888;font-weight:400">${p.dateRange}</small></div>
+        <div class="i-amt">${isCurrentPeriod ? '<span style="color:#9090b8">In progress</span>' : 'Rs. '+amt.toLocaleString()+' <small style="color:#888">('+deliveredCount+' orders)</small>'}</div>
+      </div>
+      ${isCurrentPeriod ? '<span style="color:#9090b8;font-size:11px">Period not ended</span>' : paid ? '' : `<button class="btn btn-sm btn-primary" onclick="markSubPaid('${p.key}')">Mark paid</button>`}
+    </div>`;
+  }).join('');
   } else {
     subHtml = periods.map(p=>{
       const paid = !!c.subPayments[p.key];
