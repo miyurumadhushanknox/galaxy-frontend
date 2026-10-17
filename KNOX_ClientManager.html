@@ -1186,6 +1186,11 @@ async function markSubPaid(key) {
     toast('Enter the bill amount first','err'); return;
   }
   c.subPayments[key] = !c.subPayments[key];
+  if(!c.subAmounts) c.subAmounts = {};
+  if(!c.subAmounts[key] || c.subAmounts[key]===0) {
+  const p = PLANS[c.plan];
+  if(p && p.type!=='perorder') c.subAmounts[key] = p.amount||0;
+  }
   toast(c.subPayments[key]?'Marked as paid':'Marked as unpaid','ok');
   await saveClientBilling(activeDetailId);
   openClientDetail(activeDetailId);
