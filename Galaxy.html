@@ -3954,7 +3954,7 @@ function renderBillingPage(){
   const monthPct = Math.min(100, Math.round(monthOrders/monthLimit*100));
 
 (async function(){
-  let total = 0;
+  let total = 0; window.total = 0;
   try {
     const token = localStorage.getItem('galaxy_token');
     if(!token) return;
@@ -3962,6 +3962,7 @@ function renderBillingPage(){
     const d = await r.json();
     const biz = d.business || d;
     total = (biz.knox_outstanding||0) + (biz.knox_setup_outstanding||0);
+    window.total = total;
   } catch(e){}
   setTimeout(function(){
     const allCards=document.querySelectorAll('#billing-root .card');
