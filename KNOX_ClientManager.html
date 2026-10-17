@@ -1114,7 +1114,7 @@ function getSubPeriods(c) {
     // month 1 is free, start from month 2
     let d = new Date(start.getFullYear(), start.getMonth(), 1);
     while(d <= now){
-      const key = d.toISOString().slice(0,7);
+      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
       const label = d.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
       const startDay = start.getDate();
       const periodStart = new Date(d.getFullYear(), d.getMonth(), startDay);
