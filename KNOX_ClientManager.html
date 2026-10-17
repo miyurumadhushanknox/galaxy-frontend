@@ -667,7 +667,7 @@ function renderStatCards() {
     if((plan.type==='monthly'||plan.type==='perorder') && c.subPayments[thisMonth])
       collectedThisMonth += periodAmount(c, thisMonth);
     const unpaid = (c.setupPaid||[false,false,false,false]).filter(p=>!p).length;
-    outstanding += (plan.setupFee/4)*unpaid;
+    outstanding += plan.type==='perorder' ? (unpaid>0?plan.setupFee:0) : (plan.setupFee/4)*unpaid;
     Object.keys(c.subPayments||{}).forEach(key=>{
       if(!c.subPayments[key]) outstanding += periodAmount(c,key)||(plan.type==='perorder'?0:plan.amount);
     });
