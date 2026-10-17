@@ -3952,45 +3952,28 @@ function renderBillingPage(){
   }).length;
   const monthLimit = cp.key==='basic'?100:cp.key==='nova'?500:999999;
   const monthPct = Math.min(100, Math.round(monthOrders/monthLimit*100));
-  const outstanding = PAYMENT_HISTORY.filter(p=>p.status==='pending').reduce((a,p)=>a+p.amount,0);
-  const _outstandingItems = PAYMENT_HISTORY.filter(p=>p.status==='pending');
-// Fetch real Knox billing outstanding async and update DOM
+
 (async function(){
+  let total = 0;
   try {
     const token = localStorage.getItem('galaxy_token');
     if(!token) return;
     const r = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me',{headers:{'Authorization':'Bearer '+token}});
     const d = await r.json();
     const biz = d.business || d;
-    const sp = biz.knox_sub_payments||{};
-    const sf = Array.isArray(biz.knox_setup_paid)?biz.knox_setup_paid:[false,false,false,false];
-    const start = biz.knox_start_date?new Date(biz.knox_start_date):null;
-    const amt = biz.plan==='basic'?2000:biz.plan==='nova'?5000:2000;
-    let total = 0;
-    sf.forEach(p=>{if(!p)total+=5000;});
-    if(start){
-      const now=new Date();
-      let d2=new Date(start.getFullYear(),start.getMonth(),1);
-      const nm=new Date(now.getFullYear(),now.getMonth(),1);
-      while(d2<nm){
-        const key=d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0');
-        if(!sp[key])total+=amt;
-        d2.setMonth(d2.getMonth()+1);
-      }
-    }
-
-    setTimeout(function(){
-     const allCards=document.querySelectorAll('#billing-root .card');
-     const outCard=Array.from(allCards).find(c=>c.textContent.includes('Outstanding'));
-     const amtEl=outCard?.querySelector('[style*="font-size:17px"]');
-     const subEl=outCard?.querySelector('[style*="font-weight:600"]');
-     if(amtEl) amtEl.innerHTML=total>0?'LKR '+total.toLocaleString():'LKR 0';
-     if(subEl){subEl.textContent=total>0?'Payment due — tap to view':'All cleared ✓';subEl.style.color=total>0?'#e8220e':'#16a34a';}
-     if(amtEl) amtEl.style.color=total>0?'#e8220e':'#16a34a';
-     if(total>0 && outCard){outCard.style.cursor='pointer';outCard.onclick=function(){openOutstandingModal();};}
-     window._knoxOutstandingItems=_outstandingItems;
-     },600);
-  }catch(e){}
+    total = (biz.knox_outstanding||0) + (biz.knox_setup_outstanding||0);
+  } catch(e){}
+  setTimeout(function(){
+    const allCards=document.querySelectorAll('#billing-root .card');
+    const outCard=Array.from(allCards).find(c=>c.textContent.includes('Outstanding'));
+    const amtEl=outCard?.querySelector('[style*="font-size:17px"]');
+    const subEl=outCard?.querySelector('[style*="font-weight:600"]');
+    if(amtEl) amtEl.innerHTML=total>0?'LKR '+total.toLocaleString():'LKR 0';
+    if(subEl){subEl.textContent=total>0?'Payment due — tap to view':'All cleared ✓';subEl.style.color=total>0?'#e8220e':'#16a34a';}
+    if(amtEl) amtEl.style.color=total>0?'#e8220e':'#16a34a';
+    if(total>0 && outCard){outCard.style.cursor='pointer';outCard.onclick=function(){openOutstandingModal();};}
+    window._knoxOutstandingItems=[];
+  },600);
 })();
 
   root.innerHTML = `
