@@ -1089,9 +1089,20 @@ if(c.setupMethod==='full' || plan.type==='yearly'){
   if(c.blocked){ blockBtn.textContent='✓ Unblock client'; blockBtn.classList.remove('btn-danger'); }
   else { blockBtn.innerHTML='⊘ Block client'; blockBtn.classList.add('btn-danger'); }
 
+  // Auto-fill sub_amounts for all periods
+  const p = PLANS[c.plan];
+  if(p && p.type!=='perorder') {
+  const periods = getSubPeriods(c);
+  if(!c.subAmounts) c.subAmounts = {};
+  periods.forEach(period=>{
+    if(!period.free && (!c.subAmounts[period.key] || c.subAmounts[period.key]===0)) {
+      c.subAmounts[period.key] = p.amount||0;
+    }
+  });
+  }
   saveClientBilling(id);
   openModal('m-detail');
-}
+  }
 
 function getSubPeriods(c) {
   const plan = PLANS[c.plan] || {type:'monthly'};
