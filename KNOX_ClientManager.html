@@ -1193,7 +1193,7 @@ async function markSubPaid(key) {
   const c = clients.find(x=>x.id===activeDetailId);
   if(!c) return;
   const plan = PLANS[c.plan];
-  if(plan&&plan.type==='perorder'&&!c.subPayments[key]&&(c.subAmounts[key]===undefined)){
+  if(plan&&plan.type==='perorder'&&(c.subAmounts[key]===undefined)){
     toast('Enter the bill amount first','err'); return;
   }
   c.subPayments[key] = !c.subPayments[key];
