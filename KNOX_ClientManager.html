@@ -1032,7 +1032,7 @@ async function openClientDetail(id) {
 
   const installAmt = 20000/4;
 let installHtml = '';
-if(c.setupMethod==='full' || plan.type==='yearly'){
+if(c.setupMethod==='full' || plan.type==='yearly' || plan.type==='perorder'){
   const paid = c.setupPaid[0];
   installHtml = `<div class="install-row">
     <div class="install-dot ${paid?'paid':'due'}">${paid?'✓':'!'}</div>
