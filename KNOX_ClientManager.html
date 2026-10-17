@@ -1167,7 +1167,7 @@ async function markSetupPaid(idx) {
   const c = clients.find(x=>x.id===activeDetailId);
   if(!c) return;
   const plan = PLANS[c.plan];
-  if(plan && plan.type==='yearly'){
+  if(plan && (plan.type==='yearly' || plan.type==='perorder')){
   const newVal = !c.setupPaid[0];
   c.setupPaid = [newVal, newVal, newVal, newVal];
   } else {
