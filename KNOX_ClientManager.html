@@ -1108,7 +1108,7 @@ function getSubPeriods(c) {
   const plan = PLANS[c.plan] || {type:'monthly'};
   const periods = [];
   if(!c.start) return periods;
-  const start = new Date(c.start);
+  const start = new Date(c.start + 'T00:00:00');
   const now = new Date();
   if(plan.type==='monthly'||plan.type==='perorder'){
     // month 1 is free, start from month 2
