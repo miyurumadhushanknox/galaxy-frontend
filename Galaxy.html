@@ -2503,11 +2503,10 @@ function renderWhDetail(wid){
            <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M1.5 9.5l2-2 5.5-5.5 1.5 1.5-5.5 5.5-2 .5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
                Edit
             </button>`:''}
-          ${currentUser.role!=='accountant'?`<button onclick="openTransferFor('${wid}')" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;border:no
-  <svg viewBox="0 0 16 14" fill="none" style="width:13px;height:11px"><path d="M1 4h14M11 1l3 3-3 3 3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-  Transfer
+          ${currentUser.role!=='accountant'?`<button onclick="openTransferFor('${wid}')" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">
+<svg viewBox="0 0 16 14" fill="none" style="width:14px;height:12px"><path d="M1 4h14M11 1l3 3-3 3M15 10H1M5 13l-3-3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+Transfer stock
 </button>`:''}
-        </div>
       </div>
     </div>
 
