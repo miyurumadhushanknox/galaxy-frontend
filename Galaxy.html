@@ -1382,6 +1382,11 @@ tbody tr:hover .row-actions{display:flex}
         <div style="font-size:10px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Warehouse Stock</div>
         <div id="vp-warehouses" style="display:flex;flex-direction:column;gap:8px"></div>
       </div>
+      <!-- Added By -->
+      <div style="background:#f8f8fc;border-radius:10px;padding:12px 14px;margin-bottom:16px">
+        <div style="font-size:10px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Added By</div>
+        <div style="font-size:14px;font-weight:700;color:#18182b" id="vp-addedby">—</div>
+      </div>
       <!-- Stock values -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
         <div style="background:#f8f8fc;border-radius:10px;padding:12px 14px">
@@ -2036,12 +2041,13 @@ function viewProduct(id){
   document.getElementById("vp-stk-sp").textContent=L(p.price*qty);
   document.getElementById("vp-date").textContent="Added: "+(p.dt||"—")+" · Sold: "+N(p.sold||0)+" units";
   document.getElementById("vp-warehouses").innerHTML=warehouses.map(w=>
-    "<div style=\"display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #ededf6\">"
-    +"<span style=\"font-size:12.5px;font-weight:600;color:#18182b\">"+w.name+"</span>"
-    +"<span style=\"font-size:13px;font-weight:800;color:"+(wStk(p,w.id)===0?"#e8220e":wStk(p,w.id)<=p.low?"#c07800":"#16a34a")+"\">"
-    +N(wStk(p,w.id))+" units</span></div>"
-  ).join("");
-  document.getElementById("m-view").classList.add("open");
+  "<div style=\"display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #ededf6\">"
+  +"<span style=\"font-size:12.5px;font-weight:600;color:#18182b\">"+w.name+"</span>"
+  +"<span style=\"font-size:13px;font-weight:800;color:"+(wStk(p,w.id)===0?"#e8220e":wStk(p,w.id)<=p.low?"#c07800":"#16a34a")+"\""+">"
+  +N(wStk(p,w.id))+" units</span></div>"
+).join("");
+document.getElementById("vp-addedby").textContent = p.users?.name || '—';
+document.getElementById("m-view").classList.add("open");
 }
 function editFromView(){
   document.getElementById("m-view").classList.remove("open");
