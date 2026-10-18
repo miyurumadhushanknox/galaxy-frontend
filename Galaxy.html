@@ -1879,7 +1879,7 @@ function getF(){
     else if(pSort==="profit"){av=a.price-a.pp;bv=b.price-b.pp;}
     else if(pSort==="name"){av=a.name;bv=b.name;}
     else if(pSort==="date"){av=a.dt||"";bv=b.dt||"";}
-    else{av=b.created_at||"";bv=a.created_at||"";}
+    else{av=a.created_at||"";bv=b.created_at||"";}
     return av<bv?-1*pDir:av>bv?1*pDir:0;
   });
 }
