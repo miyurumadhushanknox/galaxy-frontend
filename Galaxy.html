@@ -1965,8 +1965,8 @@ function renderImages(){
   count.textContent=real+" / "+MAX_IMG+" images";count.style.color=real>=MAX_IMG?"#e8220e":"#aaa";
 }
 function handleImgs(input){
-  const real=images.filter(s=>s!==PLACEHOLDER).length;const slots=MAX_IMG-real;const files=Array.from(input.files).slice(0,slots);
-  if(Array.from(input.files).length>slots)toast("Max "+MAX_IMG+" images.","err");
+  if(Array.from(input.files).some(f=>f.size>5*1024*1024))toast("Image is too large. Max size is 5MB.","err");
+  if(files.length>slots)toast("Max "+MAX_IMG+" images.","err");
   files.forEach(file=>{const r=new FileReader();r.onload=e=>{if(images.length===1&&images[0]===PLACEHOLDER)images=[];images.push(e.target.result);renderImages();};r.readAsDataURL(file);});
   window.selectedImages = Array.from(input.files).filter(f => {
   if (f.size > 5 * 1024 * 1024) {
