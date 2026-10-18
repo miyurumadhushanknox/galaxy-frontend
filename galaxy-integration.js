@@ -1434,7 +1434,7 @@ setInterval(function() {
 // Hide Transfer stock button for Basic plan
 (function() {
   function hideTransferBtn() {
-  var u = JSON.parse(localStorage.getItem('galaxy_user') || sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user') || '{}');
+  var lsRaw = localStorage.getItem('galaxy_user'); var ssRaw = sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user'); var lsObj = lsRaw ? JSON.parse(lsRaw) : {}; var ssObj = ssRaw ? JSON.parse(ssRaw) : {}; var u = lsObj.plan ? lsObj : ssObj;
   var pm = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
   var plan = pm[u.plan] || 'basic';
   if (plan !== 'basic') return;
