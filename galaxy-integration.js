@@ -448,8 +448,7 @@ setTimeout(function() {
     
             // Upload images to Supabase Storage
         let imageUrls = [];
-        const imgInput = document.getElementById('img-input');
-        const imgFiles = imgInput ? Array.from(imgInput.files) : [];
+        const imgFiles = window.selectedImages || [];
         if (imgFiles.length > 0) {
           const SUPABASE_URL = 'https://aiqckirrpuokgbvfndte.supabase.co';
           const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTQ1MTQsImV4cCI6MjEwNjA5MDUxNH0.zwMSqYmKZ6bpld7wsHr9zFH8febD0aPVgkO8mDXD-PA';
