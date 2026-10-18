@@ -446,25 +446,25 @@ setTimeout(function() {
     const btn = document.querySelector('#page-addproduct button[onclick="submitProduct()"]');
     if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
     
-    // Upload images to Supabase Storage
-    let imageUrls = [];
-    if (window.images && window.images.length > 0) {
-    const SUPABASE_URL = 'https://aiqckirrpuokgbvfndte.supabase.co';
-    const SUPABASE_ANON_KEY = API.token || (typeof GALAXY_CONFIG !== 'undefined' ? GALAXY_CONFIG.supabaseAnonKey : '');
-    for (const dataUrl of window.images) {
-    try {
-      const res2 = await fetch(dataUrl);
-      const blob = await res2.blob();
-      const ext  = blob.type.split('/')[1] || 'jpg';
-      const fname = Date.now() + '_' + Math.random().toString(36).slice(2) + '.' + ext;
-      const up = await fetch(
-        `${SUPABASE_URL}/storage/v1/object/product-images/${fname}`,
-        { method: 'POST', headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': blob.type, 'x-upsert': 'true' }, body: blob }
-      );
-      if (up.ok) imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/product-images/${fname}`);
-    } catch(e) { console.warn('Image upload failed', e); }
-    }
-    }
+            // Upload images to Supabase Storage
+        let imageUrls = [];
+        const imgInput = document.getElementById('img-input');
+        const imgFiles = imgInput ? Array.from(imgInput.files) : [];
+        if (imgFiles.length > 0) {
+          const SUPABASE_URL = 'https://aiqckirrpuokgbvfndte.supabase.co';
+          const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTQ1MTQsImV4cCI6MjEwNjA5MDUxNH0.zwMSqYmKZ6bpld7wsHr9zFH8febD0aPVgkO8mDXD-PA';
+          for (const file of imgFiles) {
+            try {
+              const ext = file.type.split('/')[1] || 'jpg';
+              const fname = Date.now() + '_' + Math.random().toString(36).slice(2) + '.' + ext;
+              const up = await fetch(
+                `${SUPABASE_URL}/storage/v1/object/product-images/${fname}`,
+                { method: 'POST', headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type, 'x-upsert': 'true' }, body: file }
+              );
+              if (up.ok) imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/product-images/${fname}`);
+            } catch(e) { console.warn('Image upload failed', e); }
+          }
+        }
 
     try {
       const payload = {
