@@ -67,6 +67,7 @@ thead tr{background:#f5f5fa}
 th{font-size:10px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;border-bottom:1.5px solid #e4e4f0;background:#f5f5fa;user-select:none;cursor:default}
 th.sortable{cursor:pointer}
 th.sortable:hover{filter:brightness(.85)}
+th.sort-active{background:rgba(255,100,100,0.08);color:#e8220e;}
 .sort-ic{font-size:9px;margin-left:3px;opacity:.4;display:inline-block}
 td{font-size:13px;font-weight:600;color:#18182b;background:#fff}
 tbody tr:last-child td{border-bottom:none}
@@ -1859,9 +1860,9 @@ window.navigate=navigate;
 
 // ══════════════ ITEM STOCK ══════════════
 function sortP(col){
-  if(pSort===col)pDir*=-1;else{pSort=col;pDir=1;}
-  ["name","code","stock","sold","price","profit","date"].forEach(c=>{const el=document.getElementById("si-"+c);if(!el)return;el.textContent=c===col?(pDir===1?"\u2191":"\u2193"):"\u21c5";el.style.opacity=c===col?"1":".4";el.style.color=c===col?"#e8220e":"";});
-  pPage=1;renderProducts();
+if(pSort===col){if(pDir===1){pDir=-1;}else{pSort=null;pDir=1;}}else{pSort=col;pDir=1;}
+["name","code","stock","sold","price","profit","date"].forEach(c=>{const el=document.getElementById("si-"+c);if(!el)return;el.textContent=c===pSort?(pDir===1?"\u2191":"\u2193"):"\u21c5";el.style.opacity=c===pSort?"1":"0.4";el.closest("th")?.classList.toggle("sort-active",c===pSort);});
+pPage=1;renderProducts();
 }
 function toggleCheckAll(cb){pSel.clear();if(cb.checked)getF().forEach(p=>pSel.add(p.id));renderProducts();}
 function toggleRowCheck(id,cb){if(cb.checked)pSel.add(id);else pSel.delete(id);const a=document.getElementById("chk-all");if(a){const f=getF();a.checked=f.length>0&&f.every(p=>pSel.has(p.id));}}
