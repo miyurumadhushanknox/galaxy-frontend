@@ -1437,7 +1437,12 @@ setInterval(function() {
   var lsRaw = localStorage.getItem('galaxy_user'); var ssRaw = sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user'); var lsObj = lsRaw ? JSON.parse(lsRaw) : {}; var ssObj = ssRaw ? JSON.parse(ssRaw) : {}; var u = lsObj.plan ? lsObj : ssObj;
   var pm = {monthly2k:'basic', monthly5k:'nova', stellar:'stellar', basic:'basic', nova:'nova', unlimited:'stellar'};
   var plan = pm[u.plan] || 'basic';
-  if (plan !== 'basic') return;
+  if (plan !== 'basic') {
+  if (document.body) document.body.classList.remove('galaxy-basic-plan');
+  var s = document.getElementById('galaxy-basic-hide');
+  if (s) s.remove();
+  return;
+}    
 
   // Add class to body once
   if (document.body) document.body.classList.add('galaxy-basic-plan');
