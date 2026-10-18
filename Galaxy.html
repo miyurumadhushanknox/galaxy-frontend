@@ -4139,17 +4139,71 @@ function renderBillingPage(){
 }
 
 function openOutstandingModal() {
-  const items = window._knoxOutstandingItems || [];
   const body = document.getElementById('outstanding-modal-body');
   if(!body) return;
-  body.innerHTML = items.length === 0
-    ? '<div style="color:#16a34a;text-align:center;padding:20px">All cleared ✓</div>'
-    : items.map(p => '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f0f0f6">'
-        + '<div><div style="font-size:13px;font-weight:700;color:#18182b">' + (p.period||p.inv||'') + '</div>'
-        + '<div style="font-size:11px;color:#9090b8;margin-top:2px">' + (p.plan||'') + ' — ' + (p.inv||'') + '</div></div>'
-        + '<div style="font-size:14px;font-weight:800;color:#e8220e">LKR ' + (p.amount||0).toLocaleString() + '</div>'
-        + '</div>').join('');
   document.getElementById('outstanding-modal-bg').style.display = 'flex';
+  body.innerHTML = '<div style="text-align:center;padding:20px;color:#9090b8">Loading...</div>';
+
+  const token = localStorage.getItem('galaxy_token');
+  if(!token){ body.innerHTML = '<div style="color:red;padding:20px">Not logged in</div>'; return; }
+
+  fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me',{headers:{'Authorization':'Bearer '+token}})
+  .then(r=>r.json()).then(d=>{
+    const biz = d.business || d;
+    const setupOutstanding = biz.knox_setup_outstanding||0;
+    const subOutstanding = biz.knox_outstanding||0;
+    const setupPaid = biz.knox_setup_paid||[false,false,false,false];
+    const subPayments = biz.knox_sub_payments||{};
+    const subAmounts = biz.knox_sub_amounts||{};
+    const startDate = biz.knox_start_date;
+
+    const dot = (paid) => `<div style="width:28px;height:28px;border-radius:50%;background:${paid?'#dcfce7':'#fff7ed'};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:${paid?'#16a34a':'#e8220e'};flex-shrink:0">${paid?'✓':'!'}</div>`;
+    const row = (dotHtml, title, subtitle, amtHtml) => `
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid #f0f0f6;border-radius:12px;margin-bottom:10px">
+        ${dotHtml}
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:#18182b">${title}</div>
+          <div style="font-size:11px;color:#9090b8;margin-top:2px">${subtitle}</div>
+        </div>
+        <div style="font-size:14px;font-weight:800;color:#e8220e">${amtHtml}</div>
+      </div>`;
+
+    let html = '';
+
+    // Setup fee
+    if(setupOutstanding > 0){
+      html += `<div style="color:#e8220e;font-size:10px;font-weight:700;letter-spacing:1px;margin:0 0 8px">SETUP FEE</div>`;
+      html += row(dot(false), 'Setup Fee Payment', 'One-time setup charge', 'LKR '+setupOutstanding.toLocaleString());
+    }
+
+    // Subscription months
+    if(subOutstanding > 0 && startDate){
+      html += `<div style="color:#e8220e;font-size:10px;font-weight:700;letter-spacing:1px;margin:16px 0 8px">SUBSCRIPTION PAYMENTS</div>`;
+      const start = new Date(startDate+'T00:00:00');
+      const now = new Date();
+      let cur = new Date(start.getFullYear(), start.getMonth(), 1);
+      const nowMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      while(cur <= nowMonth){
+        const key = `${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}`;
+        const paid = !!subPayments[key];
+        const amount = subAmounts[key]||0;
+        if(!paid && amount > 0){
+          const label = cur.toLocaleString('default',{month:'long'})+' '+cur.getFullYear();
+          // date range
+          const pEnd = new Date(cur.getFullYear(), cur.getMonth()+1, start.getDate());
+          const fmt = dt => dt.getDate()+' '+dt.toLocaleString('default',{month:'short'})+' '+dt.getFullYear();
+          const rangeStart = new Date(cur.getFullYear(), cur.getMonth(), start.getDate());
+          html += row(dot(false), label, fmt(rangeStart)+' – '+fmt(pEnd), 'LKR '+amount.toLocaleString());
+        }
+        cur.setMonth(cur.getMonth()+1);
+      }
+    }
+
+    if(!html) html = '<div style="color:#16a34a;text-align:center;padding:20px;font-weight:700">All cleared \u2713</div>';
+    body.innerHTML = html;
+  }).catch(()=>{
+    body.innerHTML = '<div style="color:red;padding:20px">Could not load data</div>';
+  });
 }
 
 
