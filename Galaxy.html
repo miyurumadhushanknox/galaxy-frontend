@@ -2424,9 +2424,9 @@ function renderWhMain(){
           </div>
         </div>`;
       }).join('')}
-      ${currentUser.role!=='accountant'?`<div class="card" onclick="document.getElementById('m-addwh').classList.add('open')" style="margin-bottom:0;border:1.5px dashed #e4e4f0;background:transparent;box-shadow:none;cursor:pointer;display:flex;flex-direction:column;align-items
-       <div style="font-size:24px;color:#e8220e;font-weight:300;margin-bottom:5px">+</div>
-       <div style="font-size:12px;font-weight:700;color:#e8220e">Add warehouse</div>
+      ${currentUser.role!=='accountant'?`<div class="card" onclick="document.getElementById('m-addwh').classList.add('open')" style="margin-bottom:0;border:1.5px dashed #e4e4f0;background:transparent;box-shadow:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <div style="font-size:24px;color:#e8220e;font-weight:300;margin-bottom:5px">+</div>
+      <div style="font-size:12px;font-weight:700;color:#e8220e">Add warehouse</div>
       </div>`:''}
   `;
 }
