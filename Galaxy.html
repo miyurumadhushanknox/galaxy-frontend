@@ -4139,69 +4139,17 @@ function renderBillingPage(){
 }
 
 function openOutstandingModal() {
+  const items = window._knoxOutstandingItems || [];
   const body = document.getElementById('outstanding-modal-body');
   if(!body) return;
+  body.innerHTML = items.length === 0
+    ? '<div style="color:#16a34a;text-align:center;padding:20px">All cleared ✓</div>'
+    : items.map(p => '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f0f0f6">'
+        + '<div><div style="font-size:13px;font-weight:700;color:#18182b">' + (p.period||p.inv||'') + '</div>'
+        + '<div style="font-size:11px;color:#9090b8;margin-top:2px">' + (p.plan||'') + ' — ' + (p.inv||'') + '</div></div>'
+        + '<div style="font-size:14px;font-weight:800;color:#e8220e">LKR ' + (p.amount||0).toLocaleString() + '</div>'
+        + '</div>').join('');
   document.getElementById('outstanding-modal-bg').style.display = 'flex';
-
-  body.innerHTML = '<div style="text-align:center;padding:20px;color:#9090b8">Loading...</div>';
-
-  const token = localStorage.getItem('galaxy_token');
-  if(!token){ body.innerHTML = '<div style="color:red;padding:20px">Not logged in</div>'; return; }
-
-  fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me',{headers:{'Authorization':'Bearer '+token}})
-  .then(r=>r.json()).then(d=>{
-    const biz = d.business || d;
-    const setupOutstanding = biz.knox_setup_outstanding||0;
-    const subOutstanding = biz.knox_outstanding||0;
-    const setupPaid = biz.knox_setup_paid||[false,false,false,false];
-    const subPayments = biz.knox_sub_payments||{};
-    const subAmounts = biz.knox_sub_amounts||{};
-    const startDate = biz.knox_start_date;
-
-    let html = '';
-
-    // Setup fee section
-    if(setupOutstanding > 0){
-      html += `<div style="color:#e8220e;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:10px">SETUP FEE OUTSTANDING</div>`;
-      html += `<div style="background:#fff;border:1px solid #f0f0f6;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-        <div>
-          <div style="font-size:14px;font-weight:700;color:#18182b">Setup Fee</div>
-          <div style="font-size:12px;color:#9090b8;margin-top:2px">LKR ${setupOutstanding.toLocaleString()}</div>
-        </div>
-        <div style="font-size:15px;font-weight:800;color:#e8220e">LKR ${setupOutstanding.toLocaleString()}</div>
-      </div>`;
-    }
-
-    // Subscription section
-    if(subOutstanding > 0 && startDate){
-      html += `<div style="color:#e8220e;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:10px">SUBSCRIPTION OUTSTANDING</div>`;
-      // Show unpaid months
-      const start = new Date(startDate+'T00:00:00');
-      const now = new Date();
-      let d2 = new Date(start);
-      while(d2 <= now){
-        const key = `${d2.getFullYear()}-${String(d2.getMonth()+1).padStart(2,'0')}`;
-        const paid = subPayments[key];
-        const amount = subAmounts[key]||0;
-        if(!paid && amount > 0){
-          const monthName = d2.toLocaleString('default',{month:'long',year:'numeric'});
-          html += `<div style="background:#fff;border:1px solid #f0f0f6;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-            <div>
-              <div style="font-size:14px;font-weight:700;color:#18182b">${monthName}</div>
-              <div style="font-size:12px;color:#9090b8;margin-top:2px">Subscription payment</div>
-            </div>
-            <div style="font-size:15px;font-weight:800;color:#e8220e">LKR ${amount.toLocaleString()}</div>
-          </div>`;
-        }
-        d2.setMonth(d2.getMonth()+1);
-      }
-    }
-
-    if(!html) html = '<div style="color:#16a34a;text-align:center;padding:20px">All cleared ✓</div>';
-    body.innerHTML = html;
-  }).catch(()=>{
-    body.innerHTML = '<div style="color:red;padding:20px">Could not load data</div>';
-  });
 }
 
 
