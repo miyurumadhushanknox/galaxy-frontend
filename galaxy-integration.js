@@ -453,16 +453,36 @@ setTimeout(function() {
           const SUPABASE_URL = 'https://aiqckirrpuokgbvfndte.supabase.co';
           const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTQ1MTQsImV4cCI6MjEwNjA5MDUxNH0.zwMSqYmKZ6bpld7wsHr9zFH8febD0aPVgkO8mDXD-PA';
           for (const file of imgFiles) {
-            try {
-              const ext = file.type.split('/')[1] || 'jpg';
-              const fname = Date.now() + '_' + Math.random().toString(36).slice(2) + '.' + ext;
-              const up = await fetch(
-              `${SUPABASE_URL}/storage/v1/object/product-images/${fname}`,
-              { method: 'POST', headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type }, body: file }
-              );
-              if (up.ok) imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/product-images/${fname}`);
-            } catch(e) { console.warn('Image upload failed', e); }
-          }
+            async function compressImage(file, maxPx = 800, quality = 0.8) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      let w = img.width, h = img.height;
+      if (w > maxPx || h > maxPx) {
+        if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+        else { w = Math.round(w * maxPx / h); h = maxPx; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      canvas.toBlob((blob) => resolve(blob), 'image/jpeg', quality);
+    };
+    img.src = url;
+  });
+}
+for (const file of imgFiles) {
+  try {
+    const compressed = await compressImage(file);
+    const fname = Date.now() + '_' + Math.random().toString(36).slice(2) + '.jpg';
+    const up = await fetch(
+      `${SUPABASE_URL}/storage/v1/object/product-images/${fname}`,
+      { method: 'PUT', headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'image/jpeg', 'x-upsert': 'true' }, body: compressed }
+    );
+    if (up.ok) imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/product-images/${fname}`);
+  } catch(e) { console.warn('Image upload failed', e); }
+}
         }
 
     try {
