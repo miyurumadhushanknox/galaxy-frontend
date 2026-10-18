@@ -1920,6 +1920,7 @@ function renderProducts(){
             "<td style=\"color:#bbb;font-size:12px\">"+( p.dt||"\u2014")+"</td>"+
             "</tr>";
   }).join(""):"<tr><td colspan=\"14\" style=\"text-align:center;color:#c0c0d8;padding:48px;font-weight:700\">No products found</td></tr>";
+const db=document.getElementById("btn-delete-sel");if(db){db.style.pointerEvents=pSel.size?"auto":"none";db.style.opacity=pSel.size?"1":"0.4";}
 }
 function editProduct(id){const p=products.find(x=>x.id===id);if(!p)return;navigate("addproduct");
   document.getElementById("f-name").value=p.name;document.getElementById("f-code").value=p.code||"";document.getElementById("f-purchase").value=p.pp;document.getElementById("f-selling").value=p.price;document.getElementById("f-low").value=p.low;codeManual=true;
