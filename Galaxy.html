@@ -2326,7 +2326,7 @@ function renderWarehousePage(){
 function renderWhMain(){
   document.getElementById('wh-main-view').style.display='';
   document.getElementById('wh-detail-view').style.display='none';
-  document.getElementById('breadcrumb').textContent='Home > Warehouses';
+  document.getElementById('breadcrumb').textContent='Warehouses';
 
   const totalUnits = warehouses.reduce((a,w)=>a+products.reduce((b,p)=>b+(p.stock[w.id]||0),0),0);
   const lowCount   = products.filter(p=>Object.values(p.stock).reduce((a,b)=>a+b,0)<=p.low).length;
