@@ -131,7 +131,9 @@ const ProductsAPI = {
       body: JSON.stringify({ productId, fromWarehouseId, toWarehouseId, quantity, note })
     }),
 
-  history: (id) => apiFetch(`/products/${id}/history`)
+  history: (id) => apiFetch(`/products/${id}/history`),
+  historyAll: () => apiFetch('/products/history/all')
+  
 };
 
 // ══════════════════════════════════════════

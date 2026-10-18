@@ -2970,39 +2970,48 @@ function openStockHistory(){
   requestAnimationFrame(()=> panel.style.transform = 'translateX(0)');
   const list = document.getElementById('sh-list');
   const sub  = document.getElementById('sh-subtitle');
-  if(sub) sub.textContent = stockHistory.length + ' event' + (stockHistory.length===1?'':'s');
   if(!list) return;
-  if(!stockHistory.length){
-    list.innerHTML = '<div style="text-align:center;padding:48px 0;color:#c0c0d8;font-size:13px;font-weight:600">No stock events yet.<br>Use Refill stock to add new stock.</div>';
-    return;
-  }
-  const typeLabel = {refill:'Refill', transfer:'Transfer', initial:'Initial stock', sale:'Sale'};
-  const typeColor = {refill:'#16a34a', transfer:'#e8220e', initial:'#3b82f6', sale:'#f59e0b'};
-  const typeBg    = {refill:'#e6f9ed', transfer:'#fff8f6', initial:'#eff6ff', sale:'#fff9ed'};
-  list.innerHTML = stockHistory.map(ev => {
-    const lbl = typeLabel[ev.type]||ev.type;
-    const clr = typeColor[ev.type]||'#9090b8';
-    const bg  = typeBg[ev.type] ||'#f5f5fa';
-    return `<div style="border:1.5px solid #e4e4f0;border-radius:12px;padding:13px;margin-bottom:10px;background:#fff">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="padding:2px 9px;border-radius:20px;font-size:10px;font-weight:800;background:${bg};color:${clr};text-transform:uppercase;letter-spacing:.05em">${lbl}</span>
-          <span style="font-size:13px;font-weight:700;color:#18182b">${ev.pname}</span>
-          <span style="font-size:11px;color:#9090b8;font-weight:500">${ev.pcode}</span>
+  list.innerHTML = '<div style="text-align:center;padding:48px 0;color:#9090b8;font-size:13px;">Loading...</div>';
+  ProductsAPI.historyAll().then(data => {
+    if(sub) sub.textContent = data.length + ' event' + (data.length===1?'':'s');
+    if(!data.length){
+      list.innerHTML = '<div style="text-align:center;padding:48px 0;color:#c0c0d8;font-size:13px;font-weight:600">No stock events yet.<br>Use Refill stock to add new stock.</div>';
+      return;
+    }
+    const typeLabel = {refill:'Refill', transfer:'Transfer', initial:'Initial stock', sale:'Sale', create:'New Product', delete:'Deleted'};
+    const typeColor = {refill:'#16a34a', transfer:'#e8220e', initial:'#3b82f6', sale:'#f59e0b', create:'#7c3aed', delete:'#dc2626'};
+    const typeBg    = {refill:'#e6f9ed', transfer:'#fff8f6', initial:'#eff6ff', sale:'#fff9ed', create:'#f3e8ff', delete:'#fef2f2'};
+    list.innerHTML = data.map(ev => {
+      const lbl = typeLabel[ev.action]||ev.action;
+      const clr = typeColor[ev.action]||'#9090b8';
+      const bg  = typeBg[ev.action]  ||'#f5f5fa';
+      const pname = ev.products?.name||'';
+      const pcode = ev.products?.code||'';
+      const wName = ev.warehouses?.name||'';
+      const uName = ev.users?(ev.users.first_name+' '+(ev.users.last_name||'')).trim():'';
+      const qty   = ev.quantity_change!=null?(ev.quantity_change>0?'+':'')+ev.quantity_change:'';
+      const date  = ev.created_at?ev.created_at.slice(0,10):'';
+      const time  = ev.created_at?ev.created_at.slice(11,16):'';
+      return `<div style="border:1.5px solid #e4e4f0;border-radius:12px;padding:13px;margin-bottom:10px;background:#fff">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="padding:2px 9px;border-radius:20px;font-size:10px;font-weight:800;background:${bg};color:${clr};text-transform:uppercase;letter-spacing:.05em">${lbl}</span>
+            <span style="font-size:13px;font-weight:700;color:#18182b">${pname}</span>
+            <span style="font-size:11px;color:#9090b8;font-weight:500">${pcode}</span>
+          </div>
+          <span style="font-size:11px;color:#aaa;font-weight:600">${date} ${time}</span>
         </div>
-        <span style="font-size:11px;color:#aaa;font-weight:600">${ev.date} ${ev.time||''}</span>
-      </div>
-      <div style="display:flex;gap:16px;flex-wrap:wrap">
-        <div style="font-size:12px;font-weight:600;color:#18182b">
-          <span style="color:#9090b8">Qty</span>
-          <span style="color:${ev.type==='refill'?'#16a34a':ev.type==='sale'?'#e8220e':'#18182b'};font-weight:800;margin-left:4px">${ev.type==='sale'||ev.type==='transfer'?'−':'+'}${N(ev.qty)}</span>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          ${qty?`<div style="font-size:12px;font-weight:600;color:#18182b"><span style="color:#9090b8">Qty</span> <span style="color:${ev.quantity_change>0?'#16a34a':'#dc2626'};font-weight:800;margin-left:4px">${qty}</span></div>`:''}
+          ${wName?`<div style="font-size:12px;font-weight:600;color:#9090b8">Warehouse: <span style="color:#18182b">${wName}</span></div>`:''}
+          ${uName?`<div style="font-size:12px;font-weight:600;color:#9090b8">By: <span style="color:#18182b">${uName}</span></div>`:''}
+          ${ev.note?`<div style="font-size:12px;font-weight:600;color:#9090b8">Note: <span style="color:#18182b">${ev.note}</span></div>`:''}
         </div>
-        ${ev.wName?`<div style="font-size:12px;font-weight:600;color:#9090b8">Warehouse: <span style="color:#18182b">${ev.wName}</span></div>`:''}
-        ${ev.pp!=null?`<div style="font-size:12px;font-weight:600;color:#9090b8">Purchase: <span style="color:#18182b">${L(ev.pp)}</span></div>`:''}
-        ${ev.sp!=null?`<div style="font-size:12px;font-weight:600;color:#9090b8">Selling: <span style="color:#18182b">${L(ev.sp)}</span></div>`:''}
-      </div>
-    </div>`;
-  }).join('');
+      </div>`;
+    }).join('');
+  }).catch(()=>{
+    list.innerHTML = '<div style="text-align:center;padding:48px 0;color:#dc2626;font-size:13px;">Failed to load history.</div>';
+  });
 }
 
 function closeStockHistory(){
