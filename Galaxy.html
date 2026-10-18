@@ -1970,7 +1970,6 @@ function handleImgs(input){
   files.forEach(file=>{const r=new FileReader();r.onload=e=>{if(images.length===1&&images[0]===PLACEHOLDER)images=[];images.push(e.target.result);renderImages();};r.readAsDataURL(file);});
   window.selectedImages = Array.from(input.files).filter(f => {
   if (f.size > 5 * 1024 * 1024) {
-    alert('Image "' + f.name + '" is too large. Max size is 5MB.');
     toast('Image "' + f.name + '" is too large. Max size is 5MB.', 'err');
     return false;
   }
