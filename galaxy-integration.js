@@ -253,7 +253,7 @@ function showBlockedPage() {
 
       // ── Products ──
       if (productsRes.status === 'fulfilled' && productsRes.value) {
-        const prodList = (Array.isArray(productsRes.value) ? productsRes.value : (productsRes.value.products || [])).sort((a, b) => b.id - a.id);
+        const prodList = (Array.isArray(productsRes.value) ? productsRes.value : (productsRes.value.products || [])).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         window.products = prodList.map(p => {
           // Convert stock_levels array to {warehouseId: qty} map
           const stock = {};
