@@ -2045,9 +2045,9 @@ function viewProduct(id){
   +"<span style=\"font-size:12.5px;font-weight:600;color:#18182b\">"+w.name+"</span>"
   +"<span style=\"font-size:13px;font-weight:800;color:"+(wStk(p,w.id)===0?"#e8220e":wStk(p,w.id)<=p.low?"#c07800":"#16a34a")+"\""+">"
   +N(wStk(p,w.id))+" units</span></div>"
-).join("");
-document.getElementById("vp-addedby").textContent = p.users?.name || '—';
-document.getElementById("m-view").classList.add("open");
+    ).join("");
+  document.getElementById("vp-addedby").textContent = p.creator_name || '—';
+  document.getElementById("m-view").classList.add("open");
 }
 function editFromView(){
   document.getElementById("m-view").classList.remove("open");
