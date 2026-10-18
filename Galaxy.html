@@ -1965,16 +1965,12 @@ function renderImages(){
   count.textContent=real+" / "+MAX_IMG+" images";count.style.color=real>=MAX_IMG?"#e8220e":"#aaa";
 }
 function handleImgs(input){
-  if(Array.from(input.files).some(f=>f.size>5*1024*1024))toast("Image is too large. Max size is 5MB.","err");
-  if(files.length>slots)toast("Max "+MAX_IMG+" images.","err");
+  const allFiles=Array.from(input.files);
+  allFiles.filter(f=>f.size>5*1024*1024).forEach(f=>toast("Image '"+f.name+"' is too large. Max 5MB.","err"));
+  const files=allFiles.filter(f=>f.size<=5*1024*1024).slice(0,slots);
+  if(allFiles.length>slots)toast("Max "+MAX_IMG+" images.","err");
   files.forEach(file=>{const r=new FileReader();r.onload=e=>{if(images.length===1&&images[0]===PLACEHOLDER)images=[];images.push(e.target.result);renderImages();};r.readAsDataURL(file);});
-  window.selectedImages = Array.from(input.files).filter(f => {
-  if (f.size > 5 * 1024 * 1024) {
-    toast('Image "' + f.name + '" is too large. Max size is 5MB.', 'err');
-    return false;
-  }
-  return true;
-});
+  window.selectedImages = files;
   input.value="";
 }
 function removeImg(i){images.splice(i,1);if(images.length===0)images=[PLACEHOLDER];renderImages();}
