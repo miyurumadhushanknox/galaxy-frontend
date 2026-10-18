@@ -847,11 +847,11 @@ tbody tr:hover .row-actions{display:flex}
               <th class="sortable" onclick="sortP('stock')">Available quantity <span class="sort-ic" id="si-stock">⇅</span></th>
               <th id="th-sold" class="sortable" onclick="sortP('sold')">Sales quantity <span class="sort-ic" id="si-sold">↨</span></th>
               <th class="sortable" onclick="sortP('price')">Sales price <span class="sort-ic" id="si-price">⇅</span></th>
-              <th id="th-pp">Purchase price</th>
+              <th id="th-pp" class="sortable" onclick="sortP('pp')">Purchase price <span class="sort-ic" id="si-pp">⇕</span></th>
               <th id="th-profit" class="sortable" onclick="sortP('profit')">Profit (Each one)...
               <th>Warehouse</th>
-              <th id="th-svp">Stock value (Purchase price)</th>
-              <th id="th-svs">Stock value (Sales price)</th>
+              <th id="th-svp" class="sortable" onclick="sortP('svp')">Stock value (Purchase price) <span class="sort-ic" id="si-svp">⇕</span></th>
+              <th id="th-svs" class="sortable" onclick="sortP('svs')">Stock value (Sales price) <span class="sort-ic" id="si-svs">⇕</span></th>
               <th class="sortable" onclick="sortP('date')">Add date <span class="sort-ic" id="si-date">⇅</span></th>
             </tr>
           </thead>
@@ -1861,7 +1861,7 @@ window.navigate=navigate;
 // ══════════════ ITEM STOCK ══════════════
 function sortP(col){
 if(pSort===col){if(pDir===1){pDir=-1;}else{pSort=null;pDir=-1;}}else{pSort=col;pDir=1;}
-["name","code","stock","sold","price","profit","date"].forEach(c=>{const el=document.getElementById("si-"+c);if(!el)return;el.textContent=c===pSort?(pDir===1?"\u2191":"\u2193"):"\u21c5";el.style.opacity=c===pSort?"1":"0.4";el.closest("th")?.classList.toggle("sort-active",c===pSort);});
+["name","code","stock","sold","price","profit","date","pp","svp","svs"].forEach(c=>{const el=document.getElementById("si-"+c);if(!el)return;el.textContent=c===pSort?(pDir===1?"\u2191":"\u2193"):"\u21c5";el.style.opacity=c===pSort?"1":"0.4";el.closest("th")?.classList.toggle("sort-active",c===pSort);});
 pPage=1;renderProducts();
 }
 function toggleCheckAll(cb){pSel.clear();if(cb.checked)getF().forEach(p=>pSel.add(p.id));renderProducts();}
@@ -1878,6 +1878,9 @@ function getF(){
     else if(pSort==="sold"){av=a.sold||0;bv=b.sold||0;}
     else if(pSort==="price"){av=a.price;bv=b.price;}
     else if(pSort==="profit"){av=a.price-a.pp;bv=b.price-b.pp;}
+    else if(pSort==="pp"){av=a.pp;bv=b.pp;}
+    else if(pSort==="svp"){av=tStk(a)*a.pp;bv=tStk(b)*b.pp;}
+    else if(pSort==="svs"){av=tStk(a)*a.price;bv=tStk(b)*b.price;}
     else if(pSort==="name"){av=a.name;bv=b.name;}
     else if(pSort==="date"){av=a.dt||"";bv=b.dt||"";}
     else{return new Date(b.created_at||0)-new Date(a.created_at||0);}
