@@ -452,13 +452,33 @@ setTimeout(function() {
         if (imgFiles.length > 0) {
           const SUPABASE_URL = 'https://aiqckirrpuokgbvfndte.supabase.co';
           const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTQ1MTQsImV4cCI6MjEwNjA5MDUxNH0.zwMSqYmKZ6bpld7wsHr9zFH8febD0aPVgkO8mDXD-PA';
+          
+          const compressImage = (file) => new Promise((resolve) => {
+          const img = new Image();
+          const url = URL.createObjectURL(file);
+            img.onload = () => {
+              let w = img.width, h = img.height;
+              if (w > 800 || h > 800) {
+                if (w > h) { h = Math.round(h * 800 / w); w = 800; }
+                else { w = Math.round(w * 800 / h); h = 800; }
+              }
+              const canvas = document.createElement('canvas');
+              canvas.width = w; canvas.height = h;
+              canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+              URL.revokeObjectURL(url);
+              canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.8);
+            };
+            img.src = url;
+          });
+          
           for (const file of imgFiles) {
             try {
               const ext = file.type.split('/')[1] || 'jpg';
               const fname = Date.now() + '_' + Math.random().toString(36).slice(2) + '.' + ext;
+              const compressed = await compressImage(file);
               const up = await fetch(
-              `${SUPABASE_URL}/storage/v1/object/product-images/${fname}`,
-              { method: 'POST', headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type }, body: file }
+                `${SUPABASE_URL}/storage/v1/object/product-images/${fname}`,
+                { method: 'POST', headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type }, body: compressed }
               );
               if (up.ok) imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/product-images/${fname}`);
             } catch(e) { console.warn('Image upload failed', e); }
