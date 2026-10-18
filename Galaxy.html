@@ -1865,7 +1865,7 @@ if(pSort===col){if(pDir===1){pDir=-1;}else{pSort=null;pDir=-1;}}else{pSort=col;p
 pPage=1;renderProducts();
 }
 function toggleCheckAll(cb){pSel.clear();if(cb.checked)getF().forEach(p=>pSel.add(p.id));renderProducts();}
-function toggleRowCheck(id,cb){if(cb.checked)pSel.add(id);else pSel.delete(id);const a=document.getElementById("chk-all");if(a){const f=getF();a.checked=f.length>0&&f.every(p=>pSel.has(p.id));}}
+function toggleRowCheck(id,cb){if(cb.checked)pSel.add(id);else pSel.delete(id);const a=document.getElementById("chk-all");if(a){const f=getF();a.checked=f.length>0&&f.every(p=>pSel.has(p.id));}const db=document.getElementById("btn-delete-sel");if(db){db.style.pointerEvents=pSel.size?"auto":"none";db.style.opacity=pSel.size?"1":"0.4";}}
 function toggleOn(id){const p=products.find(x=>x.id===id);if(p){p.on=!p.on;renderProducts();}}
 function deleteSelected(){if(!pSel.size){toast("Select rows first.","err");return;}if(!confirm("Delete "+pSel.size+" product(s)?"))return;products=products.filter(p=>!pSel.has(p.id));pSel.clear();renderProducts();toast("Deleted.","ok");}
 function getF(){
