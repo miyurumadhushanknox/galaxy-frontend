@@ -1967,6 +1967,7 @@ function renderImages(){
 function handleImgs(input){
   const allFiles=Array.from(input.files);
   allFiles.filter(f=>f.size>5*1024*1024).forEach(f=>toast("Image '"+f.name+"' is too large. Max 5MB.","err"));
+  const slots=MAX_IMG-images.filter(s=>s!==PLACEHOLDER).length;
   const files=allFiles.filter(f=>f.size<=5*1024*1024).slice(0,slots);
   if(allFiles.length>slots)toast("Max "+MAX_IMG+" images.","err");
   files.forEach(file=>{const r=new FileReader();r.onload=e=>{if(images.length===1&&images[0]===PLACEHOLDER)images=[];images.push(e.target.result);renderImages();};r.readAsDataURL(file);});
