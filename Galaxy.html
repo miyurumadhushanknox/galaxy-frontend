@@ -3973,7 +3973,38 @@ function renderBillingPage(){
     if(subEl){subEl.textContent=total>0?'Payment due — tap to view':'All cleared ✓';subEl.style.color=total>0?'#e8220e':'#16a34a';}
     if(amtEl) amtEl.style.color=total>0?'#e8220e':'#16a34a';
     if(total>0 && outCard){outCard.style.cursor='pointer';outCard.onclick=function(){openOutstandingModal();};}
-    window._knoxOutstandingItems=[];
+    (async function(){
+  let total = 0; window.total = 0;
+  window._knoxOutstandingItems = [];
+  try {
+    const token = localStorage.getItem('galaxy_token');
+    if(!token) return;
+    const r = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me',{headers:{'Authorization':'Bearer '+token}});
+    const d = await r.json();
+    const biz = d.business || d;
+    const outstanding = biz.knox_outstanding||0;
+    const setupOutstanding = biz.knox_setup_outstanding||0;
+    total = outstanding + setupOutstanding;
+    window.total = total;
+
+    const items = [];
+    if(setupOutstanding > 0){
+      items.push({period:'Setup Fee', inv:'', plan:'One-time', amount: setupOutstanding});
+    }
+    if(outstanding > 0){
+      items.push({period:'Subscription', inv:'', plan:'Monthly/Yearly', amount: outstanding});
+    }
+    window._knoxOutstandingItems = items;
+  } catch(e){}
+  setTimeout(function(){
+    const allCards=document.querySelectorAll('#billing-root .card');
+    const outCard=Array.from(allCards).find(c=>c.textContent.includes('Outstanding'));
+    const amtEl=outCard?.querySelector('[style*="font-size:17px"]');
+    const subEl=outCard?.querySelector('[style*="font-weight:600"]');
+    if(amtEl) amtEl.innerHTML=total>0?'LKR '+total.toLocaleString():'LKR 0';
+    if(subEl){subEl.textContent=total>0?'Payment due — tap to view':'All cleared ✓';subEl.style.color=total>0?'#e8220e':'#16a34a';}
+    if(amtEl) amtEl.style.color=total>0?'#e8220e':'#16a34a';
+    if(total>0 && outCard){outCard.style.cursor='pointer';outCard.onclick=function(){openOutstandingModal();};}
   },600);
 })();
 
