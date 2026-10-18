@@ -275,6 +275,7 @@ function showBlockedPage() {
             cat:      p.category || '',
             desc:     p.description || '',
             _raw:     p,
+            created_at: p.created_at || '',
           };
         });
       }
