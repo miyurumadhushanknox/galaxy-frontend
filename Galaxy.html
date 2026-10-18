@@ -4173,10 +4173,21 @@ function openOutstandingModal() {
     let html = '';
 
     // Setup fee
-    if(setupOutstanding > 0){
-      html += `<div style="color:#e8220e;font-size:10px;font-weight:700;letter-spacing:1px;margin:0 0 8px">SETUP FEE</div>`;
-      html += row(dot(false), 'Setup Fee Payment', 'One-time setup charge', 'LKR '+setupOutstanding.toLocaleString());
-    }
+if(setupOutstanding > 0){
+  html += `<div style="color:#e8220e;font-size:10px;font-weight:700;letter-spacing:1px;margin:0 0 8px">SETUP FEE</div>`;
+  const isFullPayment = biz.plan==='unlimited'||biz.plan==='perorder'||biz.plan==='yearly2k'||biz.plan==='yearly5k';
+  if(isFullPayment){
+    html += row(dot(false), 'Full Setup Payment', 'One-time setup charge', 'LKR '+setupOutstanding.toLocaleString());
+  } else {
+    const installAmt = 20000/4;
+    [0,1,2,3].forEach(i=>{
+      const paid = setupPaid[i]===true;
+      if(!paid){
+        html += row(dot(false), 'Installment '+(i+1)+' of 4', 'Setup fee payment', 'LKR '+installAmt.toLocaleString());
+      }
+    });
+  }
+}
 
     // Subscription months
     if(subOutstanding > 0 && startDate){
