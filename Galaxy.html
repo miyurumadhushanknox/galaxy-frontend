@@ -2929,44 +2929,14 @@ function confirmRefill(){
   const wName = warehouses.find(w=>w.id===wid)?.name||wid;
 
   // Check if price differs from current product price
-  const priceChanged = (pp !== p.pp) || (sp !== p.price);
+  const ppChanged = !rfPpLocked && pp !== (p.pp||0);
+  const spChanged = !rfSpLocked && sp !== (p.price||0);
+  const priceChanged = ppChanged || spChanged;
 
-  if(priceChanged && !rfPpLocked && !rfSpLocked){
-    // Create a variant product with suffixed name and code
-    // Count how many variants of this base product already exist
-    const baseCode = p.parentCode || p.code || '';
-    const baseName = p.parentName || p.name;
-    const siblings = products.filter(x => (x.parentCode||x.code) === baseCode);
-    const varNum   = siblings.length + 1; // 02, 03...
-    const suffix   = '-'+String(varNum).padStart(2,'0');
-
-    // Build variant stock — all zeros except target warehouse
-    const varStock = {};
-    warehouses.forEach(w => varStock[w.id] = 0);
-    varStock[wid] = qty;
-
-    const variant = {
-      id: nPid++,
-      name: baseName + suffix,
-      code: (baseCode||'') + suffix,
-      desc: p.desc||'',
-      price: sp,
-      pp: pp,
-      stock: varStock,
-      low: p.low||3,
-      sold: 0,
-      dt: today,
-      on: true,
-      images: p.images||[],
-      parentCode: baseCode,
-      parentName: baseName,
-      isVariant: true,
-    };
-    products.unshift(variant);
-    stockHistory.unshift({ type:'refill', pid:variant.id, pname:variant.name, pcode:variant.code, qty, wid, wName, pp, sp, newVariant:true, date:today, time:String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0') });
-    document.getElementById('m-refill').classList.remove('open');
-    toast('New price batch created: '+variant.name+' · +'+N(qty)+' units','ok');
-  } else {
+  if(priceChanged){
+    toast('Price change detected — duplicate this product with a new code (e.g. '+( p.code||'CODE')+'-01) for the new price batch.','err');
+    return;
+  }
     // Same price — just add stock to existing product
     p.stock[wid] = (p.stock[wid]||0) + qty;
     if(!rfPpLocked) p.pp    = pp;
@@ -2976,7 +2946,6 @@ function confirmRefill(){
     toast('+'+N(qty)+' units added to '+wName,'ok');
   }
   renderProducts();
-}
 
 // ── STOCK HISTORY PANEL ───────────────────────────────────────────────────────
 function openStockHistory(){
