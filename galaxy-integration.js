@@ -476,7 +476,7 @@ setTimeout(function() {
               const fname = Date.now() + '_' + Math.random().toString(36).slice(2) + '.jpg';
               const up = await fetch(
                 `${SUPABASE_URL}/storage/v1/object/product-images/${fname}`,
-                { method: 'PUT', headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'image/jpeg', 'x-upsert': 'true' }, body: compressed }
+                { method: 'POST', headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type }, body: file }
               );
               if (up.ok) imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/product-images/${fname}`);
             } catch(e) { console.warn('Image upload failed', e); }
