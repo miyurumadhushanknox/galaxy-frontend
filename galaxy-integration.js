@@ -445,6 +445,26 @@ setTimeout(function() {
 
     const btn = document.querySelector('#page-addproduct button[onclick="submitProduct()"]');
     if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+    
+    // Upload images to Supabase Storage
+    let imageUrls = [];
+    if (window.images && window.images.length > 0) {
+    const SUPABASE_URL = 'https://aiqckirrpuokgbvfndte.supabase.co';
+    const SUPABASE_ANON_KEY = API.token || (typeof GALAXY_CONFIG !== 'undefined' ? GALAXY_CONFIG.supabaseAnonKey : '');
+    for (const dataUrl of window.images) {
+    try {
+      const res2 = await fetch(dataUrl);
+      const blob = await res2.blob();
+      const ext  = blob.type.split('/')[1] || 'jpg';
+      const fname = Date.now() + '_' + Math.random().toString(36).slice(2) + '.' + ext;
+      const up = await fetch(
+        `${SUPABASE_URL}/storage/v1/object/product-images/${fname}`,
+        { method: 'POST', headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': blob.type, 'x-upsert': 'true' }, body: blob }
+      );
+      if (up.ok) imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/product-images/${fname}`);
+    } catch(e) { console.warn('Image upload failed', e); }
+    }
+    }
 
     try {
       const payload = {
@@ -453,6 +473,7 @@ setTimeout(function() {
         low_stock_threshold: low,
         is_active: window.productOn !== false,
         stock_levels,
+        images: imageUrls,
       };
 
       const res = await API.ProductsAPI.create(payload);
