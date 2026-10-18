@@ -1926,9 +1926,9 @@ function editProduct(id){const p=products.find(x=>x.id===id);if(!p)return;naviga
 const PLACEHOLDER="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y1ZjVmYSIgcng9IjEyIi8+PHJlY3QgeD0iNjAiIHk9IjU1IiB3aWR0aD0iODAiIGhlaWdodD0iNjAiIHJ4PSI4IiBmaWxsPSIjZTBlMGVlIi8+PGNpcmNsZSBjeD0iNzgiIGN5PSI3MyIgcj0iOSIgZmlsbD0iI2MwYzBkOCIvPjxwYXRoIGQ9Ik02MCAxMDUgTDgyIDgzIEwxMDIgMTAzIEwxMjIgODUgTDE0MCAxMDVaIiBmaWxsPSIjYzhjOGRjIi8+PC9zdmc+";
 const MAX_IMG=5;
 let images=[PLACEHOLDER];
-let productOn=true,codeManual=false,dragIdx=null;
+window.productOn=true;let codeManual=false,dragIdx=null;
 
-function toggleStatus(){productOn=!productOn;document.getElementById("status-tgl").classList.toggle("on",productOn);document.getElementById("lbl-off").style.color=productOn?"#aaa":"#e8220e";document.getElementById("lbl-on").style.color=productOn?"#e8220e":"#aaa";}
+function toggleStatus(){window.productOn=!window.productOn;document.getElementById("status-tgl").classList.toggle("on",window.productOn);document.getElementById("lbl-off").style.color=window.productOn?"#aaa":"#e8220e";document.getElementById("lbl-on").style.color=window.productOn?"#e8220e":"#aaa";}
 function buildWhFields(){document.getElementById("wh-fields").innerHTML=warehouses.map(w=>"<div class=\"field\"><label>"+w.name+" <span style=\"font-weight:400;color:#aaa;font-size:10px\">"+w.location+"</span></label><input type=\"number\" id=\"wh-"+w.id+"\" placeholder=\"0\" min=\"0\" value=\"0\" oninput=\"autoCalc()\"></div>").join("");}
 function onNameChange(){genCode(false);autoCalc();}
 function genCode(force){if(codeManual&&!force)return;const name=document.getElementById("f-name").value.trim();const prefix=name.replace(/[^a-zA-Z0-9]/g,"").substring(0,3).toUpperCase()||"PRD";const num=String(Math.floor(1000+Math.random()*9000));document.getElementById("f-code").value=prefix+num;if(force)codeManual=false;}
