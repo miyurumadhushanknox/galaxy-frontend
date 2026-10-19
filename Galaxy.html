@@ -3077,8 +3077,8 @@ function openChart(pid){
     document.getElementById('chart-analytics').innerHTML=[
       ['Total Stock',totalQty+' units','#18182b'],
       ['Sales (7 days)',totalSales7+' units','#ff5a30'],
-      ['Selling Price','Rs. '+(p.price||0).toLocaleString(),'#18182b'],
-      ['Profit Each','Rs. '+((p.price||0)-(p.pp||0)).toLocaleString(),'#16a34a'],
+      ['Selling Price',L(p.price||0),'#18182b'],
+      ['Profit Each',L((p.price||0)-(p.pp||0)),'#16a34a'],
     ].map(([label,val,col])=>`<div style="background:#f8f8fc;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:700;color:#9090b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">${label}</div><div style="font-size:18px;font-weight:900;color:${col}">${val}</div></div>`).join('');
     document.getElementById('m-chart').classList.add('open');
     setTimeout(()=>{
