@@ -3065,50 +3065,58 @@ function openChart(pid){
     days.push(key);
     labels.push(String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0'));
   }
-  // Count sales per day from stockHistory
-  const data=days.map(day=>stockHistory.filter(h=>h.type==='sale'&&h.pid===pid&&h.date===day).reduce((s,h)=>s+(h.qty||0),0));
-  const totalQty=Object.values(p.stock||{}).reduce((a,b)=>a+b,0);
-  const totalSales7=data.reduce((a,b)=>a+b,0);
-  // Analytics tiles
-  document.getElementById('chart-analytics').innerHTML=[
-    ['Total Stock',N(totalQty)+' units','#18182b'],
-    ['Sales (7 days)',N(totalSales7)+' units','#ff5a30'],
-    ['Selling Price',L(p.price),'#18182b'],
-    ['Profit Each',L((p.price||0)-(p.pp||0)),'#16a34a'],
-  ].map(([label,val,col])=>`<div style="background:#f8f8fc;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:700;color:#9090b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">${label}</div><div style="font-size:18px;font-weight:900;color:${col}">${val}</div></div>`).join('');
-  document.getElementById('m-chart').classList.add('open');
-  // Draw chart
-  const canvas=document.getElementById('chart-canvas');
-  const ctx=canvas.getContext('2d');
-  canvas.width=canvas.offsetWidth||480; canvas.height=180;
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  const max=Math.max(...data,1);
-  const pad={t:10,r:10,b:30,l:30};
-  const W=canvas.width-pad.l-pad.r, H=canvas.height-pad.t-pad.b;
-  // Grid lines
-  ctx.strokeStyle='#e4e4f0'; ctx.lineWidth=1;
-  [0,.5,1].forEach(f=>{
-  const y=pad.t+H*(1-f);
-  ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+W,y);ctx.stroke();
-  ctx.fillStyle='#9090b8';ctx.font='10px sans-serif';ctx.textAlign='right';
-  ctx.fillText(Math.round(max*f),pad.l-4,y+3);
-  });
-  // Line
-  const pts=data.map((v,i)=>({x:pad.l+i*(W/(data.length-1)),y:pad.t+H*(1-v/max)}));
-  ctx.beginPath(); ctx.strokeStyle='#ff5a30'; ctx.lineWidth=2.5; ctx.lineJoin='round';
-  pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y)); ctx.stroke();
-  // Fill
-  ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
-  pts.forEach(pt=>ctx.lineTo(pt.x,pt.y));
-  ctx.lineTo(pts[pts.length-1].x,pad.t+H); ctx.lineTo(pts[0].x,pad.t+H); ctx.closePath();
-  ctx.fillStyle='rgba(255,90,48,.08)'; ctx.fill();
-  // Dots + labels
-  pts.forEach((pt,i)=>{
-    ctx.beginPath(); ctx.arc(pt.x,pt.y,4,0,Math.PI*2); ctx.fillStyle='#ff5a30'; ctx.fill();
-    ctx.fillStyle='#9090b8'; ctx.font='10px sans-serif'; ctx.textAlign='center';
-    ctx.fillText(labels[i],pt.x,pad.t+H+18);
-    if(data[i]>0){ctx.fillStyle='#18182b'; ctx.font='bold 10px sans-serif'; ctx.fillText(data[i],pt.x,pt.y-8);}
-  });
+  // Fetch sales from backend
+  fetch(`https://galaxy-backend-production-6a12.up.railway.app/api/products/${pid}/history`,{
+    headers:{'Authorization':`Bearer ${localStorage.getItem('galaxy_token')}`}
+  }).then(r=>r.json()).then(history=>{
+    const data=days.map((_,i)=>{
+      const d=new Date(); d.setDate(d.getDate()-(6-i));
+      const dateStr=d.toISOString().split('T')[0];
+      return (history||[]).filter(h=>h.action==='sale'&&(h.created_at||'').startsWith(dateStr)).reduce((s,h)=>s+Math.abs(h.quantity_change||0),0);
+    });
+    const totalQty=Object.values(p.stock||{}).reduce((a,b)=>a+b,0);
+    const totalSales7=data.reduce((a,b)=>a+b,0);
+    // Analytics tiles
+    document.getElementById('chart-analytics').innerHTML=[
+      ['Total Stock',totalQty+' units','#18182b'],
+      ['Sales (7 days)',totalSales7+' units','#ff5a30'],
+      ['Selling Price','Rs. '+(p.price||0).toLocaleString(),'#18182b'],
+      ['Profit Each','Rs. '+((p.price||0)-(p.pp||0)).toLocaleString(),'#16a34a'],
+    ].map(([label,val,col])=>`<div style="background:#f8f8fc;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:700;color:#9090b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">${label}</div><div style="font-size:18px;font-weight:900;color:${col}">${val}</div></div>`).join('');
+    document.getElementById('m-chart').classList.add('open');
+    // Draw chart
+    const canvas=document.getElementById('chart-canvas');
+    const ctx=canvas.getContext('2d');
+    canvas.width=canvas.offsetWidth||480; canvas.height=180;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const max=Math.max(...data,1);
+    const pad={t:10,r:10,b:30,l:40};
+    const W=canvas.width-pad.l-pad.r, H=canvas.height-pad.t-pad.b;
+    // Grid lines + Y-axis labels
+    ctx.strokeStyle='#e4e4f0'; ctx.lineWidth=1;
+    [0,.5,1].forEach(f=>{
+      const y=pad.t+H*(1-f);
+      ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+W,y);ctx.stroke();
+      ctx.fillStyle='#9090b8';ctx.font='10px sans-serif';ctx.textAlign='right';
+      ctx.fillText(Math.round(max*f),pad.l-4,y+3);
+    });
+    // Line
+    const pts=data.map((v,i)=>({x:pad.l+i*(W/(data.length-1)),y:pad.t+H*(1-v/max)}));
+    ctx.beginPath(); ctx.strokeStyle='#ff5a30'; ctx.lineWidth=2.5; ctx.lineJoin='round';
+    pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y)); ctx.stroke();
+    // Fill
+    ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
+    pts.forEach(pt=>ctx.lineTo(pt.x,pt.y));
+    ctx.lineTo(pts[pts.length-1].x,pad.t+H); ctx.lineTo(pts[0].x,pad.t+H); ctx.closePath();
+    ctx.fillStyle='rgba(255,90,48,.08)'; ctx.fill();
+    // Dots + labels
+    pts.forEach((pt,i)=>{
+      ctx.beginPath();ctx.arc(pt.x,pt.y,4,0,Math.PI*2); ctx.fillStyle='#ff5a30'; ctx.fill();
+      ctx.fillStyle='#9090b8'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(labels[i],pt.x,pad.t+H+16);
+      if(data[i]>0){ctx.fillStyle='#18182b'; ctx.font='bold 10px sans-serif'; ctx.fillText(data[i],pt.x,pt.y-8);}
+    });
+  }).catch(e=>console.error('Chart fetch failed:',e));
 }
 
 // ── STOCK HISTORY PANEL ───────────────────────────────────────────────────────
