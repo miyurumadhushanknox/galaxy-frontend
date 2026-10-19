@@ -1399,6 +1399,13 @@ tbody tr:hover .row-actions{display:flex}
         <div style="font-size:10px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px">Description</div>
          <div style="font-size:14px;font-weight:700;color:#18182b" id="vp-desc">—</div>
       </div>
+      
+      <!-- Weight -->
+      <div style="background:#f8f8fc;border-radius:10px;padding:12px 14px">
+        <div style="font-size:10px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px">Product Weight</div>
+        <div style="font-size:14px;font-weight:700;color:#18182b" id="vp-weight">—</div>
+      </div>
+
       <!-- Stock values -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
         <div style="background:#f8f8fc;border-radius:10px;padding:12px 14px">
@@ -2095,6 +2102,7 @@ function viewProduct(id){
   document.getElementById("vp-pp").textContent=L(p.pp);
   document.getElementById("vp-profit").textContent=L(p.price-p.pp);
   document.getElementById("vp-stock").textContent=N(qty)+" units";
+  document.getElementById("vp-weight").textContent = p.weight ? p.weight + ' kg' : '—';
   document.getElementById("vp-stk-pp").textContent=L(p.pp*qty);
   document.getElementById("vp-stk-sp").textContent=L(p.price*qty);
   document.getElementById("vp-date").textContent="Added: "+(p.dt||"—")+" · Sold: "+N(p.sold||0)+" units";
