@@ -3087,19 +3087,25 @@ function openChart(pid){
     // Draw chart
     const canvas=document.getElementById('chart-canvas');
     const ctx=canvas.getContext('2d');
-    canvas.width=canvas.offsetWidth||480; canvas.height=180;
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const dpr=window.devicePixelRatio||1;
+    const cssW=canvas.offsetWidth||480;
+    canvas.width=cssW*dpr; canvas.height=180*dpr;
+    canvas.style.width=cssW+'px'; canvas.style.height='180px';
+    ctx.scale(dpr,dpr); ctx.clearRect(0,0,cssW,180);
     const max=Math.max(...data,1);
-    const pad={t:10,r:10,b:30,l:40};
-    const W=canvas.width-pad.l-pad.r, H=canvas.height-pad.t-pad.b;
+    const pad={t:20,r:16,b:30,l:36};
+    const W=cssW-pad.l-pad.r, H=180-pad.t-pad.b;
     // Grid lines + Y-axis labels
-    ctx.strokeStyle='#e4e4f0'; ctx.lineWidth=1;
-    [0,.5,1].forEach(f=>{
-      const y=pad.t+H*(1-f);
+    const ticks=4;
+      ctx.strokeStyle='#e4e4f0'; ctx.lineWidth=1;
+      for(let t=0;t<=ticks;t++){
+    const f=t/ticks;
+    const y=pad.t+H*(1-f);
       ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+W,y);ctx.stroke();
       ctx.fillStyle='#9090b8';ctx.font='10px sans-serif';ctx.textAlign='right';
       ctx.fillText(Math.round(max*f),pad.l-4,y+3);
-    });
+    }
+    
     // Line
     const pts=data.map((v,i)=>({x:pad.l+i*(W/(data.length-1)),y:pad.t+H*(1-v/max)}));
     ctx.beginPath(); ctx.strokeStyle='#ff5a30'; ctx.lineWidth=2.5; ctx.lineJoin='round';
