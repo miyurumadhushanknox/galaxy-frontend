@@ -1401,6 +1401,12 @@ tbody tr:hover .row-actions{display:flex}
   </div>
 </div>
 
+<!-- Description -->
+<div style="background:#f8f8fc;border-radius:10px;padding:12px 14px;margin-bottom:16px">
+  <div style="font-size:10px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px">Description</div>
+  <div style="font-size:14px;font-weight:700;color:#18182b" id="vp-desc">—</div>
+</div>
+
       <!-- Stock values -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
         <div style="background:#f8f8fc;border-radius:10px;padding:12px 14px">
@@ -2108,7 +2114,7 @@ function viewProduct(id){
   +N(wStk(p,w.id))+" units</span></div>"
     ).join("");
   document.getElementById("vp-addedby").textContent = p.creator_name || '-';
-  document.getElementById("vp-desc").textContent = p.desc || '—';
+  document.getElementById("vp-desc").textContent = p.desc || '-';
   document.getElementById("m-view").classList.add("open");
 }
 function editFromView(){
