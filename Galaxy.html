@@ -2945,13 +2945,14 @@ function confirmRefill(){
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('galaxy_token')}` },
       body: JSON.stringify({ warehouseId: wid, action: 'add', quantity: qty })
-    }).catch(e => console.error('Refill save failed:', e));
+    }).then(()=>{
     stockHistory.unshift({ type:'refill', pid:p.id, pname:p.name, pcode:p.code||'—', qty, wid, wName, pp, sp, date:today, time:String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0') });
-      document.getElementById('m-refill').classList.remove('open');
-      toast('+'+N(qty)+' units added to '+wName,'ok');
-    }
+    document.getElementById('m-refill').classList.remove('open');
+    toast('+'+N(qty)+' units added to '+wName,'ok');
     renderProducts();
-
+    if(typeof loadProducts==='function') setTimeout(loadProducts, 500);
+    }).catch(e => console.error('Refill save failed:', e));
+    }
 // ── STOCK HISTORY PANEL ───────────────────────────────────────────────────────
 function openStockHistory(){
   const panel   = document.getElementById('m-stock-history');
