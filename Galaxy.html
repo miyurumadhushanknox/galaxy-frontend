@@ -900,13 +900,12 @@ tbody tr:hover .row-actions{display:flex}
             <div class="field-note">Auto-generated from name. You can edit manually.</div>
           </div>
           <div class="field-row" style="margin-top:12px">
-          <label>Product weight (kg) <span style="color:#ff5a30">*</span></label>
-          <div style="position:relative">
-             <input type="number" id="ap-weight" min="0" step="0.01" placeholder="0.00" oninput="this.style.borderColor='#e4e4f0'">
-             <span style="position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:13px;color:#9090b8;font-weight:600">kg</span>
-          </div>
-          <div class="field-note">Per unit weight — used for delivery cost calculation</div>
-          </div>
+  <label>Product weight (kg) <span style="color:#ff5a30">*</span></label>
+  <div style="display:flex;align-items:center;gap:12px">
+    <input type="number" id="ap-weight" min="0" step="0.01" placeholder="0.00" oninput="this.style.borderColor='#e4e4f0'" style="width:160px;flex-shrink:0">
+    <span style="font-size:12px;color:#9090b8;line-height:1.4">Per unit weight — used for delivery cost calculation</span>
+  </div>
+</div>
         </div>
         <div class="card">
           <div class="card-title">
