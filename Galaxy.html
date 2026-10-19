@@ -2940,11 +2940,17 @@ function confirmRefill(){
     p.stock[wid] = (p.stock[wid]||0) + qty;
     if(!rfPpLocked) p.pp    = pp;
     if(!rfSpLocked) p.price = sp;
+    // Save to backend
+    fetch(`/api/products/${p.id}/stock`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('galaxy_token')}` },
+      body: JSON.stringify({ warehouseId: wid, action: 'add', quantity: qty })
+    }).catch(e => console.error('Refill save failed:', e));
     stockHistory.unshift({ type:'refill', pid:p.id, pname:p.name, pcode:p.code||'—', qty, wid, wName, pp, sp, date:today, time:String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0') });
-    document.getElementById('m-refill').classList.remove('open');
-    toast('+'+N(qty)+' units added to '+wName,'ok');
-  }
-  renderProducts();
+      document.getElementById('m-refill').classList.remove('open');
+      toast('+'+N(qty)+' units added to '+wName,'ok');
+    }
+    renderProducts();
 
 // ── STOCK HISTORY PANEL ───────────────────────────────────────────────────────
 function openStockHistory(){
