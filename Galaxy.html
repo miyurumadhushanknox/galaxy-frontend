@@ -1672,6 +1672,10 @@ tbody tr:hover .row-actions{display:flex}
           </div>
         </div>
       </div>
+      <!-- Price change warning note -->
+      <div id="rf-price-warn" style="display:none;margin:0 26px 16px;padding:10px 14px;background:#fff8f0;border:1.5px solid #ff5a30;border-radius:10px;font-size:12px;color:#c44400;font-weight:600">
+      ⚠ Price change detected — a duplicate product will be created with the new price.
+      </div>
     </div>
     <div style="padding:14px 26px 20px;border-top:1px solid #f0f0f6;display:flex;justify-content:flex-end;gap:10px">
       <button onclick="document.getElementById('m-refill').classList.remove('open')" style="padding:10px 20px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
@@ -1682,7 +1686,19 @@ tbody tr:hover .row-actions{display:flex}
     </div>
   </div>
 </div>
-
+<!-- DUPLICATE CONFIRM MODAL -->
+<div class="modal-bg" id="m-dup-confirm">
+  <div style="background:#fff;border-radius:18px;width:460px;max-width:94vw;box-shadow:0 8px 48px rgba(0,0,0,.15);padding:26px">
+    <div style="font-size:17px;font-weight:900;color:#18182b;margin-bottom:4px">Create duplicate product?</div>
+    <div style="font-size:12px;color:#9090b8;margin-bottom:20px">A new product will be created with the updated price.</div>
+    <div id="dup-info" style="background:#f8f8fc;border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:13px;color:#18182b;line-height:1.8"></div>
+    <div style="background:#fff8f0;border:1.5px solid #ff5a30;border-radius:10px;padding:10px 14px;font-size:12px;color:#c44400;font-weight:600;margin-bottom:20px">⚠ Original product stock unchanged. New stock goes to duplicate.</div>
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button onclick="document.getElementById('m-dup-confirm').classList.remove('open')" style="padding:10px 20px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer">Cancel</button>
+      <button onclick="confirmDuplicate()" style="padding:10px 22px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer">✓ Confirm</button>
+    </div>
+  </div>
+</div>
 <!-- STOCK HISTORY PANEL -->
 <div id="m-stock-history" style="display:none;position:fixed;top:0;right:0;width:420px;max-width:95vw;height:100vh;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.12);z-index:400;flex-direction:column;transform:translateX(100%);transition:transform .25s ease">
   <div style="padding:22px 20px 14px;border-bottom:1px solid #f0f0f6;display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0">
@@ -2884,6 +2900,7 @@ function openRefill(pid){
   // lock button states
   rfUpdateLockBtns();
   document.getElementById('m-refill').classList.add('open');
+  document.getElementById('rf-price-warn').style.display='none';
 }
 
 function rfQtyAdj(d){
@@ -2933,8 +2950,21 @@ function confirmRefill(){
   const priceChanged = ppChanged || spChanged;
 
   if(priceChanged){
-    toast('Price change detected — duplicate this product with a new code (e.g. '+( p.code||'CODE')+'-01) for the new price batch.','err');
-    return;
+  // Show warning in modal and open duplicate confirm
+  document.getElementById('rf-price-warn').style.display='block';
+  const baseCode = p.code||'CODE';
+  const siblings = products.filter(x=>(x.parentCode||x.code)===baseCode);
+  const suffix = '-'+String(siblings.length+1).padStart(2,'0');
+  document.getElementById('dup-info').innerHTML =
+    '<b>Name:</b> '+p.name+suffix+'<br>'+
+    '<b>Code:</b> '+baseCode+suffix+'<br>'+
+    '<b>Purchase Price:</b> '+L(pp)+'<br>'+
+    '<b>Selling Price:</b> '+L(sp)+'<br>'+
+    '<b>Stock to add:</b> '+qty+' units → '+wName;
+  // Store pending duplicate data
+  window._pendingDup = { p, qty, wid, wName, pp, sp, suffix, today, now };
+  document.getElementById('m-dup-confirm').classList.add('open');
+  return;
   }
     // Same price — just add stock to existing product
     p.stock[wid] = (p.stock[wid]||0) + qty;
@@ -2953,6 +2983,25 @@ function confirmRefill(){
     if(typeof loadProducts==='function') setTimeout(loadProducts, 500);
     }).catch(e => console.error('Refill save failed:', e));
     }
+
+function confirmDuplicate(){
+  const {p,qty,wid,wName,pp,sp,suffix,today,now} = window._pendingDup||{};
+  if(!p) return;
+  const baseCode = p.parentCode||p.code||'';
+  const baseName = p.parentName||p.name;
+  const varStock = {};
+  warehouses.forEach(w=>varStock[w.id]=0);
+  varStock[wid] = qty;
+  const variant = { id:nPid++, name:baseName+suffix, code:baseCode+suffix, desc:p.desc||'', price:sp, pp, stock:varStock, low:p.low||3, sold:0, dt:today, on:true, images:p.images||[], parentCode:baseCode, parentName:baseName, isVariant:true };
+  products.unshift(variant);
+  stockHistory.unshift({ type:'refill', pid:variant.id, pname:variant.name, pcode:variant.code, qty, wid, wName, pp, sp, newVariant:true, date:today, time:String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0') });
+  document.getElementById('m-dup-confirm').classList.remove('open');
+  document.getElementById('m-refill').classList.remove('open');
+  document.getElementById('rf-price-warn').style.display='none';
+  toast('New price batch created: '+variant.name+' · +'+N(qty)+' units','ok');
+  renderProducts();
+}
+
 // ── STOCK HISTORY PANEL ───────────────────────────────────────────────────────
 function openStockHistory(){
   const panel   = document.getElementById('m-stock-history');
