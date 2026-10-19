@@ -274,6 +274,7 @@ function showBlockedPage() {
             images:   p.images || [],
             cat:      p.category || '',
             desc:     p.description || '',
+            weight:       p.weight || 0,
             _raw:     p,
             created_at: p.created_at || '',
             creator_name: p.creator_name || null,
@@ -426,6 +427,7 @@ setTimeout(function() {
     const code = document.getElementById('f-code')?.value.trim();
     const low  = parseInt(document.getElementById('f-low')?.value)  || 3;
     const desc = document.getElementById('f-desc')?.value?.trim()  || '';
+    const weight = parseFloat(document.getElementById('ap-weight')?.value) || 0;
 
     const red = [];
     if (!name) red.push('Product name is required.');
@@ -489,13 +491,14 @@ setTimeout(function() {
 
     try {
       const payload = {
-        name, sku: code, description: desc,
-        purchase_price: pp, selling_price: sp,
-        low_stock_threshold: low,
-        is_active: window.productOn !== false,
-        stock_levels,
-        images: imageUrls,
-      };
+  name, sku: code, description: desc,
+  purchase_price: pp, selling_price: sp,
+  low_stock_threshold: low,
+  weight,
+  is_active: window.productOn !== false,
+  stock_levels,
+  images: imageUrls,
+};
 
       const res = await API.ProductsAPI.create(payload);
       API.showToast('Product added!', 'success');
@@ -506,14 +509,14 @@ setTimeout(function() {
       // Add to local array immediately for instant UI update
       const newProd = {
         id:    savedProduct.id,
-        name, code, price: sp, pp, stock: {}, low, sold: 0,
+        name, code, price: sp, pp, stock: {}, weight, low, sold: 0,
         dt: formatDateDMY(new Date().toISOString()), on: window.productOn !== false,
       };
       stock_levels.forEach(sl => { newProd.stock[sl.warehouse_id] = sl.quantity; });
       (window.products || []).unshift(newProd);
 
       setTimeout(() => {
-        ['f-name','f-code','f-desc','f-purchase','f-selling'].forEach(id => {
+        ['f-name','f-code','f-desc','f-purchase','f-selling','ap-weight'].forEach(id => {
           const el = document.getElementById(id); if (el) el.value = '';
         });
         const fLow = document.getElementById('f-low'); if (fLow) fLow.value = '5';
