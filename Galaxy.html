@@ -1672,6 +1672,19 @@ tbody tr:hover .row-actions{display:flex}
           </div>
         </div>
       </div>
+
+      <!-- Product weight -->
+      <div style="margin-top:18px">
+        <label style="font-size:13px;font-weight:700;color:#18182b">Product weight (kg) <span style="color:#ff5a30">*</span></label>
+          <div style="margin-top:6px;position:relative">
+            <input type="number" id="ap-weight" min="0" step="0.01" placeholder="0.00"
+              style="width:100%;padding:12px 16px;border:1.5px solid #e4e4f0;border-radius:12px;font-size:14px;color:#18182b;background:#fff;box-sizing:border-box;outline:none"
+              oninput="this.style.borderColor='#e4e4f0'">
+            <span style="position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:13px;color:#9090b8;font-weight:600">kg</span>
+          </div>
+        <div style="font-size:11px;color:#9090b8;margin-top:5px">Per unit weight — used for delivery cost calculation</div>
+      </div>
+
       <!-- Price change warning note -->
       <div id="rf-price-warn" style="display:none;margin:0 26px 16px;padding:10px 14px;background:#fff8f0;border:1.5px solid #ff5a30;border-radius:10px;font-size:12px;color:#c44400;font-weight:600">
       ⚠ Price change detected — a duplicate product will be created with the new price.
@@ -2046,11 +2059,13 @@ function submitProduct(){
   const name=document.getElementById("f-name").value.trim();
   const pp=parseFloat(document.getElementById("f-purchase").value)||0;
   const sp=parseFloat(document.getElementById("f-selling").value)||0;
+  const weight=parseFloat(document.getElementById('ap-weight').value)||0;
   let qty=0;warehouses.forEach(w=>{qty+=parseInt(document.getElementById("wh-"+w.id)?.value)||0;});
   const red=[];
   if(!name)red.push("Product name is required.");
   if(!pp)red.push("Purchase price is required \u2014 please add the purchasing price.");
   if(!sp)red.push("Selling price is required.");
+  if(!weight)red.push("Product weight is required.");
   if(qty===0)red.push("Total quantity is 0 \u2014 please add stock to at least one warehouse.");
   showNote("red",red);
   if(red.length)return;
@@ -2058,8 +2073,9 @@ function submitProduct(){
   const desc=document.getElementById("f-desc").value.trim();
   const stock={};warehouses.forEach(w=>{stock[w.id]=parseInt(document.getElementById("wh-"+w.id)?.value)||0;});
   const d=new Date();const dt=String(d.getDate()).padStart(2,"0")+"."+String(d.getMonth()+1).padStart(2,"0")+"."+d.getFullYear();
-  products.unshift({id:nPid++,name,code,price:sp,pp,stock,low:parseInt(document.getElementById("f-low").value)||3,sold:0,dt,on:productOn,desc});
+  products.unshift({id:nPid++,name,code,price:sp,pp,stock,weight,low:parseInt(document.getElementById("f-low").value)||3,sold:0,dt:today,on:productOn,desc});
   toast("Product added successfully!","ok");
+  ["f-name","f-code","f-desc","f-purchase","f-selling","ap-weight"].forEach(id=>document.getElementById(id).value="");
   setTimeout(()=>{
     ["f-name","f-code","f-desc","f-purchase","f-selling"].forEach(id=>document.getElementById(id).value="");
     document.getElementById("f-low").value="5";
