@@ -3085,7 +3085,7 @@ function openChart(pid){
       const canvas=document.getElementById('chart-canvas');
       const ctx=canvas.getContext('2d');
       const dpr=window.devicePixelRatio||1;
-      const cssW=canvas.offsetWidth||480;
+      const cssW=canvas.parentElement.offsetWidth-32||480;
       canvas.width=cssW*dpr; canvas.height=180*dpr;
       canvas.style.width=cssW+'px'; canvas.style.height='180px';
       ctx.scale(dpr,dpr); ctx.clearRect(0,0,cssW,180);
