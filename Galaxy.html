@@ -3057,7 +3057,6 @@ function openChart(pid){
   const p = products.find(x=>x.id===pid); if(!p) return;
   document.getElementById('chart-title').textContent = p.name;
   document.getElementById('chart-code').textContent = 'SKU: '+(p.code||'—');
-  // Build last 7 days labels
   const days=[], labels=[];
   for(let i=6;i>=0;i--){
     const d=new Date(); d.setDate(d.getDate()-i);
@@ -3065,7 +3064,6 @@ function openChart(pid){
     days.push(key);
     labels.push(String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0'));
   }
-  // Fetch sales from backend
   fetch(`https://galaxy-backend-production-6a12.up.railway.app/api/products/${pid}/history`,{
     headers:{'Authorization':`Bearer ${localStorage.getItem('galaxy_token')}`}
   }).then(r=>r.json()).then(history=>{
@@ -3076,7 +3074,6 @@ function openChart(pid){
     });
     const totalQty=Object.values(p.stock||{}).reduce((a,b)=>a+b,0);
     const totalSales7=data.reduce((a,b)=>a+b,0);
-    // Analytics tiles
     document.getElementById('chart-analytics').innerHTML=[
       ['Total Stock',totalQty+' units','#18182b'],
       ['Sales (7 days)',totalSales7+' units','#ff5a30'],
@@ -3084,44 +3081,40 @@ function openChart(pid){
       ['Profit Each','Rs. '+((p.price||0)-(p.pp||0)).toLocaleString(),'#16a34a'],
     ].map(([label,val,col])=>`<div style="background:#f8f8fc;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:700;color:#9090b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">${label}</div><div style="font-size:18px;font-weight:900;color:${col}">${val}</div></div>`).join('');
     document.getElementById('m-chart').classList.add('open');
-    // Draw chart
-    const canvas=document.getElementById('chart-canvas');
-    const ctx=canvas.getContext('2d');
-    const dpr=window.devicePixelRatio||1;
-    const cssW=canvas.offsetWidth||480;
-    canvas.width=cssW*dpr; canvas.height=180*dpr;
-    canvas.style.width=cssW+'px'; canvas.style.height='180px';
-    ctx.scale(dpr,dpr); ctx.clearRect(0,0,cssW,180);
-    const max=Math.max(...data,1);
-    const pad={t:20,r:16,b:30,l:36};
-    const W=cssW-pad.l-pad.r, H=180-pad.t-pad.b;
-    // Grid lines + Y-axis labels
-    const ticks=4;
+    setTimeout(()=>{
+      const canvas=document.getElementById('chart-canvas');
+      const ctx=canvas.getContext('2d');
+      const dpr=window.devicePixelRatio||1;
+      const cssW=canvas.offsetWidth||480;
+      canvas.width=cssW*dpr; canvas.height=180*dpr;
+      canvas.style.width=cssW+'px'; canvas.style.height='180px';
+      ctx.scale(dpr,dpr); ctx.clearRect(0,0,cssW,180);
+      const max=Math.max(...data,1);
+      const pad={t:20,r:16,b:30,l:36};
+      const W=cssW-pad.l-pad.r, H=180-pad.t-pad.b;
+      const ticks=4;
       ctx.strokeStyle='#e4e4f0'; ctx.lineWidth=1;
       for(let t=0;t<=ticks;t++){
-    const f=t/ticks;
-    const y=pad.t+H*(1-f);
-      ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+W,y);ctx.stroke();
-      ctx.fillStyle='#9090b8';ctx.font='10px sans-serif';ctx.textAlign='right';
-      ctx.fillText(Math.round(max*f),pad.l-4,y+3);
-    }
-    
-    // Line
-    const pts=data.map((v,i)=>({x:pad.l+i*(W/(data.length-1)),y:pad.t+H*(1-v/max)}));
-    ctx.beginPath(); ctx.strokeStyle='#ff5a30'; ctx.lineWidth=2.5; ctx.lineJoin='round';
-    pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y)); ctx.stroke();
-    // Fill
-    ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
-    pts.forEach(pt=>ctx.lineTo(pt.x,pt.y));
-    ctx.lineTo(pts[pts.length-1].x,pad.t+H); ctx.lineTo(pts[0].x,pad.t+H); ctx.closePath();
-    ctx.fillStyle='rgba(255,90,48,.08)'; ctx.fill();
-    // Dots + labels
-    pts.forEach((pt,i)=>{
-      ctx.beginPath();ctx.arc(pt.x,pt.y,4,0,Math.PI*2); ctx.fillStyle='#ff5a30'; ctx.fill();
-      ctx.fillStyle='#9090b8'; ctx.font='10px sans-serif'; ctx.textAlign='center';
-      ctx.fillText(labels[i],pt.x,pad.t+H+16);
-      if(data[i]>0){ctx.fillStyle='#18182b'; ctx.font='bold 10px sans-serif'; ctx.fillText(data[i],pt.x,pt.y-8);}
-    });
+        const f=t/ticks;
+        const y=pad.t+H*(1-f);
+        ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+W,y);ctx.stroke();
+        ctx.fillStyle='#9090b8';ctx.font='10px sans-serif';ctx.textAlign='right';
+        const val=max*f; ctx.fillText(max<=4?+(val.toFixed(1))*1:Math.round(val),pad.l-4,y+3);
+      }
+      const pts=data.map((v,i)=>({x:pad.l+i*(W/(data.length-1)),y:pad.t+H*(1-v/max)}));
+      ctx.beginPath(); ctx.strokeStyle='#ff5a30'; ctx.lineWidth=2.5; ctx.lineJoin='round';
+      pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
+      pts.forEach(pt=>ctx.lineTo(pt.x,pt.y));
+      ctx.lineTo(pts[pts.length-1].x,pad.t+H); ctx.lineTo(pts[0].x,pad.t+H); ctx.closePath();
+      ctx.fillStyle='rgba(255,90,48,.08)'; ctx.fill();
+      pts.forEach((pt,i)=>{
+        ctx.beginPath();ctx.arc(pt.x,pt.y,4,0,Math.PI*2); ctx.fillStyle='#ff5a30'; ctx.fill();
+        ctx.fillStyle='#9090b8'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+        ctx.fillText(labels[i],pt.x,pad.t+H+16);
+        if(data[i]>0){ctx.fillStyle='#18182b'; ctx.font='bold 10px sans-serif'; ctx.fillText(data[i],pt.x,pt.y-8);}
+      });
+    },50);
   }).catch(e=>console.error('Chart fetch failed:',e));
 }
 
