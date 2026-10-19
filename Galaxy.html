@@ -3092,14 +3092,14 @@ function openChart(pid){
       const max=Math.max(...data,1);
       const pad={t:20,r:16,b:30,l:36};
       const W=cssW-pad.l-pad.r, H=180-pad.t-pad.b;
-      const ticks=4;
+      const ticks=Math.min(4,max);
       ctx.strokeStyle='#e4e4f0'; ctx.lineWidth=1;
       for(let t=0;t<=ticks;t++){
         const f=t/ticks;
         const y=pad.t+H*(1-f);
         ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+W,y);ctx.stroke();
         ctx.fillStyle='#9090b8';ctx.font='10px sans-serif';ctx.textAlign='right';
-        const val=max*f; ctx.fillText(max<=4?+(val.toFixed(1))*1:Math.round(val),pad.l-4,y+3);
+        ctx.fillText(Math.round(max*f),pad.l-4,y+3);
       }
       const pts=data.map((v,i)=>({x:pad.l+i*(W/(data.length-1)),y:pad.t+H*(1-v/max)}));
       ctx.beginPath(); ctx.strokeStyle='#ff5a30'; ctx.lineWidth=2.5; ctx.lineJoin='round';
