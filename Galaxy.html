@@ -2953,8 +2953,12 @@ function confirmRefill(){
   // Show warning in modal and open duplicate confirm
   document.getElementById('rf-price-warn').style.display='block';
   const baseCode = p.parentCode||p.code||'CODE';
-  const siblings = products.filter(x=>x.parentCode===baseCode);
-  const suffix = '-'+String(siblings.length+1).padStart(2,'0');
+  const siblings = products.filter(x=>x.parentCode===baseCode||(x.code&&x.code.startsWith(baseCode+'-')));
+  const maxNum = siblings.reduce((max,x)=>{
+  const m = (x.code||'').match(/-(\d+)$/);
+  return m ? Math.max(max, parseInt(m[1])) : max;
+  }, 0);
+  const suffix = '-'+String(maxNum+1).padStart(2,'0');
   document.getElementById('dup-info').innerHTML =
     '<b>Name:</b> '+p.name+suffix+'<br>'+
     '<b>Code:</b> '+baseCode+suffix+'<br>'+
