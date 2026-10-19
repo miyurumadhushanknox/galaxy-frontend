@@ -1686,6 +1686,8 @@ tbody tr:hover .row-actions{display:flex}
     </div>
   </div>
 </div>
+
+
 <!-- DUPLICATE CONFIRM MODAL -->
 <div class="modal-bg" id="m-dup-confirm">
   <div style="background:#fff;border-radius:18px;width:460px;max-width:94vw;box-shadow:0 8px 48px rgba(0,0,0,.15);padding:26px">
@@ -1699,6 +1701,27 @@ tbody tr:hover .row-actions{display:flex}
     </div>
   </div>
 </div>
+
+<!-- CHART MODAL -->
+<div class="modal-bg" id="m-chart">
+  <div style="background:#fff;border-radius:18px;width:560px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 48px rgba(0,0,0,.15);padding:28px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <div id="chart-title" style="font-size:17px;font-weight:900;color:#18182b"></div>
+      <button onclick="document.getElementById('m-chart').classList.remove('open')" style="background:none;border:none;font-size:20px;color:#9090b8;cursor:pointer">✕</button>
+    </div>
+    <div id="chart-code" style="font-size:12px;color:#9090b8;margin-bottom:20px"></div>
+    <!-- Line chart -->
+    <div style="background:#f8f8fc;border-radius:14px;padding:16px;margin-bottom:16px">
+      <div style="font-size:12px;font-weight:700;color:#ff5a30;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px">Sales — Last 7 Days</div>
+      <canvas id="chart-canvas" height="180"></canvas>
+    </div>
+    <!-- Analytics -->
+    <div id="chart-analytics" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px"></div>
+    <button onclick="document.getElementById('m-chart').classList.remove('open')" style="width:100%;padding:12px;border:1.5px solid #e4e4f0;border-radius:12px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer">Close</button>
+  </div>
+</div>
+
+
 <!-- STOCK HISTORY PANEL -->
 <div id="m-stock-history" style="display:none;position:fixed;top:0;right:0;width:420px;max-width:95vw;height:100vh;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.12);z-index:400;flex-direction:column;transform:translateX(100%);transition:transform .25s ease">
   <div style="padding:22px 20px 14px;border-bottom:1px solid #f0f0f6;display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0">
@@ -1942,7 +1965,7 @@ function renderProducts(){
         "</span><div class=\"row-actions\">"+
       
       (currentUser.role!=='sales'?'<button class="ra-btn" onclick="viewProduct(\''+p.id+'\')"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6s2-4 5-4 5 4 5 4-2 4-5 4-5-4-5-4z" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg> View</button>':'')+
-      (currentUser.role!=='sales'?'<button class="ra-btn" onclick="toast(\'Chart \u2014 coming soon!\')"><svg viewBox="0 0 12 12" fill="none"><path d="M1 9.5V6l3-3 3 2 3-4v9H1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Chart</button>':'')+
+      (currentUser.role!=='sales'?'<button class="ra-btn" onclick="openChart(\''+p.id+'\')"><svg viewBox="0 0 12 12" fill="none"><path d="M1 9.5V6l3-3 3 2 3-4v9H1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Chart</button>':'')+
       (currentUser.role!=='accountant'&&currentUser.role!=='sales'?'<button class="ra-btn" onclick="openRefill(\''+p.id+'\')"><svg viewBox="0 0 12 12" fill="none"><path d="M10 6a4 4 0 1 1-1.17-2.83" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M10 2v2.5H7.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Refill</button>':'')+
             "<td style=\"color:#aaa;font-size:12px\">"+( p.code||"\u2014")+"</td>"+
             "<td style=\""+qtyStyle+"\">"+N(qty)+"</td>"+
@@ -3025,6 +3048,59 @@ function confirmDuplicate(){
   renderProducts();
 
   
+}
+
+function openChart(pid){
+  const p = products.find(x=>x.id===pid); if(!p) return;
+  document.getElementById('chart-title').textContent = p.name;
+  document.getElementById('chart-code').textContent = 'SKU: '+(p.code||'—');
+  // Build last 7 days labels
+  const days=[], labels=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date(); d.setDate(d.getDate()-i);
+    const key=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear();
+    days.push(key);
+    labels.push(String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0'));
+  }
+  // Count sales per day from stockHistory
+  const data=days.map(day=>stockHistory.filter(h=>h.type==='sale'&&h.pid===pid&&h.date===day).reduce((s,h)=>s+(h.qty||0),0));
+  const totalQty=Object.values(p.stock||{}).reduce((a,b)=>a+b,0);
+  const totalSales7=data.reduce((a,b)=>a+b,0);
+  // Analytics tiles
+  document.getElementById('chart-analytics').innerHTML=[
+    ['Total Stock',N(totalQty)+' units','#18182b'],
+    ['Sales (7 days)',N(totalSales7)+' units','#ff5a30'],
+    ['Selling Price',L(p.price),'#18182b'],
+    ['Profit Each',L((p.price||0)-(p.pp||0)),'#16a34a'],
+  ].map(([label,val,col])=>`<div style="background:#f8f8fc;border-radius:12px;padding:14px 16px"><div style="font-size:11px;font-weight:700;color:#9090b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">${label}</div><div style="font-size:18px;font-weight:900;color:${col}">${val}</div></div>`).join('');
+  document.getElementById('m-chart').classList.add('open');
+  // Draw chart
+  const canvas=document.getElementById('chart-canvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth||480; canvas.height=180;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const max=Math.max(...data,1);
+  const pad={t:10,r:10,b:30,l:30};
+  const W=canvas.width-pad.l-pad.r, H=canvas.height-pad.t-pad.b;
+  // Grid lines
+  ctx.strokeStyle='#e4e4f0'; ctx.lineWidth=1;
+  [0,.5,1].forEach(f=>{const y=pad.t+H*(1-f);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+W,y);ctx.stroke();});
+  // Line
+  const pts=data.map((v,i)=>({x:pad.l+i*(W/(data.length-1)),y:pad.t+H*(1-v/max)}));
+  ctx.beginPath(); ctx.strokeStyle='#ff5a30'; ctx.lineWidth=2.5; ctx.lineJoin='round';
+  pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y)); ctx.stroke();
+  // Fill
+  ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
+  pts.forEach(pt=>ctx.lineTo(pt.x,pt.y));
+  ctx.lineTo(pts[pts.length-1].x,pad.t+H); ctx.lineTo(pts[0].x,pad.t+H); ctx.closePath();
+  ctx.fillStyle='rgba(255,90,48,.08)'; ctx.fill();
+  // Dots + labels
+  pts.forEach((pt,i)=>{
+    ctx.beginPath(); ctx.arc(pt.x,pt.y,4,0,Math.PI*2); ctx.fillStyle='#ff5a30'; ctx.fill();
+    ctx.fillStyle='#9090b8'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(labels[i],pt.x,pad.t+H+18);
+    if(data[i]>0){ctx.fillStyle='#18182b'; ctx.font='bold 10px sans-serif'; ctx.fillText(data[i],pt.x,pt.y-8);}
+  });
 }
 
 // ── STOCK HISTORY PANEL ───────────────────────────────────────────────────────
