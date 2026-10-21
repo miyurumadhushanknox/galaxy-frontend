@@ -2223,7 +2223,7 @@ function confirmEditProduct(){
   p.images = [...editImages];
   document.getElementById('m-edit').classList.remove('open');
   renderProducts();
-  fetch(`http://187.127.204.222:3000/api/products/${p.id}`, {
+  fetch(`https://api.galaxylive.lk/api/products/${p.id}`, {
     method: 'PUT',
     headers: {'Content-Type':'application/json','Authorization':`Bearer ${localStorage.getItem('galaxy_token')}`},
     body: JSON.stringify({ name:p.name, sellingPrice:p.price, purchasePrice:p.pp, description:p.desc, sku:p.code, weight:p.weight, images:p.images })
@@ -3173,7 +3173,7 @@ function confirmRefill(){
     if(!rfPpLocked) p.pp    = pp;
     if(!rfSpLocked) p.price = sp;
     // Save to backend
-    fetch(`http://187.127.204.222:3000/api/products/${p.id}/stock`, {
+    fetch(`https://api.galaxylive.lk/api/products/${p.id}/stock`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('galaxy_token')}` },
       body: JSON.stringify({ warehouseId: wid, action: 'add', quantity: qty })
@@ -3198,7 +3198,7 @@ function confirmDuplicate(){
   products.unshift(variant);
 
   // Save new variant product to backend
-  fetch('http://187.127.204.222:3000/api/products', {
+  fetch('https://api.galaxylive.lk/api/products', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('galaxy_token')}` },
   body: JSON.stringify({ name: variant.name, sku: variant.code, description: variant.desc, selling_price: variant.price, purchase_price: variant.pp, images: variant.images, stock_levels: Object.entries(variant.stock).map(([warehouseId, quantity]) => ({ warehouseId, quantity })), low_stock_threshold: variant.low })
@@ -3207,7 +3207,7 @@ function confirmDuplicate(){
   if(saved.id){
     variant.id = saved.id;
     // Now add stock to the new product
-    fetch(`http://187.127.204.222:3000/api/products/${saved.id}/stock`, {
+    fetch(`https://api.galaxylive.lk/api/products/${saved.id}/stock`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('galaxy_token')}` },
       body: JSON.stringify({ warehouseId: wid, action: 'add', quantity: qty })
@@ -3236,7 +3236,7 @@ function openChart(pid){
     days.push(key);
     labels.push(String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0'));
   }
-  fetch(`http://187.127.204.222:3000/api/products/${pid}/history`,{
+  fetch(`https://api.galaxylive.lk/api/products/${pid}/history`,{
     headers:{'Authorization':`Bearer ${localStorage.getItem('galaxy_token')}`}
   }).then(r=>r.json()).then(history=>{
     const data=days.map((_,i)=>{
@@ -4245,7 +4245,7 @@ applyStatusChange = function(){
     _origApplyStatusChange.apply(this, arguments);
     if(id&&s){
       const token=localStorage.getItem('galaxy_token');
-      fetch(`http://187.127.204.222:3000/api/orders/${id}/status`,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({status:s})}).catch(e=>console.error('Status save failed',e));
+      fetch(`https://api.galaxylive.lk/api/orders/${id}/status`,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({status:s})}).catch(e=>console.error('Status save failed',e));
       const st=ORDER_STATUSES.find(x=>x.key===s);
       if(s==='cancelled') addAlert('cancelled','Order Cancelled','Order '+id+' was cancelled');
       else if(s==='returned') addAlert('returned','Order Returned','Order '+id+' has been returned');
@@ -4310,7 +4310,7 @@ function renderBillingPage(){
   try {
     const token = localStorage.getItem('galaxy_token');
     if(!token) return;
-    const r = await fetch('http://187.127.204.222:3000/api/auth/me',{headers:{'Authorization':'Bearer '+token}});
+    const r = await fetch('https://api.galaxylive.lk/api/auth/me',{headers:{'Authorization':'Bearer '+token}});
     const d = await r.json();
     const biz = d.business || d;
     const outstanding = biz.knox_outstanding||0;
@@ -4498,7 +4498,7 @@ function openOutstandingModal() {
   const token = localStorage.getItem('galaxy_token');
   if(!token){ body.innerHTML = '<div style="color:red;padding:20px">Not logged in</div>'; return; }
 
-  fetch('http://187.127.204.222:3000/api/auth/me',{headers:{'Authorization':'Bearer '+token}})
+  fetch('https://api.galaxylive.lk/api/auth/me',{headers:{'Authorization':'Bearer '+token}})
   .then(r=>r.json()).then(d=>{
     const biz = d.business || d;
     const setupPaid = biz.knox_setup_paid||[false,false,false,false];
@@ -6077,7 +6077,7 @@ function saveUser(){
   const minCap    = parseInt(document.getElementById('up-comm-mincap')?.value)||0;
   const commission = {on:commOn, method:commMethod, percent:commPct, perUnit:commUnit, minCapOn, minCap};
   const token = localStorage.getItem('galaxy_token');
-  const base = 'http://187.127.204.222:3000/api';
+  const base = 'https://api.galaxylive.lk/api';
   if(id){
     fetch(`${base}/users/${id}`,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({firstName:first,lastName:last,email,username:uname,role,status,commission,newPassword:pass})})
       .then(r=>r.json()).then(data=>{
