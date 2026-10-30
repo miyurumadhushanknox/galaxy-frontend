@@ -30,7 +30,7 @@ function showBlockedPage() {
   const token = localStorage.getItem('galaxy_token');
   if (!token) return;
   try {
-    const meRes = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+    const meRes = await fetch('https://api.galaxylive.lk/api/auth/me', {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     if (meRes.status === 403) { showBlockedPage(); }
@@ -158,7 +158,7 @@ function showBlockedPage() {
       // Galaxy's built-in session + UI flow
       sessionStorage.setItem(window.SESSION_KEY || 'galaxy_user', JSON.stringify(user));
       // Fetch plan after login
-      fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+      fetch('https://api.galaxylive.lk/api/auth/me', {
       headers: { 'Authorization': 'Bearer ' + GalaxyAPI.Auth.getToken() }
       }).then(function(r){ return r.json(); }).then(function(d){
       if (d && d.business && d.business.plan) {
@@ -219,7 +219,7 @@ function showBlockedPage() {
       try {
   const token = GalaxyAPI.Auth.getToken();
   if (token) {
-    const meRes = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me', {
+    const meRes = await fetch('https://api.galaxylive.lk/api/auth/me', {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const meData = await meRes.json();
@@ -1031,7 +1031,7 @@ setTimeout(function() {
 
   async function loadKnoxAnnouncements() {
     try {
-      const res = await fetch('https://galaxy-backend-production-6a12.up.railway.app/api/knox-admin/announcements', {
+      const res = await fetch('https://api.galaxylive.lk/api/knox-admin/announcements', {
         headers: { 'x-knox-admin-key': 'KNOX_Admin_Galaxy_2026_SecureKey' }
       });
       if (!res.ok) return;
@@ -1100,7 +1100,7 @@ setTimeout(function() {
 
     window.addOrderItem = function(pid) {
       const token = localStorage.getItem('galaxy_token');
-      const baseUrl = 'https://galaxy-backend-production-6a12.up.railway.app';
+      const baseUrl = 'https://api.galaxylive.lk';
       if (_origAdd) _origAdd(pid);
       fetch(baseUrl + '/api/warehouses/stock/' + pid, {
         headers: { 'Authorization': 'Bearer ' + token }
@@ -1401,7 +1401,7 @@ setTimeout(function() {
   setTimeout(_installSearchItems, 1500);
 // Keep backend alive
 setInterval(function() {
-  fetch('https://galaxy-backend-production-6a12.up.railway.app/api/health').catch(function(){});
+  fetch('https://api.galaxylive.lk/api/health').catch(function(){});
 }, 5 * 60 * 1000);
 // Lock report tabs for Basic plan
 (function() {
@@ -1537,7 +1537,7 @@ setInterval(hideTransferBtn, 500);
     _renewalFetched = true;
     var token = localStorage.getItem('galaxy_token') || sessionStorage.getItem('galaxy_token');
     if (!token) return;
-    fetch('https://galaxy-backend-production-6a12.up.railway.app/api/auth/me?t=' + Date.now(), {
+    fetch('https://api.galaxylive.lk/api/auth/me?t=' + Date.now(), {
       headers: { 'Authorization': 'Bearer ' + token }
     }).then(function(res){ return res.json(); }).then(function(data) {
       var start = data.business && (data.business.knox_start_date || data.business.knoxStartDate || data.business.trial_starts_at || data.business.trialStartsAt);
