@@ -3,7 +3,7 @@
  * Connects the Galaxy frontend to the real backend
  */
 
-const API_BASE = 'https://galaxy-backend-production-6a12.up.railway.app/api';
+const API_BASE = 'https://api.galaxylive.lk/api';
 
 // ── Token management ── (uses sessionStorage for file:// compatibility)
 const _store = (() => {
