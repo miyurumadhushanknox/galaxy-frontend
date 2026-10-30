@@ -7486,13 +7486,12 @@ setInterval(()=>{const el=document.getElementById("clock");if(!el)return;const d
 function showForgotPassword() {
   var modal = document.getElementById('forgotModal');
   document.body.appendChild(modal);
-  var loginScreen = document.getElementById('login-screen');
-  loginScreen.style.display = 'none';
+  document.getElementById('login-box').style.display = 'none';
   modal.style.display = 'flex';
 }
 function hideForgotPassword() {
   document.getElementById('forgotModal').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-box').style.display = 'block';
   document.getElementById('resetMsg').textContent = '';
   document.getElementById('resetEmail').value = '';
 }
