@@ -7484,7 +7484,9 @@ setInterval(()=>{const el=document.getElementById("clock");if(!el)return;const d
 
 <script>
 function showForgotPassword() {
-  document.getElementById('forgotModal').style.display = 'flex';
+  var modal = document.getElementById('forgotModal');
+  document.body.appendChild(modal);
+  modal.style.display = 'flex';
 }
 function hideForgotPassword() {
   document.getElementById('forgotModal').style.display = 'none';
