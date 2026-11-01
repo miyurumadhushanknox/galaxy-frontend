@@ -2159,7 +2159,7 @@ function submitProduct(){
   const desc=document.getElementById("f-desc").value.trim();
   const stock={};warehouses.forEach(w=>{stock[w.id]=parseInt(document.getElementById("wh-"+w.id)?.value)||0;});
   const d=new Date();const dt=String(d.getDate()).padStart(2,"0")+"."+String(d.getMonth()+1).padStart(2,"0")+"."+d.getFullYear();
-  products.unshift({id:nPid++,name,code,price:sp,pp,stock,weight,low:parseInt(document.getElementById("f-low").value)||3,sold:0,dt:today,on:productOn,desc});
+  products.unshift({id:nPid++,name,code,price:sp,pp,stock,weight,low:parseInt(document.getElementById("f-low").value)||3,sold:0,dt:today,on:productOn,desc,created_at:new Date().toISOString()});
   toast("Product added successfully!","ok");
   ["f-name","f-code","f-desc","f-purchase","f-selling","ap-weight"].forEach(id=>document.getElementById(id).value="");
   setTimeout(()=>{
