@@ -178,7 +178,7 @@ function showBlockedPage() {
      if (typeof window.initApp === 'function') window.initApp();
      }
     // Load real data after login
-      setTimeout(function() { loadRealData(); }, 300);
+      loadRealData();
       } catch (err) {
     if (err.isBlocked) {
       showBlockedPage();
