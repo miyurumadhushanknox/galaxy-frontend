@@ -2270,8 +2270,8 @@ function handleEditImgs(input){
   const slots=MAX_EDIT_IMG-editImages.length;
   const files=allFiles.filter(f=>f.size<=5*1024*1024).slice(0,slots);
   if(allFiles.length>slots)alert('Max '+MAX_EDIT_IMG+' images.');
-  const SUPABASE_URL='https://aiqckirrpuokgbvfndte.supabase.co';
-  const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzODYxNzcsImV4cCI6MjEwNzk2MjE3N30.s_rNNADnMCFMfe0cDdWqt6kj4kVXqi0je3OTAcCarbon';
+  const SUPABASE_URL = 'https://aiqckirrpuokgbvfndte.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTQ1MTQsImV4cCI6MjEwNjA5MDUxNH0.zwMSqYmKZ6bpld7wsHr9zFH8febD0aPVgkO8mDXD-PA';
   files.forEach(async file=>{
     try{
       const ext=file.type.split('/')[1]||'jpg';
