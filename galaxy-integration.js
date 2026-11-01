@@ -168,15 +168,17 @@ function showBlockedPage() {
       }).catch(function(){});
       // Call showApp — try window.showApp first, fall back to direct call
       if (typeof window.showApp === 'function') {
-        window.showApp(user);
+      window.showApp(user);
       } else {
-        // showApp not yet exposed; trigger it manually
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('app-shell').style.display = 'flex';
-        if (typeof window.applyUser === 'function') window.applyUser(user);
-        if (typeof window.applyBizName === 'function') window.applyBizName();
-        if (typeof window.initApp === 'function') window.initApp();
-      }
+     // showApp not yet exposed; trigger it manually
+     document.getElementById('login-screen').style.display = 'none';
+     document.getElementById('app-shell').style.display = 'flex';
+     if (typeof window.applyUser === 'function') window.applyUser(user);
+     if (typeof window.applyBizName === 'function') window.applyBizName();
+     if (typeof window.initApp === 'function') window.initApp();
+     }
+    // Load real data after login
+      setTimeout(function() { loadRealData(); }, 300);
       } catch (err) {
     if (err.isBlocked) {
       showBlockedPage();
