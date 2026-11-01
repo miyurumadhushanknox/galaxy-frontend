@@ -2128,13 +2128,15 @@ function renderImages(){
   if(real<MAX_IMG){const btn=document.createElement("div");btn.className="img-add";btn.onclick=()=>document.getElementById("img-input").click();btn.innerHTML="<svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M12 4v16M4 12h16\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\"/></svg>";list.appendChild(btn);}
   count.textContent=real+" / "+MAX_IMG+" images";count.style.color=real>=MAX_IMG?"#e8220e":"#aaa";
 }
+function compressImage(file,maxW,quality,cb){const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const s=Math.min(1,maxW/img.width);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',quality));};img.src=e.target.result;};r.readAsDataURL(file);}
+
 function handleImgs(input){
   const allFiles=Array.from(input.files);
   allFiles.filter(f=>f.size>5*1024*1024).forEach(f=>toast("Image '"+f.name+"' is too large. Max 5MB.","err"));
   const slots=MAX_IMG-images.filter(s=>s!==PLACEHOLDER).length;
   const files=allFiles.filter(f=>f.size<=5*1024*1024).slice(0,slots);
   if(allFiles.length>slots)toast("Max "+MAX_IMG+" images.","err");
-  files.forEach(file=>{const r=new FileReader();r.onload=e=>{if(images.length===1&&images[0]===PLACEHOLDER)images=[];images.push(e.target.result);renderImages();};r.readAsDataURL(file);});
+  files.forEach(file=>{compressImage(file,800,0.7,url=>{if(images.length===1&&images[0]===PLACEHOLDER)images=[];images.push(url);renderImages();});});
   window.selectedImages = files;
   input.value="";
 }
@@ -2268,7 +2270,7 @@ function handleEditImgs(input){
   const slots=MAX_EDIT_IMG-editImages.length;
   const files=allFiles.filter(f=>f.size<=5*1024*1024).slice(0,slots);
   if(allFiles.length>slots)alert('Max '+MAX_EDIT_IMG+' images.');
-  files.forEach(file=>{const r=new FileReader();r.onload=e=>{editImages.push(e.target.result);renderEditImages();};r.readAsDataURL(file);});
+  files.forEach(file=>{compressImage(file,800,0.7,url=>{editImages.push(url);renderEditImages();});});
   input.value='';
 }
 
