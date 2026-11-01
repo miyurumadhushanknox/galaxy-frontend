@@ -2226,18 +2226,26 @@ function confirmEditProduct(){
   p.pp = parseFloat(document.getElementById('ep-purchase').value) || 0;
   p.price = parseFloat(document.getElementById('ep-selling').value) || 0;
   p.images = [...editImages];
-  document.getElementById('m-edit').classList.remove('open');
-  renderProducts();
   fetch(`https://api.galaxylive.lk/api/products/${p.id}`, {
     method: 'PUT',
     headers: {'Content-Type':'application/json','Authorization':`Bearer ${localStorage.getItem('galaxy_token')}`},
     body: JSON.stringify({ name:p.name, sellingPrice:p.price, purchasePrice:p.pp, description:p.desc, sku:p.code, weight:p.weight, images:p.images })
-  }).then(r=>r.json()).then(()=>{
-    toast('Product updated successfully!','ok');
-  }).catch(e=>{
-    console.error('Update failed:',e);
-    toast('Update failed. Please try again.','err');
-  });
+  }).then(r=>r.json()).then(data=>{
+  if(data.error){
+    if(data.error.includes('already exists')||data.error.includes('duplicate')){
+      toast('Product code already exists. Use a different code.','err');
+    } else {
+      toast(data.error,'err');
+    }
+    return;
+  }
+  toast('Product updated successfully!','ok');
+  document.getElementById('m-edit').classList.remove('open');
+  renderProducts();
+}).catch(e=>{
+  console.error('Update failed:',e);
+  toast('Update failed. Please try again.','err');
+});
 }
 
 let editImages=[];
