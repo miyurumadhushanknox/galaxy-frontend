@@ -510,9 +510,10 @@ setTimeout(function() {
 
       // Add to local array immediately for instant UI update
       const newProd = {
-        id:    savedProduct.id,
-        name, code, price: sp, pp, stock: {}, weight, low, sold: 0,
-        dt: formatDateDMY(new Date().toISOString()), on: window.productOn !== false,
+       id:    savedProduct.id,
+       name, code, price: sp, pp, stock: {}, weight, low, sold: 0,
+       dt: formatDateDMY(new Date().toISOString()), on: window.productOn !== false,
+       created_at: savedProduct.created_at || new Date().toISOString(),
       };
       stock_levels.forEach(sl => { newProd.stock[sl.warehouse_id] = sl.quantity; });
       (window.products || []).unshift(newProd);
