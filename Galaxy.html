@@ -3075,15 +3075,17 @@ function wfAutoCode(){
 async function saveWarehouse(){
   const name=document.getElementById('wf-name').value.trim();
   const loc =document.getElementById('wf-loc').value.trim();
+  const code=document.getElementById('wf-code').value.trim();
   const type=document.getElementById('wf-type').value;
   const cap =parseInt(document.getElementById('wf-cap').value)||'';
   const manager=document.getElementById('wf-manager')?.value.trim()||'';
   if(!name){toast('Enter a warehouse name.','err');return;}
+  if(!code){toast('Enter a warehouse code.','err');return;}
+  if(!loc){toast('Enter a location.','err');return;}
   const btn=document.querySelector('#m-addwh button[onclick="saveWarehouse()"]');
   if(btn){btn.disabled=true;btn.textContent='Creating...';}
   try{
     const API=window.GalaxyAPI;
-    const code = document.getElementById('wf-code')?.value.trim() || '';
     const w=await API.WarehousesAPI.create(name, loc||'', {manager, type, capacity:cap, code});
     const newWh={id:w.id,name:w.name||name,location:w.location||loc||'-',manager:w.manager||manager||'-',type,capacity:cap,active:wfStatusOn};
     warehouses.push(newWh);
