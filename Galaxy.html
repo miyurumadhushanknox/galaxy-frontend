@@ -2738,6 +2738,7 @@ function renderWhDetail(wid){
 
   let filtered=products.filter(p=>{
     const q=p.stock[wid]||0;
+    if(q<=0) return false;
     if(lowOnly&&q>p.low)return false;
     return p.name.toLowerCase().includes(searchVal)||(p.code||'').toLowerCase().includes(searchVal);
   }).sort((a,b)=>{
