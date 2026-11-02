@@ -1633,6 +1633,7 @@ tbody tr:hover .row-actions{display:flex}
       <button onclick="document.getElementById('m-editwh').classList.remove('open')" style="width:32px;height:32px;border-radius:9px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
     </div>
     <div style="padding:0 26px 18px">
+      
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
         <div>
           <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:7px">Warehouse name</div>
@@ -2736,8 +2737,7 @@ function renderWhDetail(wid){
         <div style="flex:1;min-width:140px">
           <div style="display:flex;align-items:center;gap:9px;margin-bottom:3px">
             <span style="font-size:18px;font-weight:900;color:#18182b">${w.name}</span>
-            <span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:6px;background:${isActive?'#e6f9ed':'#fde8e8'};color:${isActive?'#16a34a':'#d92020'};letter-spacing:.06em;text-transform:uppercase">${isActive?'ACTIVE':'INACTIVE'}</span>
-          </div>
+           </div>
           <div style="font-size:11px;color:#9090b8;font-weight:500">
             <svg viewBox="0 0 10 12" fill="none" style="width:8px;height:10px;display:inline;margin-right:2px"><path d="M5 1C3.34 1 2 2.34 2 4c0 2.44 3 7 3 7s3-4.56 3-7c0-1.66-1.34-3-3-3z" stroke="currentColor" stroke-width="1.1"/><circle cx="5" cy="4" r="1" fill="currentColor" opacity=".4"/></svg>
             ${w.location||'—'} · Manager: ${w.manager||'—'}
