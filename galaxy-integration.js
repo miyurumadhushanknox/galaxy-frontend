@@ -778,9 +778,9 @@ setTimeout(function() {
         const type = document.getElementById('ef-type')?.value || 'Distribution';
         const act  = document.getElementById('ef-status-tgl')?.classList.contains('on');
         try {
-          await API.WarehousesAPI.update(wid, { name, location: loc, is_active: act });
+          await API.WarehousesAPI.update(wid, { name, location: loc, is_active: act, manager: mgr, type, capacity: parseInt(document.getElementById('ef-cap')?.value)||null, code: document.getElementById('ef-code')?.value.trim().toUpperCase() });
           const w = (window.warehouses || []).find(x => x.id === wid);
-          if (w) { w.name = name; w.location = loc; w.manager = mgr; w.type = type; w.active = act; }
+          if (w) { w.name = name; w.location = loc; w.manager = mgr; w.type = type; w.active = act; w.capacity = parseInt(document.getElementById('ef-cap')?.value)||null; w.code = document.getElementById('ef-code')?.value.trim().toUpperCase(); }
           document.getElementById('m-editwh')?.classList.remove('open');
           if (typeof window.renderWarehousePage === 'function') window.renderWarehousePage();
           if (typeof window.buildWhFields       === 'function') window.buildWhFields();
