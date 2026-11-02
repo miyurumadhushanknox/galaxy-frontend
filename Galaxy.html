@@ -1576,18 +1576,6 @@ tbody tr:hover .row-actions{display:flex}
       <button onclick="document.getElementById('m-addwh').classList.remove('open')" style="width:32px;height:32px;border-radius:9px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
     </div>
     <div style="padding:0 26px 20px">
-      <!-- On/Off toggle -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f8f8fc;border-radius:11px;margin-bottom:18px">
-        <div>
-          <div style="font-size:13px;font-weight:800;color:#18182b">Warehouse status</div>
-          <div style="font-size:11px;color:#9090b8;font-weight:500;margin-top:1px">Active warehouses appear in transfers and orders</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-size:12px;font-weight:700;color:#aaa" id="wf-tgl-off">Off</span>
-          <div class="tgl on" id="wf-status-tgl" onclick="wfToggleStatus()" style="width:42px;height:23px"><div class="tgl-dot"></div></div>
-          <span style="font-size:12px;font-weight:700;color:#e8220e" id="wf-tgl-on">On</span>
-        </div>
-      </div>
       <!-- Name + Code -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px">
         <div>
@@ -1645,18 +1633,6 @@ tbody tr:hover .row-actions{display:flex}
       <button onclick="document.getElementById('m-editwh').classList.remove('open')" style="width:32px;height:32px;border-radius:9px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
     </div>
     <div style="padding:0 26px 18px">
-      <!-- On/Off toggle -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f8f8fc;border-radius:11px;margin-bottom:18px">
-        <div>
-          <div style="font-size:13px;font-weight:800;color:#18182b">Warehouse status</div>
-          <div style="font-size:11px;color:#9090b8;margin-top:1px">Active warehouses appear in transfers and orders</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-size:12px;font-weight:700;color:#aaa" id="ef-tgl-off">Off</span>
-          <div class="tgl on" id="ef-status-tgl" onclick="efToggleStatus()" style="width:42px;height:23px"><div class="tgl-dot"></div></div>
-          <span style="font-size:12px;font-weight:700;color:#e8220e" id="ef-tgl-on">On</span>
-        </div>
-      </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
         <div>
           <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:7px">Warehouse name</div>
@@ -3088,7 +3064,7 @@ async function saveWarehouse(){
   try{
     const API=window.GalaxyAPI;
     const w=await API.WarehousesAPI.create(name, loc||'', {manager, type, capacity:cap, code});
-    const newWh={id:w.id,name:w.name||name,location:w.location||loc||'-',manager:w.manager||manager||'-',type,capacity:cap,code:w.code||code,active:wfStatusOn};
+    const newWh={id:w.id,name:w.name||name,location:w.location||loc||'-',manager:w.manager||manager||'-',type,capacity:cap,code:w.code||code};
     warehouses.push(newWh);
     products.forEach(p=>{p.stock[newWh.id]=0;});
     document.getElementById('m-addwh').classList.remove('open');
