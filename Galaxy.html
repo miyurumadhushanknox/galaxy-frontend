@@ -1682,20 +1682,7 @@ tbody tr:hover .row-actions{display:flex}
     </div>
     <div style="padding:0 26px 22px">
 
-      <!-- DELETE WAREHOUSE MODAL -->
-<div class="modal-bg" id="m-delwh">
-  <div style="background:#fff;border-radius:18px;width:420px;max-width:92vw;padding:32px 28px 24px;box-shadow:0 8px 48px rgba(0,0,0,.15);animation:mIn .18s ease">
-    <div style="width:48px;height:48px;background:#fde8e8;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
-      <svg viewBox="0 0 24 24" fill="none" style="width:22px;height:22px"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="#e8220e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div style="font-size:17px;font-weight:800;color:#18182b;margin-bottom:8px">Delete warehouse?</div>
-    <div style="font-size:13px;color:#7a7a9a;font-weight:500;line-height:1.6;margin-bottom:24px">This warehouse will be permanently deleted. All warehouse data including linked products will be affected. This action cannot be undone.</div>
-    <div style="display:flex;gap:10px;justify-content:flex-end">
-      <button onclick="document.getElementById('m-delwh').classList.remove('open')" style="padding:11px 20px;border:1.5px solid #e4e4f0;border-radius:11px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
-      <button onclick="deleteWarehouse()" style="padding:11px 22px;border:none;border-radius:11px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Delete warehouse</button>
-    </div>
-  </div>
-</div>
+     
 
       <!-- Product summary -->
       <div id="rf-product-info" style="background:#f8f8fc;border-radius:12px;padding:14px 16px;margin-bottom:18px;display:flex;align-items:center;gap:12px">
@@ -1709,7 +1696,7 @@ tbody tr:hover .row-actions{display:flex}
           <div id="rf-cur-stock" style="font-size:18px;font-weight:900;color:#18182b"></div>
         </div>
       </div>
-
+    
       <!-- Current prices -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
         <div style="background:#f8f8fc;border-radius:10px;padding:11px 14px">
@@ -1784,6 +1771,20 @@ tbody tr:hover .row-actions{display:flex}
   </div>
 </div>
 
+ <!-- DELETE WAREHOUSE MODAL -->
+<div class="modal-bg" id="m-delwh">
+  <div style="background:#fff;border-radius:18px;width:420px;max-width:92vw;padding:32px 28px 24px;box-shadow:0 8px 48px rgba(0,0,0,.15);animation:mIn .18s ease">
+    <div style="width:48px;height:48px;background:#fde8e8;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+      <svg viewBox="0 0 24 24" fill="none" style="width:22px;height:22px"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="#e8220e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div style="font-size:17px;font-weight:800;color:#18182b;margin-bottom:8px">Delete warehouse?</div>
+    <div style="font-size:13px;color:#7a7a9a;font-weight:500;line-height:1.6;margin-bottom:24px">This warehouse will be permanently deleted. All warehouse data including linked products will be affected. This action cannot be undone.</div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button onclick="document.getElementById('m-delwh').classList.remove('open')" style="padding:11px 20px;border:1.5px solid #e4e4f0;border-radius:11px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
+      <button onclick="deleteWarehouse()" style="padding:11px 22px;border:none;border-radius:11px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Delete warehouse</button>
+    </div>
+  </div>
+</div>
 
 <!-- DUPLICATE CONFIRM MODAL -->
 <div class="modal-bg" id="m-dup-confirm">
