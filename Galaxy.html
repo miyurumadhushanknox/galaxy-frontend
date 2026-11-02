@@ -2877,12 +2877,12 @@ function openEditWh(wid){
   
 }
 
-function confirmDeleteWh(wid){
+window.confirmDeleteWh = function(wid){
   window.deleteWhId=wid;
   document.getElementById('m-delwh').classList.add('open');
 }
 
-async function deleteWarehouse(){
+window.deleteWarehouse = async function(){
   const wid=window.deleteWhId;if(!wid)return;
   try{
     await window.GalaxyAPI.WarehousesAPI.delete(wid);
