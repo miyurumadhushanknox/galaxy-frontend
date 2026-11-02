@@ -2754,16 +2754,17 @@ function renderWhDetail(wid){
   }).sort((a,b)=>{
   const qa=a.stock[wid]||0, qb=b.stock[wid]||0;
   const ra=reserved[a.id]||0, rb=reserved[b.id]||0;
-  if(whdSort==='name') return a.name.localeCompare(b.name)*whdSortDir;
-  if(whdSort==='code') return (a.code||'').localeCompare(b.code||'')*whdSortDir;
-  if(whdSort==='avail') return (qa-ra-(qb-rb))*whdSortDir;
-  if(whdSort==='proc') return (ra-rb)*whdSortDir;
-  if(whdSort==='onhand') return (qa+ra-(qb+rb))*whdSortDir;
-  if(whdSort==='svpp') return ((a.pp||0)*qa-(b.pp||0)*qb)*whdSortDir;
-  if(whdSort==='svsp') return ((a.price||0)*qa-(b.price||0)*qb)*whdSortDir;
-  if(whdSort==='date') return (a.dt||'').localeCompare(b.dt||'')*whdSortDir;
-  if(whdSort==='status') return (qa===0?2:qa<=a.low?1:0)-(qb===0?2:qb<=b.low?1:0)*whdSortDir;
-  return 0;
+  if(whdSort&&whdSortDir!==0){
+    if(whdSort==='name') return a.name.localeCompare(b.name)*whdSortDir;
+    if(whdSort==='code') return (a.code||'').localeCompare(b.code||'')*whdSortDir;
+    if(whdSort==='avail') return (qa-ra-(qb-rb))*whdSortDir;
+    if(whdSort==='proc') return (ra-rb)*whdSortDir;
+    if(whdSort==='onhand') return (qa+ra-(qb+rb))*whdSortDir;
+    if(whdSort==='svpp') return ((a.pp||0)*qa-(b.pp||0)*qb)*whdSortDir;
+    if(whdSort==='svsp') return ((a.price||0)*qa-(b.price||0)*qb)*whdSortDir;
+    if(whdSort==='status') return (qa===0?2:qa<=a.low?1:0)-(qb===0?2:qb<=b.low?1:0)*whdSortDir;
+  }
+  return (a.dt||'').localeCompare(b.dt||'');
 });
 
   document.getElementById('wh-detail-view').innerHTML=`
@@ -2833,16 +2834,16 @@ Transfer stock
       <div class="table-scroll" style="max-height:calc(100vh - 380px)">
         <table>
           <thead><tr>
-            <th onclick="whdSort='name';whdSortDir=whdSort==='name'?whdSortDir*-1:1;renderWhDetail('${wid}')" style="cursor:pointer">Product ${whdSort==='name'?(whdSortDir===1?'↑':'↓'):'↕'}</th>
-            <th onclick="whdSort='code';whdSortDir=whdSort==='code'?whdSortDir*-1:1;renderWhDetail('${wid}')" style="cursor:pointer">Code ${whdSort==='code'?(whdSortDir===1?'↑':'↓'):'↕'}</th>
+            <th onclick="if(whdSort==='name'){whdSortDir=whdSortDir===1?-1:whdSortDir===-1?0:1;}else{whdSort='name';whdSortDir=1;}if(whdSortDir===0)whdSort='';renderWhDetail('${wid}')" style="cursor:pointer;${whdSort==='name'&&whdSortDir!==0?'background:#f0f4ff;color:#4a4af4;':''}">Product ${whdSort==='name'&&whdSortDir===1?'↑':whdSort==='name'&&whdSortDir===-1?'↓':'↕'}</th>
+            <th onclick="if(whdSort==='code'){whdSortDir=whdSortDir===1?-1:whdSortDir===-1?0:1;}else{whdSort='code';whdSortDir=1;}if(whdSortDir===0)whdSort='';renderWhDetail('${wid}')" style="cursor:pointer;${whdSort==='code'&&whdSortDir!==0?'background:#f0f4ff;color:#4a4af4;':''}">Code ${whdSort==='code'&&whdSortDir===1?'↑':whdSort==='code'&&whdSortDir===-1?'↓':'↕'}</th>
             <th>Category</th>
-            <th onclick="whdSort='avail';whdSortDir=whdSort==='avail'?whdSortDir*-1:1;renderWhDetail('${wid}')" style="cursor:pointer">Available ${whdSort==='avail'?(whdSortDir===1?'↑':'↓'):'↕'}</th>
-            <th onclick="whdSort='proc';whdSortDir=whdSort==='proc'?whdSortDir*-1:1;renderWhDetail('${wid}')" style="cursor:pointer">Processing ${whdSort==='proc'?(whdSortDir===1?'↑':'↓'):'↕'}</th>
-            <th onclick="whdSort='onhand';whdSortDir=whdSort==='onhand'?whdSortDir*-1:1;renderWhDetail('${wid}')" style="cursor:pointer">On Hand ${whdSort==='onhand'?(whdSortDir===1?'↑':'↓'):'↕'}</th>
-            <th onclick="whdSort='svpp';whdSortDir=whdSort==='svpp'?whdSortDir*-1:1;renderWhDetail('${wid}')" style="cursor:pointer">Stock val (Purchase) ${whdSort==='svpp'?(whdSortDir===1?'↑':'↓'):'↕'}</th>
-            <th onclick="whdSort='svsp';whdSortDir=whdSort==='svsp'?whdSortDir*-1:1;renderWhDetail('${wid}')" style="cursor:pointer">Stock val (Sale) ${whdSort==='svsp'?(whdSortDir===1?'↑':'↓'):'↕'}</th>
-            <th onclick="whdSort='date';whdSortDir=whdSort==='date'?whdSortDir*-1:1;renderWhDetail('${wid}')" style="cursor:pointer">Added date ${whdSort==='date'?(whdSortDir===1?'↑':'↓'):'↕'}</th>
-            <th onclick="whdSort='status';whdSortDir=whdSort==='status'?whdSortDir*-1:1;renderWhDetail('${wid}')" style="cursor:pointer">Status ${whdSort==='status'?(whdSortDir===1?'↑':'↓'):'↕'}</th>
+            <th onclick="if(whdSort==='avail'){whdSortDir=whdSortDir===1?-1:whdSortDir===-1?0:1;}else{whdSort='avail';whdSortDir=1;}if(whdSortDir===0)whdSort='';renderWhDetail('${wid}')" style="cursor:pointer;${whdSort==='avail'&&whdSortDir!==0?'background:#f0f4ff;color:#4a4af4;':''}">Available ${whdSort==='avail'&&whdSortDir===1?'↑':whdSort==='avail'&&whdSortDir===-1?'↓':'↕'}</th>
+            <th onclick="if(whdSort==='proc'){whdSortDir=whdSortDir===1?-1:whdSortDir===-1?0:1;}else{whdSort='proc';whdSortDir=1;}if(whdSortDir===0)whdSort='';renderWhDetail('${wid}')" style="cursor:pointer;${whdSort==='proc'&&whdSortDir!==0?'background:#f0f4ff;color:#4a4af4;':''}">Processing ${whdSort==='proc'&&whdSortDir===1?'↑':whdSort==='proc'&&whdSortDir===-1?'↓':'↕'}</th>
+            <th onclick="if(whdSort==='onhand'){whdSortDir=whdSortDir===1?-1:whdSortDir===-1?0:1;}else{whdSort='onhand';whdSortDir=1;}if(whdSortDir===0)whdSort='';renderWhDetail('${wid}')" style="cursor:pointer;${whdSort==='onhand'&&whdSortDir!==0?'background:#f0f4ff;color:#4a4af4;':''}">On Hand ${whdSort==='onhand'&&whdSortDir===1?'↑':whdSort==='onhand'&&whdSortDir===-1?'↓':'↕'}</th>
+            <th onclick="if(whdSort==='svpp'){whdSortDir=whdSortDir===1?-1:whdSortDir===-1?0:1;}else{whdSort='svpp';whdSortDir=1;}if(whdSortDir===0)whdSort='';renderWhDetail('${wid}')" style="cursor:pointer;${whdSort==='svpp'&&whdSortDir!==0?'background:#f0f4ff;color:#4a4af4;':''}">Stock val (Purchase) ${whdSort==='svpp'&&whdSortDir===1?'↑':whdSort==='svpp'&&whdSortDir===-1?'↓':'↕'}</th>
+            <th onclick="if(whdSort==='svsp'){whdSortDir=whdSortDir===1?-1:whdSortDir===-1?0:1;}else{whdSort='svsp';whdSortDir=1;}if(whdSortDir===0)whdSort='';renderWhDetail('${wid}')" style="cursor:pointer;${whdSort==='svsp'&&whdSortDir!==0?'background:#f0f4ff;color:#4a4af4;':''}">Stock val (Sale) ${whdSort==='svsp'&&whdSortDir===1?'↑':whdSort==='svsp'&&whdSortDir===-1?'↓':'↕'}</th>
+            <th onclick="if(whdSort==='date'){whdSortDir=whdSortDir===1?-1:whdSortDir===-1?0:1;}else{whdSort='date';whdSortDir=1;}if(whdSortDir===0)whdSort='';renderWhDetail('${wid}')" style="cursor:pointer;${whdSort==='date'&&whdSortDir!==0?'background:#f0f4ff;color:#4a4af4;':''}">Added date ${whdSort==='date'&&whdSortDir===1?'↑':whdSort==='date'&&whdSortDir===-1?'↓':'↕'}</th>
+            <th onclick="if(whdSort==='status'){whdSortDir=whdSortDir===1?-1:whdSortDir===-1?0:1;}else{whdSort='status';whdSortDir=1;}if(whdSortDir===0)whdSort='';renderWhDetail('${wid}')" style="cursor:pointer;${whdSort==='status'&&whdSortDir!==0?'background:#f0f4ff;color:#4a4af4;':''}">Status ${whdSort==='status'&&whdSortDir===1?'↑':whdSort==='status'&&whdSortDir===-1?'↓':'↕'}</th>
             <th></th>
             <th></th>
           </tr></thead>
