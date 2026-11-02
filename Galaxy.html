@@ -1661,6 +1661,10 @@ tbody tr:hover .row-actions{display:flex}
         </div>
       </div>
     </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:7px">Capacity (units)</div>
+      <input id="ef-cap" type="number" placeholder="10000" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;outline:none;box-sizing:border-box">
+    </div>
     <div style="padding:12px 26px 20px;background:#f8f8fc;border-radius:0 0 20px 20px;display:flex;justify-content:flex-end;gap:10px">
       <button onclick="document.getElementById('m-editwh').classList.remove('open')" style="padding:11px 20px;border:1.5px solid #e4e4f0;border-radius:11px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
       <button onclick="saveEditWarehouse()" style="padding:11px 22px;border:none;border-radius:11px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Save changes</button>
@@ -2845,7 +2849,9 @@ function openEditWh(wid){
   document.getElementById('ef-loc').value=w.location||'';
   document.getElementById('ef-mgr').value=w.manager||'';
   document.getElementById('ef-type').value=w.type||'Distribution';
+  document.getElementById('ef-cap').value=w.capacity||'';
   document.getElementById('m-editwh').classList.add('open');
+  
 }
 function efToggleStatus(){
   const tgl=document.getElementById('ef-status-tgl');
@@ -2860,8 +2866,8 @@ function saveEditWarehouse(){
   w.code    = document.getElementById('ef-code').value.trim().toUpperCase()||w.code;
   w.location= document.getElementById('ef-loc').value.trim();
   w.manager = document.getElementById('ef-mgr').value.trim();
+  w.capacity = parseInt(document.getElementById('ef-cap').value)||null;
   w.type    = document.getElementById('ef-type').value;
-  w.active  = document.getElementById('ef-status-tgl').classList.contains('on');
   document.getElementById('m-editwh').classList.remove('open');
   toast('Warehouse updated!','ok');
   renderWarehousePage();
