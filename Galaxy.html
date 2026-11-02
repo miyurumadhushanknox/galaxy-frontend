@@ -3082,6 +3082,7 @@ async function saveWarehouse(){
   if(!name){toast('Enter a warehouse name.','err');return;}
   if(!code){toast('Enter a warehouse code.','err');return;}
   if(!loc){toast('Enter a location.','err');return;}
+  if(warehouses.some(w=>w.code&&w.code.toUpperCase()===code.toUpperCase())){toast('Warehouse code already exists.','err');return;}
   const btn=document.querySelector('#m-addwh button[onclick="saveWarehouse()"]');
   if(btn){btn.disabled=true;btn.textContent='Creating...';}
   try{
