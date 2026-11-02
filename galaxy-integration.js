@@ -750,7 +750,10 @@ setTimeout(function() {
         const loc  = document.getElementById('nw-loc')?.value.trim()  || '';
         if (!name) { API.showToast('Warehouse name required.', 'error'); return; }
         try {
-          const res = await API.WarehousesAPI.create(name, loc);
+          const manager = document.getElementById('wf-manager')?.value.trim() || '';
+          const type = document.getElementById('wf-type')?.value || '';
+          const capacity = parseInt(document.getElementById('wf-cap')?.value) || null;
+          const res = await API.WarehousesAPI.create(name, loc, {manager, type, capacity});
           const w = res.warehouse || res;
           (window.warehouses || []).push({ id: w.id, name: w.name, location: w.location || loc, active: true });
           document.getElementById('m-addwh')?.classList.remove('open');
