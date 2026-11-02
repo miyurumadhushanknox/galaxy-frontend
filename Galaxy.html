@@ -2845,10 +2845,6 @@ function openEditWh(wid){
   document.getElementById('ef-loc').value=w.location||'';
   document.getElementById('ef-mgr').value=w.manager||'';
   document.getElementById('ef-type').value=w.type||'Distribution';
-  const isActive=w.active!==false;
-  document.getElementById('ef-status-tgl').classList.toggle('on',isActive);
-  document.getElementById('ef-tgl-off').style.color=isActive?'#aaa':'#e8220e';
-  document.getElementById('ef-tgl-on').style.color=isActive?'#e8220e':'#aaa';
   document.getElementById('m-editwh').classList.add('open');
 }
 function efToggleStatus(){
