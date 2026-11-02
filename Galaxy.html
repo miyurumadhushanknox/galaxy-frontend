@@ -2880,6 +2880,7 @@ function openEditWh(wid){
 window.confirmDeleteWh = function(wid){
   window.deleteWhId = wid;
   const m = document.getElementById('m-delwh');
+  document.body.appendChild(m);
   m.style.display = 'flex';
 }
 
