@@ -3083,7 +3083,8 @@ async function saveWarehouse(){
   if(btn){btn.disabled=true;btn.textContent='Creating...';}
   try{
     const API=window.GalaxyAPI;
-    const w=await API.WarehousesAPI.create(name, loc||'', {manager, type, capacity:cap});
+    const code = document.getElementById('wf-code')?.value.trim() || '';
+    const w=await API.WarehousesAPI.create(name, loc||'', {manager, type, capacity:cap, code});
     const newWh={id:w.id,name:w.name||name,location:w.location||loc||'-',manager:w.manager||manager||'-',type,capacity:cap,active:wfStatusOn};
     warehouses.push(newWh);
     products.forEach(p=>{p.stock[newWh.id]=0;});
