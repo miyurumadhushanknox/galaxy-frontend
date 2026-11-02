@@ -142,9 +142,9 @@ const ProductsAPI = {
 const WarehousesAPI = {
   list: () => apiFetch('/warehouses'),
 
-  create: (name, location) => apiFetch('/warehouses', {
+  create: (name, location, opts = {}) => apiFetch('/warehouses', {
     method: 'POST',
-    body: JSON.stringify({ name, location })
+    body: JSON.stringify({ name, location, ...opts })
   }),
 
   update: (id, data) => apiFetch(`/warehouses/${id}`, {
