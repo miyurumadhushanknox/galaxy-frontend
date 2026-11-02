@@ -777,6 +777,8 @@ setTimeout(function() {
         const mgr  = document.getElementById('ef-mgr')?.value.trim()  || '';
         const type = document.getElementById('ef-type')?.value || 'Distribution';
         const act  = document.getElementById('ef-status-tgl')?.classList.contains('on');
+        const dupCode = (window.warehouses || []).find(x => x.id !== wid && x.code && x.code.toUpperCase() === (document.getElementById('ef-code')?.value.trim().toUpperCase()));
+        if (dupCode) { API.showToast('Warehouse code already exists.', 'error'); return; }
         try {
           await API.WarehousesAPI.update(wid, { name, location: loc, is_active: act, manager: mgr, type, capacity: parseInt(document.getElementById('ef-cap')?.value)||null, code: document.getElementById('ef-code')?.value.trim().toUpperCase() });
           const w = (window.warehouses || []).find(x => x.id === wid);
@@ -785,7 +787,8 @@ setTimeout(function() {
           if (typeof window.renderWarehousePage === 'function') window.renderWarehousePage();
           if (typeof window.buildWhFields       === 'function') window.buildWhFields();
           API.showToast('Warehouse updated!', 'success');
-        } catch (err) {
+        } 
+        catch (err) {
           API.showToast(err.message || 'Could not update warehouse.', 'error');
         }
       };
