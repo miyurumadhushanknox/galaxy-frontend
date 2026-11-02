@@ -2841,7 +2841,7 @@ Transfer stock
 }
 
 function openEditWh(wid){
-  editWhId=wid;
+  window.editWhId=wid;
   const w=warehouses.find(x=>x.id===wid);if(!w)return;
   document.getElementById('ef-name').value=w.name||'';
   document.getElementById('ef-code').value=w.code||whAbbrv(w.name);
