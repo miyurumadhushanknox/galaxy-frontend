@@ -3088,7 +3088,7 @@ async function saveWarehouse(){
   try{
     const API=window.GalaxyAPI;
     const w=await API.WarehousesAPI.create(name, loc||'', {manager, type, capacity:cap, code});
-    const newWh={id:w.id,name:w.name||name,location:w.location||loc||'-',manager:w.manager||manager||'-',type,capacity:cap,active:wfStatusOn};
+    const newWh={id:w.id,name:w.name||name,location:w.location||loc||'-',manager:w.manager||manager||'-',type,capacity:cap,code:w.code||code,active:wfStatusOn};
     warehouses.push(newWh);
     products.forEach(p=>{p.stock[newWh.id]=0;});
     document.getElementById('m-addwh').classList.remove('open');

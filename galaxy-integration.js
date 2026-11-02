@@ -244,12 +244,13 @@ function showBlockedPage() {
       if (warehousesRes.status === 'fulfilled' && warehousesRes.value) {
         const whList = Array.isArray(warehousesRes.value) ? warehousesRes.value : (warehousesRes.value.warehouses || []);
         window.warehouses = whList.map(w => ({
-          id:       w.id,
-          name:     w.name,
-          location: w.location || '',
-          manager:  w.manager_name || '',
-          active:   w.is_active !== false,
-          type:     w.type || 'Distribution',
+         id:       w.id,
+         name:     w.name,
+         location: w.location || '',
+         manager:  w.manager || '',
+         active:   w.is_active !== false,
+         type:     w.type || 'Distribution',
+         code:     w.code || '',
         }));
       }
 
