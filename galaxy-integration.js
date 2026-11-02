@@ -251,6 +251,7 @@ function showBlockedPage() {
          active:   w.is_active !== false,
          type:     w.type || 'Distribution',
          code:     w.code || '',
+         capacity: w.capacity || '',
         }));
       }
 
