@@ -2859,17 +2859,23 @@ function efToggleStatus(){
   document.getElementById('ef-tgl-off').style.color=on?'#aaa':'#e8220e';
   document.getElementById('ef-tgl-on').style.color=on?'#e8220e':'#aaa';
 }
-function saveEditWarehouse(){
+async function saveEditWarehouse(){
   const w=warehouses.find(x=>x.id===editWhId);if(!w)return;
-  w.name    = document.getElementById('ef-name').value.trim()||w.name;
-  w.code    = document.getElementById('ef-code').value.trim().toUpperCase()||w.code;
-  w.location= document.getElementById('ef-loc').value.trim();
-  w.manager = document.getElementById('ef-mgr').value.trim();
-  w.capacity = parseInt(document.getElementById('ef-cap').value)||null;
-  w.type    = document.getElementById('ef-type').value;
-  document.getElementById('m-editwh').classList.remove('open');
-  toast('Warehouse updated!','ok');
-  renderWarehousePage();
+  const name    = document.getElementById('ef-name').value.trim()||w.name;
+  const code    = document.getElementById('ef-code').value.trim().toUpperCase()||w.code;
+  const location= document.getElementById('ef-loc').value.trim();
+  const manager = document.getElementById('ef-mgr').value.trim();
+  const capacity= parseInt(document.getElementById('ef-cap').value)||null;
+  const type    = document.getElementById('ef-type').value;
+  try{
+    await window.GalaxyAPI.WarehousesAPI.update(editWhId,{name,code,location,manager,capacity,type});
+    w.name=name;w.code=code;w.location=location;w.manager=manager;w.capacity=capacity;w.type=type;
+    document.getElementById('m-editwh').classList.remove('open');
+    toast('Warehouse updated!','ok');
+    renderWarehousePage();
+  }catch(e){
+    toast('Failed to update warehouse.','err');
+  }
 }
 
 function openTransfersPanel(){
