@@ -2736,6 +2736,25 @@ function openWhDetail(wid){
 let whdSort='date', whdSortDir=-1, whdSearchQ='';
 let editWhId=null;
 
+function whdFilterTable(){
+  const q=(document.getElementById('whd-search')?.value||'').toLowerCase();
+  whdSearchQ=q;
+  const wid=whView;
+  const tbody=document.getElementById('whd-tbody');
+  if(!tbody)return;
+  const from=document.getElementById('tr-from')?.value||'';
+  const filtered=products.filter(p=>{
+    const stock=p.stock[wid]||0;
+    if(stock<=0)return false;
+    if(!q)return true;
+    return p.name.toLowerCase().includes(q)||(p.code||'').toLowerCase().includes(q);
+  });
+  tbody.innerHTML=filtered.length?filtered.map(p=>{
+    const q=p.stock[wid]||0;
+    return`<tr><td>${p.name}</td></tr>`;
+  }).join(''):'<tr><td colspan="11" style="text-align:center;color:#c0c0d8;padding:40px;font-weight:700">No products found</td></tr>';
+}
+
 function renderWhDetail(wid){
   const w=warehouses.find(x=>x.id===wid); if(!w)return;
   const abbr=whAbbrv(w.name);
@@ -2824,7 +2843,7 @@ Transfer stock
       </div>
     </div>
 
-   <div class="search-wrap" style="margin-bottom:12px"><svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input id="whd-search" class="search-input" oninput="whdSearchQ=this.value;renderWhDetail('${wid}')" placeholder="Search products..."></div>
+   <div class="search-wrap" style="margin-bottom:12px"><svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input id="whd-search" class="search-input" oninput="whdSearchQ=this.value;whdFilterTable()" placeholder="Search products..."></div>
    <!-- Table -->
     <div class="table-card" style="height:auto">
       <div class="table-scroll" style="max-height:calc(100vh - 380px)">
@@ -2843,7 +2862,7 @@ Transfer stock
             <th></th>
             <th></th>
           </tr></thead>
-          <tbody>
+          <tbody id="whd-tbody">
             ${filtered.length?filtered.map(p=>{
               const q=p.stock[wid]||0;
               const isOut=q===0,isLow=!isOut&&q<=p.low;
