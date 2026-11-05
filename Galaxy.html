@@ -2675,6 +2675,11 @@ function renderWhMain(){
       </div>
     </div>
 
+    const si=document.getElementById('whd-search');
+    if(si){si.value=_sv;si.focus();}
+  }
+    
+
     <!-- Warehouse cards (3-col + add card) -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
       ${warehouses.map(w=>{
@@ -2726,6 +2731,7 @@ let whdSort='date', whdSortDir=-1;
 let editWhId=null;
 
 function renderWhDetail(wid){
+  const _sv=document.getElementById('whd-search')?.value||'';
   const w=warehouses.find(x=>x.id===wid); if(!w)return;
   const abbr=whAbbrv(w.name);
   const units=products.reduce((a,p)=>a+(p.stock[wid]||0),0);
@@ -2734,19 +2740,19 @@ function renderWhDetail(wid){
   const pct=Math.min(100,Math.round((units/cap)*100));
   const isActive=w.active!==false;
 
-  const searchVal=(document.getElementById('whd-search')?.value||'').toLowerCase();
+  const searchVal=_sv.toLowerCase();
   const lowOnly=document.getElementById('whd-lowonly')?.checked||false;
 
   const reserved = {};
   (window.orders||[]).forEach(o=>{
   if(o.status==='processing'){
-    (o.items||[]).forEach(item=>{
-      const pid = (window.products||[]).find(p=>p.name===item.name)?.id;
-      if(pid) reserved[pid]=(reserved[pid]||0)+(item.qty||0);
+    o.items.forEach(i=>{
+      const p=products.find(x=>x.name===i.name&&x.code===i.code);
+      if(p)reserved[p.id]=(reserved[p.id]||0)+i.qty;
     });
-    }
-  });
+  }});
 
+  
   let filtered=products.filter(p=>{
     const q=p.stock[wid]||0;
     if(q<=0) return false;
@@ -2766,9 +2772,7 @@ function renderWhDetail(wid){
     if(whdSort==='date') return (new Date(a.created_at||0)-new Date(b.created_at||0))*whdSortDir;
     if(whdSort==='status') return ((qa===0?2:qa<=a.low?1:0)-(qb===0?2:qb<=b.low?1:0))*whdSortDir;
   }
-  const ad=(a.dt||'').split('.').reverse().join('');
-  const bd=(b.dt||'').split('.').reverse().join('');
-  return new Date(b.created_at||0)-new Date(a.created_at||0);
+
 });
 
   document.getElementById('wh-detail-view').innerHTML=`
