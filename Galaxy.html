@@ -3046,9 +3046,9 @@ function openTransferModal(){
 function openTransferFor(wid,pid){
   openTransferModal();
   if(wid)document.getElementById('tr-from').value=wid;
-  if(pid)document.getElementById('tr-product').value=pid;
+  if(pid)trSelectProduct(pid);
   updateTransferInfo();
-}
+} 
 function updateTransferInfo(){
   const from=document.getElementById('tr-from')?.value;
   const to=document.getElementById('tr-to')?.value;
