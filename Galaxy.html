@@ -3045,7 +3045,8 @@ function openTransferModal(){
   document.getElementById('tr-from').innerHTML=opts;
   document.getElementById('tr-to').innerHTML=opts;
   if(warehouses.length>1)document.getElementById('tr-to').value=warehouses[1].id;
-  document.getElementById('tr-add-product').innerHTML=products.map(p=>
+  const trSel=document.getElementById('tr-add-product');
+  if(trSel)trSel.innerHTML=products.map(p=>
     `<option value="${p.id}">${p.code?p.code+' — ':''}${p.name}</option>`
   ).join('');
   renderTrItems();
