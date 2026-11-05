@@ -2768,7 +2768,7 @@ function renderWhDetail(wid){
   }
   const ad=(a.dt||'').split('.').reverse().join('');
   const bd=(b.dt||'').split('.').reverse().join('');
-  return bd.localeCompare(ad);
+  return new Date(b.created_at||0)-new Date(a.created_at||0);
 });
 
   document.getElementById('wh-detail-view').innerHTML=`
