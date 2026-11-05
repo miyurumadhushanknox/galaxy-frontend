@@ -3005,7 +3005,7 @@ function renderTrItems(){
         <div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:7px;border-top:1px solid #f5f5fa">
           <span style="font-size:11px;color:#9090b8;font-weight:600">Unit price:</span>
           <span style="font-size:12px;font-weight:700;color:#18182b">${L(p.price)}</span>
-          <span style="font-size:11px;color:#9090b8;font-weight:600">· Available:</span>
+          <span style="font-size:11px;color:#9090b8;font-weight:600">· Warehouse Available:</span>
           <span style="font-size:12px;font-weight:700;color:#18182b">${avail}</span>
           <span style="margin-left:auto;font-size:13px;font-weight:800;color:#18182b">${L(lineTotal)}</span>
         </div>
@@ -3084,6 +3084,7 @@ function trSetMax(){
 function confirmTransfer(){
   const from=document.getElementById('tr-from')?.value;
   const to=document.getElementById('tr-to')?.value;
+  if(!to){toast('Please select a To warehouse.','err');return;}
   if(from===to){toast('From and To must be different.','err');return;}
   if(!trItems.length){toast('Add at least one product.','err');return;}
   for(const item of trItems){
