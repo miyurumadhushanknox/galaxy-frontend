@@ -3038,9 +3038,6 @@ function openTransferModal(){
   const opts='<option value="">Select warehouse</option>'+warehouses.map(w=>`<option value="${w.id}">${w.name}</option>`).join('');
   document.getElementById('tr-from').innerHTML=opts;
   document.getElementById('tr-to').innerHTML=opts;
-  if(trSel)trSel.innerHTML=products.map(p=>
-    `<option value="${p.id}">${p.code?p.code+' — ':''}${p.name}</option>`
-  ).join('');
   renderTrItems();
   updateTransferInfo();
   document.getElementById('m-transfer').classList.add('open');
