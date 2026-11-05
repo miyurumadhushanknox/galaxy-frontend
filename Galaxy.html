@@ -1543,16 +1543,18 @@ tbody tr:hover .row-actions{display:flex}
     <!-- Scrollable product list -->
     <div style="flex:1;overflow-y:auto;padding:0 26px 10px">
       <div id="tr-items-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px"></div>
-      <!-- Add new item dashed box -->
+      <!-- Add new item search box -->
       <div style="border:2px dashed #e8220e;border-radius:12px;padding:12px 14px;background:#fff8f6">
-        <div style="display:flex;gap:8px;align-items:center">
-          <select id="tr-add-product" style="flex:1;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
-          <button onclick="trAddProduct()" style="display:inline-flex;align-items:center;gap:5px;padding:9px 16px;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap">
-            <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            Add New Item
-          </button>
-        </div>
+        <button onclick="trAddProduct()" style="display:inline-flex;align-items:center;gap:5px;padding:9px 16px;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:10px">
+        <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Add Item
+        </button>
+        <div style="position:relative">
+        <input id="tr-search" type="text" placeholder="Product Name or SKU" oninput="trSearchProducts()" style="width:100%;padding:9px 12px 9px 32px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;box-sizing:border-box">
+        <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#9090b8" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div id="tr-search-results" style="display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid #e4e4f0;border-radius:9px;max-height:180px;overflow-y:auto;z-index:100;margin-top:4px"></div>
       </div>
+     </div>
     </div>
     <div style="padding:12px 26px 20px;border-top:1px solid #f0f0f6;display:flex;justify-content:flex-end;gap:10px;flex-shrink:0">
       <button onclick="document.getElementById('m-transfer').classList.remove('open')" style="padding:11px 20px;border:1.5px solid #e4e4f0;border-radius:11px;background:#fff;color:#7a7a9a;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancel</button>
@@ -3011,6 +3013,30 @@ function trAddProduct(){
   if(trItems.find(x=>x.pid===pid)){toast('Already added.','err');return;}
   trItems.push({pid,qty:1,customPrice:null});
   renderTrItems();
+}
+
+function trSearchProducts(){
+  const q=document.getElementById('tr-search').value.toLowerCase();
+  const res=document.getElementById('tr-search-results');
+  if(!q){res.style.display='none';return;}
+  const fromWid=document.getElementById('tr-from').value;
+  const matches=products.filter(p=>(p.name.toLowerCase().includes(q)||(p.code||'').toLowerCase().includes(q))&&(p.stock[fromWid]||0)>0);
+  if(!matches.length){res.style.display='none';return;}
+  res.style.display='block';
+  res.innerHTML=matches.map(p=>`<div onclick="trSelectProduct('${p.id}')" style="padding:8px 12px;cursor:pointer;font-size:13px;font-weight:600;border-bottom:1px solid #f0f0f8" onmouseover="this.style.background='#f8f8ff'" onmouseout="this.style.background=''">${p.name} <span style="color:#9090b8;font-weight:400">${p.code||''}</span></div>`).join('');
+}
+
+function trSelectProduct(pid){
+  document.getElementById('tr-search').value='';
+  document.getElementById('tr-search-results').style.display='none';
+  const p=products.find(x=>x.id===pid);
+  if(!p)return;
+  // set the hidden select value and add
+  const sel=document.getElementById('tr-add-product');
+  if(sel){
+    sel.value=pid;
+    trAddProduct();
+  }
 }
 
 function openTransferModal(){
