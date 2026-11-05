@@ -2712,8 +2712,7 @@ function renderWhMain(){
       <div style="font-size:12px;font-weight:700;color:#e8220e">Add warehouse</div>
       </div>`:''}
   `;
-  const _si=document.getElementById('whd-search');
-  if(_si){_si.focus();_si.setSelectionRange(_si.value.length,_si.value.length);}
+  setTimeout(()=>{const _si=document.getElementById('whd-search');if(_si){_si.focus();_si.setSelectionRange(_si.value.length,_si.value.length);}},0);
 }
 
 // ── DETAIL VIEW ───────────────────────────────────────────────────────────────
