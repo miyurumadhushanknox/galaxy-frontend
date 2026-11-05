@@ -2722,11 +2722,11 @@ function openWhDetail(wid){
   renderWhDetail(wid);
 }
 
-let whdSort='date', whdSortDir=-1;
+let whdSort='date', whdSortDir=-1; let whdSv='';
 let editWhId=null;
 
 function renderWhDetail(wid){
-  const _sv=document.getElementById('whd-search')?.value||'';
+  const _sv=whdSv||document.getElementById('whd-search')?.value||'';
   const w=warehouses.find(x=>x.id===wid); if(!w)return;
   const abbr=whAbbrv(w.name);
   const units=products.reduce((a,p)=>a+(p.stock[wid]||0),0);
@@ -2819,7 +2819,7 @@ Transfer stock
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;margin-top:16px">
       <div class="search-wrap" style="min-width:300px;max-width:400px">
         <svg class="search-icon" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <input class="search-input" type="text" id="whd-search" placeholder="Filter products..." oninput="renderWhDetail('${wid}');document.getElementById('whd-search').focus();" style="color:#18182b;background:#fff" value="${_sv}">
+        <input class="search-input" type="text" id="whd-search" placeholder="Filter products..." oninput="whdSv=this.value;renderWhDetail('${wid}');document.getElementById('whd-search').focus();" style="color:#18182b;background:#fff" value="${_sv}">
       <span style="font-size:12px;color:#9090b8;font-weight:600;margin-left:auto">${filtered.length} items</span>
     </div>
 
