@@ -3029,14 +3029,9 @@ function trSearchProducts(){
 function trSelectProduct(pid){
   document.getElementById('tr-search').value='';
   document.getElementById('tr-search-results').style.display='none';
-  const p=products.find(x=>x.id===pid);
-  if(!p)return;
-  // set the hidden select value and add
-  const sel=document.getElementById('tr-add-product');
-  if(sel){
-    sel.value=pid;
-    trAddProduct();
-  }
+  if(trItems.find(x=>x.pid===pid)){toast('Already added.','err');return;}
+  trItems.push({pid,qty:1,customPrice:null});
+  renderTrItems();
 }
 
 function openTransferModal(){
