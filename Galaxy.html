@@ -2767,7 +2767,7 @@ function renderWhDetail(wid){
     if(whdSort==='status') return ((qa===0?2:qa<=a.low?1:0)-(qb===0?2:qb<=b.low?1:0))*whdSortDir;
   }
   const ad=(a.dt||'').split('.').reverse().join('');
-  
+  const bd=(b.dt||'').split('.').reverse().join('');
   return new Date(b.created_at||0)-new Date(a.created_at||0);
 });
 
