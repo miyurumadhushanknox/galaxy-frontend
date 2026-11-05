@@ -2766,7 +2766,9 @@ function renderWhDetail(wid){
     if(whdSort==='date') return (a.dt||'').localeCompare(b.dt||'')*whdSortDir;
     if(whdSort==='status') return ((qa===0?2:qa<=a.low?1:0)-(qb===0?2:qb<=b.low?1:0))*whdSortDir;
   }
-  return (a.dt||'').localeCompare(b.dt||'');
+  const ad=(a.dt||'').split('.').reverse().join('');
+  const bd=(b.dt||'').split('.').reverse().join('');
+  return bd.localeCompare(ad);
 });
 
   document.getElementById('wh-detail-view').innerHTML=`
