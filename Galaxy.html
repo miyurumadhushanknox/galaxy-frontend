@@ -2763,7 +2763,7 @@ function renderWhDetail(wid){
     if(whdSort==='onhand') return (qa+ra-(qb+rb))*whdSortDir;
     if(whdSort==='svpp') return ((a.pp||0)*qa-(b.pp||0)*qb)*whdSortDir;
     if(whdSort==='svsp') return ((a.price||0)*qa-(b.price||0)*qb)*whdSortDir;
-    if(whdSort==='date') return (new Date(b.created_at||0)-new Date(a.created_at||0))*whdSortDir;
+    if(whdSort==='date') return (new Date(a.created_at||0)-new Date(b.created_at||0))*whdSortDir;
     if(whdSort==='status') return ((qa===0?2:qa<=a.low?1:0)-(qb===0?2:qb<=b.low?1:0))*whdSortDir;
   }
   const ad=(a.dt||'').split('.').reverse().join('');
