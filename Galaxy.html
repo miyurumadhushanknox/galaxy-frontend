@@ -2723,11 +2723,9 @@ function openWhDetail(wid){
   renderWhDetail(wid);
 }
 
-let whdSort='date', whdSortDir=-1; let whdSv='';
 let editWhId=null;
 
 function renderWhDetail(wid){
-  const _sv=whdSv||document.getElementById('whd-search')?.value||'';
   const w=warehouses.find(x=>x.id===wid); if(!w)return;
   const abbr=whAbbrv(w.name);
   const units=products.reduce((a,p)=>a+(p.stock[wid]||0),0);
@@ -2735,8 +2733,6 @@ function renderWhDetail(wid){
   const cap=w.capacity||10000;
   const pct=Math.min(100,Math.round((units/cap)*100));
   const isActive=w.active!==false;
-
-  const searchVal=_sv.toLowerCase();
   const lowOnly=document.getElementById('whd-lowonly')?.checked||false;
 
   const reserved = {};
@@ -2753,7 +2749,7 @@ function renderWhDetail(wid){
     const q=p.stock[wid]||0;
     if(q<=0) return false;
     if(lowOnly&&q>p.low)return false;
-    return p.name.toLowerCase().includes(searchVal)||(p.code||'').toLowerCase().includes(searchVal);
+    return true;
   }).sort((a,b)=>{
   const qa=a.stock[wid]||0, qb=b.stock[wid]||0;
   const ra=reserved[a.id]||0, rb=reserved[b.id]||0;
@@ -2814,14 +2810,6 @@ Delete</button>`:''}
 Transfer stock
 </button>`:''}
       </div>
-    </div>
-
-    <!-- Toolbar -->
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;margin-top:16px">
-      <div class="search-wrap" style="min-width:300px;max-width:400px">
-        <svg class="search-icon" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <input class="search-input" type="text" id="whd-search" placeholder="Filter products..." oninput="whdSv=this.value;clearTimeout(whdT);whdT=setTimeout(()=>renderWhDetail('${wid}'),300)" style="color:#18182b;background:#fff" value="${_sv}">
-      <span style="font-size:12px;color:#9090b8;font-weight:600;margin-left:auto">${filtered.length} items</span>
     </div>
 
     <!-- Table -->
