@@ -1523,14 +1523,14 @@ tbody tr:hover .row-actions{display:flex}
       <div style="display:grid;grid-template-columns:1fr 44px 1fr;align-items:end;gap:8px;margin-bottom:5px">
         <div>
           <div style="font-size:12px;font-weight:800;color:#18182b;margin-bottom:7px">From</div>
-          <select id="tr-from" onchange="updateTransferInfo()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
+          <select id="tr-from" onchange="if(this.value&&this.value===document.getElementById('tr-to').value){toast('Cannot select same warehouse','err');this.value='';return;}updateTransferInfo()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
         </div>
         <div style="display:flex;align-items:center;justify-content:center;padding-bottom:4px">
           <svg viewBox="0 0 22 16" fill="none" style="width:20px;height:15px"><path d="M1 4h20M15 1l5 3-5 3M21 12H1M7 9l-5 3 5 3" stroke="#e8220e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div>
           <div style="font-size:12px;font-weight:800;color:#18182b;margin-bottom:7px">To</div>
-          <select id="tr-to" onchange="updateTransferInfo()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
+          <select id="tr-to" onchange="if(this.value&&this.value===document.getElementById('tr-from').value){toast('Cannot select same warehouse','err');this.value='';return;}updateTransferInfo()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:11px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></select>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 44px 1fr;gap:8px;margin-bottom:14px">
@@ -3027,6 +3027,7 @@ function trSearchProducts(){
 function trSelectProduct(pid){
   document.getElementById('tr-search').value='';
   document.getElementById('tr-search-results').style.display='none';
+  document.getElementById('tr-search-wrap').style.display='none';
   if(trItems.find(x=>x.pid===pid)){toast('Already added.','err');return;}
   trItems.push({pid,qty:1,customPrice:null});
   renderTrItems();
@@ -3034,11 +3035,9 @@ function trSelectProduct(pid){
 
 function openTransferModal(){
   trItems=[];
-  const opts=warehouses.map(w=>`<option value="${w.id}">${w.name}</option>`).join('');
+  const opts='<option value="">Select warehouse</option>'+warehouses.map(w=>`<option value="${w.id}">${w.name}</option>`).join('');
   document.getElementById('tr-from').innerHTML=opts;
   document.getElementById('tr-to').innerHTML=opts;
-  if(warehouses.length>1)document.getElementById('tr-to').value=warehouses[1].id;
-  const trSel=document.getElementById('tr-add-product');
   if(trSel)trSel.innerHTML=products.map(p=>
     `<option value="${p.id}">${p.code?p.code+' — ':''}${p.name}</option>`
   ).join('');
