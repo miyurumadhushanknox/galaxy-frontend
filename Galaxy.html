@@ -3098,11 +3098,10 @@ function confirmTransfer(){
     created:now.toLocaleDateString('en-LK',{day:'2-digit',month:'short'})
   });
 
-  Promise.all(trItems.map(i=>fetch(`${window.GalaxyAPI}/products/transfer`,{
+  Promise.all(trItems.map(i=>window.apiFetch('/products/transfer',{
   method:'POST',
-  headers:{'Content-Type':'application/json'},
   body:JSON.stringify({productId:i.pid,fromWarehouseId:from,toWarehouseId:to,quantity:i.qty})
-  }))).catch(e=>console.error('Transfer save failed',e));
+  }))).catch(e=>console.error('Transfer save failed',e));  
 
   document.getElementById('m-transfer').classList.remove('open');
   toast('Transferred '+trItems.length+' product(s): '+fName+' \u2192 '+tName,'ok');
