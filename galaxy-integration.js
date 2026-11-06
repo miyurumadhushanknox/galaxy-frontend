@@ -309,10 +309,11 @@ Object.assign(_gs, {
   bizCategory: s.business?.category || _gs.bizCategory || '',
   bizAddress: s.business?.address  || _gs.bizAddress  || '',
   bizPhone:   s.business?.phone    || _gs.bizPhone    || '',
-  deliveryMethods: (s.deliveryMethods || []).map(d => ({ id: d.id, name: d.name, price: d.price || 0 })),
+  deliveryMethods: (s.deliveryMethods || []).map(d => ({ id: d.id, name: d.name, price: d.price || 0, apiKey: d.api_key||null, manualPrice: d.manual_price||false, pricingMode: d.pricing_mode||'province', provincePrices: d.province_prices||{}, districtPrices: d.district_prices||{} })),
   paymentMethods:  (s.paymentMethods  || []).map(m => m.name),
   discountCodes:   (s.discountCodes   || []).map(dc => ({ id: dc.id, code: dc.code, type: dc.type, value: dc.value })),
 });
+window._origDeliveryMethods = JSON.parse(JSON.stringify(_gs.deliveryMethods || []));
 if (typeof generalSettings !== 'undefined') Object.assign(generalSettings, _gs);
         // Update biz name in sidebar/topbar
                 if (typeof window.applyBizName === 'function') window.applyBizName();
