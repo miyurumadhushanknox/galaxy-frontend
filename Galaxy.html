@@ -5120,29 +5120,31 @@ function renderGeneralPage(){
                 <option value="">Select service</option>
                 ${['Koombiyo','PickMe Flash','Grab Express','Domex','Pronto','MyPost','Custom'].map(s=>`<option value="${s}" ${d.name===s?'selected':''}>${s}</option>`).join('')}
               </select>
-              <button onclick="gsRemoveDelivery(${i})" style="width:28px;height:28px;border-radius:50%;border:none;background:#fff1f0;color:#e8220e;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
             </div>
             <div style="margin-bottom:10px">
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:4px">API Key</label>
               <input type="text" value="${d.apiKey||''}" placeholder="Paste API key here" oninput="gsUpdateDelivery(${i},'apiKey',this.value)" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:${d.manualPrice?'12px':'0'}">
-              <span style="font-size:12px;font-weight:600;color:${d.manualPrice?'#333':'#9090b8'};">Same as delivery service ricing</span>
+              <span style="font-size:12px;font-weight:600;color:${d.manualPrice?'#9090b8':'#18182b'};">Same as delivery service pricing</span>
               <div onclick="gsToggleManualPrice(${i})" style="width:38px;height:20px;border-radius:10px;background:${d.manualPrice?'#e8220e':'#e4e4f0'};cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><div style="position:absolute;top:2px;left:${d.manualPrice?'20px':'2px'};width:16px;height:16px;border-radius:50%;background:#fff;transition:left 0.2s"></div></div>
-              <span style="font-size:12px;font-weight:600;color:${d.manualPrice?'#333':'#9090b8'};">Manual pricing</span>
+              <span style="font-size:12px;font-weight:600;color:${d.manualPrice?'#18182b':'#9090b8'};">Manual Pricing</span>
             </div>
             ${d.manualPrice?`<div style="margin-top:10px">
-              <div style="display:flex;gap:8px;margin-bottom:8px">
-                <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#18182b;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif"><input type="radio" name="pm${i}" value="province" ${(d.pricingMode||'province')==='province'?'checked':''} onchange="gsUpdateDelivery(${i},'pricingMode','province');renderGeneralPage()"> Province-wise</label>
-                <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#18182b;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif"><input type="radio" name="pm${i}" value="district" ${d.pricingMode==='district'?'checked':''} onchange="gsUpdateDelivery(${i},'pricingMode','district');renderGeneralPage()"> District-wise</label>
+              <div style="display:flex;gap:8px;margin-bottom:12px">
+                <button onclick="gsUpdateDelivery(${i},'pricingMode','province');renderGeneralPage()" style="flex:1;padding:8px 0;border:none;border-radius:20px;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all 0.2s;background:${(d.pricingMode||'province')==='province'?'#e8220e':'#f0f0f5'};color:${(d.pricingMode||'province')==='province'?'#fff':'#9090b8'}">Province-wise</button>
+                <button onclick="gsUpdateDelivery(${i},'pricingMode','district');renderGeneralPage()" style="flex:1;padding:8px 0;border:none;border-radius:20px;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all 0.2s;background:${d.pricingMode==='district'?'#e8220e':'#f0f0f5'};color:${d.pricingMode==='district'?'#fff':'#9090b8'}">District-wise</button>
               </div>
             ${(d.pricingMode||'province')==='province'?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">${['Western','Central','Southern','Northern','Eastern','North Western','North Central','Uva','Sabaragamuwa'].map(prov=>`<div style="display:flex;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff"><span style="font-size:13px;font-weight:600;color:#18182b;flex:1;font-family:'Plus Jakarta Sans',sans-serif">${prov}</span><input type="number" min="0" placeholder="0" value="${(d.provincePrices||{})[prov]||''}" oninput="gsUpdateDeliveryRegion(${i},'province','${prov}',this.value)" style="width:65px;padding:7px 8px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-weight:600;text-align:right;outline:none;font-family:'Plus Jakarta Sans',sans-serif" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>`).join('')}</div>`:''}
             ${d.pricingMode==='district'?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:220px;overflow-y:auto">${['Colombo','Gampaha','Kalutara','Kandy','Matale','Nuwara Eliya','Galle','Matara','Hambantota','Jaffna','Kilinochchi','Mannar','Vavuniya','Mullaitivu','Batticaloa','Ampara','Trincomalee','Kurunegala','Puttalam','Anuradhapura','Polonnaruwa','Badulla','Monaragala','Ratnapura','Kegalle'].map(dist=>`<div style="display:flex;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff"><span style="font-size:13px;font-weight:600;color:#18182b;flex:1;font-family:'Plus Jakarta Sans',sans-serif">${dist}</span><input type="number" min="0" placeholder="0" value="${(d.districtPrices||{})[dist]||''}" oninput="gsUpdateDeliveryRegion(${i},'district','${dist}',this.value)" style="width:65px;padding:7px 8px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-weight:600;text-align:right;outline:none;font-family:'Plus Jakarta Sans',sans-serif" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>`).join('')}</div>`:''}
             </div>`:''}
+            <div style="display:flex;gap:8px;margin-top:14px">
+              <button onclick="gsRemoveDelivery(${i})" style="flex:1;padding:9px 0;border:1.5px solid #e8220e;border-radius:9px;background:#fff;color:#e8220e;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Delete</button>
+              <button onclick="saveGeneralSettings()" style="flex:1;padding:9px 0;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Save</button>
+            </div>
           </div>`).join('')}
           <button onclick="gsAddDelivery()" style="width:100%;padding:9px;border:1.5px dashed #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add Delivery Service</button>
         </div>
-        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
       </div>
 
       <!-- PAYMENT TAB -->
