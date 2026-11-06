@@ -5062,7 +5062,10 @@ function gsBizLogoUpload(input){
 
 function gsDeliveryFields(d,i){
   if(!d.name) return '';
-  let html = `<div style="margin-bottom:10px">
+  if(d.name==='Custom') d.manualPrice=true;
+  let html = '';
+  if(d.name!=='Custom'){
+  html += `<div style="margin-bottom:10px">
     <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:4px">API Key</label>
     <input type="text" value="${d.apiKey||''}" placeholder="Paste API key here" oninput="gsUpdateDelivery(${i},'apiKey',this.value)" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
   </div>
@@ -5071,6 +5074,7 @@ function gsDeliveryFields(d,i){
     <div onclick="gsToggleManualPrice(${i})" style="width:46px;height:24px;border-radius:12px;background:${d.manualPrice?'#e8220e':'#e4e4f0'};cursor:pointer;position:relative;transition:background 0.25s;flex-shrink:0;box-shadow:${d.manualPrice?'0 2px 8px rgba(232,34,14,0.3)':'0 1px 3px rgba(0,0,0,0.1)'}"><div style="position:absolute;top:3px;left:${d.manualPrice?'25px':'3px'};width:18px;height:18px;border-radius:50%;background:#fff;transition:left 0.25s;box-shadow:0 1px 4px rgba(0,0,0,0.18)"></div></div>
     <span style="font-size:12px;font-weight:600;color:${d.manualPrice?'#18182b':'#9090b8'};">Manual Pricing</span>
   </div>`;
+  }
   if(d.manualPrice){
     html += `<div style="margin-top:10px">
       <div style="display:flex;gap:10px;margin-bottom:12px">
