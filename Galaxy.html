@@ -5106,6 +5106,7 @@ function renderGeneralPage(){
             <div><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Phone</label><input id="gs-biz-phone" type="text" value="${gs.bizPhone}" placeholder="07X XXX XXXX" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>
           </div>
         </div>
+        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
       </div>
 
       <!-- DELIVERY TAB -->
@@ -5140,6 +5141,7 @@ function renderGeneralPage(){
           </div>`).join('')}
           <button onclick="gsAddDelivery()" style="width:100%;padding:9px;border:1.5px dashed #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add Delivery Service</button>
         </div>
+        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
       </div>
 
       <!-- PAYMENT TAB -->
@@ -5161,6 +5163,7 @@ function renderGeneralPage(){
           </div>
           <button onclick="gsAddDiscount()" style="padding:6px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add code</button>
         </div>
+        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
       </div>
 
       <!-- NOTIFICATIONS TAB -->
@@ -5182,6 +5185,7 @@ function renderGeneralPage(){
             ].map(t=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:#f8f8fc;border-radius:10px"><div><div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:2px">${t.label}</div><div style="font-size:11px;color:#9090b8">${t.sub}</div></div><div style="display:flex;align-items:center;gap:7px;flex-shrink:0"><span id="${t.id}-off" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#aaa':'#e8220e'}">Off</span><div class="tgl ${gs[t.key]?'on':''}" id="${t.id}" onclick="gsToggle('${t.id}','${t.key}')" style="width:40px;height:22px"><div class="tgl-dot"></div></div><span id="${t.id}-on" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#e8220e':'#aaa'}">On</span></div></div>`).join('')}
           </div>
         </div>
+        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
       </div>
 
       <!-- SYSTEM SETTINGS TAB -->
@@ -5214,16 +5218,9 @@ function renderGeneralPage(){
             </div>
           </div>
         </div>
+        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
       </div>
 
-    </div>
-
-    <!-- Save button always visible at bottom -->
-    <div style="padding-top:12px;border-top:1px solid #f0f0f6;margin-top:4px">
-      <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
-        <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Save settings
-      </button>
     </div>
   </div>
   `;
