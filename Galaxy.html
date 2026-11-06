@@ -5114,9 +5114,9 @@ function renderGeneralPage(){
         <div class="card" style="margin-bottom:12px">
           <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Delivery Services</div>
           ${(gs.deliveryMethods||[]).map((d,i)=>`
-          <div style="border:1.5px solid #e4e4f0;border-radius:10px;padding:14px;margin-bottom:10px;background:#fafafa">
+          <div style="border:1.5px solid #e4e4f0;border-radius:10px;padding:14px;margin-bottom:10px;background:#fff">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-              <select onchange="gsUpdateDelivery(${i},'name',this.value)" style="flex:1;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;background:#fff;margin-right:8px">
+              <select onchange="gsUpdateDelivery(${i},'name',this.value)" style="flex:1;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;margin-right:8px;outline:none;appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 <option value="">Select service</option>
                 ${['Koombiyo','PickMe Flash','Grab Express','Domex','Pronto','MyPost','Custom'].map(s=>`<option value="${s}" ${d.name===s?'selected':''}>${s}</option>`).join('')}
               </select>
@@ -5124,7 +5124,7 @@ function renderGeneralPage(){
             </div>
             <div style="margin-bottom:10px">
               <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:4px">API Key</label>
-              <input type="text" value="${d.apiKey||''}" placeholder="Paste API key here" oninput="gsUpdateDelivery(${i},'apiKey',this.value)" style="width:100%;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;box-sizing:border-box">
+              <input type="text" value="${d.apiKey||''}" placeholder="Paste API key here" oninput="gsUpdateDelivery(${i},'apiKey',this.value)" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${d.manualPrice?'12px':'0'}">
               <label style="font-size:11px;font-weight:700;color:#9090b8">Manual Pricing</label>
