@@ -5013,7 +5013,7 @@ function saveGeneralSettings(){
       window.apiFetch('/api/settings/delivery-methods',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).catch(()=>{});
     }
   }
-  
+
   applyTheme(generalSettings.theme);
   applyBizName();
   toast('Settings saved!','ok');
@@ -5058,27 +5058,40 @@ function gsBizLogoUpload(input){
   input.value='';
 }
 
+let _gsTab = 'business';
+function gsSetTab(t){_gsTab=t;renderGeneralPage();}
 function renderGeneralPage(){
   const root=document.getElementById('general-root');if(!root)return;
   const _gsCanBiz=can('settings.bizinfo');
   const _gsCanTime=can('settings.timecurr');
   const gs=generalSettings;
-
+  const tab=_gsTab||'business';
+  const tabs=[
+    {id:'business',label:'Business'},
+    {id:'delivery',label:'Delivery'},
+    {id:'payment',label:'Payment'},
+    {id:'notifications',label:'Notifications'},
+    {id:'system',label:'System Settings'},
+  ];
   root.innerHTML=`
-    <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:14px;height:calc(100vh - 110px);overflow:hidden">
+  <div style="display:flex;flex-direction:column;height:calc(100vh - 110px)">
+    <!-- Tab bar -->
+    <div style="display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid #f0f0f6;padding-bottom:0">
+      ${tabs.map(t=>`
+        <button onclick="gsSetTab('${t.id}')" style="padding:9px 18px;border:none;background:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;color:${tab===t.id?'#e8220e':'#9090b8'};border-bottom:${tab===t.id?'2.5px solid #e8220e':'2.5px solid transparent'};margin-bottom:-2px;transition:color .15s">${t.label}</button>
+      `).join('')}
+    </div>
 
-      <!-- ═══ LEFT: Business Info + Time & Date + Currency + Theme ═══ -->
-      <div style="display:flex;flex-direction:column;gap:12px;overflow-y:auto;padding-right:6px;min-height:0">
+    <!-- Tab content -->
+    <div style="flex:1;overflow-y:auto;padding-right:4px">
 
-        <!-- Business Info -->
-        <div class="card" style="margin-bottom:0;display:${_gsCanBiz?'block':'none'}">
+      <!-- BUSINESS TAB -->
+      <div style="display:${tab==='business'?'block':'none'}">
+        <div class="card" style="margin-bottom:12px;display:${_gsCanBiz?'block':'none'}">
           <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Business Info</div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f0f6">
             <div style="width:50px;height:50px;border-radius:10px;border:1.5px solid #e4e4f0;overflow:hidden;background:#f8f8fc;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer" onclick="document.getElementById('gs-logo-input').click()">
-              ${gs.bizLogo
-                ? `<img src="${gs.bizLogo}" style="width:100%;height:100%;object-fit:cover">`
-                : `<svg viewBox="0 0 16 16" fill="none" style="width:18px;height:18px;color:#c0c0d8"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><circle cx="5.5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 10l4-3 3 3 2-2 5 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>`
-              }
+              ${gs.bizLogo?`<img src="${gs.bizLogo}" style="width:100%;height:100%;object-fit:cover">`:`<svg viewBox="0 0 16 16" fill="none" style="width:18px;height:18px;color:#c0c0d8"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><circle cx="5.5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 10l4-3 3 3 2-2 5 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
             </div>
             <div>
               <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:4px">Business logo</div>
@@ -5087,208 +5100,132 @@ function renderGeneralPage(){
             </div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div>
-              <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Business name</label>
-              <input id="gs-biz-name" type="text" value="${gs.bizName}" placeholder="e.g. Saman Clothings" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-            </div>
-            <div>
-              <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Category</label>
-              <select id="gs-biz-cat" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-                <option value="">Select</option>
-                ${BIZ_CATEGORIES.map(c=>`<option value="${c}" ${c===gs.bizCategory?'selected':''}>${c}</option>`).join('')}
-              </select>
-            </div>
-            <div>
-              <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Address</label>
-              <input id="gs-biz-addr" type="text" value="${gs.bizAddress}" placeholder="Street, City" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-            </div>
-            <div>
-              <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Phone</label>
-              <input id="gs-biz-phone" type="text" value="${gs.bizPhone}" placeholder="07X XXX XXXX" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-            </div>
-
-            <!-- Delivery methods -->
-<div style="border:1.5px solid #e4e4f0;border-radius:12px;padding:16px;margin-bottom:4px">
-  <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Delivery Services</div>
-  ${(gs.deliveryMethods||[]).map((d,i)=>`
-  <div style="border:1.5px solid #e4e4f0;border-radius:10px;padding:14px;margin-bottom:10px;background:#fafafa">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <select onchange="gsUpdateDelivery(${i},'name',this.value)" style="flex:1;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;background:#fff;margin-right:8px">
-        <option value="">Select service</option>
-        ${['Koombiyo','PickMe Flash','Grab Express','Domex','Pronto','MyPost','Custom'].map(s=>`<option value="${s}" ${d.name===s?'selected':''}>${s}</option>`).join('')}
-      </select>
-      <button onclick="gsRemoveDelivery(${i})" style="width:28px;height:28px;border-radius:50%;border:none;background:#fff1f0;color:#e8220e;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
-    </div>
-    <div style="margin-bottom:10px">
-      <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:4px">API Key</label>
-      <input type="text" value="${d.apiKey||''}" placeholder="Paste API key here" oninput="gsUpdateDelivery(${i},'apiKey',this.value)" style="width:100%;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;box-sizing:border-box">
-    </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${d.manualPrice?'12px':'0'}">
-      <label style="font-size:11px;font-weight:700;color:#9090b8">Manual Pricing</label>
-      <div onclick="gsToggleManualPrice(${i})" style="width:38px;height:20px;border-radius:10px;background:${d.manualPrice?'#e8220e':'#e4e4f0'};cursor:pointer;position:relative;transition:background .2s;flex-shrink:0">
-        <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:${d.manualPrice?'20px':'2px'};transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
-      </div>
-    </div>
-    ${d.manualPrice?`
-    <div style="margin-top:10px">
-      <div style="display:flex;gap:8px;margin-bottom:8px">
-        <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:#18182b;cursor:pointer">
-          <input type="radio" name="pricingMode${i}" value="province" ${(d.pricingMode||'province')==='province'?'checked':''} onchange="gsUpdateDelivery(${i},'pricingMode','province');renderGeneralPage()"> Province-wise
-        </label>
-        <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:#18182b;cursor:pointer">
-          <input type="radio" name="pricingMode${i}" value="district" ${d.pricingMode==='district'?'checked':''} onchange="gsUpdateDelivery(${i},'pricingMode','district');renderGeneralPage()"> District-wise
-        </label>
-      </div>
-      ${(d.pricingMode||'province')==='province'?`
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        ${['Western','Central','Southern','Northern','Eastern','North Western','North Central','Uva','Sabaragamuwa'].map(prov=>`
-        <div style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff">
-          <span style="font-size:11px;color:#18182b;flex:1">${prov}</span>
-          <input type="number" min="0" placeholder="0" value="${(d.provincePrices||{})[prov]||''}" oninput="gsUpdateDeliveryRegion(${i},'province','${prov}',this.value)" style="width:60px;padding:4px 6px;border:1.5px solid #e4e4f0;border-radius:6px;font-size:11px;text-align:right">
-        </div>`).join('')}
-      </div>`:''}
-      ${d.pricingMode==='district'?`
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:220px;overflow-y:auto">
-        ${['Colombo','Gampaha','Kalutara','Kandy','Matale','Nuwara Eliya','Galle','Matara','Hambantota','Jaffna','Kilinochchi','Mannar','Vavuniya','Mullaitivu','Batticaloa','Ampara','Trincomalee','Kurunegala','Puttalam','Anuradhapura','Polonnaruwa','Badulla','Monaragala','Ratnapura','Kegalle'].map(dist=>`
-        <div style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff">
-          <span style="font-size:11px;color:#18182b;flex:1">${dist}</span>
-          <input type="number" min="0" placeholder="0" value="${(d.districtPrices||{})[dist]||''}" oninput="gsUpdateDeliveryRegion(${i},'district','${dist}',this.value)" style="width:60px;padding:4px 6px;border:1.5px solid #e4e4f0;border-radius:6px;font-size:11px;text-align:right">
-        </div>`).join('')}
-      </div>`:''}
-    </div>`:''}
-  </div>`).join('')}
-  <button onclick="gsAddDelivery()" style="width:100%;padding:9px;border:1.5px dashed #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add Delivery Service</button>
-</div>
-
-            <!-- Payment methods -->
-            <div>
-              <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Payment methods</label>
-              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:7px">
-                ${(gs.paymentMethods||[]).map((p,i)=>`
-                  <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1.5px solid #e4e4f0;border-radius:20px;background:#f8f8fc">
-                    <span style="font-size:12px;font-weight:600;color:#18182b">${p}</span>
-                    <button onclick="gsRemovePayment(${i})" style="border:none;background:none;color:#e8220e;cursor:pointer;font-size:12px;padding:0;line-height:1;font-family:'Plus Jakarta Sans',sans-serif">✕</button>
-                  </div>`).join('')}
-              </div>
-              <div style="display:flex;gap:7px">
-                <input id="gs-new-payment" type="text" placeholder="e.g. Mintpay" style="flex:1;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'" onkeydown="if(event.key==='Enter')gsAddPayment()">
-                <button onclick="gsAddPayment()" style="padding:7px 13px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add</button>
-              </div>
-            </div>
-
-            <!-- Discount codes -->
-            <div>
-              <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Discount codes</label>
-              <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:7px">
-                ${(gs.discountCodes||[]).map((d,i)=>`
-                  <div style="display:flex;gap:7px;align-items:center">
-                    <input type="text" value="${d.code}" placeholder="Code" oninput="gsUpdateDiscount(${i},'code',this.value)" style="flex:2;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-transform:uppercase" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-                    <select oninput="gsUpdateDiscount(${i},'type',this.value)" style="padding:7px 9px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none">
-                      <option value="percent" ${d.type==='percent'?'selected':''}>%</option>
-                      <option value="fixed"   ${d.type==='fixed'?'selected':''}>${generalSettings.currency} </option>
-                    </select>
-                    <input type="number" value="${d.value}" min="0" placeholder="Value" oninput="gsUpdateDiscount(${i},'value',this.value)" style="width:70px;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-                    <button onclick="gsRemoveDiscount(${i})" style="padding:6px 10px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;flex-shrink:0">✕</button>
-                  </div>`).join('')}
-              </div>
-              <button onclick="gsAddDiscount()" style="padding:6px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add code</button>
-            </div>
-
+            <div><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Business name</label><input id="gs-biz-name" type="text" value="${gs.bizName}" placeholder="e.g. Saman Clothings" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>
+            <div><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Category</label><select id="gs-biz-cat" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"><option value="">Select</option>${BIZ_CATEGORIES.map(c=>`<option value="${c}" ${c===gs.bizCategory?'selected':''}>${c}</option>`).join('')}</select></div>
+            <div><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Address</label><input id="gs-biz-addr" type="text" value="${gs.bizAddress}" placeholder="Street, City" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>
+            <div><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Phone</label><input id="gs-biz-phone" type="text" value="${gs.bizPhone}" placeholder="07X XXX XXXX" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>
           </div>
         </div>
+      </div>
 
-        <!-- Time & Date -->
-        <div class="card" style="margin-bottom:0;display:${_gsCanTime?'block':'none'}">
+      <!-- DELIVERY TAB -->
+      <div style="display:${tab==='delivery'?'block':'none'}">
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Delivery Services</div>
+          ${(gs.deliveryMethods||[]).map((d,i)=>`
+          <div style="border:1.5px solid #e4e4f0;border-radius:10px;padding:14px;margin-bottom:10px;background:#fafafa">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <select onchange="gsUpdateDelivery(${i},'name',this.value)" style="flex:1;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;background:#fff;margin-right:8px">
+                <option value="">Select service</option>
+                ${['Koombiyo','PickMe Flash','Grab Express','Domex','Pronto','MyPost','Custom'].map(s=>`<option value="${s}" ${d.name===s?'selected':''}>${s}</option>`).join('')}
+              </select>
+              <button onclick="gsRemoveDelivery(${i})" style="width:28px;height:28px;border-radius:50%;border:none;background:#fff1f0;color:#e8220e;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
+            </div>
+            <div style="margin-bottom:10px">
+              <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:4px">API Key</label>
+              <input type="text" value="${d.apiKey||''}" placeholder="Paste API key here" oninput="gsUpdateDelivery(${i},'apiKey',this.value)" style="width:100%;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;box-sizing:border-box">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${d.manualPrice?'12px':'0'}">
+              <label style="font-size:11px;font-weight:700;color:#9090b8">Manual Pricing</label>
+              <div onclick="gsToggleManualPrice(${i})" style="width:38px;height:20px;border-radius:10px;background:${d.manualPrice?'#e8220e':'#e4e4f0'};cursor:pointer;position:relative;transition:background .2s;flex-shrink:0"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:${d.manualPrice?'20px':'2px'};transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+            </div>
+            ${d.manualPrice?`<div style="margin-top:10px">
+              <div style="display:flex;gap:8px;margin-bottom:8px">
+                <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:#18182b;cursor:pointer"><input type="radio" name="pm${i}" value="province" ${(d.pricingMode||'province')==='province'?'checked':''} onchange="gsUpdateDelivery(${i},'pricingMode','province');renderGeneralPage()"> Province-wise</label>
+                <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:#18182b;cursor:pointer"><input type="radio" name="pm${i}" value="district" ${d.pricingMode==='district'?'checked':''} onchange="gsUpdateDelivery(${i},'pricingMode','district');renderGeneralPage()"> District-wise</label>
+              </div>
+              ${(d.pricingMode||'province')==='province'?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">${['Western','Central','Southern','Northern','Eastern','North Western','North Central','Uva','Sabaragamuwa'].map(prov=>`<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff"><span style="font-size:11px;color:#18182b;flex:1">${prov}</span><input type="number" min="0" placeholder="0" value="${(d.provincePrices||{})[prov]||''}" oninput="gsUpdateDeliveryRegion(${i},'province','${prov}',this.value)" style="width:60px;padding:4px 6px;border:1.5px solid #e4e4f0;border-radius:6px;font-size:11px;text-align:right"></div>`).join('')}</div>`:''}
+              ${d.pricingMode==='district'?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:220px;overflow-y:auto">${['Colombo','Gampaha','Kalutara','Kandy','Matale','Nuwara Eliya','Galle','Matara','Hambantota','Jaffna','Kilinochchi','Mannar','Vavuniya','Mullaitivu','Batticaloa','Ampara','Trincomalee','Kurunegala','Puttalam','Anuradhapura','Polonnaruwa','Badulla','Monaragala','Ratnapura','Kegalle'].map(dist=>`<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff"><span style="font-size:11px;color:#18182b;flex:1">${dist}</span><input type="number" min="0" placeholder="0" value="${(d.districtPrices||{})[dist]||''}" oninput="gsUpdateDeliveryRegion(${i},'district','${dist}',this.value)" style="width:60px;padding:4px 6px;border:1.5px solid #e4e4f0;border-radius:6px;font-size:11px;text-align:right"></div>`).join('')}</div>`:''}
+            </div>`:''}
+          </div>`).join('')}
+          <button onclick="gsAddDelivery()" style="width:100%;padding:9px;border:1.5px dashed #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add Delivery Service</button>
+        </div>
+      </div>
+
+      <!-- PAYMENT TAB -->
+      <div style="display:${tab==='payment'?'block':'none'}">
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Payment Methods</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:7px">
+            ${(gs.paymentMethods||[]).map((p,i)=>`<div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1.5px solid #e4e4f0;border-radius:20px;background:#f8f8fc"><span style="font-size:12px;font-weight:600;color:#18182b">${p}</span><button onclick="gsRemovePayment(${i})" style="border:none;background:none;color:#e8220e;cursor:pointer;font-size:12px;padding:0;line-height:1">✕</button></div>`).join('')}
+          </div>
+          <div style="display:flex;gap:7px">
+            <input id="gs-new-payment" type="text" placeholder="e.g. Mintpay" style="flex:1;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'" onkeydown="if(event.key==='Enter')gsAddPayment()">
+            <button onclick="gsAddPayment()" style="padding:7px 13px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add</button>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Discount Codes</div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:7px">
+            ${(gs.discountCodes||[]).map((d,i)=>`<div style="display:flex;gap:7px;align-items:center"><input type="text" value="${d.code}" placeholder="Code" oninput="gsUpdateDiscount(${i},'code',this.value)" style="flex:2;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-transform:uppercase" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"><select oninput="gsUpdateDiscount(${i},'type',this.value)" style="padding:7px 9px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="percent" ${d.type==='percent'?'selected':''}>%</option><option value="fixed" ${d.type==='fixed'?'selected':''}>${gs.currency}</option></select><input type="number" value="${d.value}" min="0" placeholder="Value" oninput="gsUpdateDiscount(${i},'value',this.value)" style="width:70px;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"><button onclick="gsRemoveDiscount(${i})" style="padding:6px 10px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:13px;font-weight:700;flex-shrink:0">✕</button></div>`).join('')}
+          </div>
+          <button onclick="gsAddDiscount()" style="padding:6px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add code</button>
+        </div>
+      </div>
+
+      <!-- NOTIFICATIONS TAB -->
+      <div style="display:${tab==='notifications'?'block':'none'}">
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Notifications</div>
+          <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid #f0f0f6">
+            <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Low stock threshold (units)</label>
+            <input type="number" id="gs-lowstock" value="${gs.lowStockThreshold}" min="1" max="100" style="width:90px;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-align:center" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+            <div style="font-size:11px;color:#9090b8;margin-top:5px">Alert when stock falls to or below this number</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            ${[
+              {id:'gs-email-tgl',key:'emailAlerts',label:'Email alerts',sub:'Receive alerts by email'},
+              {id:'gs-order-tgl',key:'orderAlerts',label:'New order',sub:'Alert when a new order is added'},
+              {id:'gs-orderstatus-tgl',key:'orderStatusAlerts',label:'Order status update',sub:'Alert when order status changes'},
+              {id:'gs-useradd-tgl',key:'userAddAlerts',label:'User added',sub:'Alert when a new user is added'},
+              {id:'gs-productadd-tgl',key:'productAddAlerts',label:'Product added',sub:'Alert when a new product is added'},
+            ].map(t=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:#f8f8fc;border-radius:10px"><div><div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:2px">${t.label}</div><div style="font-size:11px;color:#9090b8">${t.sub}</div></div><div style="display:flex;align-items:center;gap:7px;flex-shrink:0"><span id="${t.id}-off" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#aaa':'#e8220e'}">Off</span><div class="tgl ${gs[t.key]?'on':''}" id="${t.id}" onclick="gsToggle('${t.id}','${t.key}')" style="width:40px;height:22px"><div class="tgl-dot"></div></div><span id="${t.id}-on" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#e8220e':'#aaa'}">On</span></div></div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- SYSTEM SETTINGS TAB -->
+      <div style="display:${tab==='system'?'block':'none'}">
+        <div class="card" style="margin-bottom:12px;display:${_gsCanTime?'block':'none'}">
           <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Time & Date</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div>
-              <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Time zone</label>
-              <select id="gs-tz" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-                ${TIMEZONES.map(tz=>`<option value="${tz}" ${tz===gs.timezone||tz.startsWith(gs.timezone)?'selected':''}>${tz}</option>`).join('')}
-              </select>
-            </div>
-            <div>
-              <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Time format</label>
-              <div style="display:flex;gap:8px">
-                <button onclick="document.getElementById('gs-timefmt').value='24hr';this.style.background='#fff8f6';this.style.borderColor='#e8220e';this.style.color='#e8220e';this.nextElementSibling.style.background='#fff';this.nextElementSibling.style.borderColor='#e4e4f0';this.nextElementSibling.style.color='#18182b'" style="flex:1;padding:9px 0;border-radius:8px;border:${gs.timeFormat==='24hr'?'1.5px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.timeFormat==='24hr'?'#fff8f6':'#fff'};color:${gs.timeFormat==='24hr'?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">24-hour</button>
-                <button onclick="document.getElementById('gs-timefmt').value='12hr';this.style.background='#fff8f6';this.style.borderColor='#e8220e';this.style.color='#e8220e';this.previousElementSibling.style.background='#fff';this.previousElementSibling.style.borderColor='#e4e4f0';this.previousElementSibling.style.color='#18182b'" style="flex:1;padding:9px 0;border-radius:8px;border:${gs.timeFormat==='12hr'?'1.5px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.timeFormat==='12hr'?'#fff8f6':'#fff'};color:${gs.timeFormat==='12hr'?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">12-hour</button>
-                <input type="hidden" id="gs-timefmt" value="${gs.timeFormat}">
-              </div>
-            </div>
+            <div><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Time zone</label><select id="gs-tz" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">${TIMEZONES.map(tz=>`<option value="${tz}" ${tz===gs.timezone||tz.startsWith(gs.timezone)?'selected':''}>${tz}</option>`).join('')}</select></div>
+            <div><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Time format</label><div style="display:flex;gap:8px"><button onclick="document.getElementById('gs-timefmt').value='24hr';this.style.background='#fff8f6';this.style.borderColor='#e8220e';this.style.color='#e8220e';this.nextElementSibling.style.background='#fff';this.nextElementSibling.style.borderColor='#e4e4f0';this.nextElementSibling.style.color='#18182b'" style="flex:1;padding:9px 0;border-radius:8px;border:${gs.timeFormat==='24hr'?'1.5px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.timeFormat==='24hr'?'#fff8f6':'#fff'};color:${gs.timeFormat==='24hr'?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">24-hour</button><button onclick="document.getElementById('gs-timefmt').value='12hr';this.style.background='#fff8f6';this.style.borderColor='#e8220e';this.style.color='#e8220e';this.previousElementSibling.style.background='#fff';this.previousElementSibling.style.borderColor='#e4e4f0';this.previousElementSibling.style.color='#18182b'" style="flex:1;padding:9px 0;border-radius:8px;border:${gs.timeFormat==='12hr'?'1.5px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.timeFormat==='12hr'?'#fff8f6':'#fff'};color:${gs.timeFormat==='12hr'?'#e8220e':'#18182b'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">12-hour</button><input type="hidden" id="gs-timefmt" value="${gs.timeFormat}"></div></div>
           </div>
         </div>
-
-        <!-- Currency + Theme (side by side) -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
           <div class="card" style="margin-bottom:0;display:${_gsCanTime?'block':'none'}">
             <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Currency</div>
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Symbol</label>
-            <select id="gs-currency" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-              <option value="LKR" ${gs.currency==='LKR'?'selected="selected"':''}>LKR — Sri Lankan Rupee</option>
-              <option value="USD" ${gs.currency==='USD'?'selected="selected"':''}>USD — US Dollar</option>
-              <option value="EUR" ${gs.currency==='EUR'?'selected="selected"':''}>EUR — Euro</option>
-              <option value="GBP" ${gs.currency==='GBP'?'selected="selected"':''}>GBP — British Pound</option>
-              <option value="AUD" ${gs.currency==='AUD'?'selected="selected"':''}>AUD — Australian Dollar</option>
-              <option value="AED" ${gs.currency==='AED'?'selected="selected"':''}>AED — UAE Dirham</option>
+            <select id="gs-currency" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <option value="LKR" ${gs.currency==='LKR'?'selected':''}>LKR — Sri Lankan Rupee</option>
+              <option value="USD" ${gs.currency==='USD'?'selected':''}>USD — US Dollar</option>
+              <option value="EUR" ${gs.currency==='EUR'?'selected':''}>EUR — Euro</option>
+              <option value="GBP" ${gs.currency==='GBP'?'selected':''}>GBP — British Pound</option>
+              <option value="AUD" ${gs.currency==='AUD'?'selected':''}>AUD — Australian Dollar</option>
+              <option value="AED" ${gs.currency==='AED'?'selected':''}>AED — UAE Dirham</option>
             </select>
           </div>
           <div class="card" style="margin-bottom:0">
             <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px">Theme</div>
             <div style="display:flex;gap:8px">
-              <button class="theme-btn" data-theme="light" onclick="gsSetTheme('light')" style="flex:1;padding:11px 0;border-radius:9px;border:${gs.theme==='light'?'2px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.theme==='light'?'#fff8f6':'#fff'};cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;position:relative">
-                <div style="font-size:13px;font-weight:700;color:${gs.theme==='light'?'#e8220e':'#18182b'}">Light</div>
-                <div class="theme-check" style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-radius:50%;background:#e8220e;display:${gs.theme==='light'?'flex':'none'};align-items:center;justify-content:center">
-                  <svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px"><path d="M2 5l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-              </button>
-              <button class="theme-btn" data-theme="dark" onclick="gsSetTheme('dark')" style="flex:1;padding:11px 0;border-radius:9px;border:${gs.theme==='dark'?'2px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.theme==='dark'?'#fff8f6':'#fff'};cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;position:relative">
-                <div style="font-size:13px;font-weight:700;color:${gs.theme==='dark'?'#e8220e':'#18182b'}">Dark</div>
-                <div class="theme-check" style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-radius:50%;background:#e8220e;display:${gs.theme==='dark'?'flex':'none'};align-items:center;justify-content:center">
-                  <svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px"><path d="M2 5l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-              </button>
+              <button onclick="gsSetTheme('light')" style="flex:1;padding:11px 0;border-radius:9px;border:${gs.theme==='light'?'2px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.theme==='light'?'#fff8f6':'#fff'};cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;position:relative"><div style="font-size:13px;font-weight:700;color:${gs.theme==='light'?'#e8220e':'#18182b'}">Light</div>${gs.theme==='light'?`<div style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-radius:50%;background:#e8220e;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px"><path d="M2 5l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`:''}</button>
+              <button onclick="gsSetTheme('dark')" style="flex:1;padding:11px 0;border-radius:9px;border:${gs.theme==='dark'?'2px solid #e8220e':'1.5px solid #e4e4f0'};background:${gs.theme==='dark'?'#fff8f6':'#fff'};cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;position:relative"><div style="font-size:13px;font-weight:700;color:${gs.theme==='dark'?'#e8220e':'#18182b'}">Dark</div>${gs.theme==='dark'?`<div style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-radius:50%;background:#e8220e;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px"><path d="M2 5l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`:''}</button>
             </div>
           </div>
-        </div>
-
-        <!-- Save button -->
-        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
-          <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Save settings
-        </button>
-      </div>
-
-      <!-- ═══ RIGHT: Notifications ═══ -->
-      <div class="card" style="margin-bottom:0;display:flex;flex-direction:column;overflow:hidden;height:fit-content">
-        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Notifications</div>
-        <div style="flex:1;display:flex;flex-direction:column;gap:10px;overflow-y:auto">
-          <div style="padding-bottom:12px;border-bottom:1px solid #f0f0f6">
-            <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Low stock threshold (units)</label>
-            <input type="number" id="gs-lowstock" value="${gs.lowStockThreshold}" min="1" max="100" style="width:90px;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-align:center" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-            <div style="font-size:11px;color:#9090b8;margin-top:5px">Alert when stock falls to or below this number</div>
-          </div>
-          ${[
-            {id:'gs-email-tgl',      key:'emailAlerts',        label:'Email alerts',          sub:'Receive alerts by email'},
-            {id:'gs-order-tgl',      key:'orderAlerts',         label:'New order',             sub:'Alert when a new order is added'},
-            {id:'gs-orderstatus-tgl',key:'orderStatusAlerts',   label:'Order status update',   sub:'Alert when order status changes'},
-            {id:'gs-useradd-tgl',    key:'userAddAlerts',       label:'User added',            sub:'Alert when a new user is added'},
-            {id:'gs-productadd-tgl', key:'productAddAlerts',    label:'Product added',         sub:'Alert when a new product is added'},
-          ].map(t=>`
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:#f8f8fc;border-radius:10px">
-              <div>
-                <div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:2px">${t.label}</div>
-                <div style="font-size:11px;color:#9090b8">${t.sub}</div>
-              </div>
-              <div style="display:flex;align-items:center;gap:7px;flex-shrink:0">
-                <span id="${t.id}-off" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#aaa':'#e8220e'}">Off</span>
-                <div class="tgl ${gs[t.key]?'on':''}" id="${t.id}" onclick="gsToggle('${t.id}','${t.key}')" style="width:40px;height:22px"><div class="tgl-dot"></div></div>
-                <span id="${t.id}-on" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#e8220e':'#aaa'}">On</span>
-              </div>
-            </div>`).join('')}
         </div>
       </div>
 
     </div>
+
+    <!-- Save button always visible at bottom -->
+    <div style="padding-top:12px;border-top:1px solid #f0f0f6;margin-top:4px">
+      <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px">
+        <svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Save settings
+      </button>
+    </div>
+  </div>
   `;
 }
 
