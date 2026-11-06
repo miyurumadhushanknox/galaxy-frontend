@@ -5002,15 +5002,15 @@ function saveGeneralSettings(){
   const _orig = (window._origDeliveryMethods||[]);
   for(const o of _orig){
     if(!_dm.find(d=>d.id===o.id)){
-      window.apiFetch('/api/settings/delivery-methods/'+o.id,{method:'DELETE'}).catch(()=>{});
+      window.apiFetch('/settings/delivery-methods/'+o.id,{method:'DELETE'}).catch(()=>{});
     }
   }
   for(const d of _dm){
     const body={name:d.name||'',price:d.price||0,apiKey:d.apiKey||null,manualPrice:!!d.manualPrice,pricingMode:d.pricingMode||'province',provincePrices:d.provincePrices||{},districtPrices:d.districtPrices||{}};
     if(d.id){
-      window.apiFetch('/api/settings/delivery-methods/'+d.id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).catch(()=>{});
+      window.apiFetch('/settings/delivery-methods/'+d.id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).catch(()=>{});
     } else {
-      window.apiFetch('/api/settings/delivery-methods',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).catch(()=>{});
+      window.apiFetch('/settings/delivery-methods/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).catch(()=>{});
     }
   }
 
