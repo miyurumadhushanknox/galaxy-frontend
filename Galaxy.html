@@ -3820,15 +3820,11 @@ function openEditOrder(id){
     document.getElementById('c-city').value    = o.city||'';
 
     // Pre-fill delivery, payment, discount
-    const delMap = {'No Delivery':'0','Koombiyo — ${generalSettings.currency} 400':'400','Lanka Courier — ${generalSettings.currency} 350':'350','DHL — ${generalSettings.currency} 500':'500','Domex — ${generalSettings.currency} 300':'300'};
     const delSel = document.getElementById('o-delivery');
-    if(delSel){
-      // find matching value
-      const dv = delMap[o.delivery]||'0';
-      delSel.value = dv;
-    }
+    if(delSel) delSel.value = o.delivery||'';
+
     const paySel = document.getElementById('o-payment');
-    if(paySel) paySel.value = o.payment||'Cash';
+    if(paySel) paySel.value = o.payment||'';
 
     // Discount — reverse lookup code from pct
     const dcEl = document.getElementById('o-discount-code');
