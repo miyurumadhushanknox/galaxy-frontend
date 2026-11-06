@@ -5127,7 +5127,7 @@ function renderGeneralPage(){
             </div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:${d.manualPrice?'12px':'0'}">
               <span style="font-size:12px;font-weight:600;color:${d.manualPrice?'#9090b8':'#18182b'};">Same as delivery service pricing</span>
-              <div onclick="gsToggleManualPrice(${i})" style="width:38px;height:20px;border-radius:10px;background:${d.manualPrice?'#e8220e':'#e4e4f0'};cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0"><div style="position:absolute;top:2px;left:${d.manualPrice?'20px':'2px'};width:16px;height:16px;border-radius:50%;background:#fff;transition:left 0.2s"></div></div>
+              <div onclick="gsToggleManualPrice(${i})" style="width:46px;height:24px;border-radius:12px;background:${d.manualPrice?'#e8220e':'#e4e4f0'};cursor:pointer;position:relative;transition:background 0.25s;flex-shrink:0;box-shadow:${d.manualPrice?'0 2px 8px rgba(232,34,14,0.3)':'0 1px 3px rgba(0,0,0,0.1)'}"><div style="position:absolute;top:3px;left:${d.manualPrice?'25px':'3px'};width:18px;height:18px;border-radius:50%;background:#fff;transition:left 0.25s;box-shadow:0 1px 4px rgba(0,0,0,0.18)"></div></div>
               <span style="font-size:12px;font-weight:600;color:${d.manualPrice?'#18182b':'#9090b8'};">Manual Pricing</span>
             </div>
             ${d.manualPrice?`<div style="margin-top:10px">
