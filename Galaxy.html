@@ -5079,7 +5079,6 @@ function gsDeliveryFields(d,i){
   }
   if(d.manualPrice){
     html += `<div style="margin-top:10px">
-      <p style="font-size:11px;color:#9090b8;margin:0 0 10px 0;font-family:'Plus Jakarta Sans',sans-serif;">This is the base delivery price. Every order is calculated based on weight (per kg).</p>
       <div style="display:flex;gap:10px;margin-bottom:12px">
         <button onclick="gsUpdateDelivery(${i},'pricingMode','province');renderGeneralPage()" style="flex:1;padding:8px 0;border:none;border-radius:20px;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;background:${(d.pricingMode||'province')==='province'?'#e8220e':'#f0f0f5'};color:${(d.pricingMode||'province')==='province'?'#fff':'#9090b8'}">${(d.pricingMode||'province')==='province'?'● ':' '}Province wise</button>
         <button onclick="gsUpdateDelivery(${i},'pricingMode','district');renderGeneralPage()" style="flex:1;padding:8px 0;border:none;border-radius:20px;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;background:${d.pricingMode==='district'?'#e8220e':'#f0f0f5'};color:${d.pricingMode==='district'?'#fff':'#9090b8'}">${d.pricingMode==='district'?'● ':' '}District wise</button>
@@ -5160,6 +5159,7 @@ function renderGeneralPage(){
             ${!['Koombiyo','PickMe Flash','Grab Express','Domex','Pronto','MyPost'].includes(d.name)?`<div style="margin-bottom:12px"><input type="text" placeholder="Enter delivery service name" value="${d.name||''}" onchange="gsUpdateDelivery(${i},'name',this.value)" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>`:''}
             ${gsDeliveryFields(d,i)}
             <div style="display:flex;gap:8px;margin-top:14px">
+              <p style="font-size:11px;color:#9090b8;margin:0 0 10px 0;font-family:'Plus Jakarta Sans',sans-serif;">💡 These are base delivery prices. Each order is calculated based on weight (per kg).</p>
               <button onclick="gsRemoveDelivery(${i})" style="flex:1;padding:9px 0;border:1.5px solid #e8220e;border-radius:9px;background:#fff;color:#e8220e;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Delete</button>
               <button onclick="saveGeneralSettings()" style="flex:1;padding:9px 0;border:none;border-radius:9px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Save</button>
             </div>
