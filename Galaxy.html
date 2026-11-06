@@ -5006,7 +5006,7 @@ function saveGeneralSettings(){
     }
   }
   for(const d of _dm){
-    const body={name:d.name||'',price:d.price||0,apiKey:d.apiKey||null,manualPrice:!!d.manualPrice,pricingMode:d.pricingMode||'province',provincePrices:d.provincePrices||{},districtPrices:d.districtPrices||{}};
+    const _mode=d.pricingMode||'province';const body={name:d.name||'',price:d.price||0,apiKey:d.apiKey||null,manualPrice:!!d.manualPrice,pricingMode:_mode,provincePrices:_mode==='province'?d.provincePrices||{}:{},districtPrices:_mode==='district'?d.districtPrices||{}:{}};
     if(d.id){
       window.apiFetch('/settings/delivery-methods/'+d.id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).catch(()=>{});
     } else {
