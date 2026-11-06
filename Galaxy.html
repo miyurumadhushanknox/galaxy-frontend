@@ -5079,6 +5079,7 @@ function gsDeliveryFields(d,i){
   }
   if(d.manualPrice){
     html += `<div style="margin-top:10px">
+      <p style="font-size:11px;color:#9090b8;margin:0 0 10px 0;font-family:'Plus Jakarta Sans',sans-serif;">This is the base delivery price. Every order is calculated based on weight (per kg).</p>
       <div style="display:flex;gap:10px;margin-bottom:12px">
         <button onclick="gsUpdateDelivery(${i},'pricingMode','province');renderGeneralPage()" style="flex:1;padding:8px 0;border:none;border-radius:20px;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;background:${(d.pricingMode||'province')==='province'?'#e8220e':'#f0f0f5'};color:${(d.pricingMode||'province')==='province'?'#fff':'#9090b8'}">${(d.pricingMode||'province')==='province'?'● ':' '}Province wise</button>
         <button onclick="gsUpdateDelivery(${i},'pricingMode','district');renderGeneralPage()" style="flex:1;padding:8px 0;border:none;border-radius:20px;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;background:${d.pricingMode==='district'?'#e8220e':'#f0f0f5'};color:${d.pricingMode==='district'?'#fff':'#9090b8'}">${d.pricingMode==='district'?'● ':' '}District wise</button>
