@@ -7749,7 +7749,7 @@ function gsConfirmDeleteDelivery(i){
   c.style.display='flex';
 }
 
-function gsCloseDeliveryModal(){const gs=generalSettings;if(gs.deliveryMethods&&gs.deliveryMethods[_gsDeliveryEditIdx]&&!gs.deliveryMethods[_gsDeliveryEditIdx].name){gs.deliveryMethods.splice(_gsDeliveryEditIdx,1);}document.getElementById('gs-delivery-modal').style.display='none';saveGeneralSettings();renderGeneralPage();
+function gsCloseDeliveryModal(){const gs=generalSettings;if(gs.deliveryMethods&&gs.deliveryMethods[_gsDeliveryEditIdx]&&!gs.deliveryMethods[_gsDeliveryEditIdx].name){gs.deliveryMethods.splice(_gsDeliveryEditIdx,1);}document.getElementById('gs-delivery-modal').style.display='none';renderGeneralPage();
 }
 
 function gsDeliveryModalBody(i){
