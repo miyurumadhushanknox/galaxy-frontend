@@ -1265,7 +1265,7 @@ tbody tr:hover .row-actions{display:flex}
               <select id="o-delivery" onchange="calcOrder()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%">
                 ${(generalSettings.deliveryMethods||[]).map(function(d){return '<option value="'+d.id+'">'+d.name+'</option>';}).join('')}
               </select>
-              <span id="o-delivery-cost" style="font-size:13px;font-weight:700;color:#18182b;min-width:85px;text-align:right"></span>
+              <span style="display:flex;align-items:center;gap:6px;min-width:85px;justify-content:flex-end"><span id="o-delivery-cost" style="font-size:13px;font-weight:700;color:#18182b;text-align:right"></span><svg onclick="openDeliveryEditModal()" viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;cursor:pointer;color:#e8220e;flex-shrink:0"><path d="M11.5 2.5a1.5 1.5 0 0 1 2.12 2.12L5 13.25l-2.75.5.5-2.75L11.5 2.5z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             </div>
             <div style="display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:12px;margin-bottom:13px">
               <div style="font-size:13px;font-weight:800;color:#18182b;display:flex;align-items:center;gap:7px">
@@ -2347,6 +2347,7 @@ function initOrder(){
   ["c-name","c-address","c-phone1","c-phone2","c-email","c-note"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("c-city").value="";
   renderOrderItems();document.getElementById('o-delivery').innerHTML=(generalSettings.deliveryMethods||[]).map(function(d){return '<option value="'+d.id+'">'+d.name+'</option>';}).join('');document.getElementById('c-city').innerHTML='<option value="">Select city</option>'+Object.entries(SL_CITIES).map(function(pe){return Object.entries(pe[1]).map(function(de){return de[1].map(function(city){return '<option>'+city+'</option>';}).join('');}).join('');}).join('');setTimeout(()=>{updateOrderDetails();calcOrder();},0);
+  _deliveryOverride=null;
 }
 
 function updateOrderDetails(){
@@ -2503,7 +2504,7 @@ function calcOrder(){
   const _selectedCity=document.getElementById('c-city')?document.getElementById('c-city').value:'';
   const _totalWeight=orderItems.reduce(function(a,item){const p=products.find(function(x){return x.id===item.pid;});return a+(p?((p.weight||0)*item.qty):0);},0);
   const _loc=slFindCity(_selectedCity);const _pricePerKg=slGetDeliveryPrice(selDelMethod,_selectedCity);
-  const deliveryCost=Math.ceil(_totalWeight)*_pricePerKg;
+  const deliveryCost=(_deliveryOverride!==null)?_deliveryOverride:Math.ceil(_totalWeight)*_pricePerKg;
   const discount=Math.round(itemsTotal*(discountPct/100));
   const subtotal=itemsTotal+deliveryCost-discount;
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ LKR "+deliveryCost.toLocaleString():"";
@@ -7722,6 +7723,12 @@ async function sendResetLink() {
   const data = await res.json();
   document.getElementById('resetMsg').textContent = data.message || 'Reset link sent!';
 }
+
+let _deliveryOverride=null;
+function openDeliveryEditModal(){const cur=document.getElementById('o-delivery-cost');const val=(cur?cur.textContent:'').replace(/[^0-9.]/g,'');document.getElementById('delivery-override-input').value=val||'';document.getElementById('delivery-edit-modal').style.display='flex';}
+function closeDeliveryEditModal(){document.getElementById('delivery-edit-modal').style.display='none';}
+function confirmDeliveryOverride(){const val=parseFloat(document.getElementById('delivery-override-input').value);if(!isNaN(val)&&val>=0){_deliveryOverride=val;calcOrder();}closeDeliveryEditModal();}
+
 </script>
 
 <!-- Forgot Password Popup -->
@@ -7738,6 +7745,19 @@ async function sendResetLink() {
     style="width:100%; padding:14px; background:linear-gradient(135deg,#ff5a30,#e8220e); color:white; border:1px solid rgba(255,255,255,0.35); border-radius:14px; cursor:pointer; font-size:15px; font-weight:600; letter-spacing:.02em; backdrop-filter:blur(10px); margin-bottom:16px;">Send Reset Link</button>
     <p id="resetMsg" style="color:#4ade80; margin-bottom:12px; font-size:13px;"></p>
     <a href="#" onclick="hideForgotPassword(); return false;" style="color:rgba(255,255,255,0.45); font-size:12px; text-decoration:none; letter-spacing:.03em;">Cancel</a>
+  </div>
+</div>
+
+<!-- Place Order > Delivery Edit Topup Box -->
+<div id="delivery-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;padding:28px 24px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.18);font-family:'Plus Jakarta Sans',sans-serif">
+    <div style="font-size:15px;font-weight:800;color:#18182b;margin-bottom:6px">Override Delivery Price</div>
+    <div style="font-size:12px;color:#e8220e;background:#fff5f5;border:1px solid #ffd0cc;border-radius:8px;padding:10px 12px;margin-bottom:16px">⚠️ This price differs from the calculated amount. Please confirm you agree.</div>
+    <input id="delivery-override-input" type="number" min="0" style="width:100%;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;outline:none;box-sizing:border-box;margin-bottom:16px" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+    <div style="display:flex;gap:10px">
+      <button onclick="closeDeliveryEditModal()" style="flex:1;padding:10px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;color:#18182b">Cancel</button>
+      <button onclick="confirmDeliveryOverride()" style="flex:1;padding:10px;border:none;border-radius:10px;background:#e8220e;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;color:#fff">Confirm</button>
+    </div>
   </div>
 </div>
 
