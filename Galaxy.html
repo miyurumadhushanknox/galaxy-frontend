@@ -7727,7 +7727,8 @@ async function sendResetLink() {
 let _deliveryOverride=null;
 function openDeliveryEditModal(){const cur=document.getElementById('o-delivery-cost');const val=(cur?cur.textContent:'').replace(/[^0-9.]/g,'');document.getElementById('delivery-override-input').value=val||'';document.getElementById('delivery-edit-modal').style.display='flex';}
 function closeDeliveryEditModal(){document.getElementById('delivery-edit-modal').style.display='none';}
-function confirmDeliveryOverride(){const val=parseFloat(document.getElementById('delivery-override-input').value);if(!isNaN(val)&&val>=0){_deliveryOverride=val;calcOrder();}closeDeliveryEditModal();}
+function confirmDeliveryOverride(){const val=parseFloat(document.getElementById('delivery-override-input').value);if(!isNaN(val)&&val>=0){_deliveryOverride=val;calcOrder();}closeDeliveryEditModal();
+}
 
 </script>
 
@@ -7749,7 +7750,7 @@ function confirmDeliveryOverride(){const val=parseFloat(document.getElementById(
 </div>
 
 <!-- Place Order > Delivery Edit Topup Box -->
-<div id="delivery-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center">
+<div id="delivery-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999999;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:16px;padding:28px 24px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.18);font-family:'Plus Jakarta Sans',sans-serif">
     <div style="font-size:15px;font-weight:800;color:#18182b;margin-bottom:6px">Override Delivery Price</div>
     <div style="font-size:12px;color:#e8220e;background:#fff5f5;border:1px solid #ffd0cc;border-radius:8px;padding:10px 12px;margin-bottom:16px">⚠️ This price differs from the calculated amount. Please confirm you agree.</div>
