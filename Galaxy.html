@@ -7753,8 +7753,8 @@ function gsOpenDeliveryModal(i){
   document.getElementById('gs-delivery-modal-title').textContent=i>=0?'Edit Delivery Service':'Add Delivery Service';
   document.getElementById('gs-delivery-modal-body').innerHTML=gsDeliveryModalBody(_gsDeliveryEditIdx);
   document.getElementById('gs-delivery-modal-actions').innerHTML=`${i>=0?`<button onclick="gsRemoveDelivery(${_gsDeliveryEditIdx});gsCloseDeliveryModal()" style="flex:1;padding:10px;border:1.5px solid #e8220e;border-radius:10px;background:#fff;color:#e8220e;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Delete</button>`:''}
-    <button onclick="saveGeneralSettings();gsCloseDeliveryModal()" style="flex:2;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Save</button>`;
-  const m=document.getElementById('gs-delivery-modal');document.body.appendChild(m);m.style.display='flex';
+  <button onclick="saveGeneralSettings();gsCloseDeliveryModal()" style="flex:2;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Save</button>`;
+  const m=document.getElementById('gs-delivery-modal');m.style.display='flex';
 }
 function gsCloseDeliveryModal(){document.getElementById('gs-delivery-modal').style.display='none';renderGeneralPage();}
 function gsDeliveryModalBody(i){
