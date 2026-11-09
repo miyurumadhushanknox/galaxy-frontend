@@ -1232,7 +1232,7 @@ tbody tr:hover .row-actions{display:flex}
             </div>
             <div style="position:relative;margin-bottom:12px">
               <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none;z-index:1" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.79 1 4 2.79 4 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="5" r="1.5" fill="currentColor" opacity=".4"/></svg>
-              <select id="c-city" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <select id="c-city" onchange="calcOrder()" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
                 <option value="">Select city</option>
               </select>
             </div>
