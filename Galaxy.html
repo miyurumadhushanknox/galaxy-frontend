@@ -2498,7 +2498,7 @@ function calcOrder(){
     const price=item.customPrice!==null?item.customPrice:(p?p.price:0);
     return a+price*item.qty;
   },0);
-  const deliveryCost=parseInt(document.getElementById("o-delivery").value)||0;
+  const selDel=document.getElementById("o-delivery");const selDelId=selDel?selDel.value:'';const selDelMethod=(generalSettings.deliveryMethods||[]).find(function(d){return d.id===selDelId;});const deliveryCost=selDelMethod?(selDelMethod.price||0):0;
   const discount=Math.round(itemsTotal*(discountPct/100));
   const subtotal=itemsTotal+deliveryCost-discount;
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ LKR "+deliveryCost.toLocaleString():"";
