@@ -7725,7 +7725,7 @@ async function sendResetLink() {
 }
 
 let _deliveryOverride=null;
-function openDeliveryEditModal(){const cur=document.getElementById('o-delivery-cost');const val=(cur?cur.textContent:'').replace(/[^0-9.]/g,'');document.getElementById('delivery-override-input').value=val||'';document.getElementById('delivery-edit-modal').style.display='flex';}
+function openDeliveryEditModal(){const cur=document.getElementById('o-delivery-cost');const val=(cur?cur.textContent:'').replace(/[^0-9.]/g,'');document.getElementById('delivery-override-input').value=val||'';const m=document.getElementById('delivery-edit-modal');document.body.appendChild(m);m.style.display='flex';}
 function closeDeliveryEditModal(){document.getElementById('delivery-edit-modal').style.display='none';}
 function confirmDeliveryOverride(){const val=parseFloat(document.getElementById('delivery-override-input').value);if(!isNaN(val)&&val>=0){_deliveryOverride=val;calcOrder();}closeDeliveryEditModal();
 }
