@@ -7762,7 +7762,11 @@ function gsRemoveDelivery(i){
   generalSettings.deliveryMethods.splice(i,1);
   renderGeneralPage();
 }
-function gsConfirmDeleteDelivery(i){if(confirm('Delete this delivery service?')){gsRemoveDelivery(i);document.getElementById('gs-delivery-modal').style.display='none';}
+function gsConfirmDeleteDelivery(i){
+  let c=document.getElementById('gs-delete-confirm');
+  if(!c){c=document.createElement('div');c.id='gs-delete-confirm';c.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999999;display:flex;align-items:center;justify-content:center';c.innerHTML='<div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:360px;margin:24px;font-family:\'Plus Jakarta Sans\',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,0.18)"><div style="font-size:15px;font-weight:800;color:#18182b;margin-bottom:8px">Delete Delivery Service</div><div style="font-size:13px;color:#9090b8;font-weight:600;margin-bottom:20px">This delivery service and all its pricing data will be permanently removed. This action cannot be undone.</div><div style="display:flex;gap:10px"><button onclick="document.getElementById(\'gs-delete-confirm\').style.display=\'none\'" style="flex:1;padding:10px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">Cancel</button><button id="gs-delete-confirm-btn" style="flex:1;padding:10px;border:none;border-radius:10px;background:#e8220e;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">Delete</button></div></div>';document.body.appendChild(c);}
+  document.getElementById('gs-delete-confirm-btn').onclick=function(){gsRemoveDelivery(i);document.getElementById('gs-delete-confirm').style.display='none';document.getElementById('gs-delivery-modal').style.display='none';};
+  c.style.display='flex';
 }
 
 let _deliveryOverride=null;
