@@ -5186,7 +5186,7 @@ function renderGeneralPage(){
               <div style="font-size:12px;font-weight:700;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif">Add Manual</div>
             </div>
             </div>
-          </div>
+          
         </div>
       </div>
 
@@ -7742,7 +7742,7 @@ function gsOpenDeliveryModal(i){
   document.getElementById('gs-delivery-modal-title').textContent=i>=0?'Edit Delivery Service':'Add Delivery Service';
   document.getElementById('gs-delivery-modal-body').innerHTML=gsDeliveryModalBody(_gsDeliveryEditIdx);
   document.getElementById('gs-delivery-modal-actions').innerHTML=(i>=0?'<button onclick="gsRemoveDelivery('+_gsDeliveryEditIdx+');gsCloseDeliveryModal()" style="flex:1;padding:10px;border:1.5px solid #e8220e;border-radius:10px;background:#fff;color:#e8220e;font-size:13px;font-weight:700;cursor:pointer">Delete</button>':'')+'<button onclick="saveGeneralSettings();gsCloseDeliveryModal()" style="flex:2;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer">Save</button>';
-  m.style.display='flex';
+  document.body.appendChild(m);m.style.display='flex';
 }
 function gsCloseDeliveryModal(){const gs=generalSettings;if(gs.deliveryMethods&&gs.deliveryMethods[_gsDeliveryEditIdx]&&!gs.deliveryMethods[_gsDeliveryEditIdx].name){gs.deliveryMethods.splice(_gsDeliveryEditIdx,1);}document.getElementById('gs-delivery-modal').style.display='none';renderGeneralPage();}
 function gsDeliveryModalBody(i){
@@ -7799,16 +7799,16 @@ function confirmDeliveryOverride(){const val=parseFloat(document.getElementById(
 </div>
 
  <!-- DELIVERY EDIT MODAL -->
-      <div id="gs-delivery-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999999;align-items:center;justify-content:center;overflow-y:auto">
-       <div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:520px;margin:24px auto;box-shadow:0 8px 32px rgba(0,0,0,0.18);font-family:'Plus Jakarta Sans',sans-serif">
+  <div id="gs-delivery-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999999;align-items:center;justify-content:center;overflow-y:auto">
+    <div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:520px;margin:24px auto;box-shadow:0 8px 32px rgba(0,0,0,0.18);font-family:'Plus Jakarta Sans',sans-serif">
        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-       <div style="font-size:15px;font-weight:800;color:#18182b" id="gs-delivery-modal-title">Delivery Service</div>
-       <svg onclick="gsCloseDeliveryModal()" viewBox="0 0 16 16" fill="none" style="width:18px;height:18px;cursor:pointer;color:#9090b8"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+         <div style="font-size:15px;font-weight:800;color:#18182b" id="gs-delivery-modal-title">Delivery Service</div>
+         <svg onclick="gsCloseDeliveryModal()" viewBox="0 0 16 16" fill="none" style="width:18px;height:18px;cursor:pointer;color:#9090b8"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
        </div>
        <div id="gs-delivery-modal-body"></div>
        <div style="display:flex;gap:10px;margin-top:20px" id="gs-delivery-modal-actions"></div>
-       </div>
-      </div>
+    </div>
+  </div>
 
 </body>
 </html>
