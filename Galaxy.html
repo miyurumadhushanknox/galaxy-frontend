@@ -7730,9 +7730,9 @@ async function sendResetLink() {
 }
 
 let _gsDeliveryEditIdx=-1;
-window._gsDeliveryEditBackup=JSON.parse(JSON.stringify(generalSettings.deliveryMethods[_gsDeliveryEditIdx]||{}));
 function gsOpenDeliveryModal(i){
   _gsDeliveryEditIdx=i;
+  window._gsDeliveryEditBackup=i>=0?JSON.parse(JSON.stringify(generalSettings.deliveryMethods[i])):null;
   const gs=generalSettings;
   if(i<0){gs.deliveryMethods=gs.deliveryMethods||[];gs.deliveryMethods.push({name:'',manualPrice:true,pricingMode:'province',provincePrices:{},districtPrices:{}});_gsDeliveryEditIdx=gs.deliveryMethods.length-1;}
   let m=document.getElementById('gs-delivery-modal');
