@@ -7709,12 +7709,14 @@ function showForgotPassword() {
   document.querySelector('.login-box').style.visibility = 'hidden';
   modal.style.display = 'flex';
 }
+
 function hideForgotPassword() {
   document.getElementById('forgotModal').style.display = 'none';
   document.querySelector('.login-box').style.visibility = 'visible';
   document.getElementById('resetMsg').textContent = '';
   document.getElementById('resetEmail').value = '';
 }
+
 async function sendResetLink() {
   const email = document.getElementById('resetEmail').value;
   if (!email) return;
@@ -7736,13 +7738,20 @@ function gsOpenDeliveryModal(i){
   if(!m){m=document.createElement('div');m.id='gs-delivery-modal';m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999999;display:none;align-items:center;justify-content:center;overflow-y:auto';m.innerHTML='<div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:520px;margin:24px auto;font-family:\'Plus Jakarta Sans\',sans-serif"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><div style="font-size:15px;font-weight:800;color:#18182b" id="gs-delivery-modal-title"></div><svg onclick="gsCloseDeliveryModal()" viewBox="0 0 16 16" fill="none" style="width:18px;height:18px;cursor:pointer;color:#9090b8"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div id="gs-delivery-modal-body"></div><div style="display:flex;gap:10px;margin-top:20px" id="gs-delivery-modal-actions"></div></div>';document.body.appendChild(m);}
   document.getElementById('gs-delivery-modal-title').textContent=i>=0?'Edit Delivery Service':'Add Delivery Service';
   document.getElementById('gs-delivery-modal-body').innerHTML=gsDeliveryModalBody(_gsDeliveryEditIdx);
-  document.getElementById('gs-delivery-modal-actions').innerHTML=(i>=0?'<button onclick="gsConfirmDeleteDelivery('+_gsDeliveryEditIdx+');gsCloseDeliveryModal()" style="flex:1;padding:10px;border:1.5px solid #e8220e;border-radius:10px;background:#fff;color:#e8220e;font-size:13px;font-weight:700;cursor:pointer">Delete</button>':'')+'<button onclick="saveGeneralSettings();gsCloseDeliveryModal()" style="flex:2;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer">Save</button>';
+  document.getElementById('gs-delivery-modal-actions').innerHTML=(i>=0?'<button onclick="gsConfirmDeleteDelivery('+_gsDeliveryEditIdx+');gsCloseDeliveryModal()" style="flex:1;padding:10px;border:1.5px solid #e8220e;border-radius:10px;background:#fff;color:#e8220e;font-size:13px;font-weight:700;cursor:pointer">Delete</button>':'')+'<button onclick="gsSaveDeliveryModal()" style="flex:2;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer">Save</button>';
   document.body.appendChild(m);m.style.display='flex';
 }
+
 function gsConfirmDeleteDelivery(i){
-  if(confirm('Delete this delivery service?')){gsRemoveDelivery(i);gsCloseDeliveryModal();}
+  let c=document.getElementById('gs-delete-confirm');
+  if(!c){c=document.createElement('div');c.id='gs-delete-confirm';c.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999999;display:flex;align-items:center;justify-content:center';c.innerHTML='<div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:360px;margin:24px;font-family:\'Plus Jakarta Sans\',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,0.18)"><div style="font-size:15px;font-weight:800;color:#18182b;margin-bottom:8px">Delete Delivery Service</div><div style="font-size:13px;color:#9090b8;font-weight:600;margin-bottom:20px">This delivery service and all its pricing data will be permanently removed.</div><div style="display:flex;gap:10px"><button onclick="document.getElementById(\'gs-delete-confirm\').style.display=\'none\'" style="flex:1;padding:10px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#18182b;font-size:13px;font-weight:700;cursor:pointer">Cancel</button><button id="gs-delete-confirm-btn" style="flex:1;padding:10px;border:none;border-radius:10px;background:#e8220e;color:#fff;font-size:13px;font-weight:700;cursor:pointer">Delete</button></div></div>';document.body.appendChild(c);}
+  document.getElementById('gs-delete-confirm-btn').onclick=function(){gsRemoveDelivery(i);document.getElementById('gs-delete-confirm').style.display='none';document.getElementById('gs-delivery-modal').style.display='none';};
+  c.style.display='flex';
 }
-function gsCloseDeliveryModal(){const gs=generalSettings;if(gs.deliveryMethods&&gs.deliveryMethods[_gsDeliveryEditIdx]&&!gs.deliveryMethods[_gsDeliveryEditIdx].name){gs.deliveryMethods.splice(_gsDeliveryEditIdx,1);}document.getElementById('gs-delivery-modal').style.display='none';saveGeneralSettings();renderGeneralPage();}
+
+function gsCloseDeliveryModal(){const gs=generalSettings;if(gs.deliveryMethods&&gs.deliveryMethods[_gsDeliveryEditIdx]&&!gs.deliveryMethods[_gsDeliveryEditIdx].name){gs.deliveryMethods.splice(_gsDeliveryEditIdx,1);}document.getElementById('gs-delivery-modal').style.display='none';saveGeneralSettings();renderGeneralPage();
+}
+
 function gsDeliveryModalBody(i){
   const gs=generalSettings;const d=(gs.deliveryMethods||[])[i];if(!d) return '';
   let html=`<div style="margin-bottom:12px"><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Service Name</label><input type="text" placeholder="Enter delivery service name" value="${d.name||''}" oninput="gsUpdateDelivery(${i},'name',this.value)" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>`;
@@ -7756,6 +7765,15 @@ function gsDeliveryModalBody(i){
     html+=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">${['Colombo','Gampaha','Kalutara','Kandy','Matale','Nuwara Eliya','Galle','Matara','Hambantota','Jaffna','Kilinochchi','Mannar','Vavuniya','Mullaitivu','Batticaloa','Ampara','Trincomalee','Kurunegala','Puttalam','Anuradhapura','Polonnaruwa','Badulla','Monaragala','Ratnapura','Kegalle'].map(dist=>`<div style="display:flex;align-items:center;gap:4px;padding:6px 8px;border:1.5px solid #e4e4f0;border-radius:8px"><span style="font-size:11px;font-weight:600;color:#18182b;flex:1;font-family:'Plus Jakarta Sans',sans-serif">${dist}</span><input type="number" min="0" placeholder="0" value="${(d.districtPrices||{})[dist]||''}" oninput="gsUpdateDeliveryRegion(${i},'district','${dist}',this.value)" style="width:55px;padding:5px 6px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-weight:600;text-align:right;outline:none;font-family:'Plus Jakarta Sans',sans-serif" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>`).join('')}</div>`;
   }
   return html;
+}
+
+function gsSaveDeliveryModal(){
+  const gs=generalSettings;
+  const d=gs.deliveryMethods[_gsDeliveryEditIdx];
+  if(!d||!d.name.trim()){alert('Please enter a service name.');return;}
+  const dup=gs.deliveryMethods.some(function(m,idx){return idx!==_gsDeliveryEditIdx&&m.name.trim().toLowerCase()===d.name.trim().toLowerCase();});
+  if(dup){alert('A delivery service with this name already exists.');return;}
+  saveGeneralSettings();gsCloseDeliveryModal();
 }
 
 function gsRemoveDelivery(i){
