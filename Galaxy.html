@@ -5190,18 +5190,6 @@ function renderGeneralPage(){
         </div>
       </div>
 
-      <!-- DELIVERY EDIT MODAL -->
-      <div id="gs-delivery-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999999;align-items:center;justify-content:center;overflow-y:auto">
-       <div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:520px;margin:24px auto;box-shadow:0 8px 32px rgba(0,0,0,0.18);font-family:'Plus Jakarta Sans',sans-serif">
-       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-       <div style="font-size:15px;font-weight:800;color:#18182b" id="gs-delivery-modal-title">Delivery Service</div>
-       <svg onclick="gsCloseDeliveryModal()" viewBox="0 0 16 16" fill="none" style="width:18px;height:18px;cursor:pointer;color:#9090b8"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-       </div>
-       <div id="gs-delivery-modal-body"></div>
-       <div style="display:flex;gap:10px;margin-top:20px" id="gs-delivery-modal-actions"></div>
-       </div>
-      </div>
-
       <!-- PAYMENT TAB -->
       <div style="display:${tab==='payment'?'block':'none'}">
         <div class="card" style="margin-bottom:12px">
@@ -7748,14 +7736,14 @@ let _gsDeliveryEditIdx=-1;
 function gsOpenDeliveryModal(i){
   _gsDeliveryEditIdx=i;
   const gs=generalSettings;
-  if(i<0){const newD={name:'',manualPrice:true,pricingMode:'province',provincePrices:{},districtPrices:{}};(gs.deliveryMethods=gs.deliveryMethods||[]).push(newD);_gsDeliveryEditIdx=gs.deliveryMethods.length-1;}
+  if(i<0){gs.deliveryMethods=gs.deliveryMethods||[];gs.deliveryMethods.push({name:'',manualPrice:true,pricingMode:'province',provincePrices:{},districtPrices:{}});_gsDeliveryEditIdx=gs.deliveryMethods.length-1;}
   document.getElementById('gs-delivery-modal-title').textContent=i>=0?'Edit Delivery Service':'Add Delivery Service';
   document.getElementById('gs-delivery-modal-body').innerHTML=gsDeliveryModalBody(_gsDeliveryEditIdx);
   document.getElementById('gs-delivery-modal-actions').innerHTML=`${i>=0?`<button onclick="gsRemoveDelivery(${_gsDeliveryEditIdx});gsCloseDeliveryModal()" style="flex:1;padding:10px;border:1.5px solid #e8220e;border-radius:10px;background:#fff;color:#e8220e;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Delete</button>`:''}
   <button onclick="saveGeneralSettings();gsCloseDeliveryModal()" style="flex:2;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Save</button>`;
   const m=document.getElementById('gs-delivery-modal');m.style.display='flex';
 }
-function gsCloseDeliveryModal(){document.getElementById('gs-delivery-modal').style.display='none';renderGeneralPage();}
+function gsCloseDeliveryModal(){const gs=generalSettings;if(gs.deliveryMethods&&gs.deliveryMethods[_gsDeliveryEditIdx]&&!gs.deliveryMethods[_gsDeliveryEditIdx].name){gs.deliveryMethods.splice(_gsDeliveryEditIdx,1);}document.getElementById('gs-delivery-modal').style.display='none';renderGeneralPage();}
 function gsDeliveryModalBody(i){
   const gs=generalSettings;const d=(gs.deliveryMethods||[])[i];if(!d) return '';
   let html=`<div style="margin-bottom:12px"><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Service Name</label><input type="text" placeholder="Enter delivery service name" value="${d.name||''}" oninput="gsUpdateDelivery(${i},'name',this.value)" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>`;
@@ -7808,6 +7796,18 @@ function confirmDeliveryOverride(){const val=parseFloat(document.getElementById(
     </div>
   </div>
 </div>
+
+ <!-- DELIVERY EDIT MODAL -->
+      <div id="gs-delivery-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999999;align-items:center;justify-content:center;overflow-y:auto">
+       <div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:520px;margin:24px auto;box-shadow:0 8px 32px rgba(0,0,0,0.18);font-family:'Plus Jakarta Sans',sans-serif">
+       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+       <div style="font-size:15px;font-weight:800;color:#18182b" id="gs-delivery-modal-title">Delivery Service</div>
+       <svg onclick="gsCloseDeliveryModal()" viewBox="0 0 16 16" fill="none" style="width:18px;height:18px;cursor:pointer;color:#9090b8"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+       </div>
+       <div id="gs-delivery-modal-body"></div>
+       <div style="display:flex;gap:10px;margin-top:20px" id="gs-delivery-modal-actions"></div>
+       </div>
+      </div>
 
 </body>
 </html>
