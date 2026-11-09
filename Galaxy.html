@@ -6583,6 +6583,7 @@ function gsUpdateDelivery(i, field, val){
   if(!generalSettings.deliveryMethods[i]) return;
   if(field==='price') val=parseFloat(val)||0;
   generalSettings.deliveryMethods[i][field] = val;
+  if(document.getElementById('gs-delivery-modal')&&document.getElementById('gs-delivery-modal').style.display==='flex'){document.getElementById('gs-delivery-modal-body').innerHTML=gsDeliveryModalBody(i);}
 }
 
 function gsUpdateDeliveryRegion(i, type, region, val){
@@ -6590,6 +6591,7 @@ function gsUpdateDeliveryRegion(i, type, region, val){
   const key = type==='province' ? 'provincePrices' : 'districtPrices';
   if(!generalSettings.deliveryMethods[i][key]) generalSettings.deliveryMethods[i][key]={};
   generalSettings.deliveryMethods[i][key][region] = parseFloat(val)||0;
+  if(document.getElementById('gs-delivery-modal')&&document.getElementById('gs-delivery-modal').style.display==='flex'){document.getElementById('gs-delivery-modal-body').innerHTML=gsDeliveryModalBody(i);}
 }
 
 function gsAddPayment(){
