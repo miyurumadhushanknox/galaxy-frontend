@@ -7730,6 +7730,7 @@ async function sendResetLink() {
 }
 
 let _gsDeliveryEditIdx=-1;
+window._gsDeliveryEditBackup=JSON.parse(JSON.stringify(generalSettings.deliveryMethods[_gsDeliveryEditIdx]||{}));
 function gsOpenDeliveryModal(i){
   _gsDeliveryEditIdx=i;
   const gs=generalSettings;
@@ -7749,7 +7750,7 @@ function gsConfirmDeleteDelivery(i){
   c.style.display='flex';
 }
 
-function gsCloseDeliveryModal(){const gs=generalSettings;if(gs.deliveryMethods&&gs.deliveryMethods[_gsDeliveryEditIdx]&&!gs.deliveryMethods[_gsDeliveryEditIdx].name){gs.deliveryMethods.splice(_gsDeliveryEditIdx,1);}document.getElementById('gs-delivery-modal').style.display='none';renderGeneralPage();
+function gsCloseDeliveryModal(){const gs=generalSettings;if(gs.deliveryMethods&&gs.deliveryMethods[_gsDeliveryEditIdx]){if(!gs.deliveryMethods[_gsDeliveryEditIdx].name){gs.deliveryMethods.splice(_gsDeliveryEditIdx,1);}else if(window._gsDeliveryEditBackup){gs.deliveryMethods[_gsDeliveryEditIdx]=JSON.parse(JSON.stringify(window._gsDeliveryEditBackup));}}document.getElementById('gs-delivery-modal').style.display='none';renderGeneralPage();
 }
 
 function gsDeliveryModalBody(i){
