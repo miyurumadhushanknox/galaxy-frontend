@@ -6595,7 +6595,6 @@ function gsUpdateDelivery(i, field, val){
   if(!generalSettings.deliveryMethods[i]) return;
   if(field==='price') val=parseFloat(val)||0;
   generalSettings.deliveryMethods[i][field] = val;
-  if(field==='name') renderGeneralPage();
 }
 function gsRemoveDelivery(i){
   generalSettings.deliveryMethods.splice(i,1);
