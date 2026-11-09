@@ -7770,9 +7770,19 @@ function gsDeliveryModalBody(i){
 function gsSaveDeliveryModal(){
   const gs=generalSettings;
   const d=gs.deliveryMethods[_gsDeliveryEditIdx];
-  if(!d||!d.name.trim()){alert('Please enter a service name.');return;}
+  if(!d||!d.name.trim()){
+  let e=document.getElementById('gs-delivery-name-error');
+  if(!e){e=document.createElement('div');e.id='gs-delivery-name-error';e.style.cssText='color:#e8220e;font-size:12px;font-weight:700;margin-top:6px;font-family:\'Plus Jakarta Sans\',sans-serif';document.getElementById('gs-delivery-modal-body').appendChild(e);}
+  e.textContent='Please enter a service name.';
+  return;
+}
   const dup=gs.deliveryMethods.some(function(m,idx){return idx!==_gsDeliveryEditIdx&&m.name.trim().toLowerCase()===d.name.trim().toLowerCase();});
-  if(dup){alert('A delivery service with this name already exists.');return;}
+  if(dup){
+  let e=document.getElementById('gs-delivery-name-error');
+  if(!e){e=document.createElement('div');e.id='gs-delivery-name-error';e.style.cssText='color:#e8220e;font-size:12px;font-weight:700;margin-top:6px;font-family:\'Plus Jakarta Sans\',sans-serif';document.getElementById('gs-delivery-modal-body').appendChild(e);}
+  e.textContent='A delivery service with this name already exists.';
+  return;
+}
   saveGeneralSettings();gsCloseDeliveryModal();
 }
 
