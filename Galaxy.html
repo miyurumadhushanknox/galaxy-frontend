@@ -2347,7 +2347,7 @@ function initOrder(){
   document.getElementById("order-note").classList.remove("show");
   ["c-name","c-address","c-phone1","c-phone2","c-email","c-note"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("c-city").value="";
-  renderOrderItems();setTimeout(()=>{updateOrderDetails();calcOrder();},0);
+  renderOrderItems();document.getElementById('o-delivery').innerHTML=(generalSettings.deliveryMethods||[]).map(function(d){return '<option value="'+d.id+'">'+d.name+'</option>';}).join('');setTimeout(()=>{updateOrderDetails();calcOrder();},0);
 }
 
 function updateOrderDetails(){
