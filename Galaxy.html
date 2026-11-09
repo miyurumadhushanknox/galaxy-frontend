@@ -7786,7 +7786,7 @@ function gsSaveDeliveryModal(){
   e.textContent='A delivery service with this name already exists.';
   return;
 }
-  saveGeneralSettings();gsCloseDeliveryModal();
+  saveGeneralSettings(); window._gsDeliveryEditBackup=null; gsCloseDeliveryModal();
 }
 
 function gsRemoveDelivery(i){
