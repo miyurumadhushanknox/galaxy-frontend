@@ -2515,7 +2515,7 @@ function calcOrder(){
   const selPayId=selPay?selPay.value:'';
   const selPm=(generalSettings.paymentMethods||[]).find(function(p){return String(p.id)===String(selPayId);});
   const scPct=selPm?selPm.serviceCharge||0:0;
-  const scAmt=selPm&&selPm.absorbCost===false?Math.round(itemsTotal*(scPct/100)):0;
+  const scAmt=selPm&&scPct>0&&selPm.absorbCost!==true?Math.round(itemsTotal*(scPct/100)):0;
   const subtotal=itemsTotal+deliveryCost-discount+scAmt;
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ LKR "+deliveryCost.toLocaleString():"";
   const discEl=document.getElementById("o-discount-val");
