@@ -1273,7 +1273,7 @@ tbody tr:hover .row-actions{display:flex}
                 Payment method
               </div>
               <select id="o-payment" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%">
-               ${(generalSettings.paymentMethods||[]).filter(function(p){return (!p.type||p.type==='manual'||p.isActive===true);}).map(function(p){return '<option value="'+p.id+'">'+p.name+'</option>';}).join('')}
+               <!-- options set by initOrder() -->
               </select>
               <span style="min-width:85px"></span>
             </div>
@@ -2348,6 +2348,7 @@ function initOrder(){
   document.getElementById("c-city").value="";
   renderOrderItems();document.getElementById('o-delivery').innerHTML=(generalSettings.deliveryMethods||[]).map(function(d){return '<option value="'+d.id+'">'+d.name+'</option>';}).join('');document.getElementById('c-city').innerHTML='<option value="">Select city</option>'+Object.entries(SL_CITIES).map(function(pe){return Object.entries(pe[1]).map(function(de){return de[1].map(function(city){return '<option>'+city+'</option>';}).join('');}).join('');}).join('');setTimeout(()=>{updateOrderDetails();calcOrder();},0);
   _deliveryOverride=null;
+  document.getElementById('o-payment').innerHTML=(generalSettings.paymentMethods||[]).filter(function(p){return (!p.type||p.type==='manual'||p.isActive===true);}).map(function(p){return '<option value="'+p.id+'">'+p.name+'</option>';}).join('');
 }
 
 function updateOrderDetails(){
