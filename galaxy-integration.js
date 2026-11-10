@@ -310,7 +310,7 @@ Object.assign(_gs, {
   bizAddress: s.business?.address  || _gs.bizAddress  || '',
   bizPhone:   s.business?.phone    || _gs.bizPhone    || '',
   deliveryMethods: (s.deliveryMethods || []).map(d => ({ id: d.id, name: d.name, price: d.price || 0, apiKey: d.api_key||null, manualPrice: d.manual_price||false, pricingMode: d.pricing_mode||'province', provincePrices: d.province_prices||{}, districtPrices: d.district_prices||{} })),
-  paymentMethods:  (s.paymentMethods  || []).map(m => m.name),
+  paymentMethods:  (s.paymentMethods || []).map(m => ({ id: m.id, name: m.name, serviceCharge: m.service_charge || 0, absorbCost: m.absorb_cost || false })),
   discountCodes:   (s.discountCodes   || []).map(dc => ({ id: dc.id, code: dc.code, type: dc.type, value: dc.value })),
 });
 window._origDeliveryMethods = JSON.parse(JSON.stringify(_gs.deliveryMethods || []));
