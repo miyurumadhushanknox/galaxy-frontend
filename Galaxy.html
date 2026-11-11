@@ -6748,6 +6748,7 @@ function gsOpenSystemPaymentModal(type){
     +'</div></div>';
   document.body.insertAdjacentHTML('beforeend',html);
   window._gsSysPm={id:pm.id,type:type,serviceCharge:pm.serviceCharge||0,absorbCost:pm.absorbCost||false,config:JSON.parse(JSON.stringify(pm.config||{banks:[]}))};
+  gsRefreshSysAbsorb();
 }
 
 function gsRefreshSysAbsorb(){
