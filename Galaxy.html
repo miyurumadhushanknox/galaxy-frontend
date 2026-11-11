@@ -6799,23 +6799,76 @@ function gsSaveSysPaymentModal(type){
 
 // ===== DISCOUNT CODES START =====
 function gsOpenDiscountModal(){
-  var html='<div style="position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999999;display:flex;align-items:center;justify-content:center" id="gs-discount-modal"><div style="background:#fff;border-radius:16px;padding:24px;width:90%;max-width:420px;max-height:90vh;overflow-y:auto"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><div style="font-size:15px;font-weight:800;color:#18182b;font-family:\'Plus Jakarta Sans\',sans-serif">Add Discount</div><button onclick="document.getElementById(\'gs-discount-modal\').remove()" style="width:32px;height:32px;border-radius:50%;border:none;background:#f4f4f8;cursor:pointer;font-size:16px;color:#9090b8">×</button></div>'
-  +'<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT NAME</div><input id="gsd-name" type="text" placeholder="e.g. Summer Sale" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box"></div>'
-  +'<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT CODE</div><input id="gsd-code" type="text" placeholder="e.g. SAVE10" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;box-sizing:border-box;text-transform:uppercase"></div>'
-  +'<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT TYPE</div><select id="gsd-type" onchange="gsDiscountTypeChange()" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="percent">Percentage (%)</option><option value="fixed">Fixed Amount</option><option value="free_delivery">Free Delivery</option></select></div>'
-  +'<div id="gsd-value-wrap" style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">VALUE</div><input id="gsd-value" type="number" min="0" placeholder="0" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box"></div>'
-  +'<div style="margin-bottom:20px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">APPLIES TO</div><select id="gsd-scope" onchange="gsDiscountScopeChange()" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="all">All Orders</option><option value="selected">Selected Products Only</option></select></div>'
-  +'<div id="gsd-products-wrap" style="display:none;margin-bottom:20px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:8px">SELECT PRODUCTS</div><div id="gsd-products-list" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto">'
-  +(products||[]).map(function(p){return '<label style="display:flex;align-items:center;gap:10px;padding:8px;border:1.5px solid #e4e4f0;border-radius:8px;cursor:pointer"><input type="checkbox" value="'+p.id+'" style="accent-color:#e8220e;width:15px;height:15px"><img src="'+(p.image||'')+'" onerror="this.style.display=\'none\'" style="width:32px;height:32px;border-radius:6px;object-fit:cover;background:#f4f4f8"><div><div style="font-size:12px;font-weight:700;color:#18182b">'+p.name+'</div><div style="font-size:11px;color:#9090b8">'+p.sku+'</div></div></label>';}).join('')
+  var html='<div style="position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999999;display:flex;align-items:center;justify-content:center" id="gs-discount-modal"><div style="background:#fff;border-radius:16px;padding:24px;width:92%;max-width:460px;max-height:90vh;overflow-y:auto">'
+  +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><div style="font-size:15px;font-weight:800;color:#18182b;font-family:\'Plus Jakarta Sans\',sans-serif">Add Discount</div><button onclick="document.getElementById(\'gs-discount-modal\').remove()" style="width:32px;height:32px;border-radius:50%;border:none;background:#f4f4f8;cursor:pointer;font-size:18px;color:#9090b8">×</button></div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">'
+  +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT NAME</div><input id="gsd-name" type="text" placeholder="e.g. Summer Sale" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box"></div>'
+  +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT CODE</div><input id="gsd-code" type="text" placeholder="e.g. SAVE10" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;box-sizing:border-box;text-transform:uppercase"></div>'
+  +'</div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">'
+  +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT TYPE</div><select id="gsd-type" onchange="gsDiscountTypeChange()" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="percent">Percentage</option><option value="fixed">Fixed Amount</option><option value="free_delivery">Free Delivery</option></select></div>'
+  +'<div id="gsd-value-wrap"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">VALUE</div><div style="display:flex;align-items:center;border:1.5px solid #e4e4f0;border-radius:8px;overflow:hidden;background:#fff"><input id="gsd-value" type="number" min="0" max="100" placeholder="0" style="flex:1;padding:9px 12px;border:none;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><span id="gsd-value-badge" style="padding:9px 12px;font-size:12px;font-weight:700;color:#9090b8;background:#f8f8fc;border-left:1.5px solid #e4e4f0">%</span></div></div>'
+  +'</div>'
+  +'<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">APPLIES TO</div><select id="gsd-scope" onchange="gsDiscountScopeChange()" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="all">All Orders</option><option value="selected">Selected Products Only</option></select></div>'
+  +'<div id="gsd-products-wrap" style="display:none;margin-bottom:14px">'
+  +'<div id="gsd-selected-products" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px"></div>'
+  +'<div style="border:1.5px dashed #e4e4f0;border-radius:10px;padding:10px;background:#fff9f6">'
+  +'<button onclick="gsDiscountShowSearch()" style="padding:8px 16px;border:none;border-radius:8px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">+ Add Item</button>'
+  +'<div id="gsd-search-wrap" style="display:none;margin-top:10px"><input id="gsd-search" type="text" placeholder="Search product..." oninput="gsDiscountSearch(this.value)" style="width:100%;padding:8px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;color:#18182b;outline:none;box-sizing:border-box"><div id="gsd-search-results" style="margin-top:6px;display:flex;flex-direction:column;gap:4px"></div></div>'
   +'</div></div>'
-  +'<button onclick="gsSaveDiscountModal()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">Save Discount</button>'
+  +'<button onclick="gsSaveDiscountModal()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif;margin-top:6px">Save Discount</button>'
   +'</div></div>';
   document.body.insertAdjacentHTML('beforeend',html);
+  window._gsdProducts=[];
+}
+function gsDiscountShowSearch(){
+  var w=document.getElementById('gsd-search-wrap');
+  if(w){w.style.display='block';document.getElementById('gsd-search').focus();}
+}
+function gsDiscountSearch(q){
+  var res=document.getElementById('gsd-search-results');
+  if(!res)return;
+  if(!q.trim()){res.innerHTML='';return;}
+  var matches=(products||[]).filter(function(p){return p.name.toLowerCase().includes(q.toLowerCase())||( p.sku&&p.sku.toLowerCase().includes(q.toLowerCase()));}).slice(0,6);
+  res.innerHTML=matches.map(function(p){
+    return '<div onclick="gsDiscountAddProduct(\''+p.id+'\')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1.5px solid #e4e4f0;border-radius:8px;cursor:pointer;background:#fff">'
+    +'<img src="'+(p.image||'')+'" onerror="this.style.display=\'none\'" style="width:32px;height:32px;border-radius:6px;object-fit:cover;background:#f4f4f8">'
+    +'<div><div style="font-size:12px;font-weight:700;color:#18182b">'+p.name+'</div><div style="font-size:11px;color:#9090b8">'+(p.sku||'')+'</div></div></div>';
+  }).join('');
+}
+function gsDiscountAddProduct(pid){
+  if(!window._gsdProducts)window._gsdProducts=[];
+  if(window._gsdProducts.find(function(x){return x.id===pid;}))return;
+  var p=(products||[]).find(function(x){return x.id===pid;});
+  if(!p)return;
+  window._gsdProducts.push({id:p.id,name:p.name,sku:p.sku,image:p.image});
+  document.getElementById('gsd-search').value='';
+  document.getElementById('gsd-search-results').innerHTML='';
+  gsDiscountRenderProducts();
+}
+function gsDiscountRemoveProduct(pid){
+  window._gsdProducts=(window._gsdProducts||[]).filter(function(x){return x.id!==pid;});
+  gsDiscountRenderProducts();
+}
+function gsDiscountRenderProducts(){
+  var el=document.getElementById('gsd-selected-products');
+  if(!el)return;
+  el.innerHTML=(window._gsdProducts||[]).map(function(p){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff">'
+    +'<img src="'+(p.image||'')+'" onerror="this.style.display=\'none\'" style="width:32px;height:32px;border-radius:6px;object-fit:cover;background:#f4f4f8">'
+    +'<div style="flex:1"><div style="font-size:12px;font-weight:700;color:#18182b">'+p.name+'</div><div style="font-size:11px;color:#9090b8">'+(p.sku||'')+'</div></div>'
+    +'<button onclick="gsDiscountRemoveProduct(\''+p.id+'\')" style="padding:4px 8px;border:1.5px solid #fde8e8;border-radius:6px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:12px;font-weight:700">✕</button>'
+    +'</div>';
+  }).join('');
 }
 function gsDiscountTypeChange(){
   var t=document.getElementById('gsd-type');
   var w=document.getElementById('gsd-value-wrap');
-  if(w)w.style.display=t&&t.value==='free_delivery'?'none':'block';
+  var badge=document.getElementById('gsd-value-badge');
+  var inp=document.getElementById('gsd-value');
+  if(!t)return;
+  if(t.value==='free_delivery'){if(w)w.style.display='none';}
+  else{if(w)w.style.display='block';if(badge)badge.textContent=t.value==='percent'?'%':(generalSettings.currency||'LKR');if(inp)inp.max=t.value==='percent'?'100':'999999';}
 }
 function gsDiscountScopeChange(){
   var s=document.getElementById('gsd-scope');
