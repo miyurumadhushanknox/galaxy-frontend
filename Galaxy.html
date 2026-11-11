@@ -5256,9 +5256,9 @@ function renderGeneralPage(){
         <div class="card" style="margin-bottom:12px">
           <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:16px">Discount Codes</div>
           <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:7px">
-            ${(gs.discountCodes||[]).map((d,i)=>`<div style="display:flex;gap:7px;align-items:center"><input type="text" value="${d.code}" placeholder="Code" oninput="gsUpdateDiscount(${i},'code',this.value)" style="flex:2;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-transform:uppercase" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"><select oninput="gsUpdateDiscount(${i},'type',this.value)" style="padding:7px 9px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="percent" ${d.type==='percent'?'selected':''}>%</option><option value="fixed" ${d.type==='fixed'?'selected':''}>${gs.currency}</option></select><input type="number" value="${d.value}" min="0" placeholder="Value" oninput="gsUpdateDiscount(${i},'value',this.value)" style="width:70px;padding:7px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"><button onclick="gsRemoveDiscount(${i})" style="padding:6px 10px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:13px;font-weight:700;flex-shrink:0">✕</button></div>`).join('')}
+            ${(gs.discountCodes||[]).map((d,i)=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1.5px solid #e4e4f0;border-radius:10px;margin-bottom:6px;background:#fff"><div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:13px;font-weight:700;color:#18182b">${d.name||'Unnamed'}</div><div style="font-size:11px;font-weight:600;color:#9090b8">${d.code} &nbsp;·&nbsp; ${d.type==='percent'?d.value+'%':d.type==='fixed'?(gs.currency||'LKR')+' '+d.value:'Free Delivery'}</div></div><button onclick="gsRemoveDiscount(${i})" style="padding:5px 10px;border:1.5px solid #fde8e8;border-radius:8px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:12px;font-weight:700">✕</button></div>`).join('')}
           </div>
-          <button onclick="gsAddDiscount()" style="padding:6px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add code</button>
+          <button onclick="gsOpenDiscountModal()" style="padding:6px 12px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff;color:#9090b8;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">+ Add Discount</button>
         </div>
         <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
       </div>
@@ -6797,18 +6797,60 @@ function gsSaveSysPaymentModal(type){
   renderGeneralPage();
 }
 
-function gsUpdateDiscount(i, field, val){
-  if(!generalSettings.discountCodes[i]) return;
-  generalSettings.discountCodes[i][field] = (field==='value') ? parseFloat(val)||0 : val;
+// ===== DISCOUNT CODES START =====
+function gsOpenDiscountModal(){
+  var html='<div style="position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999999;display:flex;align-items:center;justify-content:center" id="gs-discount-modal"><div style="background:#fff;border-radius:16px;padding:24px;width:90%;max-width:420px;max-height:90vh;overflow-y:auto"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><div style="font-size:15px;font-weight:800;color:#18182b;font-family:\'Plus Jakarta Sans\',sans-serif">Add Discount</div><button onclick="document.getElementById(\'gs-discount-modal\').remove()" style="width:32px;height:32px;border-radius:50%;border:none;background:#f4f4f8;cursor:pointer;font-size:16px;color:#9090b8">×</button></div>'
+  +'<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT NAME</div><input id="gsd-name" type="text" placeholder="e.g. Summer Sale" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box"></div>'
+  +'<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT CODE</div><input id="gsd-code" type="text" placeholder="e.g. SAVE10" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;box-sizing:border-box;text-transform:uppercase"></div>'
+  +'<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT TYPE</div><select id="gsd-type" onchange="gsDiscountTypeChange()" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="percent">Percentage (%)</option><option value="fixed">Fixed Amount</option><option value="free_delivery">Free Delivery</option></select></div>'
+  +'<div id="gsd-value-wrap" style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">VALUE</div><input id="gsd-value" type="number" min="0" placeholder="0" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box"></div>'
+  +'<div style="margin-bottom:20px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">APPLIES TO</div><select id="gsd-scope" onchange="gsDiscountScopeChange()" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="all">All Orders</option><option value="selected">Selected Products Only</option></select></div>'
+  +'<div id="gsd-products-wrap" style="display:none;margin-bottom:20px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:8px">SELECT PRODUCTS</div><div id="gsd-products-list" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto">'
+  +(products||[]).map(function(p){return '<label style="display:flex;align-items:center;gap:10px;padding:8px;border:1.5px solid #e4e4f0;border-radius:8px;cursor:pointer"><input type="checkbox" value="'+p.id+'" style="accent-color:#e8220e;width:15px;height:15px"><img src="'+(p.image||'')+'" onerror="this.style.display=\'none\'" style="width:32px;height:32px;border-radius:6px;object-fit:cover;background:#f4f4f8"><div><div style="font-size:12px;font-weight:700;color:#18182b">'+p.name+'</div><div style="font-size:11px;color:#9090b8">'+p.sku+'</div></div></label>';}).join('')
+  +'</div></div>'
+  +'<button onclick="gsSaveDiscountModal()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">Save Discount</button>'
+  +'</div></div>';
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+function gsDiscountTypeChange(){
+  var t=document.getElementById('gsd-type');
+  var w=document.getElementById('gsd-value-wrap');
+  if(w)w.style.display=t&&t.value==='free_delivery'?'none':'block';
+}
+function gsDiscountScopeChange(){
+  var s=document.getElementById('gsd-scope');
+  var w=document.getElementById('gsd-products-wrap');
+  if(w)w.style.display=s&&s.value==='selected'?'block':'none';
+}
+function gsSaveDiscountModal(){
+  var name=(document.getElementById('gsd-name')||{}).value||'';
+  var code=(document.getElementById('gsd-code')||{}).value||'';
+  var type=(document.getElementById('gsd-type')||{}).value||'percent';
+  var value=parseFloat((document.getElementById('gsd-value')||{}).value)||0;
+  var scope=(document.getElementById('gsd-scope')||{}).value||'all';
+  var productIds=[];
+  if(scope==='selected'){
+    document.querySelectorAll('#gsd-products-list input[type=checkbox]:checked').forEach(function(cb){productIds.push(cb.value);});
+  }
+  if(!name.trim()||!code.trim()){alert('Please enter discount name and code.');return;}
+  window.apiFetch('/settings/discount-codes',{method:'POST',body:JSON.stringify({name:name.trim(),code:code.trim(),type:type,value:type==='free_delivery'?0:value,productIds:productIds})})
+  .then(function(r){
+    if(r&&r.id){
+      if(!generalSettings.discountCodes)generalSettings.discountCodes=[];
+      generalSettings.discountCodes.push({id:r.id,code:r.code,type:r.type,value:r.value,name:r.name||name,productIds:r.product_ids||productIds});
+      document.getElementById('gs-discount-modal').remove();
+      renderGeneralPage();
+    }
+  }).catch(function(){alert('Failed to save discount.');});
 }
 function gsRemoveDiscount(i){
+  var d=generalSettings.discountCodes[i];
+  if(!d)return;
+  if(d.id){window.apiFetch('/settings/discount-codes/'+d.id,{method:'DELETE'}).catch(function(){});}
   generalSettings.discountCodes.splice(i,1);
   renderGeneralPage();
 }
-function gsAddDiscount(){
-  generalSettings.discountCodes.push({code:'',type:'percent',value:0});
-  renderGeneralPage();
-}
+// ===== DISCOUNT CODES END =====
 
 
 // ── FINANCE HELPERS ──
