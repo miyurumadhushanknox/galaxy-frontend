@@ -6754,7 +6754,7 @@ function gsOpenSystemPaymentModal(type){
 function gsRefreshSysAbsorb(){
   var t=document.getElementById('gs-sys-absorb-toggle');
   if(!t)return;
-  var absorb=window._gsSysPm.absorbCost;
+  var absorb=!window._gsSysPm.absorbCost;
   t.style.background=absorb?'#e8220e':'#e4e4f0';
   t.children[0].style.left=absorb?'21px':'3px';
   var l=document.getElementById('gs-sys-absorb-left');
