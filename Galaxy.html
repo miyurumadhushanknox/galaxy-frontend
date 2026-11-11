@@ -2535,7 +2535,7 @@ function calcOrder(){
   const odSC=document.getElementById('od-service-charge');
   const odSCLabel=document.getElementById('od-service-charge-label');
   odSC.textContent=(generalSettings.currency||'LKR')+' '+scAmt.toFixed(2);
-  if(odSCLabel)odSCLabel.textContent='Payment Service Charge ('+scPct+'%)';
+  if(odSCLabel)odSCLabel.textContent=selPm&&selPm.absorbCost===true?'Payment Service Charge (not charged)':'Payment Service Charge ('+scPct+'%)';
   if(odItemsRows)odItemsRows.innerHTML=orderItems.map(item=>{
     const p=products.find(x=>x.id===item.pid);if(!p)return"";
     const price=item.customPrice!==null?item.customPrice:p.price;
