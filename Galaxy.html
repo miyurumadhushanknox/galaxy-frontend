@@ -6747,7 +6747,7 @@ function gsOpenSystemPaymentModal(type){
     +'<button onclick="gsSaveSysPaymentModal(\''+type+'\')" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;font-family:\'Plus Jakarta Sans\',sans-serif;cursor:pointer">Save</button>'
     +'</div></div>';
   document.body.insertAdjacentHTML('beforeend',html);
-  window._gsSysPm={id:pm.id,type:type,serviceCharge:pm.serviceCharge||0,absorbCost:pm.absorbCost||false,config:JSON.parse(JSON.stringify(pm.config||{banks:[]}))};
+  window._gsSysPm={id:pm.id,type:type,serviceCharge:pm.serviceCharge||0,absorbCost:!pm.absorbCost,config:JSON.parse(JSON.stringify(pm.config||{banks:[]}))}
   gsRefreshSysAbsorb();
 }
 
