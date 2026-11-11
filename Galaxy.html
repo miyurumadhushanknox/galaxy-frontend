@@ -6792,7 +6792,7 @@ function gsSaveSysPaymentModal(type){
   if(!d)return;
   var pm=generalSettings.paymentMethods.find(function(m){return m.type===type;});
   if(pm){pm.serviceCharge=d.serviceCharge;pm.absorbCost=d.absorbCost;pm.config=d.config;}
-  if(d.id){window.apiFetch('/settings/payment-methods/'+d.id,{method:'PUT',body:JSON.stringify({serviceCharge:d.serviceCharge,absorbCost:d.absorbCost,config:d.config})}).catch(function(){});}
+  if(d.id){window.apiFetch('/settings/payment-methods/'+d.id,{method:'PUT',body:JSON.stringify({serviceCharge:d.serviceCharge,absorbCost:!d.absorbCost,config:d.config})}).catch(function(){});}
   document.getElementById('gs-sys-payment-modal').remove();
   renderGeneralPage();
 }
