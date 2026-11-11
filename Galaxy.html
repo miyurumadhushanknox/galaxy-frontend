@@ -2515,7 +2515,7 @@ function calcOrder(){
   const selPayId=selPay?selPay.value:'';
   const selPm=(generalSettings.paymentMethods||[]).find(function(p){return String(p.id)===String(selPayId);});
   const scPct=selPm?selPm.serviceCharge||0:0;
-  const scAmt=selPm&&scPct>0&&selPm.absorbCost!==true?Math.round(itemsTotal*(scPct/100)):0;
+  const scAmt=selPm&&scPct>0&&selPm.absorbCost!==true?Math.round(itemsTotal*(scPct/100)*100)/100:0;
   const subtotal=itemsTotal+deliveryCost-discount+scAmt;
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ LKR "+deliveryCost.toLocaleString():"";
   const discEl=document.getElementById("o-discount-val");
@@ -2534,7 +2534,7 @@ function calcOrder(){
   if(odTotal)odTotal.textContent=(generalSettings.currency||"LKR")+" "+subtotal.toLocaleString();
   const odSC=document.getElementById('od-service-charge');
   const odSCLabel=document.getElementById('od-service-charge-label');
-  if(odSC)odSC.textContent=(generalSettings.currency||'LKR')+' '+scAmt.toLocaleString();
+  odSC.textContent=(generalSettings.currency||'LKR')+' '+scAmt.toFixed(2);
   if(odSCLabel)odSCLabel.textContent='Payment Service Charge ('+scPct+'%)';
   if(odItemsRows)odItemsRows.innerHTML=orderItems.map(item=>{
     const p=products.find(x=>x.id===item.pid);if(!p)return"";
