@@ -6912,7 +6912,7 @@ function gsSaveEditDiscountModal(i){
     window.apiFetch('/settings/discount-codes/'+d.id,{
       method:'PUT',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:d.name,code:d.code,type:d.type,value:d.value,active:d.is_active})
+      body:JSON.stringify({name:d.name,code:d.code,type:d.type,value:d.value,active:d.is_active,product_ids:(window._gsdEditProducts||[]).map(function(p){return p.id;})})
     }).catch(function(){});
   }
   document.getElementById('gs-edit-discount-modal').remove();
