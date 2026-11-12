@@ -1339,10 +1339,6 @@ tbody tr:hover .row-actions{display:flex}
                 <span style="font-size:12px;font-weight:700;color:#9090b8">Delivery charge</span>
                 <span id="od-delivery" style="font-size:13px;font-weight:600;color:#18182b">${generalSettings.currency}  0</span>
               </div>
-              <div id="od-service-charge-row" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
-                <span id="od-service-charge-label" style="font-size:12px;font-weight:700;color:#9090b8">Payment Service Charge (0%)</span>
-                <span id="od-service-charge" style="font-size:13px;font-weight:600;color:#18182b">${generalSettings.currency}  0</span>
-              </div>
               <div id="od-processing-fee-row" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
                 <span style="font-size:12px;font-weight:700;color:#9090b8">Processing Fee</span>
                 <span id="od-processing-fee" style="font-size:13px;font-weight:600;color:#18182b">${generalSettings.currency}  0</span>
@@ -1350,6 +1346,10 @@ tbody tr:hover .row-actions{display:flex}
               <div id="od-tax-row" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
                 <span style="font-size:12px;font-weight:700;color:#9090b8">Tax / VAT</span>
                 <span id="od-tax" style="font-size:13px;font-weight:600;color:#18182b">${generalSettings.currency}  0</span>
+              </div>
+              <div id="od-service-charge-row" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
+                <span id="od-service-charge-label" style="font-size:12px;font-weight:700;color:#9090b8">Payment Service Charge (0%)</span>
+                <span id="od-service-charge" style="font-size:13px;font-weight:600;color:#18182b">${generalSettings.currency}  0</span>
               </div>
               <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
                 <span style="font-size:12px;font-weight:700;color:#9090b8">Discount</span>
@@ -2549,7 +2549,7 @@ function calcOrder(){
   const odDisc=document.getElementById("od-discount");
   const odTotal=document.getElementById("od-total");
   const odItemsRows=document.getElementById("od-items-rows");
-  if(odDel)odDel.textContent=(generalSettings.currency||"LKR")+" "+deliveryCost.toLocaleString();
+  if(odDisc)odDisc.textContent=discount>0?"▼ "+(generalSettings.currency||'')+" "+discount.toLocaleString():(generalSettings.currency||'')+" 0";
   if(odDisc)odDisc.textContent=discount>0?"− LKR "+discount.toLocaleString():"LKR 0";
   if(odTotal)odTotal.textContent=(generalSettings.currency||"LKR")+" "+subtotal.toLocaleString();
   const odSC=document.getElementById('od-service-charge');
