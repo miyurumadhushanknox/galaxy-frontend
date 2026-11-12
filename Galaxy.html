@@ -5270,7 +5270,6 @@ function renderGeneralPage(){
           <div style="font-size:13px;font-weight:800;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:3px">${d.name||'Unnamed'}</div>
           <div style="font-size:11px;font-weight:600;color:#e8220e;font-family:'Plus Jakarta Sans',sans-serif">${d.type==='percent'?d.value+'% Off':d.type==='fixed'?(gs.currency||'$')+' '+d.value+' Off':'Free Delivery'}</div>
         </div>`).join('')}
-    </div>
 
     <!-- Add Discount button -->
       <div onclick="gsOpenDiscountModal()" style="border:1.5px dashed #e4e4f0;border-radius:12px;padding:16px;background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:110px;gap:8px;max-width:200px" onmouseover="this.style.borderColor='#e8220e'" onmouseout="this.style.borderColor='#e4e4f0'">
