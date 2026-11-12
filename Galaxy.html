@@ -1286,6 +1286,15 @@ tbody tr:hover .row-actions{display:flex}
               <span id="o-discount-val" style="font-size:13px;font-weight:700;min-width:85px;text-align:right"></span>
             </div>
             <div style="height:1.5px;background:#e4e4f0;margin-bottom:12px"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span style="font-size:13px;font-weight:700;color:#9090b8">Processing Fee</span>
+              <input type="number" id="o-processing-fee" placeholder="0" min="0" oninput="processingFee=parseFloat(this.value)||0;calcOrder()" style="width:100px;padding:6px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;text-align:right">
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:13px;font-weight:700;color:#9090b8">Tax / VAT</span>
+              <input type="number" id="o-tax-amount" placeholder="0" min="0" oninput="taxAmount=parseFloat(this.value)||0;calcOrder()" style="width:100px;padding:6px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;text-align:right">
+            </div>
+            <div style="height:1.5px;background:#e4e4f0;margin-bottom:12px"></div>
             <div style="display:flex;justify-content:space-between;align-items:center">
               <span style="font-size:14px;font-weight:900;color:#18182b">Subtotal</span>
               <span id="o-subtotal" style="font-size:17px;font-weight:900;color:#e8220e">${generalSettings.currency}  0</span>
@@ -1333,6 +1342,14 @@ tbody tr:hover .row-actions{display:flex}
               <div id="od-service-charge-row" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
                 <span id="od-service-charge-label" style="font-size:12px;font-weight:700;color:#9090b8">Payment Service Charge (0%)</span>
                 <span id="od-service-charge" style="font-size:13px;font-weight:600;color:#18182b">${generalSettings.currency}  0</span>
+              </div>
+              <div id="od-processing-fee-row" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
+                <span style="font-size:12px;font-weight:700;color:#9090b8">Processing Fee</span>
+                <span id="od-processing-fee" style="font-size:13px;font-weight:600;color:#18182b">${generalSettings.currency}  0</span>
+              </div>
+              <div id="od-tax-row" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
+                <span style="font-size:12px;font-weight:700;color:#9090b8">Tax / VAT</span>
+                <span id="od-tax" style="font-size:13px;font-weight:600;color:#18182b">${generalSettings.currency}  0</span>
               </div>
               <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
                 <span style="font-size:12px;font-weight:700;color:#9090b8">Discount</span>
@@ -2328,11 +2345,11 @@ let orderItems=[];
 let orderEditingId=null; // set when editing an existing order
 let orderIdCounter=1000;
 // DISCOUNT_CODES now loaded from generalSettings.discountCodes dynamically
-let discountPct=0;let discountFlat=0;
+let discountPct=0;let discountFlat=0;let processingFee=0;let taxAmount=0;
 let addItemOpen=false;
 
 function initOrder(){
-  orderItems=[];discountPct=0;discountFlat=0;addItemOpen=false;
+  orderItems=[];discountPct=0;discountFlat=0;processingFee=0;taxAmount=0;addItemOpen=false;
   orderEditingId=null;
   // Restore submit button text
   setTimeout(()=>{
@@ -2519,7 +2536,7 @@ function calcOrder(){
   const selPm=(generalSettings.paymentMethods||[]).find(function(p){return String(p.id)===String(selPayId);});
   const scPct=selPm?selPm.serviceCharge||0:0;
   const scAmt=selPm&&scPct>0&&selPm.absorbCost!==true?Math.round(itemsTotal*(scPct/100)*100)/100:0;
-  const subtotal=itemsTotal+deliveryCost-discount+scAmt;
+  const subtotal=itemsTotal+deliveryCost-discount+scAmt+processingFee+taxAmount;
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ LKR "+deliveryCost.toLocaleString():"";
   const discEl=document.getElementById("o-discount-val");
   const codeVal=document.getElementById("o-discount-code").value.trim().toUpperCase();
@@ -2539,6 +2556,9 @@ function calcOrder(){
   const odSCLabel=document.getElementById('od-service-charge-label');
   odSC.textContent=(generalSettings.currency||'LKR')+' '+scAmt.toFixed(2);
   if(odSCLabel)odSCLabel.textContent=selPm&&selPm.absorbCost===true?'Payment Service Charge (not charged)':'Payment Service Charge ('+scPct+'%)';
+  const odPF=document.getElementById('od-processing-fee');const odTax=document.getElementById('od-tax');
+  if(odPF)odPF.textContent=(generalSettings.currency||'LKR')+' '+processingFee.toLocaleString();
+  if(odTax)odTax.textContent=(generalSettings.currency||'LKR')+' '+taxAmount.toLocaleString();
   if(odItemsRows)odItemsRows.innerHTML=orderItems.map(item=>{
     const p=products.find(x=>x.id===item.pid);if(!p)return"";
     const price=item.customPrice!==null?item.customPrice:p.price;
@@ -2593,6 +2613,8 @@ function submitOrder(){
       o.delivery = delivery;
       o.payment  = payment;
       o.discount = discountPct;
+      o.processing_fee = processingFee;
+      o.tax_amount = taxAmount;
     }
     toast("Order "+orderEditingId+" updated successfully!","ok");
     setTimeout(()=>{
@@ -2611,7 +2633,7 @@ function submitOrder(){
     orders.unshift({
       id:newId, code:newId,
       customer:name, address, city, phone, phone2, email, note,
-      items:itemsData, delivery, payment, discount:discountPct,
+      items:itemsData, delivery, payment, discount:discountPct, processing_fee:processingFee, tax_amount:taxAmount,
       status:'processing',
       date:dt, time:tm,
       addedBy:currentUser?currentUser.name:'—',
