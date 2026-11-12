@@ -1286,15 +1286,6 @@ tbody tr:hover .row-actions{display:flex}
               <span id="o-discount-val" style="font-size:13px;font-weight:700;min-width:85px;text-align:right"></span>
             </div>
             <div style="height:1.5px;background:#e4e4f0;margin-bottom:12px"></div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-              <span style="font-size:13px;font-weight:700;color:#9090b8">Processing Fee</span>
-              <input type="number" id="o-processing-fee" placeholder="0" min="0" oninput="processingFee=parseFloat(this.value)||0;calcOrder()" style="width:100px;padding:6px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;text-align:right">
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-              <span style="font-size:13px;font-weight:700;color:#9090b8">Tax / VAT</span>
-              <input type="number" id="o-tax-amount" placeholder="0" min="0" oninput="taxAmount=parseFloat(this.value)||0;calcOrder()" style="width:100px;padding:6px 10px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:13px;text-align:right">
-            </div>
-            <div style="height:1.5px;background:#e4e4f0;margin-bottom:12px"></div>
             <div style="display:flex;justify-content:space-between;align-items:center">
               <span style="font-size:14px;font-weight:900;color:#18182b">Subtotal</span>
               <span id="o-subtotal" style="font-size:17px;font-weight:900;color:#e8220e">${generalSettings.currency}  0</span>
