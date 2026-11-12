@@ -7034,9 +7034,27 @@ function gsToggleDiscount(i){
     }).catch(function(){});
   }
 }
+
 function gsDeleteDiscount(i){
   var d=generalSettings.discountCodes[i];
   if(!d)return;
+  // Show confirmation modal
+  var modal=document.createElement('div');
+  modal.id='gs-delete-discount-modal';
+  modal.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  modal.innerHTML='<div style="background:#fff;border-radius:16px;padding:32px;max-width:360px;width:90%;text-align:center;">'
+    +'<h3 style="margin:0 0 8px;font-size:18px;font-weight:700;color:#111;">Delete Discount Code</h3>'
+    +'<p style="margin:0 0 24px;color:#888;font-size:14px;">This discount code will be permanently removed.</p>'
+    +'<div style="display:flex;gap:12px;">'
+    +'<button onclick="document.getElementById(\'gs-delete-discount-modal\').remove()" style="flex:1;padding:14px;border:2px solid #ddd;border-radius:10px;background:#fff;font-size:15px;font-weight:600;cursor:pointer;">Cancel</button>'
+    +'<button onclick="gsConfirmDeleteDiscount('+i+')" style="flex:1;padding:14px;border:none;border-radius:10px;background:#e03a2f;color:#fff;font-size:15px;font-weight:600;cursor:pointer;">Delete</button>'
+    +'</div></div>';
+  document.body.appendChild(modal);
+}
+function gsConfirmDeleteDiscount(i){
+  var d=generalSettings.discountCodes[i];
+  if(!d)return;
+  document.getElementById('gs-delete-discount-modal').remove();
   if(d.id){window.apiFetch('/settings/discount-codes/'+d.id,{method:'DELETE'}).catch(function(){});}
   generalSettings.discountCodes.splice(i,1);
   renderGeneralPage();
