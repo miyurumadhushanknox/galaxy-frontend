@@ -2504,9 +2504,9 @@ function swapOrderVariant(oldPid,newPid){
 function applyDiscount(){
   const code=document.getElementById("o-discount-code").value.trim().toUpperCase();
   const found=(generalSettings.discountCodes||[]).find(function(d){return d.code===code;});
-  discountPct=found&&(found.type==='percentage'||found.type==='percent')?found.value:0;
-  discountFlat=found&&found.type==='fixed'?found.value:0;
-  discountFreeDelivery=found?(found.type==='free_delivery'):false;
+  discountPct=found&&found.is_active!==false&&(found.type==='percentage'||found.type==='percent')?found.value:0;
+  discountFlat=found&&found.is_active!==false&&found.type==='fixed'?found.value:0;
+  discountFreeDelivery=found&&found.is_active!==false?(found.type==='free_delivery'):false;
   calcOrder();
 }
 
