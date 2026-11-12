@@ -6896,7 +6896,7 @@ function gsOpenEditDiscountModal(i){
   var p=(products||[]).find(function(x){return x.id===id;});
   return p?{id:p.id,name:p.name,code:p.code,image:p.images&&p.images[0]?p.images[0]:''}:null;
   }).filter(Boolean);
-  gsEditDiscountRenderProducts();
+  setTimeout(function(){gsEditDiscountRenderProducts();},50);
 }
 
 function gsSaveEditDiscountModal(i){
