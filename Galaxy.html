@@ -6844,6 +6844,50 @@ function gsOpenDiscountModal(){
   document.body.insertAdjacentHTML('beforeend',html);
   window._gsdProducts=[];
 }
+
+function gsOpenEditDiscountModal(i){
+  var d=generalSettings.discountCodes[i];
+  if(!d)return;
+  var isActive=d.is_active!==false;
+  var html='<div style="position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999999;display:flex;align-items:center;justify-content:center" id="gs-edit-discount-modal"><div style="background:#fff;border-radius:16px;padding:24px;width:92%;max-width:460px;max-height:90vh;overflow-y:auto">'
+  +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><div style="font-size:15px;font-weight:800;color:#18182b;font-family:\'Plus Jakarta Sans\',sans-serif">Edit Discount</div><div style="display:flex;align-items:center;gap:12px"><label style="position:relative;display:inline-block;width:40px;height:22px"><input type="checkbox" id="gsd-edit-active" '+(isActive?'checked':'')+' style="opacity:0;width:0;height:0"><span id="gsd-edit-active-track" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:'+(isActive?'#e8220e':'#ccc')+';border-radius:22px;transition:.3s" onclick="var c=document.getElementById(\'gsd-edit-active\');c.checked=!c.checked;this.style.background=c.checked?\'#e8220e\':\'#ccc\';document.getElementById(\'gsd-edit-active-knob\').style.transform=c.checked?\'translateX(18px)\':\'translateX(0)\'"><span id="gsd-edit-active-knob" style="position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;transform:'+(isActive?'translateX(18px)':'translateX(0)')+'"></span></span></label>'
+  +'<button onclick="document.getElementById(\'gs-edit-discount-modal\').remove()" style="width:32px;height:32px;border-radius:50%;border:none;background:#f4f4f8;cursor:pointer;font-size:18px;color:#9090b8">×</button></div></div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">'
+  +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT NAME</div><input id="gsd-edit-name" type="text" value="'+(d.name||'')+'" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box"></div>'
+  +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT CODE</div><input id="gsd-edit-code" type="text" value="'+(d.code||'')+'" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;box-sizing:border-box;text-transform:uppercase"></div>'
+  +'</div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">'
+  +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT TYPE</div><select id="gsd-edit-type" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="percent" '+(d.type==='percent'?'selected':'')+'>Percentage</option><option value="fixed" '+(d.type==='fixed'?'selected':'')+'>Fixed Amount</option><option value="free_delivery" '+(d.type==='free_delivery'?'selected':'')+'>Free Delivery</option></select></div>'
+  +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">VALUE</div><div style="display:flex;align-items:center;border:1.5px solid #e4e4f0;border-radius:8px;overflow:hidden;background:#fff"><input id="gsd-edit-value" type="number" min="0" value="'+(d.value||0)+'" style="flex:1;padding:9px 12px;border:none;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><span style="padding:9px 12px;font-size:12px;font-weight:700;color:#9090b8;background:#f8f8fc;border-left:1.5px solid #e4e4f0">'+(d.type==='percent'?'%':d.type==='fixed'?(gs.currency||'$'):'')+'</span></div></div>'
+  +'</div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">'
+  +'<button onclick="gsDeleteDiscount('+i+');document.getElementById(\'gs-edit-discount-modal\').remove()" style="padding:11px 0;border:1.5px solid #e8220e;border-radius:10px;background:#fff;color:#e8220e;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">Delete</button>'
+  +'<button onclick="gsSaveEditDiscountModal('+i+')" style="padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">Save</button>'
+  +'</div>'
+  +'</div></div>';
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+function gsSaveEditDiscountModal(i){
+  var d=generalSettings.discountCodes[i];
+  if(!d)return;
+  d.name=document.getElementById('gsd-edit-name').value.trim();
+  d.code=document.getElementById('gsd-edit-code').value.trim().toUpperCase();
+  d.type=document.getElementById('gsd-edit-type').value;
+  d.value=parseFloat(document.getElementById('gsd-edit-value').value)||0;
+  d.is_active=document.getElementById('gsd-edit-active').checked;
+  d.active=d.is_active;
+  if(d.id){
+    window.apiFetch('/settings/discount-codes/'+d.id,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:d.name,code:d.code,type:d.type,value:d.value,active:d.is_active})
+    }).catch(function(){});
+  }
+  document.getElementById('gs-edit-discount-modal').remove();
+  renderGeneralPage();
+}
+
 function gsDiscountShowSearch(){
   var w=document.getElementById('gsd-search-wrap');
   if(w){w.style.display='block';document.getElementById('gsd-search').focus();}
