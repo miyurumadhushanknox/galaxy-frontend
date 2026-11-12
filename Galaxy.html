@@ -5262,7 +5262,7 @@ function renderGeneralPage(){
     <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:16px">Discount Codes</div>
 
     <!-- Discount cards grid -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:14px">
       ${(gs.discountCodes||[]).map((d,i)=>`
         <div style="border:1.5px solid #fde8e8;border-radius:12px;padding:16px;background:#fff8f7;position:relative">
           <div onclick="gsRemoveDiscount(${i})" style="position:absolute;top:10px;right:10px;cursor:pointer;width:32px;height:18px;border-radius:9px;background:#fde8e8;display:flex;align-items:center;padding:2px;box-sizing:border-box"><div style="width:14px;height:14px;border-radius:50%;background:#e8220e;transform:translateX(14px)"></div></div>
