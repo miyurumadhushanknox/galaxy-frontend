@@ -2537,10 +2537,10 @@ function calcOrder(){
   const scPct=selPm?selPm.serviceCharge||0:0;
   const scAmt=selPm&&scPct>0&&selPm.absorbCost!==true?Math.round(itemsTotal*(scPct/100)*100)/100:0;
   const subtotal=itemsTotal+deliveryCost-discount+scAmt+processingFee+taxAmount;
-  document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ LKR "+deliveryCost.toLocaleString():"";
+  document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ "+(generalSettings.currency||"LKR")+" "+deliveryCost.toLocaleString():"";
   const discEl=document.getElementById("o-discount-val");
   const codeVal=document.getElementById("o-discount-code").value.trim().toUpperCase();
-  if(discount>0){discEl.textContent="− LKR "+discount.toLocaleString();discEl.style.color="#16a34a";}
+  if(discount>0){discEl.textContent=(generalSettings.currency||"LKR")+" "+discount.toLocaleString();discEl.style.color="#16a34a";}
   else if(codeVal&&!(generalSettings.discountCodes||[]).find(function(d){return d.code===codeVal;})){discEl.textContent="Invalid code";discEl.style.color="#aaa";}
   else{discEl.textContent="";}
   document.getElementById("o-subtotal").textContent=(generalSettings.currency||"LKR")+" "+subtotal.toLocaleString();
@@ -2550,7 +2550,7 @@ function calcOrder(){
   const odTotal=document.getElementById("od-total");
   const odItemsRows=document.getElementById("od-items-rows");
   if(odDel)odDel.textContent=(generalSettings.currency||'LKR')+" "+deliveryCost.toLocaleString();
-  if(odDisc)odDisc.textContent=discount>0?"− LKR "+discount.toLocaleString():"LKR 0";
+  if(odDisc)odDisc.textContent=discount>0?"− "+(generalSettings.currency||"LKR")+" "+discount.toLocaleString():""+(generalSettings.currency||"LKR")+" 0";
   if(odTotal)odTotal.textContent=(generalSettings.currency||"LKR")+" "+subtotal.toLocaleString();
   const odSC=document.getElementById('od-service-charge');
   const odSCLabel=document.getElementById('od-service-charge-label');
