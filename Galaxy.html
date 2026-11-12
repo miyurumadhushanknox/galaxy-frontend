@@ -6924,6 +6924,13 @@ function gsToggleDiscount(i){
   if(!d)return;
   d.active=!d.active;
   renderGeneralPage();
+  if(d.id){
+    window.apiFetch('/settings/discount-codes/'+d.id,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({active:d.active})
+    }).catch(function(){});
+  }
 }
 function gsDeleteDiscount(i){
   var d=generalSettings.discountCodes[i];
