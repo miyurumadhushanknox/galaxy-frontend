@@ -2513,7 +2513,7 @@ function calcOrder(){
   const _totalWeight=orderItems.reduce(function(a,item){const p=products.find(function(x){return x.id===item.pid;});return a+(p?((p.weight||0)*item.qty):0);},0);
   const _loc=slFindCity(_selectedCity);const _pricePerKg=slGetDeliveryPrice(selDelMethod,_selectedCity);
   const deliveryCost=(_deliveryOverride!==null)?_deliveryOverride:Math.ceil(_totalWeight)*_pricePerKg;
-  const discount=Math.round(itemsTotal*(discountPct/100))+discountFlat;
+  const discount=Math.round(itemsTotal*(discountPct/100));
   const selPay=document.getElementById('o-payment');
   const selPayId=selPay?selPay.value:'';
   const selPm=(generalSettings.paymentMethods||[]).find(function(p){return String(p.id)===String(selPayId);});
