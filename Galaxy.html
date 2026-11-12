@@ -7009,7 +7009,7 @@ function gsSaveDiscountModal(){
   var scope=(document.getElementById('gsd-scope')||{}).value||'all';
   var productIds=[];
   if(scope==='selected'){
-    document.querySelectorAll('#gsd-products-list input[type=checkbox]:checked').forEach(function(cb){productIds.push(cb.value);});
+  productIds=(window._gsdProducts||[]).map(function(p){return p.id;});
   }
   if(!name.trim()||!code.trim()){alert('Please enter discount name and code.');return;}
   window.apiFetch('/settings/discount-codes',{method:'POST',body:JSON.stringify({name:name.trim(),code:code.trim(),type:type,value:type==='free_delivery'?0:value,productIds:productIds})})
