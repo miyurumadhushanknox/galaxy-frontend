@@ -6907,7 +6907,7 @@ function gsSaveEditDiscountModal(i){
   d.type=document.getElementById('gsd-edit-type').value;
   d.value=d.type==='free_delivery'?0:(parseFloat(document.getElementById('gsd-edit-value').value)||0);
   d.is_active=document.getElementById('gsd-edit-active').checked;
-  d.active=d.is_active;
+  d.productIds=(window._gsdEditProducts||[]).map(function(p){return p.id;});
   if(d.id){
     window.apiFetch('/settings/discount-codes/'+d.id,{
       method:'PUT',
