@@ -6922,13 +6922,15 @@ function gsSaveDiscountModal(){
 function gsToggleDiscount(i){
   var d=generalSettings.discountCodes[i];
   if(!d)return;
-  d.active=!d.active;
+  var newActive = d.is_active===false ? true : false;
+  d.is_active = newActive;
+  d.active = newActive;
   renderGeneralPage();
   if(d.id){
     window.apiFetch('/settings/discount-codes/'+d.id,{
       method:'PUT',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({active:d.active})
+      body:JSON.stringify({active:newActive})
     }).catch(function(){});
   }
 }
