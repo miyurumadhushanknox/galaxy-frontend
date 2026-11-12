@@ -2535,7 +2535,7 @@ function calcOrder(){
   const discEl=document.getElementById("o-discount-val");
   const codeVal=document.getElementById("o-discount-code").value.trim().toUpperCase();
   if(discount>0){discEl.textContent=(generalSettings.currency||'')+" "+discount.toLocaleString();discEl.style.color="#16a34a";}
-  else if(codeVal&&!(generalSettings.discountCodes||[]).find(function(d){return d.code===codeVal;})){discEl.textContent="Invalid code";discEl.style.color="#aaa";}
+  else if(codeVal&&!(generalSettings.discountCodes||[]).find(function(d){return d.code===codeVal&&d.is_active!==false;})){discEl.textContent="Invalid code";discEl.style.color="#aaa";}
   else{discEl.textContent="";}
   document.getElementById("o-subtotal").textContent=(generalSettings.currency||'')+" "+subtotal.toLocaleString();
   // Update Order Details panel on right
