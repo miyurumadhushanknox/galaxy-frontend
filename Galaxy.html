@@ -6860,12 +6860,24 @@ function gsOpenEditDiscountModal(i){
   +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT TYPE</div><select id="gsd-edit-type" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="percent" '+(d.type==='percent'?'selected':'')+'>Percentage</option><option value="fixed" '+(d.type==='fixed'?'selected':'')+'>Fixed Amount</option><option value="free_delivery" '+(d.type==='free_delivery'?'selected':'')+'>Free Delivery</option></select></div>'
   +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">VALUE</div><div style="display:flex;align-items:center;border:1.5px solid #e4e4f0;border-radius:8px;overflow:hidden;background:#fff"><input id="gsd-edit-value" type="number" min="0" value="'+(d.value||0)+'" style="flex:1;padding:9px 12px;border:none;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><span style="padding:9px 12px;font-size:12px;font-weight:700;color:#9090b8;background:#f8f8fc;border-left:1.5px solid #e4e4f0">'+(d.type==='percent'?'%':d.type==='fixed'?(gs.currency||'$'):'')+'</span></div></div>'
   +'</div>'
+  +'<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">APPLIES TO</div><select id="gsd-edit-scope" onchange="gsEditDiscountScopeChange()" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="all" '+((!d.product_ids||d.product_ids.length===0)?'selected':'')+'>All Orders</option><option value="selected" '+((d.product_ids&&d.product_ids.length>0)?'selected':'')+'>Selected Products Only</option></select></div>'
+  +'<div id="gsd-edit-products-wrap" style="display:'+(d.product_ids&&d.product_ids.length>0?'block':'none')+';margin-bottom:14px">'
+  +'<div id="gsd-edit-selected-products" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px"></div>'
+  +'<div style="border:1.5px dashed #e4e4f0;border-radius:10px;padding:10px;background:#fff9f6">'
+  +'<button onclick="gsEditDiscountShowSearch()" style="padding:8px 16px;border:none;border-radius:8px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">+ Add Item</button>'
+  +'<div id="gsd-edit-search-wrap" style="display:none;margin-top:10px"><input id="gsd-edit-search" type="text" placeholder="Search product..." oninput="gsEditDiscountSearch(this.value)" style="width:100%;padding:8px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;color:#18182b;outline:none;box-sizing:border-box"><div id="gsd-edit-search-results" style="margin-top:6px;display:flex;flex-direction:column;gap:4px"></div></div>'
+  +'</div></div>'
   +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">'
   +'<button onclick="gsDeleteDiscount('+i+');document.getElementById(\'gs-edit-discount-modal\').remove()" style="padding:11px 0;border:1.5px solid #e8220e;border-radius:10px;background:#fff;color:#e8220e;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">Delete</button>'
   +'<button onclick="gsSaveEditDiscountModal('+i+')" style="padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Plus Jakarta Sans\',sans-serif">Save</button>'
   +'</div>'
   +'</div></div>';
   document.body.insertAdjacentHTML('beforeend',html);
+  window._gsdEditProducts=(d.product_ids||[]).map(function(id){
+  var p=(products||[]).find(function(x){return x.id===id;});
+  return p?{id:p.id,name:p.name,code:p.code,image:p.images&&p.images[0]?p.images[0]:''}:null;
+  }).filter(Boolean);
+  gsEditDiscountRenderProducts();
 }
 
 function gsSaveEditDiscountModal(i){
@@ -6886,6 +6898,50 @@ function gsSaveEditDiscountModal(i){
   }
   document.getElementById('gs-edit-discount-modal').remove();
   renderGeneralPage();
+}
+
+function gsEditDiscountScopeChange(){
+  var s=document.getElementById('gsd-edit-scope');
+  var w=document.getElementById('gsd-edit-products-wrap');
+  if(w)w.style.display=s.value==='selected'?'block':'none';
+}
+function gsEditDiscountShowSearch(){
+  var w=document.getElementById('gsd-edit-search-wrap');
+  if(w)w.style.display='block';
+}
+function gsEditDiscountSearch(q){
+  var res=document.getElementById('gsd-edit-search-results');
+  if(!res)return;
+  if(!q.trim()){res.innerHTML='';return;}
+  var matches=(products||[]).filter(function(p){return p.name.toLowerCase().includes(q.toLowerCase())||(p.code&&p.code.toLowerCase().includes(q.toLowerCase()));}).slice(0,6);
+  res.innerHTML=matches.map(function(p){
+    return '<div onclick="gsEditDiscountAddProduct(\''+p.id+'\')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1.5px solid #e4e4f0;border-radius:8px;cursor:pointer;background:#fff">'
+    +'<img src="'+(p.images&&p.images[0]?p.images[0]:'')+'" onerror="this.style.display=\'none\'" style="width:32px;height:32px;border-radius:6px;object-fit:cover;background:#f4f4f8">'
+    +'<div><div style="font-size:12px;font-weight:700;color:#18182b">'+p.name+'</div><div style="font-size:11px;color:#9090b8">'+(p.code||'No Code')+'</div></div></div>';
+  }).join('');
+}
+function gsEditDiscountAddProduct(id){
+  var p=(products||[]).find(function(x){return x.id===id;});
+  if(!p)return;
+  if(!window._gsdEditProducts)window._gsdEditProducts=[];
+  if(window._gsdEditProducts.find(function(x){return x.id===id;}))return;
+  window._gsdEditProducts.push({id:p.id,name:p.name,code:p.code,image:p.images&&p.images[0]?p.images[0]:''});
+  gsEditDiscountRenderProducts();
+}
+function gsEditDiscountRenderProducts(){
+  var el=document.getElementById('gsd-edit-selected-products');
+  if(!el)return;
+  el.innerHTML=(window._gsdEditProducts||[]).map(function(p){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1.5px solid #e4e4f0;border-radius:8px;background:#fff">'
+    +'<img src="'+(p.image||'')+'" onerror="this.style.display=\'none\'" style="width:32px;height:32px;border-radius:6px;object-fit:cover;background:#f4f4f8">'
+    +'<div style="flex:1"><div style="font-size:12px;font-weight:700;color:#18182b">'+p.name+'</div><div style="font-size:11px;color:#9090b8">'+(p.code||'No Code')+'</div></div>'
+    +'<button onclick="gsEditDiscountRemoveProduct(\''+p.id+'\')" style="padding:4px 8px;border:1.5px solid #fde8e8;border-radius:6px;background:#fff8f6;color:#e8220e;cursor:pointer;font-size:11px">Remove</button>'
+    +'</div>';
+  }).join('');
+}
+function gsEditDiscountRemoveProduct(id){
+  window._gsdEditProducts=(window._gsdEditProducts||[]).filter(function(p){return p.id!==id;});
+  gsEditDiscountRenderProducts();
 }
 
 function gsDiscountShowSearch(){
