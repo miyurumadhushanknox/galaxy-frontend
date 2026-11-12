@@ -7033,7 +7033,7 @@ function gsSaveDiscountModal(){
   .then(function(r){
     if(r&&r.id){
       if(!generalSettings.discountCodes)generalSettings.discountCodes=[];
-      generalSettings.discountCodes.push({id:r.id,code:r.code,type:r.type,value:r.value,name:r.name||name,productIds:r.product_ids||productIds});
+      generalSettings.discountCodes.push({id:r.id,code:r.code,type:r.type,value:r.value,name:r.name||name,productIds:r.product_ids||productIds,is_active:r.is_active!==false});
       document.getElementById('gs-discount-modal').remove();
       renderGeneralPage();
     }
