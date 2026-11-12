@@ -5264,12 +5264,15 @@ function renderGeneralPage(){
     <!-- Discount cards grid -->
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:14px">
       ${(gs.discountCodes||[]).map((d,i)=>`
-        <div style="border:1.5px solid #e4e4f0;border-radius:12px;padding:16px;background:#fff;position:relative;max-width:200px">
-          <div style="position:absolute;top:10px;right:10px"><label style="position:relative;display:inline-block;width:36px;height:20px"><input type="checkbox" checked onchange="gsRemoveDiscount(${i})" style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#e8220e;border-radius:20px;transition:.3s"><span style="position:absolute;content:'';height:14px;width:14px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;transform:translateX(16px)"></span></span></label></div>
-          <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);display:flex;align-items:center;justify-content:center;margin-bottom:10px"><svg viewBox="0 0 16 16" fill="none" style="width:18px;height:18px"><path d="M5 10l6-6M5.5 5.5a.5.5 0 100-1 .5.5 0 000 1zm5 5a.5.5 0 100-1 .5.5 0 000 1z" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><rect x="1" y="1" width="14" height="14" rx="2.5" stroke="#fff" stroke-width="1.4"/></svg></div>
-          <div style="font-size:13px;font-weight:800;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:3px">${d.name||'Unnamed'}</div>
-          <div style="font-size:11px;font-weight:600;color:#e8220e;font-family:'Plus Jakarta Sans',sans-serif">${d.type==='percent'?d.value+'% Off':d.type==='fixed'?(gs.currency||'$')+' '+d.value+' Off':'Free Delivery'}</div>
-        </div>`).join('')}
+      <div style="border:1.5px solid #e4e4f0;border-radius:12px;padding:16px;background:${d.active===false?'#f5f5fa':'#fff'};position:relative;max-width:200px;opacity:${d.active===false?'0.6':'1'}">
+      <div style="position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:6px">
+        <label style="position:relative;display:inline-block;width:36px;height:20px"><input type="checkbox" ${d.active===false?'':'checked'} onchange="gsToggleDiscount(${i})" style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:${d.active===false?'#ccc':'#e8220e'};border-radius:20px;transition:.3s"><span style="position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;transform:${d.active===false?'translateX(0)':'translateX(16px)'}"></span></span></label>
+        <span onclick="gsDeleteDiscount(${i})" style="cursor:pointer;font-size:16px;color:#ccc;line-height:1" title="Delete">×</span>
+      </div>
+      <div style="width:38px;height:38px;border-radius:10px;background:${d.active===false?'linear-gradient(135deg,#c0c0c8,#9090b8)':'linear-gradient(135deg,#ff5a30,#e8220e)'};display:flex;align-items:center;justify-content:center;margin-bottom:10px"><svg viewBox="0 0 16 16" fill="none" style="width:18px;height:18px"><path d="M5 10l6-6M5.5 5.5a.5.5 0 100-1 .5.5 0 000 1zm5 5a.5.5 0 100-1 .5.5 0 000 1z" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><rect x="1" y="1" width="14" height="14" rx="2.5" stroke="#fff" stroke-width="1.4"/></svg></div>
+      <div style="font-size:13px;font-weight:800;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:3px">${d.name||'Unnamed'}</div>
+      <div style="font-size:11px;font-weight:600;color:#e8220e;font-family:'Plus Jakarta Sans',sans-serif">${d.type==='percent'?d.value+'% Off':d.type==='fixed'?(gs.currency||'$')+' '+d.value+' Off':'Free Delivery'}</div>
+    </div>`).join('')}
 
     <!-- Add Discount button -->
       <div onclick="gsOpenDiscountModal()" style="border:1.5px dashed #e4e4f0;border-radius:12px;padding:16px;background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:110px;gap:8px;max-width:200px" onmouseover="this.style.borderColor='#e8220e'" onmouseout="this.style.borderColor='#e4e4f0'">
@@ -6917,7 +6920,13 @@ function gsSaveDiscountModal(){
     }
   }).catch(function(){alert('Failed to save discount.');});
 }
-function gsRemoveDiscount(i){
+function gsToggleDiscount(i){
+  var d=generalSettings.discountCodes[i];
+  if(!d)return;
+  d.active=!d.active;
+  renderGeneralPage();
+}
+function gsDeleteDiscount(i){
   var d=generalSettings.discountCodes[i];
   if(!d)return;
   if(d.id){window.apiFetch('/settings/discount-codes/'+d.id,{method:'DELETE'}).catch(function(){});}
