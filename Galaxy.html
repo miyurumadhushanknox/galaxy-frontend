@@ -5350,28 +5350,24 @@ function renderGeneralPage(){
   <!-- Processing Fee -->
   <div class="card" style="margin-bottom:12px">
   <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:16px">Processing Fee</div>
-  <div style="margin-bottom:14px">
-  <div style="border:1.5px solid #e8220e;border-radius:12px;padding:16px;background:#fff8f7;width:100%;">
-  <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);display:flex;align-items:center;justify-content:center;margin-bottom:10px"><svg viewBox="0 0 16 16" fill="none" style="width:18px;height:18px"><path d="M2 8h12M8 2v12" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end;">
-      <div>
-      <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px;font-family:'Plus Jakarta Sans',sans-serif">Type</label>
-      <select id="gs-processing-fee-type" class="settings-input" onchange="updateProcessingFeeSymbol()">
-        <option value="fixed" ${(gs.processingFeeType||'fixed')==='fixed'?'selected':''}>Fixed</option>
-        <option value="percentage" ${(gs.processingFeeType||'fixed')==='percentage'?'selected':''}>Percentage</option>
-      </select>
-    </div>
-    <div>
-      <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px;font-family:'Plus Jakarta Sans',sans-serif">Amount</label>
-      <div style="position:relative;">
-        <span id="gs-processing-fee-symbol" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#888;font-size:13px;">${(gs.processingFeeType||'fixed')==='percentage'?'%':(gs.currency||'')}</span>
-        <input type="number" id="gs-processing-fee" class="settings-input" min="0" step="0.01" style="padding-left:28px;" placeholder="0" value="${gs.processingFee||0}">
-      </div>
-    </div>
-  </div> 
-</div>
-</div>
-</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
+  <div>
+  <div style="font-size:11px;font-weight:700;color:#9090b8;letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px">Type</div>
+  <select id="gs-processing-fee-type" class="settings-input" onchange="updateProcessingFeeSymbol()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-weight:600;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;background:#fff;appearance:auto">
+  <option value="fixed" ${(gs.processingFeeType||'fixed')==='fixed'?'selected':''}>Fixed</option>
+  <option value="percentage" ${(gs.processingFeeType||'fixed')==='percentage'?'selected':''}>Percentage</option>
+  </select>
+  </div>
+  <div>
+  <div style="font-size:11px;font-weight:700;color:#9090b8;letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px">Value</div>
+  <div style="display:flex;align-items:center;border:1.5px solid #e4e4f0;border-radius:10px;overflow:hidden;background:#fff;">
+  <input type="number" id="gs-processing-fee" min="0" step="0.01" placeholder="0" value="${gs.processingFee||0}" style="flex:1;padding:11px 14px;border:none;outline:none;font-size:13px;font-weight:600;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;background:transparent;">
+  <span id="gs-processing-fee-symbol" style="padding:11px 14px;font-size:13px;font-weight:700;color:#9090b8;background:#f5f5fa;border-left:1.5px solid #e4e4f0;font-family:'Plus Jakarta Sans',sans-serif">${(gs.processingFeeType||'fixed')==='percentage'?'%':(gs.currency||'')}</span>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
 
   <!-- SAVE BUTTON -->
   <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
