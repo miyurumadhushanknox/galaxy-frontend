@@ -2338,11 +2338,11 @@ let orderItems=[];
 let orderEditingId=null; // set when editing an existing order
 let orderIdCounter=1000;
 // DISCOUNT_CODES now loaded from generalSettings.discountCodes dynamically
-let discountPct=0;let discountFlat=0;let processingFee=0;let taxAmount=0;
+let discountPct=0;let discountFlat=0;let discountFreeDelivery=false;let processingFee=0;let taxAmount=0;
 let addItemOpen=false;
 
 function initOrder(){
-  orderItems=[];discountPct=0;discountFlat=0;processingFee=0;taxAmount=0;addItemOpen=false;
+  orderItems=[];discountPct=0;discountFlat=0;discountFreeDelivery=false;processingFee=0;taxAmount=0;addItemOpen=false;
   orderEditingId=null;
   // Restore submit button text
   setTimeout(()=>{
