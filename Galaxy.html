@@ -2411,7 +2411,7 @@ function addOrderItem(pid){
   document.getElementById("item-search-results").innerHTML="";
   document.getElementById("item-search-box").style.display="none";
   addItemOpen=false;
-  renderOrderItems();calcOrder();
+  renderOrderItems();applyDiscount();
 }
 
 function changeQty(pid,delta){
