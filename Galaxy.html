@@ -5054,6 +5054,17 @@ function applyTheme(theme){
   }
 }
 
+async function saveProcessingFee(){
+  const fee=parseFloat(document.getElementById('gs-processing-fee').value)||0;
+  const type=document.getElementById('gs-processing-fee-type').value;
+  generalSettings.processingFee=fee;
+  generalSettings.processingFeeType=type;
+  try{
+    await apiFetch('/settings/general',{method:'PUT',body:JSON.stringify({...generalSettings,processingFee:fee,processingFeeType:type})});
+    showToast('Processing fee saved');
+  }catch(e){showToast('Failed to save','error');}
+}
+
 function saveGeneralSettings(){
   // collect all values
   if(can('settings.timecurr')){
@@ -5364,8 +5375,7 @@ function renderGeneralPage(){
   <input type="number" id="gs-processing-fee" min="0" step="0.01" placeholder="0" value="${gs.processingFee||0}" style="flex:1;padding:11px 14px;border:none;outline:none;font-size:13px;font-weight:600;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;background:transparent;">
   <span id="gs-processing-fee-symbol" style="padding:11px 14px;font-size:13px;font-weight:700;color:#9090b8;background:#f5f5fa;border-left:1.5px solid #e4e4f0;font-family:'Plus Jakarta Sans',sans-serif">${(gs.processingFeeType||'fixed')==='percentage'?'%':(gs.currency||'')}</span>
   </div>
-  </div>
-  </div>
+  <button onclick="saveProcessingFee()" style="margin-top:16px;width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer">✓ Save Processing Fee</button>
   </div>
   </div>
 
