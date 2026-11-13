@@ -2506,7 +2506,7 @@ function applyDiscount(){
   const found=(generalSettings.discountCodes||[]).find(function(d){return d.code===code;});
   discountPct=found&&found.is_active!==false&&(found.type==='percentage'||found.type==='percent')&&(!found.productIds||found.productIds.length===0||orderItems.some(i=>found.productIds.includes(i.pid)))?found.value:0;
   discountFlat=found&&found.is_active!==false&&found.type==='fixed'&&(!found.productIds||found.productIds.length===0||orderItems.some(i=>found.productIds.includes(i.pid)))?found.value:0;
-  discountFreeDelivery=found&&found.is_active!==false?(found.type==='free_delivery'):false;
+  discountFreeDelivery=found&&found.is_active!==false&&found.type==='free_delivery'&&(!found.productIds||found.productIds.length===0||orderItems.some(i=>found.productIds.includes(i.pid)))?true:false;
   calcOrder();
 }
 
