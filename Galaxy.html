@@ -2522,7 +2522,7 @@ function calcOrder(){
   const _selectedCity=document.getElementById('c-city')?document.getElementById('c-city').value:'';
   const _totalWeight=orderItems.reduce(function(a,item){const p=products.find(function(x){return x.id===item.pid;});return a+(p?((p.weight||0)*item.qty):0);},0);
   const _loc=slFindCity(_selectedCity);const _pricePerKg=slGetDeliveryPrice(selDelMethod,_selectedCity);
-  const deliveryCost=(_deliveryOverride!==null)?_deliveryOverride:Math.ceil(_totalWeight)*_pricePerKg;
+  const deliveryCost=discountFreeDelivery?0:(_deliveryOverride!==null)?_deliveryOverride:Math.ceil(_totalWeight)*_pricePerKg;
   const discountBase=(()=>{const dc=document.getElementById('o-discount-code').value.trim().toUpperCase();const found=(generalSettings.discountCodes||[]).find(function(d){return d.code===dc;});if(!found)return itemsTotal;const ids=found.productIds||[];if(!ids.length)return itemsTotal;return orderItems.reduce((a,item)=>{const p=products.find(x=>x.id===item.pid);if(!p)return a;if(ids.includes(item.pid))return a+(item.customPrice!==null?item.customPrice:(p?p.price:0))*item.qty;return a;},0);})();
   const discount=Math.round((discountBase*(discountPct/100)+discountFlat)*100)/100;
   const selPay=document.getElementById('o-payment');
@@ -2534,7 +2534,7 @@ function calcOrder(){
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ "+(generalSettings.currency||'')+" "+deliveryCost.toLocaleString():"";
   const discEl=document.getElementById("o-discount-val");
   const codeVal=document.getElementById("o-discount-code").value.trim().toUpperCase();
-  if(discount>0){discEl.textContent=(generalSettings.currency||'')+" "+discount.toLocaleString();discEl.style.color="#16a34a";}
+  if(discount>0||discountFreeDelivery){discEl.textContent=(generalSettings.currency||'')+" "+(discountFreeDelivery&&discount===0?'Free Delivery':discount.toLocaleString());discEl.style.color="#16a34a";}
   else if(codeVal&&!(generalSettings.discountCodes||[]).find(function(d){return d.code===codeVal&&d.is_active!==false;})){discEl.textContent="Invalid code";discEl.style.color="#aaa";}
   else{discEl.textContent="";}
   document.getElementById("o-subtotal").textContent=(generalSettings.currency||'')+" "+subtotal.toLocaleString();
