@@ -2360,11 +2360,13 @@ function toggleWalkIn(){
     knob.style.left='18px';
     cityField.style.opacity='0.4';
     cityField.style.pointerEvents='none';
+    const delEl=document.getElementById('o-delivery');if(delEl){delEl.style.opacity='0.4';delEl.style.pointerEvents='none';}
   } else {
     toggle.style.background='#e4e4f0';
     knob.style.left='2px';
     cityField.style.opacity='1';
     cityField.style.pointerEvents='auto';
+    const delEl=document.getElementById('o-delivery');if(delEl){delEl.style.opacity='1';delEl.style.pointerEvents='auto';}
   }
   calcOrder();
 }
