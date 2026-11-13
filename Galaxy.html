@@ -5350,10 +5350,10 @@ function renderGeneralPage(){
   <div style="margin-top:24px;">
   <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Processing Fee</div>
   <div style="background:#f8f8fc;border-radius:14px;padding:16px 18px;">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+  <div style="display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:end;">
     <div>
       <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Type</label>
-      <select id="gs-processing-fee-type" class="settings-input" onchange="updateProcessingFeeSymbol()" style="width:100%">
+      <select id="gs-processing-fee-type" class="settings-input" onchange="updateProcessingFeeSymbol()">
         <option value="fixed" ${(gs.processingFeeType||'fixed')==='fixed'?'selected':''}>Fixed</option>
         <option value="percentage" ${(gs.processingFeeType||'fixed')==='percentage'?'selected':''}>Percentage</option>
       </select>
@@ -5362,7 +5362,7 @@ function renderGeneralPage(){
       <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Amount</label>
       <div style="position:relative;">
         <span id="gs-processing-fee-symbol" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#888;font-size:13px;">${(gs.processingFeeType||'fixed')==='percentage'?'%':(gs.currency||'')}</span>
-        <input type="number" id="gs-processing-fee" class="settings-input" min="0" step="0.01" style="padding-left:28px;width:100%" placeholder="0" value="${gs.processingFee||0}">
+        <input type="number" id="gs-processing-fee" class="settings-input" min="0" step="0.01" style="padding-left:28px;" placeholder="0" value="${gs.processingFee||0}">
       </div>
     </div>
   </div>
