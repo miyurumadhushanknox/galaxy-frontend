@@ -1293,6 +1293,10 @@ tbody tr:hover .row-actions{display:flex}
               <input type="text" id="o-discount-code" placeholder="Enter discount code" oninput="applyDiscount()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
               <span id="o-discount-val" style="font-size:13px;font-weight:700;min-width:85px;text-align:right"></span>
             </div>
+            <div id="o-procfee-row" style="display:none;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:13px;font-weight:600;color:#18182b">Processing Fee</span>
+              <span id="o-procfee-val" style="font-size:13px;font-weight:700;color:#18182b"></span>
+            </div>
             <div style="height:1.5px;background:#e4e4f0;margin-bottom:12px"></div>
             <div style="display:flex;justify-content:space-between;align-items:center">
               <span style="font-size:14px;font-weight:900;color:#18182b">Subtotal</span>
@@ -2371,6 +2375,12 @@ function toggleWalkIn(){
   calcOrder();
 }
 
+function updateProcessingFeeSymbol(){
+  const type=document.getElementById('gs-processing-fee-type').value;
+  const sym=document.getElementById('gs-processing-fee-symbol');
+  if(sym)sym.textContent=type==='percentage'?'%':(generalSettings.currency||'');
+}
+
 function initOrder(){
   orderItems=[];discountPct=0;discountFlat=0;discountFreeDelivery=false;processingFee=0;taxAmount=0;addItemOpen=false;
   orderEditingId=null;
@@ -2555,6 +2565,8 @@ function calcOrder(){
   const deliveryCost=walkInMode?0:(_deliveryOverride!==null)?_deliveryOverride:Math.ceil(_totalWeight)*_pricePerKg;
   const discountBase=(()=>{const dc=document.getElementById('o-discount-code').value.trim().toUpperCase();const found=(generalSettings.discountCodes||[]).find(function(d){return d.code===dc;});if(!found)return itemsTotal;const ids=found.productIds||[];if(!ids.length)return itemsTotal;return orderItems.reduce((a,item)=>{const p=products.find(x=>x.id===item.pid);if(!p)return a;if(ids.includes(item.pid))return a+(item.customPrice!==null?item.customPrice:(p?p.price:0))*item.qty;return a;},0);})();
   const discount=Math.round((discountBase*(discountPct/100)+discountFlat+(discountFreeDelivery?deliveryCost:0))*100)/100;
+  const procFee=generalSettings.processingFee>0?(generalSettings.processingFeeType==='percentage'?Math.round(itemsTotal*(generalSettings.processingFee/100)*100)/100:generalSettings.processingFee):0;
+  processingFee=procFee;
   const selPay=document.getElementById('o-payment');
   const selPayId=selPay?selPay.value:'';
   const selPm=(generalSettings.paymentMethods||[]).find(function(p){return String(p.id)===String(selPayId);});
@@ -2568,6 +2580,8 @@ function calcOrder(){
   else if(codeVal&&!(generalSettings.discountCodes||[]).find(function(d){return d.code===codeVal&&d.is_active!==false;})){discEl.textContent="Invalid code";discEl.style.color="#aaa";}
   else{discEl.textContent="";}
   document.getElementById("o-subtotal").textContent=(generalSettings.currency||'')+" "+subtotal.toLocaleString();
+  const procFeeRow=document.getElementById('o-procfee-row');const procFeeVal=document.getElementById('o-procfee-val');
+  if(procFeeRow&&procFeeVal){if(procFee>0){procFeeRow.style.display='flex';procFeeVal.textContent=(generalSettings.currency||'')+" "+procFee.toLocaleString();}else{procFeeRow.style.display='none';}}
   // Update Order Details panel on right
   const odDel=document.getElementById("od-delivery");
   const odDisc=document.getElementById("od-discount");
@@ -5057,6 +5071,8 @@ function saveGeneralSettings(){
   generalSettings.orderStatusAlerts= document.getElementById('gs-orderstatus-tgl')?.classList.contains('on');
   generalSettings.userAddAlerts= document.getElementById('gs-useradd-tgl')?.classList.contains('on');
   generalSettings.productAddAlerts= document.getElementById('gs-productadd-tgl')?.classList.contains('on');
+  generalSettings.processingFee= parseFloat(document.getElementById('gs-processing-fee')?.value)||0;
+  generalSettings.processingFeeType= document.getElementById('gs-processing-fee-type')?.value||'fixed';
   if(can('settings.bizinfo')){
     generalSettings.bizName    = document.getElementById('gs-biz-name')?.value.trim()||'';
     // bizLogo is saved on upload via gsBizLogoUpload, persists in generalSettings
@@ -5328,6 +5344,27 @@ function renderGeneralPage(){
       <div style="font-size:12px;font-weight:700;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif">Add Discount</div>
       </div>
 
+  </div>
+
+  <!-- Processing Fee -->
+  <div class="settings-card" style="margin-top:18px;">
+  <div class="settings-card-title">Processing Fee</div>
+  <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+    <div style="flex:0 0 140px;">
+      <label class="settings-label">Type</label>
+      <select id="gs-processing-fee-type" class="settings-input" onchange="updateProcessingFeeSymbol()">
+      <option value="fixed" ${(gs.processingFeeType||'fixed')==='fixed'?'selected':''}>Fixed</option>
+      <option value="percentage" ${(gs.processingFeeType||'fixed')==='percentage'?'selected':''}>Percentage</option>
+      </select>
+    </div>
+    <div style="flex:1;min-width:120px;">
+      <label class="settings-label">Amount</label>
+      <div style="position:relative;">
+        <span id="gs-processing-fee-symbol" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#888;font-size:13px;">${(gs.processingFeeType||'fixed')==='percentage'?'%':(gs.currency||'')}</span>
+        <input type="number" id="gs-processing-fee" class="settings-input" min="0" step="0.01" style="padding-left:28px;" placeholder="0" value="${gs.processingFee||0}">
+      </div>
+    </div>
+  </div>
   </div>
 
   <!-- SAVE BUTTON -->
