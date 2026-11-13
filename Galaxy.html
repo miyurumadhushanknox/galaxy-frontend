@@ -2434,7 +2434,7 @@ function setCustomPrice(pid,val){
 }
 function removeOrderItem(pid){
   orderItems=orderItems.filter(x=>x.pid!==pid);
-  renderOrderItems();calcOrder();
+  renderOrderItems();applyDiscount();
 }
 
 function renderOrderItems(){
