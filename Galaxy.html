@@ -5256,7 +5256,7 @@ async function gsBizLogoUpload(input){
   try{
     const _SURL='https://aiqckirrpuokgbvfndte.supabase.co';
     const _SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTQ1MTQsImV4cCI6MjEwNjA5MDUxNH0.zwMSqYmKZ6bpld7wsHr9zFH8febD0aPVgkO8mDXD-PA';
-    const compressed=await new Promise(resolve=>{const img=new Image();const url=URL.createObjectURL(file);img.onload=()=>{let w=img.width,h=img.height;if(w>800||h>800){if(w>h){h=Math.round(h*800/w);w=800;}else{w=Math.round(w*800/h);h=800;}}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);URL.revokeObjectURL(url);canvas.toBlob(blob=>resolve(blob),'image/jpeg',0.8);};img.src=url;});
+    const compressed=await new Promise(resolve=>{const img=new Image();const url=URL.createObjectURL(file);img.onload=()=>{let w=img.width,h=img.height;if(w>400||h>400){if(w>h){h=Math.round(h*400/w);w=400;}else{w=Math.round(w*400/h);h=400;}}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);URL.revokeObjectURL(url);canvas.toBlob(blob=>resolve(blob),'image/jpeg',0.6);};img.src=url;});
     const up=await fetch(`${_SURL}/storage/v1/object/business-logos/${fname}`,
       {method:'POST',headers:{'Authorization':`Bearer ${_SKEY}`,'Content-Type':'image/jpeg'},body:compressed});
     if(up.ok){
