@@ -8498,7 +8498,7 @@ function gsSaveDeliveryModal(){
   e.textContent='A delivery service with this name already exists.';
   return;
 }
-  delete gs.deliveryMethods[_gsDeliveryEditIdx]._isNew; saveGeneralSettings(); window._gsDeliveryEditBackup=null; gsCloseDeliveryModal();
+  delete gs.deliveryMethods[_gsDeliveryEditIdx]._isNew; saveGeneralSettings(); window._gsDeliveryEditBackup=null; document.getElementById('gs-delivery-modal').style.display='none'; renderGeneralPage();
 }
 
 function gsRemoveDelivery(i){
