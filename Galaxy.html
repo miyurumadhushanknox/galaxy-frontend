@@ -5085,9 +5085,15 @@ function gsCloseProcessingFeeModal(){
 function gsToggleProcessingFee(cb){
   const enabled = cb.checked;
   generalSettings.processingFeeEnabled = enabled;
+  // Update toggle color instantly
+  const slider = cb.nextElementSibling;
+  if(slider){
+    slider.style.background = enabled ? '#e8220e' : '#ccc';
+    const knob = slider.querySelector('span');
+    if(knob) knob.style.transform = enabled ? 'translateX(16px)' : 'translateX(0)';
+  }
   apiFetch('/settings/general', {method:'PUT', body:JSON.stringify({...generalSettings, processingFeeEnabled: enabled})})
     .then(()=>{
-      showToast(enabled ? 'Processing fee enabled' : 'Processing fee disabled');
       const s = document.getElementById('pf-card-status');
       if(s){
         if(enabled){
