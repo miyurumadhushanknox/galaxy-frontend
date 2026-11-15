@@ -5274,7 +5274,7 @@ async function gsBizLogoUpload(input){
 }
 
 let _gsTab = 'business';
-function gsSetTab(t){_gsTab=t;renderGeneralPage();}
+function gsSetTab(t){_gsTab=t;renderGeneralPage();window.scrollTo({top:0});}
 function renderGeneralPage(){
   const root=document.getElementById('general-root');if(!root)return;
   const _gsCanBiz=can('settings.bizinfo');
