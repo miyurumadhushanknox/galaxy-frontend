@@ -5197,7 +5197,7 @@ function saveGeneralSettings(){
   generalSettings.bizCategory = document.getElementById('gs-biz-cat')?.value||'';
   generalSettings.bizAddress  = document.getElementById('gs-biz-addr')?.value.trim()||'';
   generalSettings.bizPhone    = document.getElementById('gs-biz-phone')?.value.trim()||'';
-  apiFetch('/settings/business',{method:'PUT',body:JSON.stringify({name:generalSettings.bizName,category:generalSettings.bizCategory,address:generalSettings.bizAddress,phone:generalSettings.bizPhone})}).catch(()=>{});
+  apiFetch('/settings/business',{method:'PUT',body:JSON.stringify({name:generalSettings.bizName,category:generalSettings.bizCategory,address:generalSettings.bizAddress,phone:generalSettings.bizPhone,logo_url:generalSettings.bizLogo||null})}).catch(()=>{});
   }
   // (saved above in bizinfo block)
 
