@@ -5472,11 +5472,11 @@ function renderGeneralPage(){
     </div>
   </div>
 
-  <!-- Processing Fee -->
+<!-- Processing Fee -->
 <div class="card" style="margin-bottom:12px">
 <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:16px">Processing Fee</div>
 <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px">
-<div onclick="gsOpenProcessingFeeModal()" style="border:1.5px solid ${gs.processingFeeEnabled?'#e8220e':'#e4e4f0'};border-radius:12px;padding:16px;background:${gs.processingFeeEnabled?'#fff8f7':'#f5f5fa'};position:relative;max-width:200px;opacity:${gs.processingFeeEnabled?'1':'0.5'};cursor:pointer">
+<div onclick="gsOpenProcessingFeeModal()" style="border:1.5px solid ${gs.processingFeeEnabled?'#e8220e':'#e4e4f0'};border-radius:12px;padding:16px;background:${gs.processingFeeEnabled?'#fff8f7':'#f5f5fa'};position:relative;max-width:200px;width:200px;opacity:${gs.processingFeeEnabled?'1':'0.5'};cursor:pointer">
 <div onclick="event.stopPropagation()" style="position:absolute;top:10px;right:10px">
 <label onclick="event.stopPropagation()" style="position:relative;display:inline-block;width:36px;height:20px"><input type="checkbox" id="pf-card-toggle" ${gs.processingFeeEnabled?'checked':''} onchange="gsToggleProcessingFee(this)" style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:${gs.processingFeeEnabled?'#e8220e':'#ccc'};border-radius:20px;transition:.3s"><span style="position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;transform:${gs.processingFeeEnabled?'translateX(16px)':'translateX(0)'}"></span></span></label>
 </div>
@@ -5484,6 +5484,7 @@ function renderGeneralPage(){
 <div style="font-size:13px;font-weight:800;color:#18182b;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:3px">Processing Fee</div>
 <div id="pf-card-status" style="font-size:11px;font-weight:600;color:${gs.processingFeeEnabled?'#e8220e':'#9090b8'};font-family:'Plus Jakarta Sans',sans-serif">${gs.processingFeeEnabled?(gs.processingFeeType==='percentage'?gs.processingFee+'%':(gs.currency||'$')+' '+gs.processingFee):'Not Set'}</div>
 </div>
+<!-- Tax / VAT Fee -->
 <div onclick="gsOpenTaxVatModal()" style="border:1.5px solid ${gs.taxVatEnabled?'#e8220e':'#e4e4f0'};border-radius:12px;padding:16px;background:${gs.taxVatEnabled?'#fff8f7':'#f5f5fa'};position:relative;max-width:200px;width:200px;opacity:${gs.taxVatEnabled?'1':'0.5'};cursor:pointer">
 <div onclick="event.stopPropagation()" style="position:absolute;top:10px;right:10px">
 <label onclick="event.stopPropagation()" style="position:relative;display:inline-block;width:36px;height:20px"><input type="checkbox" id="tv-card-toggle" ${gs.taxVatEnabled?'checked':''} onchange="gsToggleTaxVat(this)" style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:${gs.taxVatEnabled?'#e8220e':'#ccc'};border-radius:20px;transition:.3s"><span style="position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;transform:${gs.taxVatEnabled?'translateX(16px)':'translateX(0)'}"></span></span></label>
