@@ -5073,6 +5073,7 @@ function gsOpenProcessingFeeModal(){
 function gsCloseProcessingFeeModal(){
   document.getElementById('processing-fee-modal').style.display='none';
 }
+
 function gsToggleProcessingFee(cb){
   if(!cb.checked){
     generalSettings.processingFee=0;
@@ -5080,8 +5081,6 @@ function gsToggleProcessingFee(cb){
     apiFetch('/settings/general',{method:'PUT',body:JSON.stringify({...generalSettings,processingFee:0})})
       .then(()=>{showToast('Processing fee disabled');openGeneralSettings();})
       .catch(()=>showToast('Failed to save','error'));
-  } else {
-    gsOpenProcessingFeeModal();
   }
 }
 
