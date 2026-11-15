@@ -5253,10 +5253,12 @@ async function gsBizLogoUpload(input){
   const ext=file.type.split('/')[1]||'jpg';
   const fname=Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+ext;
   try{
-    const up=await fetch(`${SUPABASE_URL}/storage/v1/object/business-logos/${fname}`,
-      {method:'POST',headers:{'Authorization':`Bearer ${SUPABASE_ANON_KEY}`,'Content-Type':file.type},body:file});
+    const _SURL='https://aiqckirrpuokgbvfndte.supabase.co';
+    const _SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjgzOTQ4MDEsImV4cCI6MjA0Mzk3MDgwMX0.zwXXX';
+    const up=await fetch(`${_SURL}/storage/v1/object/business-logos/${fname}`,
+      {method:'POST',headers:{'Authorization':`Bearer ${_SKEY}`,'Content-Type':file.type},body:file});
     if(up.ok){
-      const url=`${SUPABASE_URL}/storage/v1/object/public/business-logos/${fname}`;
+      const url=`${_SURL}/storage/v1/object/public/business-logos/${fname}`;
       generalSettings.bizLogo=url;
       const prev=document.getElementById('gs-logo-preview');
       if(prev){prev.src=url;prev.style.display='block';}
