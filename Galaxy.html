@@ -5250,13 +5250,15 @@ function gsSetTheme(t){
 
 async function gsBizLogoUpload(input){
   const file=input.files[0];if(!file)return;
-  const ext=file.type.split('/')[1]||'jpg';
+  if(file.size>5*1024*1024){toast('Image too large. Max 5MB.','error');input.value='';return;}
+  const ext='jpg';
   const fname=Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+ext;
   try{
     const _SURL='https://aiqckirrpuokgbvfndte.supabase.co';
     const _SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTQ1MTQsImV4cCI6MjEwNjA5MDUxNH0.zwMSqYmKZ6bpld7wsHr9zFH8febD0aPVgkO8mDXD-PA';
+    const compressed=await new Promise(resolve=>{const img=new Image();const url=URL.createObjectURL(file);img.onload=()=>{let w=img.width,h=img.height;if(w>800||h>800){if(w>h){h=Math.round(h*800/w);w=800;}else{w=Math.round(w*800/h);h=800;}}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);URL.revokeObjectURL(url);canvas.toBlob(blob=>resolve(blob),'image/jpeg',0.8);};img.src=url;});
     const up=await fetch(`${_SURL}/storage/v1/object/business-logos/${fname}`,
-      {method:'POST',headers:{'Authorization':`Bearer ${_SKEY}`,'Content-Type':file.type},body:file});
+      {method:'POST',headers:{'Authorization':`Bearer ${_SKEY}`,'Content-Type':'image/jpeg'},body:compressed});
     if(up.ok){
       const url=`${_SURL}/storage/v1/object/public/business-logos/${fname}`;
       generalSettings.bizLogo=url;
