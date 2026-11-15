@@ -5256,7 +5256,7 @@ async function gsBizLogoUpload(input){
     const _SURL='https://aiqckirrpuokgbvfndte.supabase.co';
     const _SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWNraXJycHVva2didmZuZHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MTQ1MTQsImV4cCI6MjEwNjA5MDUxNH0.zwMSqYmKZ6bpld7wsHr9zFH8febD0aPVgkO8mDXD-PA';
     const up=await fetch(`${_SURL}/storage/v1/object/business-logos/${fname}`,
-      {method:'PUT',headers:{'Authorization':`Bearer ${_SKEY}`,'Content-Type':file.type,'x-upsert':'true'},body:file});
+      {method:'POST',headers:{'Authorization':`Bearer ${_SKEY}`,'Content-Type':file.type},body:file});
     if(up.ok){
       const url=`${_SURL}/storage/v1/object/public/business-logos/${fname}`;
       generalSettings.bizLogo=url;
