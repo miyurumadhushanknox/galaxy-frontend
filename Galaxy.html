@@ -2592,7 +2592,7 @@ function calcOrder(){
   odSC.textContent=(generalSettings.currency||'')+' '+scAmt.toFixed(2);
   if(odSCLabel)odSCLabel.textContent=selPm&&selPm.absorbCost===true?'Payment Service Charge (not charged)':'Payment Service Charge ('+scPct+'%)';
   const odPF=document.getElementById('od-processing-fee');const odTax=document.getElementById('od-tax');
-  const odPFRow=document.getElementById('od-procfee-row');if(odPFRow)odPFRow.style.display=generalSettings.processingFeeEnabled?'flex':'none';if(odPF)odPF.textContent=(generalSettings.currency||'')+'  '+processingFee.toLocaleString();
+  const odPFRow=document.getElementById('od-processing-fee-row');if(odPFRow)odPFRow.style.display=generalSettings.processingFeeEnabled?'flex':'none';if(odPF)odPF.textContent=(generalSettings.currency||'')+'  '+processingFee.toLocaleString();
   const odTaxRow=document.getElementById('od-tax-row');if(odTaxRow)odTaxRow.style.display=generalSettings.taxVatEnabled?'flex':'none';if(odTax)odTax.textContent=(generalSettings.currency||'')+'  '+taxAmt.toLocaleString();
   if(odItemsRows)odItemsRows.innerHTML=orderItems.map(item=>{
     const p=products.find(x=>x.id===item.pid);if(!p)return"";
