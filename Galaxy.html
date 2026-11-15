@@ -5083,14 +5083,23 @@ function gsCloseProcessingFeeModal(){
 }
 
 function gsToggleProcessingFee(cb){
-  if(!cb.checked){
-    generalSettings.processingFee=0;
-    generalSettings.processingFeeEnabled=false;
-    generalSettings.processingFeeType=generalSettings.processingFeeType||'fixed';
-    apiFetch('/settings/general',{method:'PUT',body:JSON.stringify({...generalSettings,processingFee:0,processingFeeEnabled:false})})
-      .then(()=>{showToast('Processing fee disabled');const s=document.getElementById('pf-card-status');if(s)s.textContent='Not Set';const t=document.getElementById('pf-card-toggle');if(t)t.checked=false;})
-      .catch(()=>showToast('Failed to save','error'));
-  }
+  const enabled = cb.checked;
+  generalSettings.processingFeeEnabled = enabled;
+  apiFetch('/settings/general', {method:'PUT', body:JSON.stringify({...generalSettings, processingFeeEnabled: enabled})})
+    .then(()=>{
+      showToast(enabled ? 'Processing fee enabled' : 'Processing fee disabled');
+      const s = document.getElementById('pf-card-status');
+      if(s){
+        if(enabled){
+          const fee = generalSettings.processingFee||0;
+          const type = generalSettings.processingFeeType||'fixed';
+          s.textContent = type==='percentage' ? fee+'%' : (generalSettings.currency||'$')+' '+fee;
+        } else {
+          s.textContent = 'Not Set';
+        }
+      }
+    })
+    .catch(()=>showToast('Failed to save','error'));
 }
 
 function saveGeneralSettings(){
