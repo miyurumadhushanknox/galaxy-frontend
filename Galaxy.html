@@ -2561,7 +2561,7 @@ function calcOrder(){
   const deliveryCost=walkInMode?0:(_deliveryOverride!==null)?_deliveryOverride:Math.ceil(_totalWeight)*_pricePerKg;
   const discountBase=(()=>{const dc=document.getElementById('o-discount-code').value.trim().toUpperCase();const found=(generalSettings.discountCodes||[]).find(function(d){return d.code===dc;});if(!found)return itemsTotal;const ids=found.productIds||[];if(!ids.length)return itemsTotal;return orderItems.reduce((a,item)=>{const p=products.find(x=>x.id===item.pid);if(!p)return a;if(ids.includes(item.pid))return a+(item.customPrice!==null?item.customPrice:(p?p.price:0))*item.qty;return a;},0);})();
   const discount=Math.round((discountBase*(discountPct/100)+discountFlat+(discountFreeDelivery?deliveryCost:0))*100)/100;
-  const procFee=generalSettings.processingFee>0?(generalSettings.processingFeeType==='percentage'?Math.round(itemsTotal*(generalSettings.processingFee/100)*100)/100:generalSettings.processingFee):0;
+  const procFee=generalSettings.processingFeeEnabled?(generalSettings.processingFeeType==='percentage'?Math.round(itemsTotal*(generalSettings.processingFee/100)*100)/100:generalSettings.processingFee||0):0;
   processingFee=procFee;
   const taxAmt=generalSettings.taxVatEnabled?Math.round(itemsTotal*(generalSettings.taxVat/100)*100)/100:0;
   const selPay=document.getElementById('o-payment');
@@ -2578,7 +2578,7 @@ function calcOrder(){
   else{discEl.textContent="";}
   document.getElementById("o-subtotal").textContent=(generalSettings.currency||'')+" "+subtotal.toLocaleString();
   const procFeeRow=document.getElementById('o-procfee-row');const procFeeVal=document.getElementById('o-procfee-val');
-  if(procFeeRow&&procFeeVal){if(procFee>0){procFeeRow.style.display='flex';procFeeVal.textContent=(generalSettings.currency||'')+" "+procFee.toLocaleString();}else{procFeeRow.style.display='none';}}
+  if(procFeeRow&&procFeeVal){if(procFee>0&&generalSettings.processingFeeEnabled){procFeeRow.style.display='flex';procFeeVal.textContent=(generalSettings.currency||'')+' '+procFee.toLocaleString();}else{procFeeRow.style.display='none';}}
   // Update Order Details panel on right
   const odDel=document.getElementById("od-delivery");
   const odDisc=document.getElementById("od-discount");
