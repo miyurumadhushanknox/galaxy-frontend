@@ -5193,11 +5193,11 @@ function saveGeneralSettings(){
   generalSettings.processingFee= parseFloat(document.getElementById('gs-processing-fee')?.value)||0;
   generalSettings.processingFeeType= document.getElementById('gs-processing-fee-type')?.value||'fixed';
   if(can('settings.bizinfo')){
-    generalSettings.bizName    = document.getElementById('gs-biz-name')?.value.trim()||'';
-    // bizLogo is saved on upload via gsBizLogoUpload, persists in generalSettings
-    // (saved above in bizinfo block)
-  
-  
+  generalSettings.bizName     = document.getElementById('gs-biz-name')?.value.trim()||'';
+  generalSettings.bizCategory = document.getElementById('gs-biz-cat')?.value||'';
+  generalSettings.bizAddress  = document.getElementById('gs-biz-addr')?.value.trim()||'';
+  generalSettings.bizPhone    = document.getElementById('gs-biz-phone')?.value.trim()||'';
+  apiFetch('/settings/business',{method:'PUT',body:JSON.stringify({name:generalSettings.bizName,category:generalSettings.bizCategory,address:generalSettings.bizAddress,phone:generalSettings.bizPhone})}).catch(()=>{});
   }
   // (saved above in bizinfo block)
 
