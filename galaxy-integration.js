@@ -309,6 +309,7 @@ Object.assign(_gs, {
   bizCategory: s.business?.category || _gs.bizCategory || '',
   bizAddress: s.business?.address  || _gs.bizAddress  || '',
   bizPhone:   s.business?.phone    || _gs.bizPhone    || '',
+  bizLogo:     s.business?.logo_url  || _gs.bizLogo     || '',
   deliveryMethods: (s.deliveryMethods || []).map(d => ({ id: d.id, name: d.name, price: d.price || 0, apiKey: d.api_key||null, manualPrice: d.manual_price||false, pricingMode: d.pricing_mode||'province', provincePrices: d.province_prices||{}, districtPrices: d.district_prices||{} })),
   paymentMethods: (s.paymentMethods || []).map(m => ({ id: m.id, name: m.name, type: m.type||'manual', serviceCharge: m.service_charge || 0, payByCustomer: m.pay_by_customer || false, isActive: m.is_active !== false, config: m.config||{} })),
   discountCodes: (s.discountCodes || []).map(dc => ({ id: dc.id, code: dc.code, type: dc.type, value: dc.value, name: dc.name||'', productIds: dc.product_ids||[] })),
