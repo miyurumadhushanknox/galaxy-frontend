@@ -5085,13 +5085,24 @@ function gsCloseProcessingFeeModal(){
 function gsToggleProcessingFee(cb){
   const enabled = cb.checked;
   generalSettings.processingFeeEnabled = enabled;
-  // Update toggle color instantly
-  const slider = cb.nextElementSibling;
+  // Instantly update card styles
+  const card = document.getElementById('pf-card-toggle').closest('div[onclick="gsOpenProcessingFeeModal()"]');
+  if(card){
+  card.style.border = '1.5px solid ' + (enabled ? '#e8220e' : '#e4e4f0');
+  card.style.background = enabled ? '#fff8f7' : '#f5f5fa';
+  card.style.opacity = enabled ? '1' : '0.5';
+  }
+  // Instantly update toggle color
+  const toggle = document.getElementById('pf-card-toggle');
+  if(toggle){
+  const slider = toggle.nextElementSibling;
   if(slider){
     slider.style.background = enabled ? '#e8220e' : '#ccc';
     const knob = slider.querySelector('span');
     if(knob) knob.style.transform = enabled ? 'translateX(16px)' : 'translateX(0)';
   }
+  }
+  
   apiFetch('/settings/general', {method:'PUT', body:JSON.stringify({...generalSettings, processingFeeEnabled: enabled})})
     .then(()=>{
       const s = document.getElementById('pf-card-status');
