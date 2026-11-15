@@ -312,9 +312,14 @@ Object.assign(_gs, {
   deliveryMethods: (s.deliveryMethods || []).map(d => ({ id: d.id, name: d.name, price: d.price || 0, apiKey: d.api_key||null, manualPrice: d.manual_price||false, pricingMode: d.pricing_mode||'province', provincePrices: d.province_prices||{}, districtPrices: d.district_prices||{} })),
   paymentMethods: (s.paymentMethods || []).map(m => ({ id: m.id, name: m.name, type: m.type||'manual', serviceCharge: m.service_charge || 0, payByCustomer: m.pay_by_customer || false, isActive: m.is_active !== false, config: m.config||{} })),
   discountCodes: (s.discountCodes || []).map(dc => ({ id: dc.id, code: dc.code, type: dc.type, value: dc.value, name: dc.name||'', productIds: dc.product_ids||[] })),
+  // Processing Fee
   processingFee: parseFloat(s.settings?.processing_fee)||0,
   processingFeeType: s.settings?.processing_fee_type||'fixed',
   processingFeeEnabled: s.settings?.processing_fee_enabled === true,
+  // Tax/ VAT
+  taxVat: parseFloat(s.settings?.tax_vat)||0,
+  taxVatType: s.settings?.tax_vat_type||'fixed',
+  taxVatEnabled: s.settings?.tax_vat_enabled === true,
 });
 window._origDeliveryMethods = JSON.parse(JSON.stringify(_gs.deliveryMethods || []));
 if (typeof generalSettings !== 'undefined') Object.assign(generalSettings, _gs);
