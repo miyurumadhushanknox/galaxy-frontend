@@ -5543,14 +5543,10 @@ function renderGeneralPage(){
       </div>
     </div>
     
+
       <!-- NOTIFICATIONS TAB -->
       <div style="display:${tab==='notifications'?'block':'none'}">
-        <div style="text-align:center;padding:40px 0 20px">
-          <div style="font-size:36px;margin-bottom:12px">🔔</div>
-          <div style="font-size:16px;font-weight:800;color:#18182b;margin-bottom:6px">Coming Soon</div>
-          <div style="font-size:13px;color:#9090b8">Notifications will be available in a future update</div>
-        </div>
-        ${false?`<div class="card" style="margin-bottom:12px">
+        <div class="card" style="margin-bottom:12px">
           <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Notifications</div>
           <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid #f0f0f6">
             <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Low stock threshold (units)</label>
@@ -5567,7 +5563,7 @@ function renderGeneralPage(){
             ].map(t=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:#f8f8fc;border-radius:10px"><div><div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:2px">${t.label}</div><div style="font-size:11px;color:#9090b8">${t.sub}</div></div><div style="display:flex;align-items:center;gap:7px;flex-shrink:0"><span id="${t.id}-off" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#aaa':'#e8220e'}">Off</span><div class="tgl ${gs[t.key]?'on':''}" id="${t.id}" onclick="gsToggle('${t.id}','${t.key}')" style="width:40px;height:22px"><div class="tgl-dot"></div></div><span id="${t.id}-on" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#e8220e':'#aaa'}">On</span></div></div>`).join('')}
           </div>
         </div>
-        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>`:''}
+        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
       </div>
 
       <!-- SYSTEM SETTINGS TAB -->
