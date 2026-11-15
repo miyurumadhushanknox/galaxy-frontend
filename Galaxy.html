@@ -5063,7 +5063,7 @@ async function saveProcessingFee(){
     await apiFetch('/settings/general',{method:'PUT',body:JSON.stringify({...generalSettings,processingFee:fee,processingFeeType:type})});
     showToast('Processing fee saved');
     gsCloseProcessingFeeModal();
-    document.querySelector('[data-tab="payment"]')?.click();
+    location.reload();
   }catch(e){showToast('Failed to save','error');}
 }
 
@@ -5079,7 +5079,7 @@ function gsToggleProcessingFee(cb){
     generalSettings.processingFee=0;
     generalSettings.processingFeeType=generalSettings.processingFeeType||'fixed';
     apiFetch('/settings/general',{method:'PUT',body:JSON.stringify({...generalSettings,processingFee:0})})
-      .then(()=>{showToast('Processing fee disabled');document.querySelector('[data-tab="payment"]')?.click();})
+      .then(()=>{showToast('Processing fee disabled');location.reload();})
       .catch(()=>showToast('Failed to save','error'));
   }
 }
