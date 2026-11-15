@@ -314,6 +314,7 @@ Object.assign(_gs, {
   discountCodes: (s.discountCodes || []).map(dc => ({ id: dc.id, code: dc.code, type: dc.type, value: dc.value, name: dc.name||'', productIds: dc.product_ids||[] })),
   processingFee: parseFloat(s.settings?.processing_fee)||0,
   processingFeeType: s.settings?.processing_fee_type||'fixed',
+  processingFeeEnabled: s.settings?.processing_fee_enabled === true,
 });
 window._origDeliveryMethods = JSON.parse(JSON.stringify(_gs.deliveryMethods || []));
 if (typeof generalSettings !== 'undefined') Object.assign(generalSettings, _gs);
