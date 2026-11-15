@@ -5308,12 +5308,12 @@ function renderGeneralPage(){
             <div style="width:50px;height:50px;border-radius:10px;border:1.5px solid #e4e4f0;overflow:hidden;background:#f8f8fc;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer" onclick="document.getElementById('gs-logo-input').click()">
               ${gs.bizLogo?`<img id="gs-logo-preview" src="${gs.bizLogo}" style="width:100%;height:100%;object-fit:cover">`:`<svg viewBox="0 0 16 16" fill="none" style="width:18px;height:18px;color:#c0c0d8"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><circle cx="5.5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 10l4-3 3 3 2-2 5 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
             </div>
-            <div>
+          <div>
               <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:4px">Business logo</div>
               <button onclick="document.getElementById('gs-logo-input').click()" style="padding:4px 11px;border:1.5px solid #e4e4f0;border-radius:7px;background:#fff;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:'Plus Jakarta Sans',sans-serif">Upload</button>
               <input type="file" id="gs-logo-input" accept="image/*" style="display:none" onchange="gsBizLogoUpload(this)">
-            </div>
-          </div>
+        </div>
+      </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Business name</label><input id="gs-biz-name" type="text" value="${gs.bizName}" placeholder="e.g. Saman Clothings" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></div>
             <div><label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:5px">Category</label><select id="gs-biz-cat" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"><option value="">Select</option>${BIZ_CATEGORIES.map(c=>`<option value="${c}" ${c===gs.bizCategory?'selected':''}>${c}</option>`).join('')}</select></div>
@@ -5545,27 +5545,27 @@ function renderGeneralPage(){
     </div>
   </div>
 
-      <!-- NOTIFICATIONS TAB -->
-      <div style="display:${tab==='notifications'?'block':'none'}">
-        <div class="card" style="margin-bottom:12px">
-          <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Notifications</div>
-          <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid #f0f0f6">
-            <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Low stock threshold (units)</label>
-            <input type="number" id="gs-lowstock" value="${gs.lowStockThreshold}" min="1" max="100" style="width:90px;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-align:center" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-            <div style="font-size:11px;color:#9090b8;margin-top:5px">Alert when stock falls to or below this number</div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            ${[
-              {id:'gs-email-tgl',key:'emailAlerts',label:'Email alerts',sub:'Receive alerts by email'},
-              {id:'gs-order-tgl',key:'orderAlerts',label:'New order',sub:'Alert when a new order is added'},
-              {id:'gs-orderstatus-tgl',key:'orderStatusAlerts',label:'Order status update',sub:'Alert when order status changes'},
-              {id:'gs-useradd-tgl',key:'userAddAlerts',label:'User added',sub:'Alert when a new user is added'},
-              {id:'gs-productadd-tgl',key:'productAddAlerts',label:'Product added',sub:'Alert when a new product is added'},
-            ].map(t=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:#f8f8fc;border-radius:10px"><div><div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:2px">${t.label}</div><div style="font-size:11px;color:#9090b8">${t.sub}</div></div><div style="display:flex;align-items:center;gap:7px;flex-shrink:0"><span id="${t.id}-off" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#aaa':'#e8220e'}">Off</span><div class="tgl ${gs[t.key]?'on':''}" id="${t.id}" onclick="gsToggle('${t.id}','${t.key}')" style="width:40px;height:22px"><div class="tgl-dot"></div></div><span id="${t.id}-on" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#e8220e':'#aaa'}">On</span></div></div>`).join('')}
-          </div>
-        </div>
-        <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
+  <!-- NOTIFICATIONS TAB -->
+  <div style="display:${tab==='notifications'?'block':'none'}">
+    <div class="card" style="margin-bottom:12px">
+      <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Notifications</div>
+      <div style="padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid #f0f0f6">
+        <label style="font-size:11px;font-weight:700;color:#9090b8;display:block;margin-bottom:6px">Low stock threshold (units)</label>
+        <input type="number" id="gs-lowstock" value="${gs.lowStockThreshold}" min="1" max="100" style="width:90px;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:9px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;text-align:center" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+        <div style="font-size:11px;color:#9090b8;margin-top:5px">Alert when stock falls to or below this number</div>
       </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${[
+          {id:'gs-email-tgl',key:'emailAlerts',label:'Email alerts',sub:'Receive alerts by email'},
+          {id:'gs-order-tgl',key:'orderAlerts',label:'New order',sub:'Alert when a new order is added'},
+          {id:'gs-orderstatus-tgl',key:'orderStatusAlerts',label:'Order status update',sub:'Alert when order status changes'},
+          {id:'gs-useradd-tgl',key:'userAddAlerts',label:'User added',sub:'Alert when a new user is added'},
+          {id:'gs-productadd-tgl',key:'productAddAlerts',label:'Product added',sub:'Alert when a new product is added'},
+        ].map(t=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:#f8f8fc;border-radius:10px"><div><div style="font-size:13px;font-weight:700;color:#18182b;margin-bottom:2px">${t.label}</div><div style="font-size:11px;color:#9090b8">${t.sub}</div></div><div style="display:flex;align-items:center;gap:7px;flex-shrink:0"><span id="${t.id}-off" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#aaa':'#e8220e'}">Off</span><div class="tgl ${gs[t.key]?'on':''}" id="${t.id}" onclick="gsToggle('${t.id}','${t.key}')" style="width:40px;height:22px"><div class="tgl-dot"></div></div><span id="${t.id}-on" style="font-size:11px;font-weight:700;color:${gs[t.key]?'#e8220e':'#aaa'}">On</span></div></div>`).join('')}
+      </div>
+    </div>
+    <button onclick="saveGeneralSettings()" style="width:100%;padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px"><svg viewBox="0 0 14 14" fill="none" style="width:12px;height:12px"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Save settings</button>
+  </div>
 
       <!-- SYSTEM SETTINGS TAB -->
       <div style="display:${tab==='system'?'block':'none'}">
