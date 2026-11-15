@@ -5248,19 +5248,24 @@ function gsSetTheme(t){
   applyTheme(t);
 }
 
-function gsBizLogoUpload(input){
+async function gsBizLogoUpload(input){
   const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    generalSettings.bizLogo=e.target.result;
-    const prev=document.getElementById('gs-logo-preview');
-    if(prev){prev.src=e.target.result;prev.style.display='block';}
-    const ph=document.getElementById('gs-logo-placeholder');
-    if(ph) ph.style.display='none';
-    applyBizName();
-    toast('Logo uploaded!','ok');
-  };
-  reader.readAsDataURL(file);
+  const ext=file.type.split('/')[1]||'jpg';
+  const fname=Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+ext;
+  try{
+    const up=await fetch(`${SUPABASE_URL}/storage/v1/object/business-logos/${fname}`,
+      {method:'POST',headers:{'Authorization':`Bearer ${SUPABASE_ANON_KEY}`,'Content-Type':file.type},body:file});
+    if(up.ok){
+      const url=`${SUPABASE_URL}/storage/v1/object/public/business-logos/${fname}`;
+      generalSettings.bizLogo=url;
+      const prev=document.getElementById('gs-logo-preview');
+      if(prev){prev.src=url;prev.style.display='block';}
+      const ph=document.getElementById('gs-logo-placeholder');
+      if(ph)ph.style.display='none';
+      applyBizName();
+      toast('Logo uploaded!','ok');
+    }else{toast('Upload failed','error');}
+  }catch(e){toast('Upload failed','error');}
   input.value='';
 }
 
