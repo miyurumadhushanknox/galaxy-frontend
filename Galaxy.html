@@ -7293,7 +7293,7 @@ function gsSaveDiscountModal(){
       document.getElementById('gs-discount-modal').remove();
       renderGeneralPage();
     }
-  }).catch(function(err){var msg=err&&err.message&&err.message.includes('already exists')?'This discount code already exists.':'Failed to save discount.';var e=document.getElementById('gsd-code-error');if(!e){e=document.createElement('div');e.id='gsd-code-error';e.style.cssText='color:#e8220e;font-size:12px;margin-top:4px;';document.getElementById('gsd-code').parentNode.appendChild(e);}e.textContent=msg;});
+  }).catch(function(err){var msg=err&&err.message&&err.message.includes('already exists')?'This discount code already exists.':'Failed to save discount.';alert(msg);});
 }
 function gsToggleDiscount(i){
   var d=generalSettings.discountCodes[i];
