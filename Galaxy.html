@@ -7166,7 +7166,7 @@ function gsSaveEditDiscountModal(i){
   d.is_active=window._gsdEditActive;
   d.productIds=(window._gsdEditProducts||[]).map(function(p){return p.id;});
   if(d.id){
-    window.apiFetch('/settings/discount-codes/'+d.id,{
+    window.apiFetch('/discount-codes/'+d.id,{
       method:'PUT',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({name:d.name,code:d.code,type:d.type,value:d.value,active:d.is_active,product_ids:(window._gsdEditProducts||[]).map(function(p){return p.id;})})
@@ -7285,7 +7285,7 @@ function gsSaveDiscountModal(){
   productIds=(window._gsdProducts||[]).map(function(p){return p.id;});
   }
   if(!name.trim()||!code.trim()){alert('Please enter discount name and code.');return;}
-  window.apiFetch('/settings/discount-codes',{method:'POST',body:JSON.stringify({name:name.trim(),code:code.trim(),type:type,value:type==='free_delivery'?0:value,productIds:productIds})})
+  window.apiFetch('/discount-codes',{method:'POST',body:JSON.stringify({name:name.trim(),code:code.trim(),type:type,value:type==='free_delivery'?0:value,productIds:productIds})})
   .then(function(r){
     if(r&&r.id){
       if(!generalSettings.discountCodes)generalSettings.discountCodes=[];
@@ -7331,7 +7331,7 @@ function gsConfirmDeleteDiscount(i){
   var d=generalSettings.discountCodes[i];
   if(!d)return;
   document.getElementById('gs-delete-discount-modal').remove();
-  if(d.id){window.apiFetch('/settings/discount-codes/'+d.id,{method:'DELETE'}).catch(function(){});}
+  if(d.id){window.apiFetch('/discount-codes/'+d.id,{method:'DELETE'}).catch(function(){});}
   generalSettings.discountCodes.splice(i,1);
   renderGeneralPage();
 }
