@@ -7131,6 +7131,7 @@ function gsOpenEditDiscountModal(i){
   +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT NAME</div><input id="gsd-edit-name" type="text" value="'+(d.name||'')+'" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box"></div>'
   +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT CODE</div><input id="gsd-edit-code" type="text" value="'+(d.code||'')+'" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:700;color:#18182b;background:#fff;outline:none;box-sizing:border-box;text-transform:uppercase"></div>'
   +'</div>'
+  +'<div id="gsd-edit-code-error" style="color:#e8220e;font-size:12px;margin-top:-8px;margin-bottom:8px;display:none"></div>'
   +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">'
   +'<div><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">DISCOUNT TYPE</div><select id="gsd-edit-type" onchange="var t=this.value;var b=document.getElementById(\'gsd-edit-badge\');if(b)b.textContent=t===\'percent\'?\'%\':t===\'fixed\'?(generalSettings.currency||\'$\'):\'\';var vw=document.getElementById(\'gsd-edit-value-wrap\');if(vw)vw.style.display=t===\'free_delivery\'?\'none\':\'block\';" style="width:100%;padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:8px;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><option value="percent" '+(d.type==='percent'?'selected':'')+'>Percentage</option><option value="fixed" '+(d.type==='fixed'?'selected':'')+'>Fixed Amount</option><option value="free_delivery" '+(d.type==='free_delivery'?'selected':'')+'>Free Delivery</option></select></div>'
   +'<div id="gsd-edit-value-wrap" style="display:'+(d.type==='free_delivery'?'none':'block')+'"><div style="font-size:11px;font-weight:700;color:#9090b8;margin-bottom:6px">VALUE</div><div style="display:flex;align-items:center;border:1.5px solid #e4e4f0;border-radius:8px;overflow:hidden;background:#fff"><input id="gsd-edit-value" type="number" min="0" value="'+(d.value||0)+'" style="flex:1;padding:9px 12px;border:none;font-size:12px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none"><span id="gsd-edit-badge" style="padding:9px 12px;font-size:12px;font-weight:700;color:#9090b8;background:#f8f8fc;border-left:1.5px solid #e4e4f0">'+(d.type==='percent'?'%':d.type==='fixed'?(generalSettings.currency||'$'):'')+'</span></div></div>'
@@ -7170,10 +7171,8 @@ function gsSaveEditDiscountModal(i){
       method:'PUT',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({name:d.name,code:d.code,type:d.type,value:d.value,active:d.is_active,product_ids:(window._gsdEditProducts||[]).map(function(p){return p.id;})})
-    }).catch(function(err){var msg=err&&err.message&&err.message.includes('already exists')?'This discount code already exists.':'Failed to save discount.';alert(msg);return;});
-  }
-  document.getElementById('gs-edit-discount-modal').remove();
-  renderGeneralPage();
+    }).then(function(){document.getElementById('gs-edit-discount-modal').remove();renderGeneralPage();}).catch(function(err){var msg=err&&err.message&&err.message.includes('already exists')?'This discount code already exists.':'Failed to save discount.';var e=document.getElementById('gsd-edit-code-error');if(e){e.textContent=msg;e.style.display='block';}});
+    }
 }
 
 function gsEditDiscountScopeChange(){
@@ -7293,7 +7292,7 @@ function gsSaveDiscountModal(){
       document.getElementById('gs-discount-modal').remove();
       renderGeneralPage();
     }
-  }).catch(function(err){var msg=err&&err.message&&err.message.includes('already exists')?'This discount code already exists.':'Failed to save discount.';alert(msg);});
+  }).catch(function(err){var msg=err&&err.message&&err.message.includes('already exists')?'This discount code already exists.':'Failed to save discount.';var e=document.getElementById('gsd-edit-code-error');if(e){e.textContent=msg;e.style.display='block';}});
 }
 function gsToggleDiscount(i){
   var d=generalSettings.discountCodes[i];
