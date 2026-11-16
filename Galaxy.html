@@ -2568,7 +2568,7 @@ function calcOrder(){
   const selPayId=selPay?selPay.value:'';
   const selPm=(generalSettings.paymentMethods||[]).find(function(p){return String(p.id)===String(selPayId);});
   const scPct=selPm?selPm.serviceCharge||0:0;
-  const scAmt=selPm&&scPct>0&&selPm.absorbCost!==true?Math.round(itemsTotal*(scPct/100)*100)/100:0;
+  const scAmt=selPm&&scPct>0&&selPm.payByCustomer!==true?Math.round(itemsTotal*(scPct/100)*100)/100:0;
   const subtotal=itemsTotal+deliveryCost-discount+scAmt+processingFee+taxAmt;
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ "+(generalSettings.currency||'')+" "+deliveryCost.toLocaleString():"";
   const discEl=document.getElementById("o-discount-val");
@@ -2590,7 +2590,7 @@ function calcOrder(){
   const odSC=document.getElementById('od-service-charge');
   const odSCLabel=document.getElementById('od-service-charge-label');
   odSC.textContent=(generalSettings.currency||'')+' '+scAmt.toFixed(2);
-  if(odSCLabel)odSCLabel.textContent=selPm&&selPm.absorbCost===true?'Payment Service Charge (not charged)':'Payment Service Charge ('+scPct+'%)';
+  if(odSCLabel)odSCLabel.textContent=selPm&&selPm.payByCustomer===true?'Payment Service Charge (not charged)':'Payment Service Charge ('+scPct+'%)';
   const odPF=document.getElementById('od-processing-fee');const odTax=document.getElementById('od-tax');
   const odPFRow=document.getElementById('od-processing-fee-row');if(odPFRow)odPFRow.style.display=generalSettings.processingFeeEnabled?'flex':'none';if(odPF)odPF.textContent=(generalSettings.currency||'')+'  '+processingFee.toLocaleString();
   const odTaxRow=document.getElementById('od-tax-row');if(odTaxRow)odTaxRow.style.display=generalSettings.taxVatEnabled?'flex':'none';if(odTax)odTax.textContent=(generalSettings.currency||'')+'  '+taxAmt.toLocaleString();
@@ -6948,7 +6948,7 @@ function gsOpenPaymentModal(i){
   _gsPaymentEditIdx=i;
   window._gsPaymentEditBackup=i>=0?JSON.parse(JSON.stringify(generalSettings.paymentMethods[i])):null;
   const gs=generalSettings;
-  if(i<0){gs.paymentMethods=gs.paymentMethods||[];gs.paymentMethods.push({name:'',serviceCharge:0,absorbCost:false,_isNew:true});_gsPaymentEditIdx=gs.paymentMethods.length-1;}
+  if(i<0){gs.paymentMethods=gs.paymentMethods||[];gs.paymentMethods.push({name:'',serviceCharge:0,payByCustomer:false,_isNew:true});_gsPaymentEditIdx=gs.paymentMethods.length-1;}
   let m=document.getElementById('gs-payment-modal');
   if(!m){m=document.createElement('div');m.id='gs-payment-modal';m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999999;display:none;align-items:center;justify-content:center;overflow-y:auto';m.innerHTML='<div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:520px;margin:24px auto;font-family:\'Plus Jakarta Sans\',sans-serif"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><div style="font-size:15px;font-weight:800;color:#18182b" id="gs-payment-modal-title"></div><svg onclick="gsClosePaymentModal()" viewBox="0 0 16 16" fill="none" style="width:18px;height:18px;cursor:pointer;color:#9090b8"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div id="gs-payment-modal-body"></div><div style="display:flex;gap:10px;margin-top:20px" id="gs-payment-modal-actions"></div></div>';document.body.appendChild(m);}
   document.getElementById('gs-payment-modal-title').textContent=i>=0?'Edit Payment Method':'Add Payment Method';
@@ -7052,7 +7052,7 @@ function gsOpenSystemPaymentModal(type){
 function gsRefreshSysAbsorb(){
   var t=document.getElementById('gs-sys-absorb-toggle');
   if(!t)return;
-  var absorb=window._gsSysPm.absorbCost;
+  var absorb=window._gsSysPm.payByCustomer;
   t.style.background=absorb?'#e8220e':'#e4e4f0';
   t.children[0].style.left=absorb?'21px':'3px';
   var l=document.getElementById('gs-sys-absorb-left');
@@ -7089,8 +7089,8 @@ function gsSaveSysPaymentModal(type){
   var d=window._gsSysPm;
   if(!d)return;
   var pm=generalSettings.paymentMethods.find(function(m){return m.type===type;});
-  if(pm){pm.serviceCharge=d.serviceCharge;pm.absorbCost=d.absorbCost;pm.config=d.config;}
-  if(d.id){window.apiFetch('/settings/payment-methods/'+d.id,{method:'PUT',body:JSON.stringify({serviceCharge:d.serviceCharge,absorbCost:!d.absorbCost,config:d.config})}).catch(function(){});}
+  if(pm){pm.serviceCharge=d.serviceCharge;pm.payByCustomer=d.payByCustomer;pm.config=d.config;}
+  if(d.id){window.apiFetch('/settings/payment-methods/'+d.id,{method:'PUT',body:JSON.stringify({serviceCharge:d.serviceCharge,payByCustomer:!d.payByCustomer,config:d.config})}).catch(function(){});}
   document.getElementById('gs-sys-payment-modal').remove();
   renderGeneralPage();
 }
