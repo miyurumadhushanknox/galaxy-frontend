@@ -5407,7 +5407,7 @@ function renderGeneralPage(){
 
   <!-- PAYMENT METHODS -->
   <div class="card" style="margin-bottom:12px">
-    <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Payment Methods</div>
+    <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Standard Payment Methods</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:14px">
 
       <!-- System payment methods -->
@@ -5437,6 +5437,12 @@ function renderGeneralPage(){
           </div>`;
         }).join('');
       })()}
+      
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="font-size:11px;font-weight:800;color:#2e7d32;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px">Payment Methods</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:14px">
 
       <!-- Manual payment methods -->
       ${(gs.paymentMethods||[]).filter(p=>!p.type||p.type==='manual').map((p,i)=>`
