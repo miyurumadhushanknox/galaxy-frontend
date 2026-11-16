@@ -7171,7 +7171,7 @@ function gsSaveEditDiscountModal(i){
       method:'PUT',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({name:d.name,code:d.code,type:d.type,value:d.value,active:d.is_active,product_ids:(window._gsdEditProducts||[]).map(function(p){return p.id;})})
-    }).then(function(){document.getElementById('gs-edit-discount-modal').remove();renderGeneralPage();}).catch(function(err){var msg=err&&err.message&&err.message.includes('already exists')?'This discount code already exists.':'Failed to save discount.';var e=document.getElementById('gsd-edit-code-error');if(e){e.textContent=msg;e.style.display='block';}});
+    }).then(function(){document.getElementById('gs-edit-discount-modal').remove();renderGeneralPage();}).catch(function(err){var msg=err&&err.message&&err.message.includes('already exists')?'This discount code already exists.':'A discount code with this code already exists.';var e=document.getElementById('gsd-edit-code-error');if(e){e.textContent=msg;e.style.display='block';}});
     }
 }
 
