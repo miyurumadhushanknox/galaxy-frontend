@@ -2568,7 +2568,7 @@ function calcOrder(){
   const selPayId=selPay?selPay.value:'';
   const selPm=(generalSettings.paymentMethods||[]).find(function(p){return String(p.id)===String(selPayId);});
   const scPct=selPm?selPm.serviceCharge||0:0;
-  const scAmt=selPm&&scPct>0&&selPm.payByCustomer!==true?Math.round(itemsTotal*(scPct/100)*100)/100:0;
+  const scAmt=selPm&&scPct>0&&selPm.payByCustomer===true?Math.round(itemsTotal*(scPct/100)*100)/100:0;
   const subtotal=itemsTotal+deliveryCost-discount+scAmt+processingFee+taxAmt;
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ "+(generalSettings.currency||'')+" "+deliveryCost.toLocaleString():"";
   const discEl=document.getElementById("o-discount-val");
@@ -2590,7 +2590,7 @@ function calcOrder(){
   const odSC=document.getElementById('od-service-charge');
   const odSCLabel=document.getElementById('od-service-charge-label');
   odSC.textContent=(generalSettings.currency||'')+' '+scAmt.toFixed(2);
-  if(odSCLabel)odSCLabel.textContent=selPm&&selPm.payByCustomer===true?'Payment Service Charge (not charged)':'Payment Service Charge ('+scPct+'%)';
+  if(odSCLabel)odSCLabel.textContent=selPm&&selPm.payByCustomer===true?'Payment Service Charge ('+scPct+'%)':'Payment Service Charge (not charged)';
   const odPF=document.getElementById('od-processing-fee');const odTax=document.getElementById('od-tax');
   const odPFRow=document.getElementById('od-processing-fee-row');if(odPFRow)odPFRow.style.display=generalSettings.processingFeeEnabled?'flex':'none';if(odPF)odPF.textContent=(generalSettings.currency||'')+'  '+processingFee.toLocaleString();
   const odTaxRow=document.getElementById('od-tax-row');if(odTaxRow)odTaxRow.style.display=generalSettings.taxVatEnabled?'flex':'none';if(odTax)odTax.textContent=(generalSettings.currency||'')+'  '+taxAmt.toLocaleString();
