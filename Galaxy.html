@@ -6985,7 +6985,7 @@ function gsPaymentModalBody(i){
     <div style="flex:1;text-align:right"><div style="font-size:13px;font-weight:700;color:${d.payByCustomer?'#9090b8':'#e8220e'}">We pay it</div>
     <div style="font-size:11px;font-weight:600;color:#9090b8;margin-top:2px">We absorb the service charge</div>
   </div>
-  <div onclick="gsUpdatePayment(${i},'payByCustomer',!generalSettings.paymentMethods[${i}].payByCustomer);document.getElementById('gs-payment-modal-body').innerHTML=gsPaymentModalBody(${i})" style="width:42px;height:24px;border-radius:12px;background:${d.absorbCost?'#e8220e':'#e4e4f0'};cursor:pointer;position:relative;flex-shrink:0">
+  <div onclick="gsUpdatePayment(${i},'payByCustomer',!generalSettings.paymentMethods[${i}].payByCustomer);document.getElementById('gs-payment-modal-body').innerHTML=gsPaymentModalBody(${i})" style="width:42px;height:24px;border-radius:12px;background:${d.payByCustomer?'#e8220e':'#e4e4f0'};cursor:pointer;position:relative;flex-shrink:0">
     <div style="position:absolute;top:3px;left:${d.payByCustomer?'21px':'3px'};width:18px;height:18px;border-radius:50%;background:#fff"></div>
   </div>
   <div style="flex:1"><div style="font-size:13px;font-weight:700;color:${d.payByCustomer?'#e8220e':'#9090b8'}">Pay by Customer</div>
