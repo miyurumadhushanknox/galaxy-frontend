@@ -4278,7 +4278,7 @@ function uploadAvatar(input){
   if(!currentUser)return;
   const pr=getProfile();
   const ext=file.name.split('.').pop();
-  const path=currentUser.id+'/avatar.'+ext;
+  const path=currentUser.id+'/avatar_'+Date.now()+'.'+ext;
   window.apiFetch('/settings/upload-avatar',{method:'POST',headers:{'x-file-name':path,'x-bucket':'user-avatars','Content-Type':file.type},body:file}).then(function(r){
     pr.avatar=r.url+'?t='+Date.now();
     currentUser.avatar_url=r.url;
