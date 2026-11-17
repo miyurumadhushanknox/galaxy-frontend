@@ -150,6 +150,11 @@ function showBlockedPage() {
       bizAddress:  biz.address || '',
       plan:        biz.plan || null,
       avatar_url:  data.user.avatar_url || null,
+      email:       data.user.email || '',
+      phone:       data.user.phone || null,
+      employee_id: data.user.employee_id || null,
+      firstName:   data.user.firstName || '',
+      lastName:    data.user.lastName || '',
       };
       // Check if business is blocked
       if (data.business && (data.business.is_blocked || data.business.isBlocked)) {
