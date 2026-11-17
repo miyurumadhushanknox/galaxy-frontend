@@ -4276,20 +4276,38 @@ function saveProfile(){
 function uploadAvatar(input){
   const file=input.files[0];if(!file)return;
   if(!currentUser)return;
+  if(file.size>5*1024*1024){toast('File too large. Max 5MB.','error');input.value='';return;}
   const pr=getProfile();
   const ext=file.name.split('.').pop();
   const path=currentUser.id+'/avatar_'+Date.now()+'.'+ext;
-  window.apiFetch('/settings/upload-avatar',{method:'POST',headers:{'x-file-name':path,'x-bucket':'user-avatars','Content-Type':file.type},body:file}).then(function(r){
-    pr.avatar=r.url+'?t='+Date.now();
-    currentUser.avatar_url=r.url;
-    sessionStorage.setItem(window.SESSION_KEY||'galaxy_user',JSON.stringify(currentUser));
-    const img=document.getElementById('sb-av-img');
-    const txt=document.getElementById('sb-av-txt');
-    if(img){img.src=r.url+'?t='+Date.now();img.style.display='block';}
-    if(txt)txt.style.display='none';
-    toast('Profile photo updated!','ok');
-    renderProfilePage();
-  }).catch(function(){toast('Failed to upload photo.','error');});
+  function doUpload(blob){
+    window.apiFetch('/settings/upload-avatar',{method:'POST',headers:{'x-file-name':path,'x-bucket':'user-avatars','Content-Type':'image/jpeg'},body:blob}).then(function(r){
+      pr.avatar=r.url+'?t='+Date.now();
+      currentUser.avatar_url=r.url;
+      sessionStorage.setItem(window.SESSION_KEY||'galaxy_user',JSON.stringify(currentUser));
+      const img=document.getElementById('sb-av-img');
+      const txt=document.getElementById('sb-av-txt');
+      if(img){img.src=r.url+'?t='+Date.now();img.style.display='block';}
+      if(txt)txt.style.display='none';
+      toast('Profile photo updated!','ok');
+      renderProfilePage();
+    }).catch(function(){toast('Failed to upload photo.','error');});
+  }
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const img=new Image();
+    img.onload=function(){
+      const canvas=document.createElement('canvas');
+      const MAX=600;
+      let w=img.width,h=img.height;
+      if(w>h){if(w>MAX){h=Math.round(h*MAX/w);w=MAX;}}else{if(h>MAX){w=Math.round(w*MAX/h);h=MAX;}}
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      canvas.toBlob(function(blob){doUpload(blob);},'image/jpeg',0.7);
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
   input.value='';
 }
 
