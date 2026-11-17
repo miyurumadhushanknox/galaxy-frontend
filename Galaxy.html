@@ -4273,7 +4273,16 @@ function saveProfile(){
   const avtTxt=document.getElementById('sb-av-txt');
   if(avtTxt)avtTxt.textContent=ini(currentUser.name);
   window.apiFetch('/users/profile',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:pr.firstName,lastName:pr.lastName,phone:pr.phone,employeeId:pr.employeeId})})
-    .then(function(){toast('Profile updated!','ok');renderProfilePage();})
+    .then(function(r){
+    if(r.user){
+    currentUser.email=r.user.email||currentUser.email;
+    currentUser.phone=r.user.phone||currentUser.phone;
+    currentUser.employee_id=r.user.employee_id||currentUser.employee_id;
+    sessionStorage.setItem(window.SESSION_KEY||'galaxy_user',JSON.stringify(currentUser));
+    }
+    toast('Profile updated!','ok');
+    renderProfilePage();
+    })
     .catch(function(){toast('Failed to save profile.','error');});
 }
 
