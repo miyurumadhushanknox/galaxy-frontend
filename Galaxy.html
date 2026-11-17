@@ -1995,11 +1995,12 @@ function applyUser(f){
   const sbAvTxt=document.getElementById("sb-av-txt"); if(sbAvTxt)sbAvTxt.textContent=ini(f.name);
   // Restore avatar if saved
   const pr=profileData[f.id];
-  if(pr?.avatar){
-    const img=document.getElementById("sb-av-img");
-    const txt=document.getElementById("sb-av-txt");
-    if(img){img.src=pr.avatar;img.style.display="block";}
-    if(txt)txt.style.display="none";
+  const avatarUrl=pr?.avatar||f.avatar_url||null;
+  if(avatarUrl){
+  const img=document.getElementById("sb-av-img");
+  const txt=document.getElementById("sb-av-txt");
+  if(img){img.src=avatarUrl;img.style.display="block";}
+  if(txt)txt.style.display="none";
   }
 }
 function showApp(f){applyUser(f);applyBizName();applyBizName();document.getElementById("login-screen").style.display="none";document.getElementById("app-shell").style.display="flex";initApp();}
@@ -4089,7 +4090,7 @@ function getProfile(){
       email:     currentUser.username+'@galaxy.lk',
       phone:     '',
       businessName: generalSettings.bizName||'',
-      avatar:      currentUser.avatar_url||null,
+      avatar: currentUser.avatar_url||null,
       leaveFrom: '',
       leaveTo:   '',
       leaveReason: '',
