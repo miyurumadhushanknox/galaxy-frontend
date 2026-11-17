@@ -4257,20 +4257,22 @@ function renderProfilePage(){
 function saveProfile(){
   if(!currentUser)return;
   const pr=getProfile();
-  pr.firstName = document.getElementById('pf-firstname')?.value.trim()||pr.firstName;
-  pr.lastName  = document.getElementById('pf-lastname')?.value.trim()||'';
-  pr.email     = document.getElementById('pf-email')?.value.trim()||pr.email;
-  pr.phone     = document.getElementById('pf-phone')?.value.trim()||'';
-  pr.businessName = document.getElementById('pf-business')?.value.trim()||'';
-  // Update display name
-  const fullName = (pr.firstName+' '+pr.lastName).trim();
-  currentUser.name = fullName||currentUser.name;
-  // Update sidebar
-  document.getElementById('sb-name').textContent = currentUser.name;
+  pr.firstName=document.getElementById('pf-firstname')?.value.trim()||pr.firstName;
+  pr.lastName=document.getElementById('pf-lastname')?.value.trim()||'';
+  pr.email=document.getElementById('pf-email')?.value.trim()||pr.email;
+  pr.phone=document.getElementById('pf-phone')?.value.trim()||'';
+  pr.businessName=document.getElementById('pf-business')?.value.trim()||'';
+  const fullName=(pr.firstName+' '+pr.lastName).trim();
+  currentUser.name=fullName||currentUser.name;
+  currentUser.firstName=pr.firstName;
+  currentUser.lastName=pr.lastName;
+  sessionStorage.setItem(window.SESSION_KEY||'galaxy_user',JSON.stringify(currentUser));
+  document.getElementById('sb-name').textContent=currentUser.name;
   const avtTxt=document.getElementById('sb-av-txt');
   if(avtTxt)avtTxt.textContent=ini(currentUser.name);
-  toast('Profile updated!','ok');
-  renderProfilePage();
+  window.apiFetch('/settings/profile',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:pr.firstName,lastName:pr.lastName,phone:pr.phone})})
+    .then(function(){toast('Profile updated!','ok');renderProfilePage();})
+    .catch(function(){toast('Failed to save profile.','error');});
 }
 
 function uploadAvatar(input){
