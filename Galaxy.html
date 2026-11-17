@@ -4270,7 +4270,7 @@ function saveProfile(){
   document.getElementById('sb-name').textContent=currentUser.name;
   const avtTxt=document.getElementById('sb-av-txt');
   if(avtTxt)avtTxt.textContent=ini(currentUser.name);
-  window.apiFetch('/settings/profile',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:pr.firstName,lastName:pr.lastName,phone:pr.phone})})
+  window.apiFetch('/users/profile',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:pr.firstName,lastName:pr.lastName,phone:pr.phone})})
     .then(function(){toast('Profile updated!','ok');renderProfilePage();})
     .catch(function(){toast('Failed to save profile.','error');});
 }
