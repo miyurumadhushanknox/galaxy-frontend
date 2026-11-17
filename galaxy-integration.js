@@ -149,6 +149,7 @@ function showBlockedPage() {
       bizCategory: biz.category || '',
       bizAddress:  biz.address || '',
       plan:        biz.plan || null,
+      avatar_url:  data.user.avatar_url || null,
       };
       // Check if business is blocked
       if (data.business && (data.business.is_blocked || data.business.isBlocked)) {
