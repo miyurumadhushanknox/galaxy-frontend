@@ -4087,7 +4087,7 @@ function getProfile(){
     profileData[currentUser.id]={
     firstName: currentUser.firstName||currentUser.name.split(' ')[0]||'',
     lastName:  currentUser.lastName||currentUser.name.split(' ').slice(1).join(' ')||'',
-    email:     currentUser.username+'@galaxy.lk',
+    email:     currentUser.email||'',
     phone:     currentUser.phone||'',
     employeeId: currentUser.employee_id||'',
     businessName: generalSettings.bizName||'',
