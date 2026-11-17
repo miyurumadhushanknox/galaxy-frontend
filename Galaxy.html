@@ -2017,6 +2017,25 @@ window.addEventListener("DOMContentLoaded",()=>{
   document.getElementById("f-code").addEventListener("input",()=>{codeManual=true;});
 });
 
+window.addEventListener("DOMContentLoaded",()=>{
+  const saved=sessionStorage.getItem(SESSION_KEY);
+  if(saved){try{if(window._stopGalaxy)window._stopGalaxy();showApp(JSON.parse(saved));}catch(e){sessionStorage.removeItem(SESSION_KEY);}}
+  // Auto-fix missing email for existing sessions
+  setTimeout(function(){
+  if(currentUser && !currentUser.email){
+    window.apiFetch('/users/profile-info')
+      .then(function(r){
+        if(r && r.email){
+          currentUser.email=r.email;
+          currentUser.phone=currentUser.phone||r.phone;
+          currentUser.employee_id=currentUser.employee_id||r.employee_id;
+          sessionStorage.setItem(window.SESSION_KEY||'galaxy_user',JSON.stringify(currentUser));
+        }
+      }).catch(function(){});
+  }
+}, 500);
+});
+
 // ── NAVIGATION ──
 function navigate(page){
   // Mobile: close sidebar + update bottom nav
