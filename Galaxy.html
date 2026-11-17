@@ -4281,6 +4281,8 @@ function uploadAvatar(input){
   const path=currentUser.id+'/avatar.'+ext;
   window.apiFetch('/settings/upload-avatar',{method:'POST',headers:{'x-file-name':path,'x-bucket':'user-avatars','Content-Type':file.type},body:file}).then(function(r){
     pr.avatar=r.url;
+    currentUser.avatar_url=r.url;
+    sessionStorage.setItem(window.SESSION_KEY||'galaxy_user',JSON.stringify(currentUser));
     const img=document.getElementById('sb-av-img');
     const txt=document.getElementById('sb-av-txt');
     if(img){img.src=r.url;img.style.display='block';}
