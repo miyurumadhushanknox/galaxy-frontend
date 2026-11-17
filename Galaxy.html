@@ -4280,12 +4280,12 @@ function uploadAvatar(input){
   const ext=file.name.split('.').pop();
   const path=currentUser.id+'/avatar.'+ext;
   window.apiFetch('/settings/upload-avatar',{method:'POST',headers:{'x-file-name':path,'x-bucket':'user-avatars','Content-Type':file.type},body:file}).then(function(r){
-    pr.avatar=r.url;
+    pr.avatar=r.url+'?t='+Date.now();
     currentUser.avatar_url=r.url;
     sessionStorage.setItem(window.SESSION_KEY||'galaxy_user',JSON.stringify(currentUser));
     const img=document.getElementById('sb-av-img');
     const txt=document.getElementById('sb-av-txt');
-    if(img){img.src=r.url;img.style.display='block';}
+    if(img){img.src=r.url+'?t='+Date.now();img.style.display='block';}
     if(txt)txt.style.display='none';
     toast('Profile photo updated!','ok');
     renderProfilePage();
