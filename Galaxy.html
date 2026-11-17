@@ -4085,15 +4085,16 @@ function getProfile(){
   if(!currentUser)return null;
   if(!profileData[currentUser.id]){
     profileData[currentUser.id]={
-      firstName: currentUser.name.split(' ')[0]||'',
-      lastName:  currentUser.name.split(' ').slice(1).join(' ')||'',
-      email:     currentUser.username+'@galaxy.lk',
-      phone:     '',
-      businessName: generalSettings.bizName||'',
-      avatar: currentUser.avatar_url||null,
-      leaveFrom: '',
-      leaveTo:   '',
-      leaveReason: '',
+    firstName: currentUser.firstName||currentUser.name.split(' ')[0]||'',
+    lastName:  currentUser.lastName||currentUser.name.split(' ').slice(1).join(' ')||'',
+    email:     currentUser.username+'@galaxy.lk',
+    phone:     currentUser.phone||'',
+    employeeId: currentUser.employee_id||'',
+    businessName: generalSettings.bizName||'',
+    avatar: currentUser.avatar_url||null,
+    leaveFrom: '',
+    leaveTo:   '',
+    leaveReason: '',
     };
   }
   return profileData[currentUser.id];
@@ -4258,6 +4259,8 @@ function saveProfile(){
   currentUser.name=fullName||currentUser.name;
   currentUser.firstName=pr.firstName;
   currentUser.lastName=pr.lastName;
+  currentUser.phone=pr.phone;
+  currentUser.employee_id=pr.employeeId;
   sessionStorage.setItem(window.SESSION_KEY||'galaxy_user',JSON.stringify(currentUser));
   document.getElementById('sb-name').textContent=currentUser.name;
   const avtTxt=document.getElementById('sb-av-txt');
