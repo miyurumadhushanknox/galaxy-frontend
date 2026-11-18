@@ -2011,7 +2011,8 @@ function doLogout(){sessionStorage.removeItem(SESSION_KEY);currentUser=null;docu
 
 window.addEventListener("DOMContentLoaded",()=>{
   const saved=sessionStorage.getItem(SESSION_KEY);
-  if(saved){try{if(window._stopGalaxy)window._stopGalaxy();showApp(JSON.parse(saved));}catch(e){sessionStorage.removeItem(SESSION_KEY);}}
+  const _resetParam=new URLSearchParams(window.location.search).get('reset');
+  if(!_resetParam){if(saved){try{if(window._stopGalaxy)window._stopGalaxy();showApp(JSON.parse(saved));}catch(e){sessionStorage.removeItem(SESSION_KEY);}}}
   document.getElementById("l-pass").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
   document.getElementById("l-user").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("l-pass").focus();});
   document.getElementById("f-code").addEventListener("input",()=>{codeManual=true;});
@@ -2019,7 +2020,8 @@ window.addEventListener("DOMContentLoaded",()=>{
 
 window.addEventListener("DOMContentLoaded",()=>{
   const saved=sessionStorage.getItem(SESSION_KEY);
-  if(saved){try{if(window._stopGalaxy)window._stopGalaxy();showApp(JSON.parse(saved));}catch(e){sessionStorage.removeItem(SESSION_KEY);}}
+  const _resetParam2=new URLSearchParams(window.location.search).get('reset');
+  if(!_resetParam2){if(saved){try{if(window._stopGalaxy)window._stopGalaxy();showApp(JSON.parse(saved));}catch(e){sessionStorage.removeItem(SESSION_KEY);}}}
   // Auto-fix missing email for existing sessions
   setTimeout(function(){
   if(currentUser && !currentUser.email){
