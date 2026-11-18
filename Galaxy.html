@@ -8663,6 +8663,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (token) {
     window._resetToken = token;
     document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('m-statuschange').style.display = 'block';
     const overlay = document.getElementById('resetPasswordOverlay');
     overlay.style.display = 'flex';
   }
