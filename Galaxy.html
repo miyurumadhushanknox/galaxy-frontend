@@ -8646,7 +8646,7 @@ function confirmDeliveryOverride(){const val=parseFloat(document.getElementById(
     </button>
     <p id="rp-message" style="margin-top:16px;font-size:13px;min-height:18px;"></p>
   </div>
-</div>
+
 
 <script>
 // Check for reset token in URL on page load
@@ -8655,15 +8655,11 @@ window.addEventListener('DOMContentLoaded', () => {
   const token = params.get('reset');
   if (token) {
     window._resetToken = token;
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('m-statuschange').style.display = 'block';
-    document.getElementById('m-statuschange').classList.remove('open');
-    const scPanel = document.getElementById('m-statuschange').querySelector('div:first-child');
-    if (scPanel) scPanel.style.display = 'none';
-    document.querySelector('.modal-bg') && (document.querySelector('.modal-bg').style.display = 'none');
-    document.getElementById('m-viewuser').style.display = 'none';
-    const overlay = document.getElementById('resetPasswordOverlay');
-    overlay.style.display = 'flex';
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('m-statuschange').style.display = 'none';
+      document.getElementById('m-viewuser').style.display = 'none';
+      const overlay = document.getElementById('resetPasswordOverlay');
+      overlay.style.display = 'flex';
   }
 });
 
