@@ -8658,9 +8658,17 @@ window.addEventListener('DOMContentLoaded', () => {
   const token = params.get('reset');
   if (token) {
     window._resetToken = token;
-      document.getElementById('login-screen').style.visibility = 'hidden';
-      const canvas = document.querySelector('.galaxy-canvas');
-      if (canvas) canvas.style.visibility = 'visible';
+      const loginScreen = document.getElementById('login-screen');
+      const canvas = loginScreen.querySelector('.galaxy-canvas');
+      if (canvas) {
+      document.body.appendChild(canvas);
+      canvas.style.position = 'fixed';
+      canvas.style.inset = '0';
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.zIndex = '0';
+      }
+      loginScreen.style.display = 'none';
       document.getElementById('m-statuschange').style.display = 'none';
       document.getElementById('m-viewuser').style.display = 'none';
       const overlay = document.getElementById('resetPasswordOverlay');
