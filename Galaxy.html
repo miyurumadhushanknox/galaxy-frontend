@@ -8657,6 +8657,7 @@ window.addEventListener('DOMContentLoaded', () => {
     window._resetToken = token;
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('m-statuschange').style.display = 'block';
+    document.querySelector('.modal-bg') && (document.querySelector('.modal-bg').style.display = 'none');
     const overlay = document.getElementById('resetPasswordOverlay');
     overlay.style.display = 'flex';
   }
