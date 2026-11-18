@@ -8658,7 +8658,9 @@ window.addEventListener('DOMContentLoaded', () => {
   const token = params.get('reset');
   if (token) {
     window._resetToken = token;
-      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('login-screen').style.visibility = 'hidden';
+      const canvas = document.querySelector('.galaxy-canvas');
+      if (canvas) canvas.style.visibility = 'visible';
       document.getElementById('m-statuschange').style.display = 'none';
       document.getElementById('m-viewuser').style.display = 'none';
       const overlay = document.getElementById('resetPasswordOverlay');
