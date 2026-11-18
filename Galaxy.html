@@ -1952,7 +1952,7 @@ tbody tr:hover .row-actions{display:flex}
     <div style="padding:20px 22px">
       <input type="hidden" id="sc-order-id">
       <div style="font-size:12px;font-weight:700;color:#18182b;margin-bottom:8px">Select new status</div>
-      <select id="sc-status-select" onchange="scCheckReason()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;foolor:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none;margin-bottom:10px" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+      <select id="sc-status-select" onchange="scCheckReason()" style="width:100%;padding:11px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none;margin-bottom:10px" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
       </select>
       <div id="sc-status-desc" style="font-size:12px;color:#9090b8;margin-bottom:14px"></div>
       <!-- Reason box — only shown for Cancelled, Returned, Refunded -->
@@ -1962,8 +1962,10 @@ tbody tr:hover .row-actions{display:flex}
           Reason required
         </div>
         <textarea id="sc-reason" rows="3" placeholder="Enter reason for this status change…" style="width:100%;padding:10px 12px;border:1.5px solid #e8220e;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff8f6;outline:none;resize:vertical;line-height:1.5"></textarea>
+      </div>
+      <button onclick="applyStatusChange()" style="width:100%;padding:12px;background:#e8220e;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px">Save Status</button>
+    </div>
   </div>
-  <button onclick="applyStatusChange()" style="width:100%;padding:12px;background:#e8220e;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px">Save Status</button>
 </div>
 
 <script>
