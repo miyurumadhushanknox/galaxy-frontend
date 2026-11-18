@@ -2003,6 +2003,7 @@ function applyUser(f){
   if(txt)txt.style.display="none";
   }
 }
+
 function showApp(f){applyUser(f);applyBizName();applyBizName();document.getElementById("login-screen").style.display="none";document.getElementById("app-shell").style.display="flex";initApp();}
 window.showApp=showApp;
 window.applyUser=applyUser;
@@ -8661,6 +8662,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const token = params.get('reset');
   if (token) {
     window._resetToken = token;
+    document.getElementById('login-screen').style.display = 'none';
     const overlay = document.getElementById('resetPasswordOverlay');
     overlay.style.display = 'flex';
   }
