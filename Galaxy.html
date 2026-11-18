@@ -8657,6 +8657,9 @@ window.addEventListener('DOMContentLoaded', () => {
     window._resetToken = token;
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('m-statuschange').style.display = 'block';
+    document.getElementById('m-statuschange').classList.remove('open');
+    const scPanel = document.getElementById('m-statuschange').querySelector('div:first-child');
+    if (scPanel) scPanel.style.display = 'none';
     document.querySelector('.modal-bg') && (document.querySelector('.modal-bg').style.display = 'none');
     document.getElementById('m-viewuser').style.display = 'none';
     const overlay = document.getElementById('resetPasswordOverlay');
