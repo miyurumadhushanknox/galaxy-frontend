@@ -8627,30 +8627,23 @@ function confirmDeliveryOverride(){const val=parseFloat(document.getElementById(
   </div>
 
   <!-- Reset Password Popup -->
-<div id="resetPasswordOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;">
-  <div style="background:#1a1a2e;border:1px solid #333;border-radius:16px;padding:40px;width:420px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
-    <h2 style="color:#fff;margin:0 0 8px;">Set New Password</h2>
-    <p style="color:#999;margin:0 0 24px;font-size:14px;">Enter your new password below.</p>
-
-    <input type="password" id="rp-new-password" placeholder="New password"
-      style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid #333;background:#0f0f1a;color:#fff;margin-bottom:12px;box-sizing:border-box;font-size:14px;outline:none;"
-      onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#333'">
-
-    <input type="password" id="rp-confirm-password" placeholder="Confirm password"
-      style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid #333;background:#0f0f1a;color:#fff;margin-bottom:24px;box-sizing:border-box;font-size:14px;outline:none;"
-      onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#333'">
-
-    <div style="display:flex;gap:12px;">
-      <button onclick="closeResetPopup()"
-        style="flex:1;padding:12px;border-radius:10px;border:1px solid #444;background:transparent;color:#fff;cursor:pointer;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;">
-        Cancel
-      </button>
-      <button onclick="confirmResetPassword()"
-        style="flex:1;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;cursor:pointer;font-size:14px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;">
-        Confirm
-      </button>
+<div id="resetPasswordOverlay" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#2a2a2a;border:1px solid #444;border-radius:16px;padding:40px;width:420px;max-width:90vw;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+    <div style="width:56px;height:56px;background:#1a1a1a;border-radius:14px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;">
+      <span style="color:#e8441a;font-size:28px;font-weight:900;">G</span>
     </div>
-
+    <h2 style="color:#fff;margin:0 0 6px;font-size:22px;font-weight:700;">Reset Password</h2>
+    <p style="color:#999;margin:0 0 24px;font-size:14px;">Enter your new password below.</p>
+    <input type="password" id="rp-new-password" placeholder="NEW PASSWORD"
+      style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid #333;background:#111;color:#fff;margin-bottom:12px;box-sizing:border-box;font-size:13px;outline:none;letter-spacing:0.05em;"
+      onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#333'">
+    <input type="password" id="rp-confirm-password" placeholder="CONFIRM PASSWORD"
+      style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid #333;background:#111;color:#fff;margin-bottom:24px;box-sizing:border-box;font-size:13px;outline:none;letter-spacing:0.05em;"
+      onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#333'">
+    <button onclick="confirmResetPassword()"
+      style="width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;cursor:pointer;font-size:15px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;">
+      Set New Password
+    </button>
     <p id="rp-message" style="margin-top:16px;font-size:13px;min-height:18px;"></p>
   </div>
 </div>
@@ -8710,7 +8703,7 @@ async function confirmResetPassword() {
     if (res.ok) {
       msg.style.color = '#22c55e';
       msg.textContent = 'Password changed! You can now log in.';
-      setTimeout(() => closeResetPopup(), 2000);
+      setTimeout(() => { window.location.href = window.location.pathname; }, 2000);
     } else {
       msg.style.color = '#e8220e';
       msg.textContent = data.error || 'Reset failed. Try again.';
