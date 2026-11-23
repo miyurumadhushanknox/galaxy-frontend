@@ -2512,6 +2512,10 @@ function confirmEditPrice() {
   if (o && !isNaN(val) && val >= 0) {
     o.customPrice = val;
     o.priceEditing = false;
+    if (window._galaxyOrderItems) {
+      var gi = window._galaxyOrderItems.find(x => x.pid === _editPricePid || x.id === _editPricePid);
+      if (gi) gi.customPrice = val;
+    }
     renderOrderItems();
     calcOrder();
   }
