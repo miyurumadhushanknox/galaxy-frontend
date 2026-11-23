@@ -2512,7 +2512,7 @@ function renderOrderItems(){
     const basePrice=p.price;
     const usePrice=item.customPrice!==null?item.customPrice:basePrice;
     const lineTotal=usePrice*item.qty;
-    const priceEditing=item.customPrice!==null;
+    const priceEditing=item.priceEditing===true;
 
     // Find price siblings (variants sharing same parentCode or code root)
     const baseCode=p.parentCode||p.code||'';
