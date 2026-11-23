@@ -2488,9 +2488,34 @@ function setQty(pid,val){
   calcOrder();
 }
 
+var _editPricePid = null;
 function enablePriceEdit(pid) {
   var o = orderItems.find(x => x.pid === pid);
-  if (o) { o.priceEditing = true; renderOrderItems(); }
+  if (!o) return;
+  var p = products.find(x => x.id === pid);
+  var currentPrice = o.customPrice !== null ? o.customPrice : (p ? p.price : 0);
+  _editPricePid = pid;
+  document.getElementById('editPriceModalMsg').innerHTML =
+    "Current product price is <b>" + L(currentPrice) + "</b>.<br>Are you sure you want to edit the price for this order?";
+  document.getElementById('editPriceInput').value = currentPrice;
+  var modal = document.getElementById('editPriceModal');
+  modal.style.display = 'flex';
+}
+function closeEditPriceModal() {
+  document.getElementById('editPriceModal').style.display = 'none';
+  _editPricePid = null;
+}
+function confirmEditPrice() {
+  if (!_editPricePid) return;
+  var val = parseFloat(document.getElementById('editPriceInput').value);
+  var o = orderItems.find(x => x.pid === _editPricePid);
+  if (o && !isNaN(val) && val >= 0) {
+    o.customPrice = val;
+    o.priceEditing = false;
+    renderOrderItems();
+    calcOrder();
+  }
+  closeEditPriceModal();
 }
 
 function setCustomPrice(pid,val){
@@ -8648,6 +8673,18 @@ function confirmDeliveryOverride(){const val=parseFloat(document.getElementById(
       onmouseup="this.style.transform='translateY(0)'"
       style="width:100%;padding:14px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:white;border:1px solid rgba(255,255,255,0.35);border-radius:14px;cursor:pointer;font-size:15px;font-weight:600;letter-spacing:.02em;backdrop-filter:blur(10px);margin-bottom:16px;">Set New Password</button>
     <p id="rp-message" style="color:#4ade80;margin-bottom:12px;font-size:13px;min-height:18px;"></p>
+  </div>
+</div>
+
+<!-- Place Order Edit Price Modal -->
+<div id="editPriceModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:28px 32px;width:360px;max-width:95vw;box-shadow:0 8px 40px rgba(0,0,0,0.18);">
+    <div style="font-size:15px;font-weight:600;color:#18182b;margin-bottom:16px;" id="editPriceModalMsg"></div>
+    <input type="number" id="editPriceInput" min="0" placeholder="Enter new price" style="width:100%;padding:10px 14px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:14px;font-family:Plus Jakarta Sans,sans-serif;font-weight:600;color:#18182b;box-sizing:border-box;outline:none;margin-bottom:20px;">
+    <div style="display:flex;gap:10px;">
+      <button onclick="closeEditPriceModal()" style="flex:1;padding:11px;border:1.5px solid #e4e4f0;border-radius:10px;background:#f5f5fa;font-size:14px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Plus Jakarta Sans,sans-serif;">Cancel</button>
+      <button onclick="confirmEditPrice()" style="flex:1;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:Plus Jakarta Sans,sans-serif;">Confirm</button>
+    </div>
   </div>
 </div>
 
