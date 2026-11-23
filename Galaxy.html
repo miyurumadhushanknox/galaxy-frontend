@@ -2545,7 +2545,7 @@ function renderOrderItems(){
                 ?"<input type='number' value='"+usePrice+"' min='0' oninput='setCustomPrice("+item.pid+",this.value)' onblur='renderOrderItems()' style='width:100px;padding:4px 8px;border:1.5px solid #e8220e;border-radius:7px;font-size:13px;font-family:Plus Jakarta Sans,sans-serif;font-weight:700;color:#e8220e;background:#fff8f6;outline:none'>"
                   +"<button onclick='setCustomPrice("+item.pid+",null);renderOrderItems()' style='padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#f5f5fa;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Plus Jakarta Sans,sans-serif'>Reset</button>"
                 :"<span style='font-size:13px;font-weight:700;color:#18182b'>"+L(basePrice)+"</span>"
-                  +"<button onclick='orderItems.find(x=>x.pid==="+item.pid+").customPrice="+basePrice+";renderOrderItems()' style='padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#f5f5fa;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Plus Jakarta Sans,sans-serif'>Edit</button>"
+                  +"<button onclick='(function(){var o=orderItems.find(x=>x.pid==="+item.pid+");o.customPrice="+basePrice+";o.priceEditing=true;renderOrderItems();})()' style='padding:3px 8px;border:1.5px solid #e4e4f0;border-radius:7px;background:#f5f5fa;font-size:11px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Plus Jakarta Sans,sans-serif'>Edit</button>"
               )+
               "<span style='margin-left:auto;font-size:13px;font-weight:800;color:#18182b'>"+L(lineTotal)+"</span>"+
             "</div>"
