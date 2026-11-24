@@ -1201,6 +1201,7 @@ setTimeout(function() {
 
   try {
     const payload = {
+      walk_in: !!(window.walkInMode || document.getElementById('walkin-toggle')?.style.background?.includes('232')),
       customer_name:    customerName,
       customer_phone:   customerPhone,
       customer_phone2:  customerPhone2,
