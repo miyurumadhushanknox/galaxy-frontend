@@ -2631,6 +2631,10 @@ function calcOrder(){
   const scAmt=selPm&&scPct>0&&selPm.payByCustomer===true?Math.round(itemsTotal*(scPct/100)*100)/100:0;
   window._paymentServiceCharge=scAmt;
   window._itemsTotal=itemsTotal;
+  window._deliveryCost=deliveryCost;
+  window._discount=discount;
+  window._procFee=procFee;
+  window._taxAmt=taxAmt;
   const subtotal=itemsTotal+deliveryCost-discount+scAmt+processingFee+taxAmt;
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ "+(generalSettings.currency||'')+" "+deliveryCost.toLocaleString():"";
   const discEl=document.getElementById("o-discount-val");

@@ -1207,9 +1207,12 @@ setTimeout(function() {
       customer_email:   customerEmail,
       note:             customerNote,
       delivery_method:  deliveryName,
-      delivery_cost:    deliveryPrice,
       payment_method:   paymentMethod,
       discount_code:    discountCode || null,
+      delivery_cost:    parseFloat(window._deliveryCost || 0),
+      discount_amount:  parseFloat(window._discount || 0),
+      processing_fee:   parseFloat(window._procFee || 0),
+      tax_amount:       parseFloat(window._taxAmt || 0),
       items: items.map(i => ({
       product_id: i.pid || i.id,
       quantity:   i.qty,
