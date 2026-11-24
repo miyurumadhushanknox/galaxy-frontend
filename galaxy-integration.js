@@ -668,8 +668,9 @@ setTimeout(function() {
     let items = window._galaxyOrderItems || [];
 
     const red = [];
-    if (!customerName)  red.push('Customer name is required.');
-    if (!customerPhone) red.push('Phone number is required.');
+    var _walkIn2 = document.getElementById('walkin-toggle')?.style.background?.includes('229') || window.walkInMode;
+    if (!customerName && !_walkIn2)  red.push('Customer name is required.');
+    if (!customerPhone && !_walkIn2) red.push('Phone number is required.');
     if (!items.length)  red.push('Add at least one product to the order.');
     if (!paymentMethod) red.push('Select a payment method.');
 
@@ -1173,8 +1174,9 @@ setTimeout(function() {
   let items = window._galaxyOrderItems || [];
 
   const red = [];
-  if (!customerName)  red.push('Customer name is required.');
-  if (!customerPhone) red.push('Phone number is required.');
+  var _walkIn = document.getElementById('walkin-toggle')?.style.background?.includes('229') || window.walkInMode;
+  if (!customerName && !_walkIn)  red.push('Customer name is required.');
+  if (!customerPhone && !_walkIn) red.push('Phone number is required.');
   if (!items.length)  red.push('Add at least one product to the order.');
   if (!paymentMethod) red.push('Select a payment method.');
 
