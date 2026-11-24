@@ -1217,6 +1217,7 @@ setTimeout(function() {
       product_id: i.pid || i.id,
       quantity:   i.qty,
       unit_price: (i.customPrice !== null && i.customPrice !== undefined) ? i.customPrice : ((window.products || []).find(p => p.id === i.pid)?.price || 0),
+      warehouse_id: i.warehouse_id || null,
       })),
       items_total: parseFloat(window._itemsTotal || 0),
       payment_service_charge: parseFloat(window._paymentServiceCharge || 0),
