@@ -1385,6 +1385,18 @@ list.querySelectorAll('input[onchange*="setQty"]').forEach(function(input) {
     }
     }, 1000);
 
+    // Patch phone inputs to only accept numbers
+    function patchPhoneInputs() {
+    document.querySelectorAll('input[placeholder*="Phone"], input[placeholder*="phone"]').forEach(function(inp) {
+      inp.setAttribute('inputmode', 'numeric');
+      inp.addEventListener('input', function() {
+      this.value = this.value.replace(/[^0-9+\-\s]/g, '');
+    });
+    });
+    }
+patchPhoneInputs();
+setTimeout(patchPhoneInputs, 1000);
+
     // If already logged in via sessionStorage (JWT still valid), load real data
     const saved = sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user');
 
