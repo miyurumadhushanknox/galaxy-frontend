@@ -2629,6 +2629,8 @@ function calcOrder(){
   const selPm=(generalSettings.paymentMethods||[]).find(function(p){return String(p.id)===String(selPayId);});
   const scPct=selPm?selPm.serviceCharge||0:0;
   const scAmt=selPm&&scPct>0&&selPm.payByCustomer===true?Math.round(itemsTotal*(scPct/100)*100)/100:0;
+  window._paymentServiceCharge=scAmt;
+  window._itemsTotal=itemsTotal;
   const subtotal=itemsTotal+deliveryCost-discount+scAmt+processingFee+taxAmt;
   document.getElementById("o-delivery-cost").textContent=deliveryCost>0?"+ "+(generalSettings.currency||'')+" "+deliveryCost.toLocaleString():"";
   const discEl=document.getElementById("o-discount-val");

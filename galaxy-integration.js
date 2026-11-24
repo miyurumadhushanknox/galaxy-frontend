@@ -1213,10 +1213,10 @@ setTimeout(function() {
       items: items.map(i => ({
       product_id: i.pid || i.id,
       quantity:   i.qty,
-      unit_price: (i.customPrice !== null && i.customPrice !== undefined) ? i.customPrice : (i.sp || i.price),
+      unit_price: (i.customPrice !== null && i.customPrice !== undefined) ? i.customPrice : ((window.products || []).find(p => p.id === i.pid)?.price || 0),
       })),
-      items_total: parseFloat(window.calcOrderTotal ? window.calcOrderTotal() : 0) || 0,
-      payment_service_charge: parseFloat(window._galaxyPaymentServiceCharge || 0),
+      items_total: parseFloat(window._itemsTotal || 0),
+      payment_service_charge: parseFloat(window._paymentServiceCharge || 0),
     };
 
     const res = await API.OrdersAPI.create(payload);
