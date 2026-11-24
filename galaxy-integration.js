@@ -1397,6 +1397,36 @@ list.querySelectorAll('input[onchange*="setQty"]').forEach(function(input) {
 patchPhoneInputs();
 setTimeout(patchPhoneInputs, 1000);
 
+// Move Walk-in toggle to CUSTOMER DETAILS header and make fields optional
+function patchWalkIn() {
+  var toggle = document.getElementById('walkin-toggle');
+  if (!toggle) return;
+  // Find CUSTOMER DETAILS heading
+  var heading = Array.from(document.querySelectorAll('div')).find(function(d) {
+    return d.textContent.trim() === 'CUSTOMER DETAILS' && d.style.fontWeight >= 600;
+  });
+  if (!heading) return;
+  // Move toggle to heading row
+  var wrapper = toggle.closest('div[style*="display:flex"]') || toggle.parentNode;
+  heading.parentNode.style.display = 'flex';
+  heading.parentNode.style.justifyContent = 'space-between';
+  heading.parentNode.style.alignItems = 'center';
+  heading.parentNode.appendChild(wrapper);
+  // Patch toggleWalkIn to also toggle required
+  var _origToggle = window.toggleWalkIn;
+  window.toggleWalkIn = function() {
+    if (_origToggle) _origToggle();
+    setTimeout(function() {
+      var isWalkIn = document.getElementById('walkin-toggle').style.background !== 'rgb(228, 228, 240)';
+      document.querySelectorAll('#page-placeorder input[required], #page-placeorder select[required]').forEach(function(inp) {
+        if (isWalkIn) inp.removeAttribute('required');
+        else inp.setAttribute('required', '');
+      });
+    }, 50);
+  };
+}
+setTimeout(patchWalkIn, 1200);
+
     // If already logged in via sessionStorage (JWT still valid), load real data
     const saved = sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user');
 
