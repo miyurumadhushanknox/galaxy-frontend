@@ -1278,6 +1278,29 @@ setTimeout(function() {
             if (m) { var pid=m[1], delta=parseInt(m[2]); btn.removeAttribute('onclick'); btn.addEventListener('click', function() { window.changeQty(pid, delta); }); }
           });
 
+    // Fix close (×) and +/- buttons using input onchange to get pid
+list.querySelectorAll('input[onchange*="setQty"]').forEach(function(input) {
+  var m = input.getAttribute('onchange').match(/setQty\("([^"]+)"/);
+  if (!m) return;
+  var pid = m[1];
+  var row = input.closest('div[style*="border:1.5px"]') || input.parentNode.parentNode;
+  // +/- buttons in same row
+  row.querySelectorAll('button').forEach(function(b) {
+    var t = b.textContent.trim();
+    if (t === '-') { b.onclick = null; b.addEventListener('click', function() { window.changeQty(pid, -1); }); }
+    if (t === '+') { b.onclick = null; b.addEventListener('click', function() { window.changeQty(pid, 1); }); }
+  });
+  // × close button (outer wrapper's first button)
+  var wrapper = row.closest('div[style*="display:flex;align-items:center;gap:10px"]');
+  if (wrapper) {
+    var xBtn = wrapper.querySelector('button');
+    if (xBtn && xBtn.textContent.trim() === '×') {
+      xBtn.onclick = null;
+      xBtn.addEventListener('click', function() { window.removeOrderItem(pid); });
+    }
+  }
+});
+
           var galaxyItems = items;
           galaxyItems.forEach(function(mirrorItem, idx) {
             // Find the unit price row in this item's DOM — look for the Edit button
