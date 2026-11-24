@@ -668,7 +668,7 @@ setTimeout(function() {
     let items = window._galaxyOrderItems || [];
 
     const red = [];
-    var _walkIn2 = document.getElementById('walkin-toggle')?.style.background?.includes('229') || window.walkInMode;
+    var _walkIn2 = document.getElementById('walkin-toggle')?.style.background?.includes('232') || window.walkInMode;
     if (!customerName && !_walkIn2)  red.push('Customer name is required.');
     if (!customerPhone && !_walkIn2) red.push('Phone number is required.');
     if (!items.length)  red.push('Add at least one product to the order.');
@@ -1174,7 +1174,7 @@ setTimeout(function() {
   let items = window._galaxyOrderItems || [];
 
   const red = [];
-  var _walkIn = document.getElementById('walkin-toggle')?.style.background?.includes('229') || window.walkInMode;
+  var _walkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232') || window.walkInMode;
   if (!customerName && !_walkIn)  red.push('Customer name is required.');
   if (!customerPhone && !_walkIn) red.push('Phone number is required.');
   if (!items.length)  red.push('Add at least one product to the order.');
@@ -1417,9 +1417,10 @@ function patchWalkIn() {
   // Patch toggleWalkIn to also toggle required
   var _origToggle = window.toggleWalkIn;
   window.toggleWalkIn = function() {
-    if (_origToggle) _origToggle();
-    setTimeout(function() {
-      var isWalkIn = document.getElementById('walkin-toggle').style.background !== 'rgb(228, 228, 240)';
+  if (_origToggle) _origToggle();
+  setTimeout(function() {
+    var isWalkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232');
+    window.walkInMode = isWalkIn;
       document.querySelectorAll('#page-placeorder input[required], #page-placeorder select[required]').forEach(function(inp) {
         if (isWalkIn) inp.removeAttribute('required');
         else inp.setAttribute('required', '');
