@@ -1989,7 +1989,10 @@ tbody tr:hover .row-actions{display:flex}
               <div id="m-vieworder-code" style="font-size:12px;font-weight:700;color:#e8220e"></div>
             </div>
           </div>
-          <button onclick="document.getElementById('m-vieworder').classList.remove('open')" style="width:28px;height:28px;border-radius:50%;border:none;background:#f5f5fa;cursor:pointer;font-size:16px;color:#9090b8;display:flex;align-items:center;justify-content:center">×</button>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span id="m-vieworder-status"></span>
+            <button onclick="document.getElementById('m-vieworder').classList.remove('open')" style="width:28px;height:28px;border-radius:50%;border:none;background:#f5f5fa;cursor:pointer;font-size:16px;color:#9090b8;display:flex;align-items:center;justify-content:center">×</button>
+          </div>
         </div>
         <div style="padding:20px 24px" id="m-vieworder-body"></div>
       </div>
@@ -3886,22 +3889,16 @@ function openViewOrder(id){
   const tax=o._raw?.tax_amount||o._raw?.tax_vat||0;
   const psc=o._raw?.payment_service_charge||0;
   const grandTotal=sp-disc+del+fee+tax+psc;
-  const row=(label,val)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8">${label}</span><span style="font-size:12px;font-weight:700;color:#18182b;text-align:right;max-width:55%">${val}</span></div>`;
+  const row=(label,val)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8;font-weight:600">${label}</span><span style="font-size:12px;font-weight:700;color:#18182b;text-align:right;max-width:55%">${val}</span></div>`;
   document.getElementById('m-vieworder-code').textContent=o._raw?.order_code||o.code;
+  document.getElementById('m-vieworder-status').innerHTML=`<span style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;background:${st.bg};color:${st.color}"><span style="width:7px;height:7px;border-radius:50%;background:${st.color};display:inline-block"></span>${st.label}</span>`;
   document.getElementById('m-vieworder-body').innerHTML=`
-    <!-- Header -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <div style="font-size:11px;color:#9090b8">${o.date} ${o.time||''} · Added by ${o.addedBy||'—'}</div>
-      <span style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;background:${st.bg};color:${st.color}">
-        <span style="width:7px;height:7px;border-radius:50%;background:${st.color};display:inline-block"></span>${st.label}
-      </span>
-    </div>
     <!-- Two columns -->
     <div style="display:flex;gap:0;margin-bottom:16px">
-      <!-- Left: Customer -->
+      <!-- Left: Customer + Order Info -->
       <div style="flex:1;padding-right:16px;border-right:1px solid #f0f0f6">
         <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Customer Details</div>
-        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden">
+        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px">
           ${row('Name', o.customer||'—')}
           ${row('Address', o.address||'—')}
           ${row('City', o.city||'—')}
@@ -3910,9 +3907,18 @@ function openViewOrder(id){
           ${row('Email', o.email||'—')}
           ${row('Special Note', o.note||'—')}
         </div>
-        ${o.reason?`<div style="margin-top:10px;padding:8px 10px;background:#fff0ec;border-radius:8px;font-size:12px;font-weight:600;color:#e8220e"><span style="font-weight:800">Reason:</span> ${o.reason}</div>`:''}
+        ${o.reason?`<div style="margin-bottom:16px;padding:8px 10px;background:#fff0ec;border-radius:8px;font-size:12px;font-weight:600;color:#e8220e"><span style="font-weight:800">Reason:</span> ${o.reason}</div>`:''}
+        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Order Info</div>
+        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden">
+          ${row('Added By', o.addedBy||'—')}
+          ${row('Delivery', o.delivery||'—')}
+          ${row('Payment', o._raw?.payment_method||o.payment||'—')}
+          ${row('Discount Code', o._raw?.discount_code||'—')}
+          ${row('Date', o.date||'—')}
+          ${row('Time', o.time||'—')}
+        </div>
       </div>
-      <!-- Right: Products + Order Info -->
+      <!-- Right: Products + Billing -->
       <div style="flex:1;padding-left:16px">
         <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Product Details</div>
         <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px">
@@ -3921,22 +3927,14 @@ function openViewOrder(id){
             <span style="font-size:12px;font-weight:700;color:#e8220e;white-space:nowrap">×${i.qty} · ${L(i.sp*i.qty)}</span>
           </div>`).join('')}
           ${currentUser.role!=='sales'?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px">
-            <span style="font-size:12px;color:#9090b8">Profit</span>
+            <span style="font-size:12px;color:#9090b8;font-weight:600">Profit</span>
             <span style="font-size:12px;font-weight:800;color:${profit>=0?'#16a34a':'#e8220e'}">${L(profit)}</span>
           </div>`:''}
-        </div>
-        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Order Info</div>
-        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px">
-          ${row('Delivery', o.delivery||'—')}
-          ${row('Payment', o._raw?.payment_method||o.payment||'—')}
-          ${row('Discount Code', o._raw?.discount_code||'—')}
-          ${row('Date', o.date||'—')}
-          ${row('Time', o.time||'—')}
         </div>
         <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Billing Details</div>
         <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden">
           ${row('Product Price', L(sp))}
-          ${disc>0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8">Discount</span><span style="font-size:12px;font-weight:700;color:#16a34a">– ${L(disc)}</span></div>`:''}
+          ${disc>0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8;font-weight:600">Discount</span><span style="font-size:12px;font-weight:700;color:#16a34a">– ${L(disc)}</span></div>`:''}
           ${del>0?row('Delivery Charge', L(del)):''}
           ${fee>0?row('Processing Fee', L(fee)):''}
           ${tax>0?row('Tax / VAT', L(tax)):''}
@@ -3950,11 +3948,15 @@ function openViewOrder(id){
     </div>
     <!-- Buttons -->
     <div style="display:flex;gap:12px;padding-top:4px">
+      <button onclick="alert('Coming soon')" style="flex:1;padding:12px;border:1.5px solid #e0e0ef;border-radius:10px;background:#fff;color:#18182b;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
+        <svg viewBox="0 0 14 14" fill="none" style="width:13px;height:13px"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download Receipt
+      </button>
       ${o.status==='processing' && currentUser.role!=='accountant' && currentUser.role!=='sales' ?
-      `<button onclick="openEditOrder('${o.id}');document.getElementById('m-vieworder').classList.remove('open')" style="flex:1;padding:12px;border:1.5px solid #e0e0ef;border-radius:10px;background:#fff;color:#18182b;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
+      `<button onclick="openEditOrder('${o.id}');document.getElementById('m-vieworder').classList.remove('open')" style="flex:1;padding:12px;border:none;border-radius:10px;background:#e8220e;color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
         <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M1.5 9.5l2-2 5.5-5.5 1.5 1.5-2 2 .5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
         Edit Order
-      </button>` : `<div style="font-size:12px;color:#aaa;font-weight:500;text-align:center;width:100%;padding:4px 0">Edit are only available for Processing orders.</div>`}
+      </button>` : `<button disabled style="flex:1;padding:12px;border:none;border-radius:10px;background:#f5f5fa;color:#b0b0c8;font-size:14px;font-weight:800;cursor:not-allowed;font-family:'Plus Jakarta Sans',sans-serif">Edit Order</button>`}
     </div>
   `;
   document.getElementById('m-vieworder').classList.add('open');
