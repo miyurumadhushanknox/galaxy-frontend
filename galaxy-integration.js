@@ -1404,19 +1404,6 @@ list.querySelectorAll('input[onchange*="setQty"]').forEach(function(input) {
 patchPhoneInputs();
 setTimeout(patchPhoneInputs, 1000);
 
-// Patch placeholder asterisks for mandatory fields
-function patchPlaceholderStars() {
-  var addrEl = document.getElementById('c-address');
-  if (addrEl) addrEl.placeholder = 'Address *';
-  var cityEl = document.getElementById('c-city');
-  if (cityEl) {
-    var firstOpt = cityEl.querySelector('option[value=""], option:first-child');
-    if (firstOpt) firstOpt.textContent = 'Select city *';
-  }
-}
-patchPlaceholderStars();
-setTimeout(patchPlaceholderStars, 1500);
-
 // Move Walk-in toggle to CUSTOMER DETAILS header and make fields optional
 function patchWalkIn() {
   var toggle = document.getElementById('walkin-toggle');
@@ -1435,14 +1422,14 @@ function patchWalkIn() {
   // Patch toggleWalkIn to also toggle required
   var _origToggle = window.toggleWalkIn;
   window.toggleWalkIn = function() {
-  if (_origToggle) _origToggle();
-  setTimeout(function() {
-    var isWalkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232');
-    window.walkInMode = isWalkIn;
-    var addrEl = document.getElementById('c-address');
-    var cityEl = document.getElementById('c-city');
-    if (addrEl) addrEl.placeholder = isWalkIn ? 'Address' : 'Address *';
-    if (cityEl) { var fo = cityEl.querySelector('option[value=""], option:first-child'); if (fo) fo.textContent = isWalkIn ? 'Select city' : 'Select city *'; }
+      if (_origToggle) _origToggle();
+    setTimeout(function() {
+      var isWalkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232');
+      window.walkInMode = isWalkIn;
+      var addrEl = document.getElementById('c-address');
+      var phoneEl = document.getElementById('c-phone1');
+      if (addrEl) addrEl.placeholder = isWalkIn ? 'Address' : 'Address *';
+      if (phoneEl) phoneEl.placeholder = isWalkIn ? 'Phone Number 01 (Optional)' : 'Phone Number 01 *';
     document.querySelectorAll('#page-placeorder input[required], #page-placeorder select[required]').forEach(function(inp) {
     if (isWalkIn) inp.removeAttribute('required');
     else inp.setAttribute('required', '');
@@ -1451,6 +1438,11 @@ function patchWalkIn() {
   };
 }
 setTimeout(patchWalkIn, 1200);
+
+setTimeout(function() {
+  var addrEl = document.getElementById('c-address');
+  if (addrEl) addrEl.placeholder = 'Address *';
+}, 1500);
 
     // If already logged in via sessionStorage (JWT still valid), load real data
     const saved = sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user');
