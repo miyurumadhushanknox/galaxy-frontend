@@ -3785,13 +3785,13 @@ function renderOrdersPage(){
             <tr>
               <th style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" id="chk-all-orders" onchange="document.querySelectorAll('.order-row-chk').forEach(c=>{c.checked=this.checked;toggleOrderRow(c)})" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></th>
               <th class="sc3-first">Order / Product</th>
-              <th style="min-width:100px">Order code</th>
-              <th style="min-width:140px">Status</th>
-              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th>Purchase price</th>' : ''}
-              <th>Sale price</th>
-              <th style="min-width:110px">Other fees</th>
-              <th>Qty</th>
-              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th>Profit</th>' : ''}
+              <th style="min-width:100px;text-align:center">Order code</th>
+              <th style="min-width:140px;text-align:center">Status</th>
+              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Purchase price</th>' : ''}
+              <th style="text-align:center">Sale price</th>
+              <th style="min-width:110px;text-align:center">Other fees</th>
+              <th style="text-align:center">Qty</th>
+              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Profit</th>' : ''}
             </tr>
           </thead>
           <tbody id="orders-tbody">
@@ -3804,27 +3804,29 @@ function renderOrdersPage(){
               return `<tr style="transition:background .15s" onclick="const cb=this.querySelector('.order-row-chk');if(event.target!==cb){cb.checked=!cb.checked;}this.style.backgroundColor=cb.checked?'#fff5f5':''">
               <td style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" class="order-row-chk" onchange="toggleOrderRow(this)" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></td>
                 <td class="sc3-first">
-                  <div class="row-name-cell">
-                    <span class="row-name-text">${ordFirstName(o)}</span>
-                    <div style="font-size:11px;color:#aaa;font-weight:500">${o.customer} · ${o.city}</div>
-                    <div style="font-size:10px;color:#b0b0c8;margin-top:2px">${o.date} ${o.time||''}</div>
-                    <div class="row-actions">
-                      <button class="ra-btn" onclick="openViewOrder('${o.id}')"><svg viewBox="0 0 12 12" fill="none"><ellipse cx="6" cy="6" rx="5" ry="3.5" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg>View order</button>
+                  <div class="row-name-cell" style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+                    <div>
+                      <span class="row-name-text">${ordFirstName(o)}</span>
+                      <div style="font-size:11px;color:#aaa;font-weight:500">${o.customer} · ${o.city}</div>
+                      <div class="row-actions">
+                        <button class="ra-btn" onclick="openViewOrder('${o.id}')"><svg viewBox="0 0 12 12" fill="none"><ellipse cx="6" cy="6" rx="5" ry="3.5" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg>View order</button>
+                      </div>
                     </div>
+                    <div style="font-size:10px;color:#b0b0c8;white-space:nowrap;text-align:right;flex-shrink:0;margin-top:2px">${o.date}<br>${o.time||''}</div>
                   </div>
                 </td>
-                <td style="font-size:12px;font-weight:700;color:#e8220e">${o._raw?.order_code||o.order_code||o.code}</td>
-                <td>
+                <td style="font-size:12px;font-weight:700;color:#e8220e;text-align:center">${o._raw?.order_code||o.order_code||o.code}</td>
+                <td style="text-align:center">
                   <button onclick="openStatusChange('${o.id}')" title="Click to change status" style="display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;background:${st.bg};color:${st.color};white-space:nowrap;border:1.5px solid transparent;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s;${currentUser.role==='accountant'?'pointer-events:none;opacity:0.4':''}" onmouseenter="this.style.borderColor='${st.color}'" onmouseleave="this.style.borderColor='transparent'">
                     <span style="width:6px;height:6px;border-radius:50%;background:${st.color};display:inline-block"></span>${st.label}
                     <svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px;opacity:.6"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
                 </td>
-                ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:#777">${L(pp)}</td>` : ''}
-                <td style="font-weight:700">${L(sp)}</td>
-                <td style="font-size:12px;color:#555">${(()=>{const f=[];if(o._raw?.discount_amount>0)f.push('Disc: '+L(o._raw.discount_amount));if(o._raw?.delivery_cost>0)f.push('Del: '+L(o._raw.delivery_cost));if(o._raw?.processing_fee>0)f.push('Fee: '+L(o._raw.processing_fee));if(o._raw?.tax_vat>0)f.push('VAT: '+L(o._raw.tax_vat));if(o._raw?.payment_service_charge>0)f.push('PSC: '+L(o._raw.payment_service_charge));return f.length?f.join('<br>'):'—';})()}</td>
+                ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:#777;text-align:center">${L(pp)}</td>` : ''}
+                <td style="font-weight:700;text-align:center">${L(sp)}</td>
+                <td style="font-size:12px;color:#555;text-align:center">${(()=>{const t=(o._raw?.discount_amount||0)+(o._raw?.delivery_cost||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_vat||0)+(o._raw?.payment_service_charge||0);return t>0?L(t):'—';})()}</td>
                 <td style="text-align:center">${o.items.reduce((a,i)=>a+i.qty,0)}</td>
-                ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:${profit>=0?'#16a34a':'#e8220e'};font-weight:700">${L(profit)}</td>` : ''}
+                ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:${profit>=0?'#16a34a':'#e8220e'};font-weight:700;text-align:center">${L(profit)}</td>` : ''}
               </tr>`;
             }).join('') : '<tr><td colspan="9" style="text-align:center;color:#c0c0d8;padding:48px;font-weight:700">No orders found</td></tr>'}
           </tbody>
