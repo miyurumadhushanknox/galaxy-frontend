@@ -8574,12 +8574,15 @@ function showOrderSuccess(order,code){
     :'<div style="padding:12px 14px;font-size:12px;color:#9090b8">No items</div>';
   // Customer Details
   const custRows=[
-    ['Customer',order?.customer_name||order?.customer||''],
-    ['Phone',order?.customer_phone||order?.phone||''],
+    ['Customer Name',order?.customer_name||order?.customer||''],
     ['Address',order?.customer_address||order?.address||''],
     ['City',order?.customer_city||order?.city||''],
+    ['Phone Number 01',order?.customer_phone||order?.phone||''],
+    ['Phone Number 02',order?.customer_phone2||''],
+    ['Email',order?.customer_email||order?.email||''],
+    ['Special Note',order?.note||order?.special_note||''],
     ['Delivery',order?.delivery_method||''],
-    ['Payment',document.querySelector('select')&&[...document.querySelectorAll('select')].find(s=>s.value===''+order?.payment_method)?.selectedOptions[0]?.text||order?.payment_method||''],
+    ['Payment',[...document.querySelectorAll('select')].find(s=>s.value===''+order?.payment_method)?.selectedOptions[0]?.text||order?.payment_method||''],
   ];
   document.getElementById('os-customer').innerHTML=custRows.map(([l,v])=>
     '<div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:700;color:#9090b8">'+l+'</span><span style="font-size:13px;font-weight:700;color:#18182b">'+v+'</span></div>'
@@ -8588,6 +8591,9 @@ function showOrderSuccess(order,code){
   const billRows=[
     ['Discount',cur+' '+(order?.discount_amount||0)],
     ['Delivery Charge',cur+' '+(order?.delivery_cost||0)],
+    ['Processing Fee',cur+' '+(order?.processing_fee||0)],
+    ['Tax / VAT',cur+' '+(order?.tax_amount||0)],
+    ['Payment Service Charge',cur+' '+(order?.payment_service_charge||0)],
     ['Total',cur+' '+(order?.items_total||0)],
   ];
   document.getElementById('os-billing').innerHTML=billRows.map(([l,v],idx)=>

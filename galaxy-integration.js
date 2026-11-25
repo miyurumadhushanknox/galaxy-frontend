@@ -1260,7 +1260,13 @@ setTimeout(function() {
       discount_amount: payload.discount_amount,
       delivery_cost: payload.delivery_cost,
       items_total: payload.items_total,
-    };
+      processing_fee: payload.processing_fee,
+      tax_amount: payload.tax_amount,
+      payment_service_charge: payload.payment_service_charge,
+      customer_phone2: payload.customer_phone2,
+      customer_email: payload.customer_email,
+      note: payload.note,
+      };
 showOrderSuccess(orderData, orderCode);
     if (typeof window.initOrder === 'function') window.initOrder();
   } catch (err) {
