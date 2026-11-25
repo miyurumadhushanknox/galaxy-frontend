@@ -2682,7 +2682,7 @@ function submitOrder(){
   const noteBox=document.getElementById("order-note");
   const noteItems=document.getElementById("order-note-items");
   if(errors.length){
-    noteItems.innerHTML=errors.map(e=>"<div class='note-item' style='display:flex;align-items:center;gap:6px;margin-bottom:4px'><div class='note-dot'></div><span>"+e+"</span></div>").join("")
+    noteItems.innerHTML=errors.map(e=>"<div class='note-item'><div class='note-dot'></div><span>"+e+"</span></div>").join("")
     noteBox.classList.add("show");return;
   }
   noteBox.classList.remove("show");
