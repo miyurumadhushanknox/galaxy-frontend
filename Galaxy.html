@@ -8602,6 +8602,10 @@ function showOrderSuccess(order,code){
     if(t<=0){clearInterval(window._osTimer);closeOrderSuccess();}
   },1000);
 }
+function closeOrderSuccess(){
+  clearInterval(window._osTimer);
+  document.getElementById('order-success-modal').style.display='none';
+}
 
 function showForgotPassword() {
   var modal = document.getElementById('forgotModal');
