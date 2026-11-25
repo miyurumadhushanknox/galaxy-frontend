@@ -1419,6 +1419,13 @@ function patchWalkIn() {
   heading.parentNode.style.justifyContent = 'space-between';
   heading.parentNode.style.alignItems = 'center';
   heading.parentNode.appendChild(wrapper);
+
+  // Set initial placeholder stars
+  var addrEl = document.getElementById('c-address');
+  if (addrEl) addrEl.placeholder = 'Address *';
+  var phoneEl = document.getElementById('c-phone1');
+  if (phoneEl) phoneEl.placeholder = 'Phone Number 01 *';
+
   // Patch toggleWalkIn to also toggle required
   var _origToggle = window.toggleWalkIn;
   window.toggleWalkIn = function() {
@@ -1434,15 +1441,10 @@ function patchWalkIn() {
     if (isWalkIn) inp.removeAttribute('required');
     else inp.setAttribute('required', '');
       });
-    }, 50);
+    }, 200);
   };
 }
 setTimeout(patchWalkIn, 1200);
-
-setTimeout(function() {
-  var addrEl = document.getElementById('c-address');
-  if (addrEl) addrEl.placeholder = 'Address *';
-}, 1500);
 
     // If already logged in via sessionStorage (JWT still valid), load real data
     const saved = sessionStorage.getItem(window.SESSION_KEY || 'galaxy_user');
