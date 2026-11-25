@@ -1406,14 +1406,13 @@ setTimeout(patchPhoneInputs, 1000);
 
 // Patch placeholder asterisks for mandatory fields
 function patchPlaceholderStars() {
-  var fields = [
-    { id: 'c-address', placeholder: 'Address *' },
-    { id: 'c-city',    placeholder: 'Select city *' }
-  ];
-  fields.forEach(function(f) {
-    var el = document.getElementById(f.id);
-    if (el) el.placeholder = f.placeholder;
-  });
+  var addrEl = document.getElementById('c-address');
+  if (addrEl) addrEl.placeholder = 'Address *';
+  var cityEl = document.getElementById('c-city');
+  if (cityEl) {
+    var firstOpt = cityEl.querySelector('option[value=""], option:first-child');
+    if (firstOpt) firstOpt.textContent = 'Select city *';
+  }
 }
 patchPlaceholderStars();
 setTimeout(patchPlaceholderStars, 1500);
@@ -1443,10 +1442,10 @@ function patchWalkIn() {
     var addrEl = document.getElementById('c-address');
     var cityEl = document.getElementById('c-city');
     if (addrEl) addrEl.placeholder = isWalkIn ? 'Address' : 'Address *';
-    if (cityEl) cityEl.placeholder = isWalkIn ? 'Select city' : 'Select city *';
-      document.querySelectorAll('#page-placeorder input[required], #page-placeorder select[required]').forEach(function(inp) {
-        if (isWalkIn) inp.removeAttribute('required');
-        else inp.setAttribute('required', '');
+    if (cityEl) { var fo = cityEl.querySelector('option[value=""], option:first-child'); if (fo) fo.textContent = isWalkIn ? 'Select city' : 'Select city *'; }
+    document.querySelectorAll('#page-placeorder input[required], #page-placeorder select[required]').forEach(function(inp) {
+    if (isWalkIn) inp.removeAttribute('required');
+    else inp.setAttribute('required', '');
       });
     }, 50);
   };
