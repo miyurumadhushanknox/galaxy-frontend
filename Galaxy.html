@@ -3792,6 +3792,7 @@ function renderOrdersPage(){
               <th style="min-width:110px;text-align:center">Other fees</th>
               <th style="text-align:center">Qty</th>
               ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Profit</th>' : ''}
+              <th style="min-width:110px;text-align:center">Date & Time</th>
             </tr>
           </thead>
           <tbody id="orders-tbody">
@@ -3804,16 +3805,13 @@ function renderOrdersPage(){
               return `<tr style="transition:background .15s" onclick="const cb=this.querySelector('.order-row-chk');if(event.target!==cb){cb.checked=!cb.checked;}this.style.backgroundColor=cb.checked?'#fff5f5':''">
               <td style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" class="order-row-chk" onchange="toggleOrderRow(this)" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></td>
                 <td class="sc3-first">
-                  <div class="row-name-cell" style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-                    <div>
+                    <div class="row-name-cell">
                       <span class="row-name-text">${ordFirstName(o)}</span>
                       <div style="font-size:11px;color:#aaa;font-weight:500">${o.customer} · ${o.city}</div>
                       <div class="row-actions">
                         <button class="ra-btn" onclick="openViewOrder('${o.id}')"><svg viewBox="0 0 12 12" fill="none"><ellipse cx="6" cy="6" rx="5" ry="3.5" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg>View order</button>
                       </div>
                     </div>
-                    <div style="font-size:10px;color:#b0b0c8;white-space:nowrap;text-align:right;flex-shrink:0;margin-top:2px">${o.date}<br>${o.time||''}</div>
-                  </div>
                 </td>
                 <td style="font-size:12px;font-weight:700;color:#e8220e;text-align:center">${o._raw?.order_code||o.order_code||o.code}</td>
                 <td style="text-align:center">
@@ -3824,9 +3822,10 @@ function renderOrdersPage(){
                 </td>
                 ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:#777;text-align:center">${L(pp)}</td>` : ''}
                 <td style="font-weight:700;text-align:center">${L(sp)}</td>
-                <td style="font-size:12px;color:#555;text-align:center">${(()=>{const t=(o._raw?.discount_amount||0)+(o._raw?.delivery_cost||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_vat||0)+(o._raw?.payment_service_charge||0);return t>0?L(t):'—';})()}</td>
+                <td style="text-align:center">${(()=>{const t=(o._raw?.discount_amount||0)+(o._raw?.delivery_cost||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_vat||0)+(o._raw?.payment_service_charge||0);return t>0?L(t):'—';})()}</td>
                 <td style="text-align:center">${o.items.reduce((a,i)=>a+i.qty,0)}</td>
                 ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:${profit>=0?'#16a34a':'#e8220e'};font-weight:700;text-align:center">${L(profit)}</td>` : ''}
+                <td style="text-align:center;white-space:nowrap">${o.date}<br><span style="font-size:11px;color:#9090b8">${o.time||''}</span></td>
               </tr>`;
             }).join('') : '<tr><td colspan="9" style="text-align:center;color:#c0c0d8;padding:48px;font-weight:700">No orders found</td></tr>'}
           </tbody>
