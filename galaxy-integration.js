@@ -1162,6 +1162,8 @@ setTimeout(function() {
           if (addrEl2) addrEl2.placeholder = 'Address *';
           var phoneEl2 = document.getElementById('c-phone1');
           if (phoneEl2) phoneEl2.placeholder = 'Phone Number 01 *';
+          var _toggleEl = document.getElementById('walkin-toggle');
+          if (_toggleEl && window._walkInObserver) window._walkInObserver.observe(_toggleEl, { attributes: true, attributeFilter: ['style'] });
         }, 100);
       }
     };
@@ -1433,7 +1435,7 @@ function patchWalkIn() {
   }, 2000);
 
   // Watch walkin-toggle for style changes instead of patching the function
-var _walkInObserver = new MutationObserver(function() {
+  window._walkInObserver = new MutationObserver(function() {
   var isWalkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232');
   window.walkInMode = isWalkIn;
   var addrEl = document.getElementById('c-address');
@@ -1446,7 +1448,7 @@ var _walkInObserver = new MutationObserver(function() {
   });
 });
 var _walkInToggleEl = document.getElementById('walkin-toggle');
-if (_walkInToggleEl) _walkInObserver.observe(_walkInToggleEl, { attributes: true, attributeFilter: ['style'] });
+if (_walkInToggleEl) window._walkInObserver.observe(_walkInToggleEl, { attributes: true, attributeFilter: ['style'] });
 }
 setTimeout(patchWalkIn, 1200);
 
