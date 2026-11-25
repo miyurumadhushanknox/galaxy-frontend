@@ -1194,8 +1194,8 @@ setTimeout(function() {
   if (red.length) {
     if (noteEl) {
       noteEl.classList.add('show');
-      const li = noteEl.querySelector('ul,div');
-      if (li) li.innerHTML = red.map(r => '<div>' + r + '</div>').join('');
+      const li = noteEl.querySelector('#order-note-items');
+      if (li) li.innerHTML = red.map(r => '<div class="note-item"><div class="note-dot"></div><span>' + r + '</span></div>').join('');
     }
     return;
   }
