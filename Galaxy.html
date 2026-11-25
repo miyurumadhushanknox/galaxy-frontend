@@ -1301,7 +1301,7 @@ tbody tr:hover .row-actions{display:flex}
               <span id="o-subtotal" style="font-size:17px;font-weight:900;color:#e8220e">${generalSettings.currency}  0</span>
             </div>
           </div>
-          </div>
+        </div>
 
         <!-- ══ RIGHT — Order Details + Submit ══ -->
         <div>
@@ -2682,7 +2682,7 @@ function submitOrder(){
   const noteBox=document.getElementById("order-note");
   const noteItems=document.getElementById("order-note-items");
   if(errors.length){
-    noteItems.innerHTML=errors.map(e=>"<div class='note-item'><div class='note-dot'></div><span>"+e+"</span></div>").join("");
+    noteItems.innerHTML=errors.map(e=>"<div class='note-item' style='display:flex;align-items:center;gap:6px;margin-bottom:4px'><div class='note-dot'></div><span>"+e+"</span></div>").join("")
     noteBox.classList.add("show");return;
   }
   noteBox.classList.remove("show");
