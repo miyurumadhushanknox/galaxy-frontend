@@ -8570,7 +8570,7 @@ function showOrderSuccess(order,code){
   // Product Details
   const items=order?.items||[];
   document.getElementById('os-items').innerHTML=items.length
-    ?items.map(i=>'<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:600;color:#18182b">'+(i.name||i.product_name||'')+'</span><span style="font-size:12px;font-weight:800;color:#e8220e">x'+(i.qty||i.quantity||1)+'</span></div>').join('')
+    ?items.map(i=>'<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:600;color:#18182b">'+(i.name||i.product_name||i.item_name||i.title||'')+'</span><span style="font-size:12px;font-weight:800;color:#e8220e">x'+(i.qty||i.quantity||i.count||1)+'</span></div>').join('')
     :'<div style="padding:12px 14px;font-size:12px;color:#9090b8">No items</div>';
   // Customer Details
   const custRows=[

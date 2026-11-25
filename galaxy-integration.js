@@ -1247,7 +1247,21 @@ setTimeout(function() {
 
     const orderCode = res.order?.order_code || res.order_code || '';
     const total = payload.items_total || 0;
-    showOrderSuccess(newOrder || res.order || res, orderCode);
+    window._lastPayload = payload;
+    const orderData = {
+      ...(newOrder || res.order || res),
+      items: payload.items || [],
+      customer_name: payload.customer_name,
+      customer_phone: payload.customer_phone,
+      customer_address: payload.customer_address,
+      customer_city: payload.customer_city,
+      delivery_method: payload.delivery_method,
+      payment_method: payload.payment_method,
+      discount_amount: payload.discount_amount,
+      delivery_cost: payload.delivery_cost,
+      items_total: payload.items_total,
+    };
+showOrderSuccess(orderData, orderCode);
     if (typeof window.initOrder === 'function') window.initOrder();
   } catch (err) {
     API.showToast(err.message || 'Order failed.', 'error');
