@@ -1372,9 +1372,9 @@ tbody tr:hover .row-actions{display:flex}
   </main>
 </div>
 
-<!-- ORDER SUCCESS MODAL -->
+<!-- Place Order/ORDER SUCCESS MODAL -->
 <div id="order-success-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:400;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:18px;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.18);padding:0">
+  <div style="background:#fff;border-radius:18px;width:860px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.18);padding:0">
     <!-- Header -->
     <div style="padding:20px 24px 16px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between">
       <div style="display:flex;align-items:center;gap:10px">
@@ -1388,24 +1388,25 @@ tbody tr:hover .row-actions{display:flex}
       </div>
       <div id="os-timer" style="font-size:11px;font-weight:700;color:#9090b8;background:#f5f5fa;padding:4px 10px;border-radius:20px"></div>
     </div>
-    <!-- Product Details -->
-    <div style="padding:16px 24px 0">
-      <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Product Details</div>
-      <div id="os-items" style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px"></div>
+    <!-- Body: two columns -->
+    <div style="display:flex;gap:0;padding:20px 24px 0">
+      <!-- Left: Customer Details -->
+      <div style="flex:1;padding-right:16px;border-right:1px solid #f0f0f6">
+        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Customer Details</div>
+        <div id="os-customer" style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:0"></div>
+      </div>
+      <!-- Right: Product + Billing -->
+      <div style="flex:1;padding-left:16px">
+        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Product Details</div>
+        <div id="os-items" style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px"></div>
+        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Billing Details</div>
+        <div id="os-billing" style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:0"></div>
+      </div>
     </div>
-    <!-- Customer Details -->
-    <div style="padding:0 24px">
-      <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Customer Details</div>
-      <div id="os-customer" style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px"></div>
-    </div>
-    <!-- Billing Details -->
-    <div style="padding:0 24px">
-      <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Billing Details</div>
-      <div id="os-billing" style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:20px"></div>
-    </div>
-    <!-- Close -->
-    <div style="padding:0 24px 20px">
-      <button onclick="closeOrderSuccess()" style="width:100%;padding:12px;border:none;border-radius:10px;background:#18182b;color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Close</button>
+    <!-- Buttons -->
+    <div style="padding:20px 24px;display:flex;gap:12px">
+      <button onclick="closeOrderSuccess()" style="flex:1;padding:12px;border:1.5px solid #e0e0ef;border-radius:10px;background:#fff;color:#18182b;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Close</button>
+      <button onclick="closeOrderSuccess();window.navigate('manageorders')" style="flex:1;padding:12px;border:none;border-radius:10px;background:#e8220e;color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">View More →</button>
     </div>
   </div>
 </div>
@@ -8581,14 +8582,14 @@ function showOrderSuccess(order,code){
     ['Phone Number 02',order?.customer_phone2||''],
     ['Email',order?.customer_email||order?.email||''],
     ['Special Note',order?.note||order?.special_note||''],
-    ['Delivery',order?.delivery_method||''],
-    ['Payment',[...document.querySelectorAll('select')].find(s=>s.value===''+order?.payment_method)?.selectedOptions[0]?.text||order?.payment_method||''],
   ];
   document.getElementById('os-customer').innerHTML=custRows.map(([l,v])=>
     '<div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:700;color:#9090b8">'+l+'</span><span style="font-size:13px;font-weight:700;color:#18182b">'+v+'</span></div>'
   ).join('');
   // Billing Details
-  const billRows=[
+ const billRows=[
+    ['Delivery',order?.delivery_method||''],
+    ['Payment',[...document.querySelectorAll('select')].find(s=>s.value===''+order?.payment_method)?.selectedOptions[0]?.text||order?.payment_method||''],
     ['Discount',cur+' '+(order?.discount_amount||0)],
     ['Delivery Charge',cur+' '+(order?.delivery_cost||0)],
     ['Processing Fee',cur+' '+(order?.processing_fee||0)],
