@@ -3777,7 +3777,7 @@ function renderOrdersPage(){
         <table>
           <thead>
             <tr>
-              <th style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" id="chk-all-orders" onchange="document.querySelectorAll('.order-row-chk').forEach(c=>{c.checked=this.checked;c.closest('tr').style.background=this.checked?'#fff5f5':''})" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></th>
+              <th style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" id="chk-all-orders" onchange="document.querySelectorAll('.order-row-chk').forEach(c=>{c.checked=this.checked;toggleOrderRow(c)})" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></th>
               <th class="sc3-first">Order / Product</th>
               <th style="min-width:100px">Order code</th>
               <th style="min-width:130px">Date &amp; Time</th>
@@ -3797,7 +3797,7 @@ function renderOrdersPage(){
               const sp = o.items.reduce((a,i)=>a+i.sp*i.qty,0);
               const profit = sp - pp;
               return `<tr style="transition:background .15s">
-              <td style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" class="order-row-chk" onchange="this.closest('tr').style.background=this.checked?'#fff5f5':''" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></td>
+              <td style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" class="order-row-chk" onchange="toggleOrderRow(this)" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></td>
                 <td class="sc3-first">
                   <div class="row-name-cell">
                     <span class="row-name-text">${ordFirstName(o)}</span>
@@ -8566,6 +8566,7 @@ setInterval(()=>{const el=document.getElementById("clock");if(!el)return;const d
 
 <script>
 
+// Place Order/Success Order Billing Details
 function showOrderSuccess(order,code){
   const cur=generalSettings.currency||'';
   const modal=document.getElementById('order-success-modal');
@@ -8588,7 +8589,7 @@ function showOrderSuccess(order,code){
   document.getElementById('os-customer').innerHTML=custRows.map(([l,v])=>
     '<div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:700;color:#9090b8">'+l+'</span><span style="font-size:13px;font-weight:700;color:#18182b">'+v+'</span></div>'
   ).join('');
-  // Billing Details
+  // Place Order/Billing Details
  const billRows=[
     ['Discount',cur+' '+(order?.discount_amount||0),'green'],
     ['Delivery Charge',cur+' '+(order?.delivery_cost||0),''],
@@ -8613,6 +8614,9 @@ function closeOrderSuccess(){
   clearInterval(window._osTimer);
   document.getElementById('order-success-modal').style.display='none';
 }
+
+// Manage Order/Select Raw Highlight
+function toggleOrderRow(cb){cb.closest('tr').style.background=cb.checked?'#fff5f5':'';}
 
 function showForgotPassword() {
   var modal = document.getElementById('forgotModal');
