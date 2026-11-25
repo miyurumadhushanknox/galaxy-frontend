@@ -1977,15 +1977,23 @@ tbody tr:hover .row-actions{display:flex}
 </div>
 
 <!-- VIEW ORDER MODAL -->
-<div class="modal-bg" id="m-vieworder">
-  <div style="background:#fff;border-radius:18px;width:560px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 48px rgba(0,0,0,.15);animation:mIn .18s ease">
-    <div style="padding:20px 24px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between">
-      <div style="font-size:17px;font-weight:900;color:#18182b">Order Details</div>
-      <button onclick="document.getElementById('m-vieworder').classList.remove('open')" style="width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:none;cursor:pointer;font-size:18px;color:#9090b8;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif">×</button>
+    <div class="modal-bg" id="m-vieworder">
+      <div style="background:#fff;border-radius:18px;width:860px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.18);padding:0">
+        <div style="padding:20px 24px 16px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:34px;height:34px;border-radius:50%;background:#fff0ec;display:flex;align-items:center;justify-content:center">
+              <svg viewBox="0 0 20 20" fill="none" style="width:18px;height:18px"><rect x="3" y="3" width="14" height="14" rx="3" stroke="#e8220e" stroke-width="1.5"/><path d="M7 10h6M7 7h6M7 13h4" stroke="#e8220e" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <div style="font-size:15px;font-weight:900;color:#18182b">Order Details</div>
+              <div id="m-vieworder-code" style="font-size:12px;font-weight:700;color:#e8220e"></div>
+            </div>
+          </div>
+          <button onclick="document.getElementById('m-vieworder').classList.remove('open')" style="width:28px;height:28px;border-radius:50%;border:none;background:#f5f5fa;cursor:pointer;font-size:16px;color:#9090b8;display:flex;align-items:center;justify-content:center">×</button>
+        </div>
+        <div style="padding:20px 24px" id="m-vieworder-body"></div>
+      </div>
     </div>
-    <div style="padding:20px 24px" id="m-vieworder-body"></div>
-  </div>
-</div>
 
 <!-- STATUS CHANGE MODAL -->
 <div class="modal-bg" id="m-statuschange">
@@ -3879,15 +3887,11 @@ function openViewOrder(id){
   const psc=o._raw?.payment_service_charge||0;
   const grandTotal=sp-disc+del+fee+tax+psc;
   const row=(label,val)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8">${label}</span><span style="font-size:12px;font-weight:700;color:#18182b;text-align:right;max-width:55%">${val}</span></div>`;
+  document.getElementById('m-vieworder-code').textContent=o._raw?.order_code||o.code;
   document.getElementById('m-vieworder-body').innerHTML=`
     <!-- Header -->
-    <div style="padding:0 0 16px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div>
-          <div style="font-size:17px;font-weight:900;color:#18182b">${o._raw?.order_code||o.code}</div>
-          <div style="font-size:11px;color:#9090b8;margin-top:2px">${o.date} ${o.time||''} · Added by ${o.addedBy||'—'}</div>
-        </div>
-      </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-size:11px;color:#9090b8">${o.date} ${o.time||''} · Added by ${o.addedBy||'—'}</div>
       <span style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;background:${st.bg};color:${st.color}">
         <span style="width:7px;height:7px;border-radius:50%;background:${st.color};display:inline-block"></span>${st.label}
       </span>
