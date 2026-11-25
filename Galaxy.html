@@ -3787,10 +3787,10 @@ function renderOrdersPage(){
               <th class="sc3-first">Order / Product</th>
               <th style="min-width:100px;text-align:center">Order code</th>
               <th style="min-width:140px;text-align:center">Status</th>
-              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Purchase price</th>' : ''}
-              <th style="text-align:center">Sale price</th>
-              <th style="min-width:110px;text-align:center">Other fees</th>
               <th style="text-align:center">Qty</th>
+              <th style="text-align:center">Sale price</th>
+              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Purchase price</th>' : ''}
+              <th style="min-width:110px;text-align:center">Other fees</th>
               ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Profit</th>' : ''}
               <th style="min-width:110px;text-align:center">Date & Time</th>
             </tr>
@@ -3813,19 +3813,19 @@ function renderOrdersPage(){
                       </div>
                     </div>
                 </td>
-                <td style="font-size:12px;font-weight:700;color:#e8220e;text-align:center">${o._raw?.order_code||o.order_code||o.code}</td>
+                <td style="text-align:center;color:#777">${o._raw?.order_code||o.order_code||o.code}</td>
                 <td style="text-align:center">
                   <button onclick="openStatusChange('${o.id}')" title="Click to change status" style="display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;background:${st.bg};color:${st.color};white-space:nowrap;border:1.5px solid transparent;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color .15s;${currentUser.role==='accountant'?'pointer-events:none;opacity:0.4':''}" onmouseenter="this.style.borderColor='${st.color}'" onmouseleave="this.style.borderColor='transparent'">
                     <span style="width:6px;height:6px;border-radius:50%;background:${st.color};display:inline-block"></span>${st.label}
                     <svg viewBox="0 0 10 10" fill="none" style="width:8px;height:8px;opacity:.6"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
                 </td>
-                ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:#777;text-align:center">${L(pp)}</td>` : ''}
+                <td style="text-align:center;color:#777">${o.items.reduce((a,i)=>a+i.qty,0)}</td>
                 <td style="font-weight:700;text-align:center">${L(sp)}</td>
-                <td style="text-align:center">${(()=>{const t=(o._raw?.discount_amount||0)+(o._raw?.delivery_cost||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_vat||0)+(o._raw?.payment_service_charge||0);return t>0?L(t):'—';})()}</td>
-                <td style="text-align:center">${o.items.reduce((a,i)=>a+i.qty,0)}</td>
+                ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:#777;text-align:center">${L(pp)}</td>` : ''}
+                <td style="text-align:center;color:#777">${(()=>{const t=(o._raw?.discount_amount||0)+(o._raw?.delivery_cost||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_vat||0)+(o._raw?.payment_service_charge||0);return t>0?L(t):'—';})()}</td>
                 ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:${profit>=0?'#16a34a':'#e8220e'};font-weight:700;text-align:center">${L(profit)}</td>` : ''}
-                <td style="text-align:center;white-space:nowrap">${o.date}<br><span style="font-size:11px;color:#9090b8">${o.time||''}</span></td>
+                <td style="text-align:center;white-space:nowrap;font-size:11px;color:#9090b8">${o.date}<br>${o.time||''}</td>
               </tr>`;
             }).join('') : '<tr><td colspan="9" style="text-align:center;color:#c0c0d8;padding:48px;font-weight:700">No orders found</td></tr>'}
           </tbody>
