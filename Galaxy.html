@@ -7,6 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 
+/* ── Manage Order Table Selection Raw Highlight ── */
+.order-row-chk:checked ~ * { background: #fff5f5; }
+tr:has(.order-row-chk:checked) { background: #fff5f5 !important; 
+}
+
 /* ── Warehouse Transfer Button ── */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
@@ -412,6 +417,7 @@ tbody tr:hover .row-actions{display:flex}
   opacity:.95;
 }
 .btn-signin:active{transform:translateY(0);opacity:.85}
+
 </style>
 
 <div class="login-screen" id="login-screen">
