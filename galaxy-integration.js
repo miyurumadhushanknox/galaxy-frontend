@@ -1177,6 +1177,8 @@ setTimeout(function() {
   var _walkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232') || window.walkInMode;
   if (!customerName && !_walkIn)  red.push('Customer name is required.');
   if (!customerPhone && !_walkIn) red.push('Phone number is required.');
+  if (!customerAddress && !_walkIn) red.push('Address is required.');
+  if (!customerCity && !_walkIn)    red.push('City is required.');
   if (!items.length)  red.push('Add at least one product to the order.');
   if (!paymentMethod) red.push('Select a payment method.');
 
