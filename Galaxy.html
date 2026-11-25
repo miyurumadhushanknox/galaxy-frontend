@@ -3878,80 +3878,76 @@ function openViewOrder(id){
   const tax=o._raw?.tax_amount||o._raw?.tax_vat||0;
   const psc=o._raw?.payment_service_charge||0;
   const grandTotal=sp-disc+del+fee+tax+psc;
+  const row=(label,val)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8">${label}</span><span style="font-size:12px;font-weight:700;color:#18182b;text-align:right;max-width:55%">${val}</span></div>`;
   document.getElementById('m-vieworder-body').innerHTML=`
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
-      <div>
-        <div style="font-size:18px;font-weight:900;color:#18182b;margin-bottom:3px">${o._raw?.order_code||o.code}</div>
-        <div style="font-size:12px;color:#9090b8">${o.date} ${o.time||''} · Added by ${o.addedBy||'—'}</div>
+    <!-- Header -->
+    <div style="padding:0 0 16px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div>
+          <div style="font-size:17px;font-weight:900;color:#18182b">${o._raw?.order_code||o.code}</div>
+          <div style="font-size:11px;color:#9090b8;margin-top:2px">${o.date} ${o.time||''} · Added by ${o.addedBy||'—'}</div>
+        </div>
       </div>
       <span style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;background:${st.bg};color:${st.color}">
         <span style="width:7px;height:7px;border-radius:50%;background:${st.color};display:inline-block"></span>${st.label}
       </span>
     </div>
-    <!-- Items -->
-    <div style="background:#f8f8fc;border-radius:10px;padding:12px 14px;margin-bottom:14px">
-      <div style="font-size:10px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Products</div>
-      ${o.items.map(i=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee">
-        <span style="font-size:13px;font-weight:700;color:#18182b">${i.name} <span style="color:#9090b8;font-weight:500;font-size:11px">${i.code}</span></span>
-        <span style="font-size:12px;font-weight:600;color:#9090b8">×${i.qty} · ${L(i.sp)} = <b style="color:#18182b">${L(i.sp*i.qty)}</b></span>
-      </div>`).join('')}
-      ${currentUser.role!=='sales'?`<div style="display:flex;justify-content:space-between;margin-top:8px">
-      <span style="font-size:12px;color:#9090b8">Profit</span>
-      <span style="font-size:13px;font-weight:800;color:${profit>=0?'#16a34a':'#e8220e'}">${L(profit)}</span>
-      </div>`:''}
-    </div>
-    <!-- Customer + Order Info -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
-      <div style="background:#f8f8fc;border-radius:10px;padding:12px 14px">
-        <div style="font-size:10px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Customer</div>
-        ${[
-          ['Name', o.customer],
-          ['Address', o.address||'—'],
-          ['City', o.city||'—'],
-          ['Phone Number 01', o.phone||'—'],
-          ['Phone Number 02', o.phone2||'—'],
-          ['Email', o.email||'—'],
-          ['Special Note', o.note||'—'],
-        ].map(([label,val])=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #eee">
-          <span style="font-size:11px;color:#9090b8">${label}</span>
-          <span style="font-size:11px;font-weight:600;color:#18182b;text-align:right;max-width:55%">${val}</span>
-        </div>`).join('')}
-        ${o.reason?`<div style="margin-top:8px;padding:8px 10px;background:#fff0ec;border-radius:8px;font-size:12px;font-weight:600;color:#e8220e"><span style="font-weight:800">Reason:</span> ${o.reason}</div>`:''}
+    <!-- Two columns -->
+    <div style="display:flex;gap:0;margin-bottom:16px">
+      <!-- Left: Customer -->
+      <div style="flex:1;padding-right:16px;border-right:1px solid #f0f0f6">
+        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Customer Details</div>
+        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden">
+          ${row('Name', o.customer||'—')}
+          ${row('Address', o.address||'—')}
+          ${row('City', o.city||'—')}
+          ${row('Phone Number 01', o.phone||'—')}
+          ${row('Phone Number 02', o.phone2||'—')}
+          ${row('Email', o.email||'—')}
+          ${row('Special Note', o.note||'—')}
+        </div>
+        ${o.reason?`<div style="margin-top:10px;padding:8px 10px;background:#fff0ec;border-radius:8px;font-size:12px;font-weight:600;color:#e8220e"><span style="font-weight:800">Reason:</span> ${o.reason}</div>`:''}
       </div>
-      <div style="background:#f8f8fc;border-radius:10px;padding:12px 14px">
-        <div style="font-size:10px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Order Info</div>
-        ${[
-          ['Delivery', o.delivery||'—'],
-          ['Payment', o._raw?.payment_method||o.payment||'—'],
-          ['Discount Code', o._raw?.discount_code||'—'],
-        ].map(([label,val])=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #eee">
-          <span style="font-size:11px;color:#9090b8">${label}</span>
-          <span style="font-size:11px;font-weight:600;color:#18182b;text-align:right;max-width:60%;word-break:break-all">${val}</span>
-        </div>`).join('')}
-      </div>
-    </div>
-    <!-- Billing -->
-    <div style="border:1.5px solid #e4e4f0;border-radius:10px;padding:12px 14px;margin-bottom:14px">
-      <div style="font-size:10px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Billing Details</div>
-      ${[
-        ['Product Price', L(sp), false],
-        disc>0 ? ['Discount', '– '+L(disc), 'green'] : null,
-        del>0 ? ['Delivery Charge', L(del), false] : null,
-        fee>0 ? ['Processing Fee', L(fee), false] : null,
-        tax>0 ? ['Tax / VAT', L(tax), false] : null,
-        psc>0 ? ['Payment Service Charge', L(psc), false] : null,
-      ].filter(Boolean).map(([label,val,color])=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f0f0f6">
-        <span style="font-size:12px;color:#9090b8">${label}</span>
-        <span style="font-size:12px;font-weight:700;color:${color==='green'?'#16a34a':'#18182b'}">${val}</span>
-      </div>`).join('')}
-      <div style="display:flex;justify-content:space-between;padding:8px 0;margin-top:4px">
-        <span style="font-size:13px;font-weight:900">Total</span>
-        <span style="font-size:15px;font-weight:900;color:#e8220e">${L(grandTotal)}</span>
+      <!-- Right: Products + Order Info -->
+      <div style="flex:1;padding-left:16px">
+        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Product Details</div>
+        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px">
+          ${o.items.map(i=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6">
+            <span style="font-size:12px;font-weight:700;color:#18182b">${i.name} <span style="color:#9090b8;font-weight:500;font-size:11px">${i.code}</span></span>
+            <span style="font-size:12px;font-weight:700;color:#e8220e;white-space:nowrap">×${i.qty} · ${L(i.sp*i.qty)}</span>
+          </div>`).join('')}
+          ${currentUser.role!=='sales'?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px">
+            <span style="font-size:12px;color:#9090b8">Profit</span>
+            <span style="font-size:12px;font-weight:800;color:${profit>=0?'#16a34a':'#e8220e'}">${L(profit)}</span>
+          </div>`:''}
+        </div>
+        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Order Info</div>
+        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px">
+          ${row('Delivery', o.delivery||'—')}
+          ${row('Payment', o._raw?.payment_method||o.payment||'—')}
+          ${row('Discount Code', o._raw?.discount_code||'—')}
+          ${row('Date', o.date||'—')}
+          ${row('Time', o.time||'—')}
+        </div>
+        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Billing Details</div>
+        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden">
+          ${row('Product Price', L(sp))}
+          ${disc>0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8">Discount</span><span style="font-size:12px;font-weight:700;color:#16a34a">– ${L(disc)}</span></div>`:''}
+          ${del>0?row('Delivery Charge', L(del)):''}
+          ${fee>0?row('Processing Fee', L(fee)):''}
+          ${tax>0?row('Tax / VAT', L(tax)):''}
+          ${psc>0?row('Payment Service Charge', L(psc)):''}
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px">
+            <span style="font-size:13px;font-weight:900;color:#18182b">Total</span>
+            <span style="font-size:14px;font-weight:900;color:#e8220e">${L(grandTotal)}</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div style="display:flex;gap:10px;margin-top:4px">
+    <!-- Buttons -->
+    <div style="display:flex;gap:12px;padding-top:4px">
       ${o.status==='processing' && currentUser.role!=='accountant' && currentUser.role!=='sales' ?
-      `<button onclick="openEditOrder('${o.id}');document.getElementById('m-vieworder').classList.remove('open')" style="flex:1;padding:11px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
+      `<button onclick="openEditOrder('${o.id}');document.getElementById('m-vieworder').classList.remove('open')" style="flex:1;padding:12px;border:1.5px solid #e0e0ef;border-radius:10px;background:#fff;color:#18182b;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
         <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><path d="M1.5 9.5l2-2 5.5-5.5 1.5 1.5-2 2 .5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
         Edit Order
       </button>` : `<div style="font-size:12px;color:#aaa;font-weight:500;text-align:center;width:100%;padding:4px 0">Edit are only available for Processing orders.</div>`}
