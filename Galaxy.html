@@ -165,7 +165,7 @@ tbody tr:hover .row-actions{display:flex}
 .submit-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:15px;font-weight:900;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;letter-spacing:.03em;margin-bottom:14px}
 .submit-btn:hover{opacity:.9}
 .note-box{border-radius:10px;padding:13px 15px;margin-bottom:12px;display:none}
-.note-box.show{display:flex;flex-direction:column}
+.note-box.show{display:block}
 .note-box.red{border:1.5px dashed #e8220e;background:#fff8f6}
 .note-box.yellow{border:1.5px dashed #d08020;background:#fffcf0}
 .note-title{font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:5px}
@@ -2171,7 +2171,9 @@ function autoCalc(){
   if(pp&&sp){if(sp<pp)yellow.push("Selling price is lower than purchase \u2014 this product will run at a loss.");if(sp===pp)yellow.push("Selling price equals purchase price \u2014 profit will be zero.");}
   showNote("yellow",yellow);
 }
+
 function showNote(type,items){const box=document.getElementById("note-"+type);const lst=document.getElementById(type==="red"?"red-items":"yellow-items");if(!items.length){box.classList.remove("show");return;}lst.innerHTML=items.map(e=>"<div class=\"note-item\"><div class=\"note-dot\"></div><span>"+e+"</span></div>").join("");box.classList.add("show");}
+
 function renderImages(){
   const list=document.getElementById("img-list");const count=document.getElementById("img-count");list.innerHTML="";
   images.forEach((src,i)=>{
@@ -2682,7 +2684,7 @@ function submitOrder(){
   const noteBox=document.getElementById("order-note");
   const noteItems=document.getElementById("order-note-items");
   if(errors.length){
-    noteItems.innerHTML="<ul style='margin:4px 0 0 16px;padding:0'>"+errors.map(e=>"<li style='margin-bottom:4px'>"+e+"</li>").join("")+"</ul>"
+    noteItems.innerHTML=errors.map(e=>"<div class=\"note-item\"><div class=\"note-dot\"></div><span>"+e+"</span></div>").join("")
     noteBox.classList.add("show");return;
   }
   noteBox.classList.remove("show");
