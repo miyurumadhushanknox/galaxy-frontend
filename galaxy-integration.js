@@ -670,7 +670,9 @@ setTimeout(function() {
     const red = [];
     var _walkIn2 = document.getElementById('walkin-toggle')?.style.background?.includes('232') || window.walkInMode;
     if (!customerName && !_walkIn2)  red.push('Customer name is required.');
-    if (!customerPhone && !_walkIn2) red.push('Phone number is required.');
+    if (!customerPhone && !_walkIn2)   red.push('Phone number is required.');
+    if (!customerAddress && !_walkIn2) red.push('Address is required.');
+    if (!customerCity && !_walkIn2)    red.push('City is required.');
     if (!items.length)  red.push('Add at least one product to the order.');
     if (!paymentMethod) red.push('Select a payment method.');
 
@@ -1402,6 +1404,20 @@ list.querySelectorAll('input[onchange*="setQty"]').forEach(function(input) {
 patchPhoneInputs();
 setTimeout(patchPhoneInputs, 1000);
 
+// Patch placeholder asterisks for mandatory fields
+function patchPlaceholderStars() {
+  var fields = [
+    { id: 'c-address', placeholder: 'Address *' },
+    { id: 'c-city',    placeholder: 'Select city *' }
+  ];
+  fields.forEach(function(f) {
+    var el = document.getElementById(f.id);
+    if (el) el.placeholder = f.placeholder;
+  });
+}
+patchPlaceholderStars();
+setTimeout(patchPlaceholderStars, 1500);
+
 // Move Walk-in toggle to CUSTOMER DETAILS header and make fields optional
 function patchWalkIn() {
   var toggle = document.getElementById('walkin-toggle');
@@ -1424,6 +1440,10 @@ function patchWalkIn() {
   setTimeout(function() {
     var isWalkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232');
     window.walkInMode = isWalkIn;
+    var addrEl = document.getElementById('c-address');
+    var cityEl = document.getElementById('c-city');
+    if (addrEl) addrEl.placeholder = isWalkIn ? 'Address' : 'Address *';
+    if (cityEl) cityEl.placeholder = isWalkIn ? 'Select city' : 'Select city *';
       document.querySelectorAll('#page-placeorder input[required], #page-placeorder select[required]').forEach(function(inp) {
         if (isWalkIn) inp.removeAttribute('required');
         else inp.setAttribute('required', '');
