@@ -3919,33 +3919,52 @@ function openViewOrder(id){
         </div>
       </div>
       <!-- Right: Products + Billing -->
-      <div style="flex:1;padding-left:16px">
-        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Product Details</div>
-        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px">
-          ${o.items.map(i=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6">
-            <span style="font-size:12px;font-weight:700;color:#18182b">${i.name} <span style="color:#9090b8;font-weight:500;font-size:11px">${i.code}</span></span>
-            <span style="font-size:12px;font-weight:700;color:#e8220e;white-space:nowrap">×${i.qty} · ${L(i.sp*i.qty)}</span>
+      <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Billing Details</div>
+        <!-- Box 1: Products -->
+        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:10px">
+          ${o.items.map(i=>`
+          <div style="padding:9px 14px;border-bottom:1px solid #f0f0f6">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:${currentUser.role!=='sales'?'5px':'0'}">
+              <span style="font-size:12px;font-weight:700;color:#18182b">${i.name} <span style="color:#9090b8;font-weight:500;font-size:11px">(Code: ${i.code})</span></span>
+              <span style="font-size:12px;font-weight:700;color:#e8220e;white-space:nowrap;margin-left:8px">×${i.qty} · ${L(i.sp)} = ${L(i.sp*i.qty)}</span>
+            </div>
+            ${currentUser.role!=='sales'?`<div style="display:flex;gap:16px;font-size:11px;color:#9090b8">
+              <span>Purchase: <b style="color:#18182b">${L(i.pp)}</b></span>
+              <span>Sale: <b style="color:#18182b">${L(i.sp)}</b></span>
+              <span>Profit: <b style="color:${(i.sp-i.pp)>=0?'#16a34a':'#e8220e'}">${L(i.sp-i.pp)}</b></span>
+            </div>`:''}
           </div>`).join('')}
-          ${currentUser.role!=='sales'?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px">
-            <span style="font-size:12px;color:#9090b8;font-weight:600">Profit</span>
-            <span style="font-size:12px;font-weight:800;color:${profit>=0?'#16a34a':'#e8220e'}">${L(profit)}</span>
-          </div>`:''}
         </div>
-        <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Billing Details</div>
-        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden">
-          ${row('Product Price', L(sp))}
+        <!-- Box 2: Extra charges -->
+        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:10px">
           ${disc>0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8;font-weight:600">Discount</span><span style="font-size:12px;font-weight:700;color:#16a34a">– ${L(disc)}</span></div>`:''}
-          ${del>0?row('Delivery Charge', L(del)):''}
-          ${fee>0?row('Processing Fee', L(fee)):''}
-          ${tax>0?row('Tax / VAT', L(tax)):''}
-          ${psc>0?row('Payment Service Charge', L(psc)):''}
+          ${del>0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8;font-weight:600">Delivery Charge</span><span style="font-size:12px;font-weight:700;color:#18182b">${L(del)}</span></div>`:''}
+          ${fee>0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8;font-weight:600">Processing Fee</span><span style="font-size:12px;font-weight:700;color:#18182b">${L(fee)}</span></div>`:''}
+          ${tax>0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8;font-weight:600">Tax / VAT</span><span style="font-size:12px;font-weight:700;color:#18182b">${L(tax)}</span></div>`:''}
+          ${psc>0?`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px"><span style="font-size:12px;color:#9090b8;font-weight:600">Payment Service Charge</span><span style="font-size:12px;font-weight:700;color:#18182b">${L(psc)}</span></div>`:''}
+          ${(!disc&&!del&&!fee&&!tax&&!psc)?`<div style="padding:10px 14px;font-size:12px;color:#9090b8;text-align:center">No extra charges</div>`:''}
+        </div>
+        <!-- Box 3: Totals -->
+        <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6">
+            <span style="font-size:12px;color:#9090b8;font-weight:600">Total Sale</span>
+            <span style="font-size:12px;font-weight:700;color:#18182b">${L(sp)}</span>
+          </div>
+          ${currentUser.role!=='sales'?`
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6">
+            <span style="font-size:12px;color:#9090b8;font-weight:600">Total Cost</span>
+            <span style="font-size:12px;font-weight:700;color:#18182b">${L(pp)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6">
+            <span style="font-size:12px;color:#9090b8;font-weight:600">Total Profit</span>
+            <span style="font-size:12px;font-weight:700;color:${profit>=0?'#16a34a':'#e8220e'}">${L(profit)}</span>
+          </div>`:''}
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px">
             <span style="font-size:13px;font-weight:900;color:#18182b">Total</span>
             <span style="font-size:14px;font-weight:900;color:#e8220e">${L(grandTotal)}</span>
           </div>
         </div>
       </div>
-    </div>
     <!-- Buttons -->
     <div style="display:flex;gap:12px;padding-top:4px">
       <button onclick="alert('Coming soon')" style="flex:1;padding:12px;border:1.5px solid #e0e0ef;border-radius:10px;background:#fff;color:#18182b;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
