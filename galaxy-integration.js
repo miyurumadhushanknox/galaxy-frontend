@@ -1426,7 +1426,7 @@ function patchWalkIn() {
   if (addrEl) addrEl.placeholder = 'Address *';
   var phoneEl = document.getElementById('c-phone1');
   if (phoneEl) phoneEl.placeholder = 'Phone Number 01 *';
-  }, 300);
+  }, 2000);
 
   // Patch toggleWalkIn to also toggle required
   var _origToggle = window.toggleWalkIn;
