@@ -1356,12 +1356,12 @@ tbody tr:hover .row-actions{display:flex}
             </div>
           </div>
           <button onclick="submitOrder()" style="width:100%;padding:15px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:16px;font-weight:900;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;letter-spacing:.03em" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">Submit</button>
-          <div id="order-note" class="note-box red" style="margin-top:12px;margin-bottom:0;width:100%;flex-direction:column">
+          <div class="note-box red" id="order-note">
             <div class="note-title">
               <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M6 4v3M6 8.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
               Cannot place order — fix these first
             </div>
-            <div id="order-note-items" style="display:flex;flex-direction:column;gap:0"></div>
+            <div id="order-note-items"></div>
           </div>
 
         </div>
@@ -2685,8 +2685,8 @@ function submitOrder(){
   const noteBox=document.getElementById("order-note");
   const noteItems=document.getElementById("order-note-items");
   if(errors.length){
-    noteItems.style.cssText="display:flex;flex-direction:column;gap:0";noteItems.innerHTML=errors.map(e=>"<div class=\"note-item\" style=\"display:flex\"><div class=\"note-dot\"></div><span>"+e+"</span></div>").join("")
-    noteBox.style.cssText="display:flex;flex-direction:column;margin-top:12px;margin-bottom:0;width:100%";noteBox.classList.add("show");return;
+    noteItems.innerHTML=errors.map(e=>"<div class=\"note-item\"><div class=\"note-dot\"></div><span>"+e+"</span></div>").join("")
+    noteBox.classList.add("show");return;
   }
   noteBox.style.display="none";noteBox.classList.remove("show");
 
