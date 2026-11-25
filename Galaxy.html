@@ -2685,7 +2685,7 @@ function submitOrder(){
   const noteBox=document.getElementById("order-note");
   const noteItems=document.getElementById("order-note-items");
   if(errors.length){
-    noteItems.innerHTML=errors.map(e=>"<div class=\"note-item\" style=\"display:flex\"><div class=\"note-dot\"></div><span>"+e+"</span></div>").join("")
+    noteItems.style.cssText="display:flex;flex-direction:column;gap:0";noteItems.innerHTML=errors.map(e=>"<div class=\"note-item\" style=\"display:flex\"><div class=\"note-dot\"></div><span>"+e+"</span></div>").join("")
     noteBox.style.cssText="display:flex;flex-direction:column;margin-top:12px;margin-bottom:0;width:100%";noteBox.classList.add("show");return;
   }
   noteBox.style.display="none";noteBox.classList.remove("show");
