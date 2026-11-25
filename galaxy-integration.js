@@ -1250,7 +1250,7 @@ setTimeout(function() {
     window._lastPayload = payload;
     const orderData = {
       ...(newOrder || res.order || res),
-      items: payload.items || [],
+      items: (payload.items||[]).map(it=>({...it,name:(window.products||[]).find(p=>p.id===it.product_id)?.name||(window.products||[]).find(p=>p.id===it.product_id)?.product_name||'Item'})),
       customer_name: payload.customer_name,
       customer_phone: payload.customer_phone,
       customer_address: payload.customer_address,
