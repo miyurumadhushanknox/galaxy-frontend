@@ -8616,7 +8616,7 @@ function closeOrderSuccess(){
 }
 
 // Manage Order/Select Raw Highlight
-function toggleOrderRow(cb){cb.closest('tr').style.background=cb.checked?'#fff5f5':'';}
+function toggleOrderRow(cb){cb.closest('tr').setAttribute('style',(cb.checked?'transition:background .15s;background:#fff5f5':'transition:background .15s'));}
 
 function showForgotPassword() {
   var modal = document.getElementById('forgotModal');
