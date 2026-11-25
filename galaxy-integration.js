@@ -1432,23 +1432,21 @@ function patchWalkIn() {
   if (phoneEl) phoneEl.placeholder = 'Phone Number 01 *';
   }, 2000);
 
-  // Patch toggleWalkIn to also toggle required
-  var _origToggle = window.toggleWalkIn;
-  window.toggleWalkIn = function() {
-      if (_origToggle) _origToggle();
-    setTimeout(function() {
-      var isWalkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232');
-      window.walkInMode = isWalkIn;
-      var addrEl = document.getElementById('c-address');
-      var phoneEl = document.getElementById('c-phone1');
-      if (addrEl) addrEl.placeholder = isWalkIn ? 'Address (Optional)' : 'Address *';
-      if (phoneEl) phoneEl.placeholder = isWalkIn ? 'Phone Number 01 (Optional)' : 'Phone Number 01 *';
-    document.querySelectorAll('#page-placeorder input[required], #page-placeorder select[required]').forEach(function(inp) {
+  // Watch walkin-toggle for style changes instead of patching the function
+var _walkInObserver = new MutationObserver(function() {
+  var isWalkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232');
+  window.walkInMode = isWalkIn;
+  var addrEl = document.getElementById('c-address');
+  var phoneEl = document.getElementById('c-phone1');
+  if (addrEl) addrEl.placeholder = isWalkIn ? 'Address (Optional)' : 'Address *';
+  if (phoneEl) phoneEl.placeholder = isWalkIn ? 'Phone Number 01 (Optional)' : 'Phone Number 01 *';
+  document.querySelectorAll('#page-placeorder input[required], #page-placeorder select[required]').forEach(function(inp) {
     if (isWalkIn) inp.removeAttribute('required');
     else inp.setAttribute('required', '');
-      });
-    }, 200);
-  };
+  });
+});
+var _walkInToggleEl = document.getElementById('walkin-toggle');
+if (_walkInToggleEl) _walkInObserver.observe(_walkInToggleEl, { attributes: true, attributeFilter: ['style'] });
 }
 setTimeout(patchWalkIn, 1200);
 
