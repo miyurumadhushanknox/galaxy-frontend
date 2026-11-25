@@ -1245,11 +1245,10 @@ setTimeout(function() {
 
     API.showToast('Order placed! ' + (res.order?.order_code || res.order_code || ''), 'success');
 
-    setTimeout(() => {
-      if (typeof window.initOrder === 'function') window.initOrder();
-      if (typeof window.renderOrdersPage === 'function') window.renderOrdersPage();
-      window.navigate('manageorders');
-    }, 1200);
+    const orderCode = res.order?.order_code || res.order_code || '';
+    const total = payload.items_total || 0;
+    showOrderSuccess(newOrder || res.order || res, orderCode);
+    if (typeof window.initOrder === 'function') window.initOrder();
   } catch (err) {
     API.showToast(err.message || 'Order failed.', 'error');
   } finally {
