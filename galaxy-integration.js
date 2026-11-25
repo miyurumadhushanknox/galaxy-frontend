@@ -1266,6 +1266,7 @@ setTimeout(function() {
       customer_phone2: payload.customer_phone2,
       customer_email: payload.customer_email,
       note: payload.note,
+      final_total: payload.final_total || (parseFloat(payload.items_total||0) - parseFloat(payload.discount_amount||0) + parseFloat(payload.delivery_cost||0) + parseFloat(payload.processing_fee||0) + parseFloat(payload.tax_amount||0) + parseFloat(payload.payment_service_charge||0)),
       };
 showOrderSuccess(orderData, orderCode);
     if (typeof window.initOrder === 'function') window.initOrder();

@@ -8588,17 +8588,15 @@ function showOrderSuccess(order,code){
   ).join('');
   // Billing Details
  const billRows=[
-    ['Delivery',order?.delivery_method||''],
-    ['Payment',[...document.querySelectorAll('select')].find(s=>s.value===''+order?.payment_method)?.selectedOptions[0]?.text||order?.payment_method||''],
-    ['Discount',cur+' '+(order?.discount_amount||0)],
-    ['Delivery Charge',cur+' '+(order?.delivery_cost||0)],
-    ['Processing Fee',cur+' '+(order?.processing_fee||0)],
-    ['Tax / VAT',cur+' '+(order?.tax_amount||0)],
-    ['Payment Service Charge',cur+' '+(order?.payment_service_charge||0)],
-    ['Total',cur+' '+(order?.items_total||0)],
+    ['Discount',cur+' '+(order?.discount_amount||0),'green'],
+    ['Delivery Charge',cur+' '+(order?.delivery_cost||0),''],
+    ['Processing Fee',cur+' '+(order?.processing_fee||0),''],
+    ['Tax / VAT',cur+' '+(order?.tax_amount||0),''],
+    ['Payment Service Charge',cur+' '+(order?.payment_service_charge||0),''],
+    ['Total',cur+' '+(order?.final_total||0),'red'],
   ];
-  document.getElementById('os-billing').innerHTML=billRows.map(([l,v],idx)=>
-    '<div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid #f0f0f6'+(idx===billRows.length-1?';background:#fafafa':'')+'"><span style="font-size:12px;font-weight:700;color:#9090b8">'+l+'</span><span style="font-size:13px;font-weight:'+(idx===billRows.length-1?'900':'700')+';color:'+(idx===billRows.length-1?'#e8220e':'#18182b')+'">'+v+'</span></div>'
+  document.getElementById('os-billing').innerHTML=billRows.map(([l,v,c],idx)=>
+    '<div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid #f0f0f6'+(idx===billRows.length-1?';background:#fafafa':'')+'"><span style="font-size:12px;font-weight:700;color:#9090b8">'+l+'</span><span style="font-size:13px;font-weight:'+(idx===billRows.length-1?'900':'700')+';color:'+(c==='green'?'#16a34a':c==='red'?'#e8220e':'#18182b')+'">'+(c==='green'?'- ':'')+v+'</span></div>'
   ).join('');
   modal.style.display='flex';
   let t=10;
