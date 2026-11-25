@@ -3777,6 +3777,7 @@ function renderOrdersPage(){
         <table>
           <thead>
             <tr>
+              <th style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" id="chk-all-orders" onchange="document.querySelectorAll('.order-row-chk').forEach(c=>c.checked=this.checked)" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></th>
               <th class="sc3-first">Order / Product</th>
               <th style="min-width:100px">Order code</th>
               <th style="min-width:130px">Date &amp; Time</th>
@@ -3796,6 +3797,7 @@ function renderOrdersPage(){
               const sp = o.items.reduce((a,i)=>a+i.sp*i.qty,0);
               const profit = sp - pp;
               return `<tr>
+              <td style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" class="order-row-chk" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></td>
                 <td class="sc3-first">
                   <div class="row-name-cell">
                     <span class="row-name-text">${ordFirstName(o)}</span>
