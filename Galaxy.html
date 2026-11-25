@@ -1374,22 +1374,39 @@ tbody tr:hover .row-actions{display:flex}
 
 <!-- ORDER SUCCESS MODAL -->
 <div id="order-success-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:400;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:18px;width:480px;max-width:95vw;max-height:88vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.18);padding:28px 28px 24px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+  <div style="background:#fff;border-radius:18px;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.18);padding:0">
+    <!-- Header -->
+    <div style="padding:20px 24px 16px;border-bottom:1px solid #f0f0f6;display:flex;align-items:center;justify-content:space-between">
       <div style="display:flex;align-items:center;gap:10px">
-        <div style="width:36px;height:36px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center">
-          <svg viewBox="0 0 20 20" fill="none" style="width:20px;height:20px"><circle cx="10" cy="10" r="9" stroke="#16a34a" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="width:34px;height:34px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 20 20" fill="none" style="width:18px;height:18px"><circle cx="10" cy="10" r="9" stroke="#16a34a" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div>
           <div style="font-size:15px;font-weight:900;color:#18182b">Order Placed!</div>
           <div id="os-code" style="font-size:12px;font-weight:700;color:#e8220e"></div>
         </div>
       </div>
-      <div id="os-timer" style="font-size:12px;font-weight:700;color:#9090b8"></div>
+      <div id="os-timer" style="font-size:11px;font-weight:700;color:#9090b8;background:#f5f5fa;padding:4px 10px;border-radius:20px"></div>
     </div>
-    <div id="os-details" style="display:flex;flex-direction:column;gap:0;border:1px solid #f0f0f6;border-radius:12px;overflow:hidden;margin-bottom:16px"></div>
-    <div id="os-items" style="margin-bottom:16px"></div>
-    <button onclick="closeOrderSuccess()" style="width:100%;padding:12px;border:none;border-radius:10px;background:#18182b;color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Close</button>
+    <!-- Product Details -->
+    <div style="padding:16px 24px 0">
+      <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Product Details</div>
+      <div id="os-items" style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px"></div>
+    </div>
+    <!-- Customer Details -->
+    <div style="padding:0 24px">
+      <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Customer Details</div>
+      <div id="os-customer" style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:16px"></div>
+    </div>
+    <!-- Billing Details -->
+    <div style="padding:0 24px">
+      <div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Billing Details</div>
+      <div id="os-billing" style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:20px"></div>
+    </div>
+    <!-- Close -->
+    <div style="padding:0 24px 20px">
+      <button onclick="closeOrderSuccess()" style="width:100%;padding:12px;border:none;border-radius:10px;background:#18182b;color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Close</button>
+    </div>
   </div>
 </div>
 
@@ -8550,22 +8567,32 @@ function showOrderSuccess(order,code){
   const cur=generalSettings.currency||'';
   const modal=document.getElementById('order-success-modal');
   document.getElementById('os-code').textContent='Order #'+(code||order?.order_code||'');
-  const rows=[
+  // Product Details
+  const items=order?.items||[];
+  document.getElementById('os-items').innerHTML=items.length
+    ?items.map(i=>'<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:600;color:#18182b">'+(i.name||i.product_name||'')+'</span><span style="font-size:12px;font-weight:800;color:#e8220e">x'+(i.qty||i.quantity||1)+'</span></div>').join('')
+    :'<div style="padding:12px 14px;font-size:12px;color:#9090b8">No items</div>';
+  // Customer Details
+  const custRows=[
     ['Customer',order?.customer_name||order?.customer||''],
     ['Phone',order?.customer_phone||order?.phone||''],
     ['Address',order?.customer_address||order?.address||''],
     ['City',order?.customer_city||order?.city||''],
     ['Delivery',order?.delivery_method||''],
     ['Payment',order?.payment_method||''],
+  ];
+  document.getElementById('os-customer').innerHTML=custRows.map(([l,v])=>
+    '<div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:700;color:#9090b8">'+l+'</span><span style="font-size:13px;font-weight:700;color:#18182b">'+v+'</span></div>'
+  ).join('');
+  // Billing Details
+  const billRows=[
     ['Discount',cur+' '+(order?.discount_amount||0)],
     ['Delivery Charge',cur+' '+(order?.delivery_cost||0)],
     ['Total',cur+' '+(order?.items_total||0)],
   ];
-  document.getElementById('os-details').innerHTML=rows.map(([l,v])=>
-    '<div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:700;color:#9090b8">'+l+'</span><span style="font-size:13px;font-weight:700;color:#18182b">'+v+'</span></div>'
+  document.getElementById('os-billing').innerHTML=billRows.map(([l,v],idx)=>
+    '<div style="display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid #f0f0f6'+(idx===billRows.length-1?';background:#fafafa':'')+'"><span style="font-size:12px;font-weight:700;color:#9090b8">'+l+'</span><span style="font-size:13px;font-weight:'+(idx===billRows.length-1?'900':'700')+';color:'+(idx===billRows.length-1?'#e8220e':'#18182b')+'">'+v+'</span></div>'
   ).join('');
-  const items=order?.items||[];
-  document.getElementById('os-items').innerHTML=items.length?'<div style="font-size:11px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">Items</div>'+items.map(i=>'<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:600;color:#18182b">'+(i.name||i.product_name||'')+'</span><span style="font-size:12px;font-weight:700;color:#18182b">x'+(i.qty||i.quantity||1)+'</span></div>').join(''):'';
   modal.style.display='flex';
   let t=10;
   document.getElementById('os-timer').textContent='Closing in '+t+'s';
@@ -8574,10 +8601,6 @@ function showOrderSuccess(order,code){
     document.getElementById('os-timer').textContent='Closing in '+t+'s';
     if(t<=0){clearInterval(window._osTimer);closeOrderSuccess();}
   },1000);
-}
-function closeOrderSuccess(){
-  clearInterval(window._osTimer);
-  document.getElementById('order-success-modal').style.display='none';
 }
 
 function showForgotPassword() {
