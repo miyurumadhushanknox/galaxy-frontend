@@ -1158,6 +1158,10 @@ setTimeout(function() {
         setTimeout(function() {
           const idEl = document.getElementById('o-id');
           if (idEl) idEl.textContent = '—';
+          var addrEl2 = document.getElementById('c-address');
+          if (addrEl2) addrEl2.placeholder = 'Address *';
+          var phoneEl2 = document.getElementById('c-phone1');
+          if (phoneEl2) phoneEl2.placeholder = 'Phone Number 01 *';
         }, 100);
       }
     };
