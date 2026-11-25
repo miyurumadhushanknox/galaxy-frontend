@@ -1420,7 +1420,7 @@ list.querySelectorAll('input[onchange*="setQty"]').forEach(function(input) {
 
     // Patch phone inputs to only accept numbers
     function patchPhoneInputs() {
-    document.querySelectorAll('input[placeholder*="Phone"], input[placeholder*="phone"]').forEach(function(inp) {
+    document.querySelectorAll('input[placeholder*="Phone number"], input[placeholder*="phone number"], input[id*="phone"], input[id*="Phone"]').forEach(function(inp) {
       inp.setAttribute('inputmode', 'numeric');
       inp.addEventListener('input', function() {
       this.value = this.value.replace(/[^0-9+\-\s]/g, '');
