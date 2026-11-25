@@ -3789,14 +3789,14 @@ function renderOrdersPage(){
               <th style="min-width:120px">Added by</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="orders-tbody">
             ${filtered.length ? filtered.map(o=>{
               const st = ORDER_STATUSES.find(s=>s.key===o.status)||ORDER_STATUSES[0];
               const canEdit = o.status==='processing';
               const pp = o.items.reduce((a,i)=>a+i.pp*i.qty,0);
               const sp = o.items.reduce((a,i)=>a+i.sp*i.qty,0);
               const profit = sp - pp;
-              return `<tr style="transition:background .15s">
+              return `<tr style="transition:background .15s" onclick="const cb=this.querySelector('.order-row-chk');if(event.target!==cb){cb.checked=!cb.checked;}this.style.backgroundColor=cb.checked?'#fff5f5':''">
               <td style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" class="order-row-chk" onchange="toggleOrderRow(this)" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></td>
                 <td class="sc3-first">
                   <div class="row-name-cell">
@@ -8616,7 +8616,7 @@ function closeOrderSuccess(){
 }
 
 // Manage Order/Select Raw Highlight
-function toggleOrderRow(cb){cb.closest('tr').setAttribute('style',(cb.checked?'transition:background .15s;background:#fff5f5':'transition:background .15s'));}
+function toggleOrderRow(cb){cb.closest('tr').style.backgroundColor=cb.checked?'#fff5f5':'';}
 
 function showForgotPassword() {
   var modal = document.getElementById('forgotModal');
