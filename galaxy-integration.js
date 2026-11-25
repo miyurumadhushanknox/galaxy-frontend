@@ -1421,10 +1421,12 @@ function patchWalkIn() {
   heading.parentNode.appendChild(wrapper);
 
   // Set initial placeholder stars
+  setTimeout(function() {
   var addrEl = document.getElementById('c-address');
   if (addrEl) addrEl.placeholder = 'Address *';
   var phoneEl = document.getElementById('c-phone1');
   if (phoneEl) phoneEl.placeholder = 'Phone Number 01 *';
+  }, 300);
 
   // Patch toggleWalkIn to also toggle required
   var _origToggle = window.toggleWalkIn;
@@ -1435,7 +1437,7 @@ function patchWalkIn() {
       window.walkInMode = isWalkIn;
       var addrEl = document.getElementById('c-address');
       var phoneEl = document.getElementById('c-phone1');
-      if (addrEl) addrEl.placeholder = isWalkIn ? 'Address' : 'Address *';
+      if (addrEl) addrEl.placeholder = isWalkIn ? 'Address (Optional)' : 'Address *';
       if (phoneEl) phoneEl.placeholder = isWalkIn ? 'Phone Number 01 (Optional)' : 'Phone Number 01 *';
     document.querySelectorAll('#page-placeorder input[required], #page-placeorder select[required]').forEach(function(inp) {
     if (isWalkIn) inp.removeAttribute('required');
