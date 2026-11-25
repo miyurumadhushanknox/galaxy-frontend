@@ -2686,9 +2686,9 @@ function submitOrder(){
   const noteItems=document.getElementById("order-note-items");
   if(errors.length){
     noteItems.innerHTML=errors.map(e=>"<div class=\"note-item\" style=\"display:flex\"><div class=\"note-dot\"></div><span>"+e+"</span></div>").join("")
-    noteBox.style.display="flex";noteBox.classList.add("show");return;
+    noteBox.style.cssText="display:flex;flex-direction:column;margin-top:12px;margin-bottom:0;width:100%";noteBox.classList.add("show");return;
   }
-  noteBox.classList.remove("show");
+  noteBox.style.display="none";noteBox.classList.remove("show");
 
   const itemsData=orderItems.map(i=>{
     const p=products.find(x=>x.id===i.pid);
