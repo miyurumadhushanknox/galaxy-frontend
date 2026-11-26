@@ -2019,7 +2019,25 @@ tbody tr:hover .row-actions{display:flex}
         </div>
         <textarea id="sc-reason" rows="3" placeholder="Enter reason for this status change…" style="width:100%;padding:10px 12px;border:1.5px solid #e8220e;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff8f6;outline:none;resize:vertical;line-height:1.5"></textarea>
       </div>
-      <button onclick="applyStatusChange()" style="width:100%;padding:12px;background:#e8220e;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px">Save Status</button>
+      <div style="display:flex;gap:10px;margin-top:10px">
+        <button onclick="document.getElementById('m-statuschange').classList.remove('open')" style="flex:1;padding:12px;background:#f5f5fa;color:#9090b8;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">Cancel</button>
+        <button onclick="confirmStatusChange()" style="flex:2;padding:12px;background:#e8220e;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">Change Status</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS CONFIRM POPUP -->
+<div class="modal-bg" id="m-statusconfirm">
+  <div style="background:#fff;border-radius:16px;width:360px;max-width:95vw;box-shadow:0 8px 48px rgba(0,0,0,.15);animation:mIn .18s ease;padding:28px 24px;text-align:center">
+    <div style="width:48px;height:48px;border-radius:50%;background:#fff4f3;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+      <svg viewBox="0 0 24 24" fill="none" style="width:24px;height:24px;color:#e8220e"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5M12 16.5v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+    <div style="font-size:17px;font-weight:900;color:#18182b;margin-bottom:8px">Are you sure?</div>
+    <div id="sc-confirm-text" style="font-size:13px;color:#9090b8;margin-bottom:24px;line-height:1.6"></div>
+    <div style="display:flex;gap:10px">
+      <button onclick="document.getElementById('m-statusconfirm').classList.remove('open')" style="flex:1;padding:12px;background:#f5f5fa;color:#9090b8;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">Cancel</button>
+      <button onclick="applyStatusChange()" style="flex:1;padding:12px;background:#e8220e;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">Confirm</button>
     </div>
   </div>
 </div>
@@ -4135,6 +4153,20 @@ function openStatusChange(id){
   document.getElementById('m-statuschange').classList.add('open');
 }
 
+function confirmStatusChange(){
+  const id=document.getElementById('sc-order-id').value;
+  const s=document.getElementById('sc-status-select').value;
+  const o=orders.find(x=>x.id===id);if(!o)return;
+  if(SC_REASON_STATUSES&&SC_REASON_STATUSES.includes(s)){
+    const reason=(document.getElementById('sc-reason')?.value||'').trim();
+    if(!reason){document.getElementById('sc-reason').style.borderColor='#e8220e';document.getElementById('sc-reason').focus();toast('Please enter a reason.','err');return;}
+  }
+  const fromLabel=ORDER_STATUSES.find(x=>x.key===o.status)?.label||o.status;
+  const toLabel=ORDER_STATUSES.find(x=>x.key===s)?.label||s;
+  document.getElementById('sc-confirm-text').innerHTML=`Changing order status from<br><b style="color:#18182b">${fromLabel}</b> → <b style="color:#e8220e">${toLabel}</b>`;
+  document.getElementById('m-statusconfirm').classList.add('open');
+}
+
 function applyStatusChange(){
   const id=document.getElementById('sc-order-id').value;
   const s=document.getElementById('sc-status-select').value;
@@ -4152,6 +4184,7 @@ function applyStatusChange(){
   }
   o.status=s;
   document.getElementById('m-statuschange').classList.remove('open');
+  document.getElementById('m-statusconfirm').classList.remove('open');
   toast('Order '+id+' → '+ORDER_STATUSES.find(x=>x.key===s)?.label,'ok');
   renderOrdersPage();
 }
