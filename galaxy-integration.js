@@ -1180,7 +1180,7 @@ setTimeout(function() {
   const paymentMethod   = document.getElementById('o-payment')?.value         || '';
   const discountCode    = document.getElementById('o-discount-code')?.value?.trim() || '';
 
-  let items = window._galaxyOrderItems || [];
+  let items = window._galaxyOrderItems || window.orderItems || [];
 
   const red = [];
   var _walkIn = document.getElementById('walkin-toggle')?.style.background?.includes('232') || window.walkInMode;

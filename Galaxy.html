@@ -2539,11 +2539,13 @@ function changeQty(pid,delta){
   ex.qty=Math.max(1,Math.min(ex.qty+delta,tStk(p)));
   renderOrderItems();calcOrder();
 }
+
 function setQty(pid,val){
   const ex=orderItems.find(x=>x.pid===pid);if(!ex)return;
   const p=products.find(x=>x.id===pid);
   ex.qty=Math.max(1,Math.min(parseInt(val)||1,tStk(p)));
   calcOrder();
+  if(window._galaxyOrderItems){const gi=window._galaxyOrderItems.find(x=>x.pid===pid);if(gi)gi.qty=ex.qty;}
 }
 
 var _editPricePid = null;
