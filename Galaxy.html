@@ -2524,7 +2524,7 @@ function searchItems(){
 function addOrderItem(pid){
   const p=products.find(x=>x.id===pid);if(!p)return;
   const ex=orderItems.find(x=>x.pid===pid);
-  if(ex){ex.qty=Math.min(ex.qty+1,tStk(p));}
+  if(ex){ex.qty=Math.min(ex.qty+1,tStk(p));if(window._galaxyOrderItems){const gi=window._galaxyOrderItems.find(x=>x.pid===ex.pid);if(gi)gi.qty=ex.qty;}}
   else{orderItems.push({pid,qty:1,customPrice:null});}
   document.getElementById("item-search-input").value="";
   document.getElementById("item-search-results").innerHTML="";
@@ -2538,6 +2538,7 @@ function changeQty(pid,delta){
   const p=products.find(x=>x.id===pid);
   ex.qty=Math.max(1,Math.min(ex.qty+delta,tStk(p)));
   renderOrderItems();calcOrder();
+  if(window._galaxyOrderItems){const gi=window._galaxyOrderItems.find(x=>x.pid===pid);if(gi)gi.qty=ex.qty;}
 }
 
 function setQty(pid,val){
