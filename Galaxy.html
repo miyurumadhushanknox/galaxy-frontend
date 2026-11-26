@@ -3929,11 +3929,11 @@ function openViewOrder(id){
               <span style="font-size:12px;font-weight:700;color:#18182b">${i.name} <span style="color:#9090b8;font-weight:500;font-size:11px">(Code: ${i.code})</span></span>
               <span style="font-size:12px;font-weight:700;color:#e8220e;white-space:nowrap;margin-left:8px">×${i.qty} · ${L(i.sp)} = ${L(i.sp*i.qty)}</span>
             </div>
-            ${currentUser.role!=='sales'?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:11px;color:#9090b8;margin-top:5px">
-              <span>Purchase price: <b style="color:#18182b">${L(i.pp)}</b></span>
-              <span>Sale price: <b style="color:#18182b">${L(i.sp)}</b></span>
-              <span>Actual sale: <b style="color:#18182b">${L(i.sp*i.qty)}</b></span>
-              <span>Profit: <b style="color:${(i.sp-i.pp)>=0?'#16a34a':'#e8220e'}">${L(i.sp-i.pp)}</b></span>
+            ${currentUser.role!=='sales'?`<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+              <span style="background:#f5f5fb;border-radius:6px;padding:3px 8px;font-size:11px;color:#9090b8">PP: <b style="color:#18182b">${L(i.pp)}</b></span>
+              <span style="background:#f5f5fb;border-radius:6px;padding:3px 8px;font-size:11px;color:#9090b8">SP: <b style="color:#18182b">${L(i.sp)}</b></span>
+              <span style="background:#f5f5fb;border-radius:6px;padding:3px 8px;font-size:11px;color:#9090b8">Sale: <b style="color:#18182b">${L(i.sp*i.qty)}</b></span>
+              <span style="background:#f5f5fb;border-radius:6px;padding:3px 8px;font-size:11px;color:${(i.sp-i.pp)>=0?'#16a34a':'#e8220e'}">Profit: <b>${L(i.sp-i.pp)}</b></span>
             </div>`:''}
           </div>`).join('')}
         </div>

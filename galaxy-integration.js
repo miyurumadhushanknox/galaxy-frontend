@@ -1033,7 +1033,7 @@ setTimeout(function() {
         code: i.product_sku  || i.code || '',
         qty:  i.quantity,
         pp:   i.purchase_price || i.pp || 0,
-        sp:   i.unit_price    || i.sp || 0,
+        sp:   i.selling_price || i.unit_price || i.sp || 0,
       })),
       delivery: o.delivery_method
         ? o.delivery_method + (o.delivery_cost > 0 ? ' — LKR ' + o.delivery_cost : '')
