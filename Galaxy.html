@@ -3870,9 +3870,18 @@ function getFilteredOrders(){
   });
 }
 
-function downloadReceipt(o,grandTotal,disc,del,fee,tax,psc){
+function downloadReceipt(oid){
+  const o=orders.find(x=>x.id===oid);if(!o)return;
   const biz=window.generalSettings||{};
   const L2=v=>((biz.currency||'AUD')+' '+Number(v||0).toLocaleString());
+  const disc=o._raw?.discount_amount||0;
+  const del=o._raw?.delivery_price||o._raw?.delivery_cost||0;
+  const fee=o._raw?.processing_fee||0;
+  const tax=o._raw?.tax_amount||o._raw?.tax_vat||0;
+  const psc=o._raw?.payment_service_charge||0;
+  const sp=o.items.reduce((a,i)=>a+i.sp*i.qty,0);
+  const pp=o.items.reduce((a,i)=>a+i.pp*i.qty,0);
+  const grandTotal=sp-disc+del+fee+tax+psc;
   const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt ${o.code||o.id}</title><style>
     body{font-family:Arial,sans-serif;margin:0;padding:24px;color:#18182b;font-size:13px}
     .header{text-align:center;margin-bottom:20px}
@@ -4042,7 +4051,7 @@ function openViewOrder(id){
     </div>
     <!-- Buttons -->
     <div style="display:flex;gap:12px;padding-top:4px">
-      <button onclick="downloadReceipt(o,grandTotal,disc,del,fee,tax,psc)" style="flex:1;padding:12px;border:1.5px solid #e0e0ef;border-radius:10px;background:#fff;color:#18182b;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
+      <button onclick="downloadReceipt('${o.id}')" style="flex:1;padding:12px;border:1.5px solid #e0e0ef;border-radius:10px;background:#fff;color:#18182b;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
         <svg viewBox="0 0 14 14" fill="none" style="width:13px;height:13px"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Download Receipt
       </button>
