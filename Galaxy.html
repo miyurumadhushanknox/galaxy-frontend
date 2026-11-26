@@ -3885,81 +3885,94 @@ function downloadReceipt(oid){
   const oc=o._raw?.order_code||o.code||o.id;
   const logoHtml=biz.bizLogo?`<img src="${biz.bizLogo}" onerror="this.style.display='none'" style="max-height:52px;max-width:160px;margin-bottom:10px;border-radius:8px;background:#fff;padding:4px;display:block;margin-left:auto;margin-right:auto">`:'';
   const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt ${oc}</title><style>
-    *{box-sizing:border-box;margin:0;padding:0}
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
     body{font-family:'Segoe UI',Arial,sans-serif;background:#fff;margin:0;padding:0}
-    .card{background:#fff;width:100%;min-height:100vh;overflow:hidden}
-    .top-bar{background:#e8220e;padding:28px 28px 20px;text-align:center;color:#fff}
-    .biz-name{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-top:6px}
-    .biz-sub{font-size:12px;opacity:.85;margin-top:4px}
-    .order-badge{display:inline-block;background:rgba(255,255,255,0.18);border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;margin-top:10px;letter-spacing:.5px}
-    .body{padding:24px 28px}
-    .section{margin-bottom:20px}
-    .section-title{font-size:10px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
-    .billing-box{border:1px solid #e8e8f0;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.7;color:#18182b}
-    .billing-label{font-size:10px;color:#9090b8;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-    .billing-name{font-size:15px;font-weight:800;color:#18182b;margin-bottom:2px}
-    .billing-detail{font-size:13px;color:#444;line-height:1.6}
-    .product-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f6}
-    .product-row:last-child{border-bottom:none}
-    .p-name{font-size:13px;font-weight:700;color:#18182b}
-    .p-sku{font-size:11px;color:#9090b8;margin-top:1px}
-    .p-qty{font-size:12px;font-weight:800;color:#e8220e;background:#fff0ee;border-radius:6px;padding:2px 8px;margin-bottom:2px;text-align:center}
-    .p-total{font-size:13px;font-weight:700;color:#18182b;text-align:right}
-    .summary-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px}
-    .summary-label{color:#9090b8;font-weight:500}
-    .summary-val{font-weight:600;color:#18182b}
-    .total-box{background:#18182b;border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-    .total-label{color:#fff;font-size:14px;font-weight:600}
-    .total-val{color:#fff;font-size:18px;font-weight:800}
-    .footer{text-align:center;padding:16px 28px;background:#f8f8fc;font-size:11px;color:#9090b8;border-top:1px solid #f0f0f6}
-    .divider{border:none;border-top:1px solid #f0f0f6;margin:4px 0 16px}
+    .wrap{max-width:680px;margin:0 auto;padding:32px 24px}
+    .header{text-align:center;padding:32px 24px 24px;background:linear-gradient(135deg,#c0190b 0%,#e8220e 60%,#ff4422 100%);border-radius:16px;margin-bottom:24px;color:#fff}
+    .logo{max-height:60px;max-width:160px;border-radius:10px;margin-bottom:12px;display:block;margin-left:auto;margin-right:auto}
+    .biz-name{font-size:26px;font-weight:900;letter-spacing:-1px;margin-bottom:4px}
+    .biz-sub{font-size:12px;opacity:.8;margin-bottom:14px}
+    .badge-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:5px 16px;font-size:12px;font-weight:700;letter-spacing:.5px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+    .info-card{background:#f8f8fc;border-radius:12px;padding:16px}
+    .info-card-title{font-size:10px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+    .info-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #efefef;font-size:12px}
+    .info-row:last-child{border-bottom:none}
+    .info-label{color:#9090b8;font-weight:500}
+    .info-val{font-weight:700;color:#18182b;text-align:right;max-width:60%}
+    .products-section{margin-bottom:24px}
+    .section-title{font-size:10px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+    .product-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#f8f8fc;border-radius:10px;margin-bottom:8px}
+    .p-left{flex:1}
+    .p-name{font-size:13px;font-weight:800;color:#18182b}
+    .p-sku{font-size:11px;color:#9090b8;margin-top:2px}
+    .p-right{text-align:right}
+    .p-qty{display:inline-block;background:#e8220e;color:#fff;border-radius:6px;padding:2px 10px;font-size:11px;font-weight:800;margin-bottom:4px}
+    .p-price{font-size:14px;font-weight:800;color:#18182b}
+    .summary-card{background:#f8f8fc;border-radius:12px;padding:16px;margin-bottom:16px}
+    .sum-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #efefef}
+    .sum-row:last-child{border-bottom:none}
+    .sum-label{color:#9090b8;font-weight:500}
+    .sum-val{font-weight:700;color:#18182b}
+    .discount-val{color:#16a34a;font-weight:700}
+    .total-bar{background:linear-gradient(135deg,#18182b 0%,#2d2d4e 100%);border-radius:12px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+    .total-label{color:#fff;font-size:14px;font-weight:600;opacity:.8}
+    .total-val{color:#fff;font-size:22px;font-weight:900;letter-spacing:-0.5px}
+    .footer{text-align:center;padding:20px;background:#f8f8fc;border-radius:12px}
+    .footer-thanks{font-size:16px;font-weight:800;color:#18182b;margin-bottom:4px}
+    .footer-sub{font-size:11px;color:#9090b8}
     @media print{
-      body{background:#fff;padding:0}
-      .card{box-shadow:none;border-radius:0;width:100%;margin:0}
+      *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+      body{padding:0}
     }
-    @page{size:A4;margin:0}
-  </style>
-  <script><\/script>
-  </head><body><div class="card">
-  <div class="top-bar">
-    ${logoHtml}
+    @page{size:A4;margin:16mm}
+  </style></head><body><div class="wrap">
+  <div class="header">
+    ${biz.bizLogo?`<img src="${biz.bizLogo}" class="logo" onerror="this.style.display='none'"><br>`:''}
     <div class="biz-name">${biz.bizName||'Galaxy'}</div>
     <div class="biz-sub">${[biz.bizAddress,biz.bizPhone].filter(Boolean).join(' · ')}</div>
-    <div class="order-badge">${oc}</div>
-  </div>
-  <div class="body">
-    <div class="section">
-      <div class="section-title">Billing Information</div>
-      <div class="billing-box">
-        <div class="billing-name">${o.customer||'—'}</div>
-        <div class="billing-detail">
-          ${o.phone?`<div>${o.phone}</div>`:''}
-          ${o.address?`<div>${o.address}${o.city?', '+o.city:''}</div>`:''}
-          ${!o.address&&o.city?`<div>${o.city}</div>`:''}
-          ${o.payment?`<div>Payment: ${o.payment}</div>`:''}
-          <div>Date: ${o.date||''} ${o.time||''}</div>
-        </div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-title">Products</div>
-      ${o.items.map(i=>`<div class="product-row">
-        <div><div class="p-name">${i.name}</div><div class="p-sku">SKU: ${i.code||'—'}</div></div>
-        <div style="text-align:right"><div class="p-qty">×${i.qty}</div><div class="p-total">${L2(i.sp*i.qty)}</div></div>
-      </div>`).join('')}
-    </div>
-    <div class="section">
-      <div class="section-title">Summary</div>
-      <hr class="divider">
-      ${disc>0?`<div class="summary-row"><span class="summary-label">Discount</span><span style="color:#16a34a;font-weight:700">− ${L2(disc)}</span></div>`:''}
-      ${del>0?`<div class="summary-row"><span class="summary-label">Delivery</span><span class="summary-val">${L2(del)}</span></div>`:''}
-      ${fee>0?`<div class="summary-row"><span class="summary-label">Processing Fee</span><span class="summary-val">${L2(fee)}</span></div>`:''}
-      ${tax>0?`<div class="summary-row"><span class="summary-label">Tax / VAT</span><span class="summary-val">${L2(tax)}</span></div>`:''}
-      ${psc>0?`<div class="summary-row"><span class="summary-label">Payment Service Charge</span><span class="summary-val">${L2(psc)}</span></div>`:''}
-      <div class="total-box"><span class="total-label">Total</span><span class="total-val">${L2(grandTotal)}</span></div>
+    <div class="badge-row">
+      <div class="badge">📄 ${oc}</div>
+      <div class="badge">📅 ${o.date||''} ${o.time||''}</div>
     </div>
   </div>
-  <div class="footer">Thank you for your purchase! · ${biz.bizName||'Galaxy'}</div>
+  <div class="two-col">
+    <div class="info-card">
+      <div class="info-card-title">Billing Information</div>
+      <div class="info-row"><span class="info-label">Name</span><span class="info-val">${o.customer||'—'}</span></div>
+      ${o.phone?`<div class="info-row"><span class="info-label">Phone</span><span class="info-val">${o.phone}</span></div>`:''}
+      ${o.address?`<div class="info-row"><span class="info-label">Address</span><span class="info-val">${o.address}</span></div>`:''}
+      ${o.city?`<div class="info-row"><span class="info-label">City</span><span class="info-val">${o.city}</span></div>`:''}
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">Order Details</div>
+      ${o.payment?`<div class="info-row"><span class="info-label">Payment</span><span class="info-val">${o.payment}</span></div>`:''}
+      ${o.delivery?`<div class="info-row"><span class="info-label">Delivery</span><span class="info-val">${o.delivery}</span></div>`:''}
+      <div class="info-row"><span class="info-label">Order</span><span class="info-val">${oc}</span></div>
+      <div class="info-row"><span class="info-label">Date</span><span class="info-val">${o.date||''}</span></div>
+    </div>
+  </div>
+  <div class="products-section">
+    <div class="section-title">Products</div>
+    ${o.items.map(i=>`<div class="product-row">
+      <div class="p-left"><div class="p-name">${i.name}</div><div class="p-sku">SKU: ${i.code||'—'}</div></div>
+      <div class="p-right"><div class="p-qty">×${i.qty}</div><div class="p-price">${L2(i.sp*i.qty)}</div></div>
+    </div>`).join('')}
+  </div>
+  <div class="summary-card">
+    <div class="section-title" style="margin-bottom:8px">Summary</div>
+    ${disc>0?`<div class="sum-row"><span class="sum-label">Discount</span><span class="discount-val">− ${L2(disc)}</span></div>`:''}
+    ${del>0?`<div class="sum-row"><span class="sum-label">Delivery</span><span class="sum-val">${L2(del)}</span></div>`:''}
+    ${fee>0?`<div class="sum-row"><span class="sum-label">Processing Fee</span><span class="sum-val">${L2(fee)}</span></div>`:''}
+    ${tax>0?`<div class="sum-row"><span class="sum-label">Tax / VAT</span><span class="sum-val">${L2(tax)}</span></div>`:''}
+    ${psc>0?`<div class="sum-row"><span class="sum-label">Payment Service Charge</span><span class="sum-val">${L2(psc)}</span></div>`:''}
+  </div>
+  <div class="total-bar"><span class="total-label">Total Amount</span><span class="total-val">${L2(grandTotal)}</span></div>
+  <div class="footer">
+    <div class="footer-thanks">Thank you for your purchase!</div>
+    <div class="footer-sub">${biz.bizName||'Galaxy'} · ${[biz.bizAddress,biz.bizPhone].filter(Boolean).join(' · ')}</div>
+  </div>
   </div></body></html>`;
   const iframe=document.createElement('iframe');
   iframe.style.cssText='position:fixed;left:-9999px;top:0;width:210mm;height:297mm;border:none';
