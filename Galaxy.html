@@ -3886,8 +3886,8 @@ function downloadReceipt(oid){
   const logoHtml=biz.bizLogo?`<img src="${biz.bizLogo}" onerror="this.style.display='none'" style="max-height:52px;max-width:160px;margin-bottom:10px;border-radius:8px;background:#fff;padding:4px;display:block;margin-left:auto;margin-right:auto">`:'';
   const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt ${oc}</title><style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f4f8;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px}
-    .card{background:#fff;border-radius:16px;box-shadow:0 4px 32px rgba(0,0,0,0.10);width:210mm;max-width:100%;overflow:hidden}
+    body{font-family:'Segoe UI',Arial,sans-serif;background:#fff;margin:0;padding:0}
+    .card{background:#fff;width:100%;min-height:100vh;overflow:hidden}
     .top-bar{background:#e8220e;padding:28px 28px 20px;text-align:center;color:#fff}
     .biz-name{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-top:6px}
     .biz-sub{font-size:12px;opacity:.85;margin-top:4px}
@@ -3915,11 +3915,11 @@ function downloadReceipt(oid){
     .divider{border:none;border-top:1px solid #f0f0f6;margin:4px 0 16px}
     @media print{
       body{background:#fff;padding:0}
-      .card{box-shadow:none;border-radius:0;width:100%}
+      .card{box-shadow:none;border-radius:0;width:100%;margin:0}
     }
     @page{size:A4;margin:0}
   </style>
-  <script>window.onload=function(){window.print()}<\/script>
+  <script><\/script>
   </head><body><div class="card">
   <div class="top-bar">
     ${logoHtml}
@@ -3961,11 +3961,17 @@ function downloadReceipt(oid){
   </div>
   <div class="footer">Thank you for your purchase! · ${biz.bizName||'Galaxy'}</div>
   </div></body></html>`;
-  const blob=new Blob([html],{type:'text/html'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=`Receipt-${oc}.html`;
-  a.click();
+  const iframe=document.createElement('iframe');
+  iframe.style.cssText='position:fixed;left:-9999px;top:0;width:210mm;height:297mm;border:none';
+  document.body.appendChild(iframe);
+  iframe.contentDocument.open();
+  iframe.contentDocument.write(html);
+  iframe.contentDocument.close();
+  setTimeout(()=>{
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+    setTimeout(()=>document.body.removeChild(iframe),1000);
+  },600);
 }
 
 function cancelOrder(id){
