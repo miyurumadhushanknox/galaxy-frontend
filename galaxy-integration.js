@@ -1034,6 +1034,7 @@ setTimeout(function() {
         qty:  i.quantity,
         pp:   i.purchase_price || i.pp || 0,
         sp:   i.selling_price || i.unit_price || i.sp || 0,
+        image: i.product_image || i.image_url || i.image || '',
       })),
       delivery: o.delivery_method
         ? o.delivery_method + (o.delivery_cost > 0 ? ' — LKR ' + o.delivery_cost : '')

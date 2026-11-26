@@ -3926,9 +3926,12 @@ function openViewOrder(id){
           ${o.items.map(i=>`
           <div style="padding:10px 14px;border-bottom:1px solid #f0f0f6">
             <div style="display:flex;justify-content:space-between;align-items:flex-start">
-            <div>
-            <div style="font-size:12px;font-weight:700;color:#18182b">${i.name}</div>
-            <div style="font-size:11px;color:#9090b8;margin-top:1px">SKU: ${i.code}</div>
+              <div style="display:flex;align-items:flex-start;gap:10px">
+                ${i.image?`<img src="${i.image}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;flex-shrink:0">`:'<div style="width:40px;height:40px;border-radius:6px;background:#f0f0f6;flex-shrink:0;display:flex;align-items:center;justify-content:center"><span style="font-size:16px">📦</span></div>'}
+              <div>
+              <div style="font-size:12px;font-weight:700;color:#18182b">${i.name}</div>
+              <div style="font-size:11px;color:#9090b8;margin-top:1px">SKU: ${i.code}</div>
+            </div>
           </div>
             <div style="text-align:right;white-space:nowrap;margin-left:8px">
               <div style="font-size:13px;font-weight:800;color:#e8220e">×${i.qty}</div>
