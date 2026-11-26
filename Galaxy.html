@@ -3945,7 +3945,7 @@ function openViewOrder(id){
         <div style="border-top:1px solid #f0f0f6;margin-top:8px;padding-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:5px">
           <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Purchase price: <b style="color:#18182b">${L(i.pp)}</b></span>
           <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Actual sale: <b style="color:#18182b">${L(i.sp*i.qty)}</b></span>
-          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Sale price: <b style="color:#18182b">${L(i.sp)}</b></span>
+          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Sale price: <b style="color:#18182b">${L(i.origSp||i.sp)}</b></span>
           <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:${(i.sp-i.pp)>=0?'#16a34a':'#e8220e'}">Profit: <b>${L(i.sp-i.pp)}</b></span>
         </div>`:''}
         </div>`).join('')}

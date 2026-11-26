@@ -1029,12 +1029,13 @@ setTimeout(function() {
       address:  o.customer_address || '',
       email:    o.customer_email || '',
       items:    (o.items || o.order_items || []).map(i => ({
-        name: i.product_name || i.name || '',
-        code: i.product_sku  || i.code || '',
-        qty:  i.quantity,
-        pp:   i.purchase_price || i.pp || 0,
-        sp:   i.selling_price || i.unit_price || i.sp || 0,
-        image: i.product_image || i.image_url || i.image || '',
+      name: i.product_name || i.name || '',
+      code: i.product_code || i.product_sku || i.code || '',
+      qty:  i.quantity,
+      pp:   i.purchase_price || i.pp || 0,
+      sp:   i.selling_price || i.unit_price || i.sp || 0,
+      origSp: i.product_selling_price || i.origSp || i.sp || 0,
+      image: i.product_image || i.image_url || i.image || '',
       })),
       delivery: o.delivery_method
         ? o.delivery_method + (o.delivery_cost > 0 ? ' — LKR ' + o.delivery_cost : '')
