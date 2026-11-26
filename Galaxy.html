@@ -3924,18 +3924,25 @@ function openViewOrder(id){
         <!-- Box 1: Products -->
         <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:10px">
           ${o.items.map(i=>`
-          <div style="padding:9px 14px;border-bottom:1px solid #f0f0f6">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:${currentUser.role!=='sales'?'5px':'0'}">
-              <span style="font-size:12px;font-weight:700;color:#18182b">${i.name} <span style="color:#9090b8;font-weight:500;font-size:11px">(Code: ${i.code})</span></span>
-              <span style="font-size:12px;font-weight:700;color:#e8220e;white-space:nowrap;margin-left:8px">×${i.qty} · ${L(i.sp)} = ${L(i.sp*i.qty)}</span>
+          <div style="padding:10px 14px;border-bottom:1px solid #f0f0f6">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+            <div style="font-size:12px;font-weight:700;color:#18182b">${i.name}</div>
+            <div style="font-size:11px;color:#9090b8;margin-top:1px">SKU: ${i.code}</div>
+          </div>
+            <div style="text-align:right;white-space:nowrap;margin-left:8px">
+              <div style="font-size:13px;font-weight:800;color:#e8220e">×${i.qty}</div>
+              <div style="font-size:12px;font-weight:700;color:#18182b;margin-top:2px">${L(i.sp*i.qty)}</div>
             </div>
-            ${currentUser.role!=='sales'?`<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
-              <span style="background:#f5f5fb;border-radius:6px;padding:3px 8px;font-size:11px;color:#9090b8">PP: <b style="color:#18182b">${L(i.pp)}</b></span>
-              <span style="background:#f5f5fb;border-radius:6px;padding:3px 8px;font-size:11px;color:#9090b8">SP: <b style="color:#18182b">${L(i.sp)}</b></span>
-              <span style="background:#f5f5fb;border-radius:6px;padding:3px 8px;font-size:11px;color:#9090b8">Sale: <b style="color:#18182b">${L(i.sp*i.qty)}</b></span>
-              <span style="background:#f5f5fb;border-radius:6px;padding:3px 8px;font-size:11px;color:${(i.sp-i.pp)>=0?'#16a34a':'#e8220e'}">Profit: <b>${L(i.sp-i.pp)}</b></span>
-            </div>`:''}
-          </div>`).join('')}
+        </div>
+        ${currentUser.role!=='sales'?`
+        <div style="border-top:1px solid #f0f0f6;margin-top:8px;padding-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:5px">
+          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Purchase price: <b style="color:#18182b">${L(i.pp)}</b></span>
+          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Actual sale: <b style="color:#18182b">${L(i.sp*i.qty)}</b></span>
+          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Sale price: <b style="color:#18182b">${L(i.sp)}</b></span>
+          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:${(i.sp-i.pp)>=0?'#16a34a':'#e8220e'}">Profit: <b>${L(i.sp-i.pp)}</b></span>
+        </div>`:''}
+        </div>`).join('')}
         </div>
         <!-- Box 2: Extra charges -->
         <div style="border:1px solid #f0f0f6;border-radius:10px;overflow:hidden;margin-bottom:10px">
