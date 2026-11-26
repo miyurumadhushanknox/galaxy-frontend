@@ -3942,12 +3942,12 @@ function openViewOrder(id){
             </div>
         </div>
         ${currentUser.role!=='sales'?`
-        <div style="border-top:1px solid #f0f0f6;margin-top:8px;padding-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:5px">
+        <div style="border-top:1px solid #f0f0f6;margin-top:8px;padding-top:8px"><div style="font-size:10px;color:#9090b8;margin-bottom:5px;font-weight:600">PER PRODUCT</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
           <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Purchase price: <b style="color:#18182b">${L(i.pp)}</b></span>
-          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Actual sale/unit: <b style="color:#18182b">${L(i.sp)}</b></span>
-          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Sale price/unit: <b style="color:#18182b">${L(i.origSp||i.sp)}</b></span>
+          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Actual sale: <b style="color:#18182b">${L(i.sp)}</b></span>
+          <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:#9090b8">Sale price: <b style="color:#18182b">${L(i.origSp||i.sp)}</b></span>
           <span style="background:#f5f5fb;border-radius:6px;padding:4px 8px;font-size:11px;color:${(i.sp-i.pp)>=0?'#16a34a':'#e8220e'}">Profit: <b>${L(i.sp-i.pp)}</b></span>
-        </div>`:''}
+        </div></div>`:''}
         </div>`).join('')}
         </div>
         <!-- Box 2: Extra charges -->
