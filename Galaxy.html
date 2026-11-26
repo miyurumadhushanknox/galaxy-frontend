@@ -3882,22 +3882,23 @@ function downloadReceipt(oid){
   const sp=o.items.reduce((a,i)=>a+i.sp*i.qty,0);
   const pp=o.items.reduce((a,i)=>a+i.pp*i.qty,0);
   const grandTotal=sp-disc+del+fee+tax+psc;
-    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt ${o.code}</title><style>
+  const oc=o._raw?.order_code||o.code||o.id;
+  const logoHtml=biz.bizLogo?`<img src="${biz.bizLogo}" onerror="this.style.display='none'" style="max-height:52px;max-width:160px;margin-bottom:10px;border-radius:8px;background:#fff;padding:4px;display:block;margin-left:auto;margin-right:auto">`:'';
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt ${oc}</title><style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f4f8;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px}
-    .card{background:#fff;border-radius:16px;box-shadow:0 4px 32px rgba(0,0,0,0.10);max-width:480px;width:100%;overflow:hidden}
+    body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f4f8;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px}
+    .card{background:#fff;border-radius:16px;box-shadow:0 4px 32px rgba(0,0,0,0.10);width:210mm;max-width:100%;overflow:hidden}
     .top-bar{background:#e8220e;padding:28px 28px 20px;text-align:center;color:#fff}
-    .top-bar img{max-height:52px;max-width:160px;margin-bottom:10px;border-radius:8px;background:#fff;padding:4px}
-    .biz-name{font-size:22px;font-weight:800;letter-spacing:-.5px}
+    .biz-name{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-top:6px}
     .biz-sub{font-size:12px;opacity:.85;margin-top:4px}
     .order-badge{display:inline-block;background:rgba(255,255,255,0.18);border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;margin-top:10px;letter-spacing:.5px}
     .body{padding:24px 28px}
     .section{margin-bottom:20px}
     .section-title{font-size:10px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
-    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .info-box{background:#f8f8fc;border-radius:8px;padding:10px 12px}
-    .info-label{font-size:10px;color:#9090b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
-    .info-val{font-size:13px;font-weight:700;color:#18182b}
+    .billing-box{border:1px solid #e8e8f0;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.7;color:#18182b}
+    .billing-label{font-size:10px;color:#9090b8;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+    .billing-name{font-size:15px;font-weight:800;color:#18182b;margin-bottom:2px}
+    .billing-detail{font-size:13px;color:#444;line-height:1.6}
     .product-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f6}
     .product-row:last-child{border-bottom:none}
     .p-name{font-size:13px;font-weight:700;color:#18182b}
@@ -3912,29 +3913,32 @@ function downloadReceipt(oid){
     .total-val{color:#fff;font-size:18px;font-weight:800}
     .footer{text-align:center;padding:16px 28px;background:#f8f8fc;font-size:11px;color:#9090b8;border-top:1px solid #f0f0f6}
     .divider{border:none;border-top:1px solid #f0f0f6;margin:4px 0 16px}
-  </style></head><body><div class="card">
+    @media print{
+      body{background:#fff;padding:0}
+      .card{box-shadow:none;border-radius:0;width:100%}
+    }
+    @page{size:A4;margin:0}
+  </style>
+  <script>window.onload=function(){window.print()}</script>
+  </head><body><div class="card">
   <div class="top-bar">
-    ${biz.bizLogo?`<img src="${biz.bizLogo}"><br>`:''}
+    ${logoHtml}
     <div class="biz-name">${biz.bizName||'Galaxy'}</div>
     <div class="biz-sub">${[biz.bizAddress,biz.bizPhone].filter(Boolean).join(' · ')}</div>
-    <div class="order-badge">${o.code}</div>
+    <div class="order-badge">${oc}</div>
   </div>
   <div class="body">
     <div class="section">
-      <div class="section-title">Customer Details</div>
-      <div class="info-grid">
-        <div class="info-box"><div class="info-label">Name</div><div class="info-val">${o.customer||'—'}</div></div>
-        <div class="info-box"><div class="info-label">Phone</div><div class="info-val">${o.phone||'—'}</div></div>
-        <div class="info-box"><div class="info-label">City</div><div class="info-val">${o.city||'—'}</div></div>
-        <div class="info-box"><div class="info-label">Date</div><div class="info-val">${o.date||''} ${o.time||''}</div></div>
-        ${o.address?`<div class="info-box" style="grid-column:span 2"><div class="info-label">Address</div><div class="info-val">${o.address}</div></div>`:''}
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-title">Order Info</div>
-      <div class="info-grid">
-        ${o.payment?`<div class="info-box"><div class="info-label">Payment</div><div class="info-val">${o.payment}</div></div>`:''}
-        ${o.delivery?`<div class="info-box"><div class="info-label">Delivery</div><div class="info-val">${o.delivery}</div></div>`:''}
+      <div class="section-title">Billing Information</div>
+      <div class="billing-box">
+        <div class="billing-name">${o.customer||'—'}</div>
+        <div class="billing-detail">
+          ${o.phone?`<div>${o.phone}</div>`:''}
+          ${o.address?`<div>${o.address}${o.city?', '+o.city:''}</div>`:''}
+          ${!o.address&&o.city?`<div>${o.city}</div>`:''}
+          ${o.payment?`<div>Payment: ${o.payment}</div>`:''}
+          <div>Date: ${o.date||''} ${o.time||''}</div>
+        </div>
       </div>
     </div>
     <div class="section">
@@ -3960,7 +3964,7 @@ function downloadReceipt(oid){
   const blob=new Blob([html],{type:'text/html'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download=`Receipt-${o.code||o.id}.html`;
+  a.download=`Receipt-${oc}.html`;
   a.click();
 }
 
