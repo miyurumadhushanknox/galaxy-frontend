@@ -3882,58 +3882,81 @@ function downloadReceipt(oid){
   const sp=o.items.reduce((a,i)=>a+i.sp*i.qty,0);
   const pp=o.items.reduce((a,i)=>a+i.pp*i.qty,0);
   const grandTotal=sp-disc+del+fee+tax+psc;
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt ${o.code||o.id}</title><style>
-    body{font-family:Arial,sans-serif;margin:0;padding:24px;color:#18182b;font-size:13px}
-    .header{text-align:center;margin-bottom:20px}
-    .logo{max-height:60px;max-width:180px;margin-bottom:8px}
-    .biz-name{font-size:20px;font-weight:800;color:#18182b}
-    .biz-sub{font-size:12px;color:#9090b8;margin-top:2px}
-    .divider{border:none;border-top:1px solid #f0f0f6;margin:16px 0}
-    .section-title{font-size:11px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-    .row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f8f8fc}
-    .row-label{color:#9090b8;font-weight:600}
-    .row-val{font-weight:700;color:#18182b}
-    .product{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f6}
-    .product-name{font-weight:700;font-size:13px}
-    .product-sku{font-size:11px;color:#9090b8}
-    .product-qty{font-size:13px;font-weight:800;color:#e8220e}
-    .product-total{font-weight:700}
-    .total-row{display:flex;justify-content:space-between;padding:6px 0}
-    .grand{font-size:15px;font-weight:800;border-top:2px solid #18182b;margin-top:8px;padding-top:10px}
-    .footer{text-align:center;margin-top:24px;font-size:11px;color:#9090b8}
-    @media print{body{padding:0}}
-  </style></head><body>
-  <div class="header">
-    ${biz.bizLogo?`<img src="${biz.bizLogo}" class="logo"><br>`:''}
+    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt ${o.code}</title><style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f4f8;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px}
+    .card{background:#fff;border-radius:16px;box-shadow:0 4px 32px rgba(0,0,0,0.10);max-width:480px;width:100%;overflow:hidden}
+    .top-bar{background:#e8220e;padding:28px 28px 20px;text-align:center;color:#fff}
+    .top-bar img{max-height:52px;max-width:160px;margin-bottom:10px;border-radius:8px;background:#fff;padding:4px}
+    .biz-name{font-size:22px;font-weight:800;letter-spacing:-.5px}
+    .biz-sub{font-size:12px;opacity:.85;margin-top:4px}
+    .order-badge{display:inline-block;background:rgba(255,255,255,0.18);border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;margin-top:10px;letter-spacing:.5px}
+    .body{padding:24px 28px}
+    .section{margin-bottom:20px}
+    .section-title{font-size:10px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .info-box{background:#f8f8fc;border-radius:8px;padding:10px 12px}
+    .info-label{font-size:10px;color:#9090b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+    .info-val{font-size:13px;font-weight:700;color:#18182b}
+    .product-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f6}
+    .product-row:last-child{border-bottom:none}
+    .p-name{font-size:13px;font-weight:700;color:#18182b}
+    .p-sku{font-size:11px;color:#9090b8;margin-top:1px}
+    .p-qty{font-size:12px;font-weight:800;color:#e8220e;background:#fff0ee;border-radius:6px;padding:2px 8px;margin-bottom:2px;text-align:center}
+    .p-total{font-size:13px;font-weight:700;color:#18182b;text-align:right}
+    .summary-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px}
+    .summary-label{color:#9090b8;font-weight:500}
+    .summary-val{font-weight:600;color:#18182b}
+    .total-box{background:#18182b;border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+    .total-label{color:#fff;font-size:14px;font-weight:600}
+    .total-val{color:#fff;font-size:18px;font-weight:800}
+    .footer{text-align:center;padding:16px 28px;background:#f8f8fc;font-size:11px;color:#9090b8;border-top:1px solid #f0f0f6}
+    .divider{border:none;border-top:1px solid #f0f0f6;margin:4px 0 16px}
+  </style></head><body><div class="card">
+  <div class="top-bar">
+    ${biz.bizLogo?`<img src="${biz.bizLogo}"><br>`:''}
     <div class="biz-name">${biz.bizName||'Galaxy'}</div>
     <div class="biz-sub">${[biz.bizAddress,biz.bizPhone].filter(Boolean).join(' · ')}</div>
+    <div class="order-badge">${o.code}</div>
   </div>
-  <hr class="divider">
-  <div class="section-title">Receipt</div>
-  <div class="row"><span class="row-label">Order ID</span><span class="row-val">${o.code||o.id}</span></div>
-  <div class="row"><span class="row-label">Date</span><span class="row-val">${o.date||''} ${o.time||''}</span></div>
-  <div class="row"><span class="row-label">Customer</span><span class="row-val">${o.customer||''}</span></div>
-  ${o.phone?`<div class="row"><span class="row-label">Phone</span><span class="row-val">${o.phone}</span></div>`:''}
-  ${o.address?`<div class="row"><span class="row-label">Address</span><span class="row-val">${o.address}${o.city?', '+o.city:''}</span></div>`:''}
-  ${o.payment?`<div class="row"><span class="row-label">Payment</span><span class="row-val">${o.payment}</span></div>`:''}
-  ${o.delivery?`<div class="row"><span class="row-label">Delivery</span><span class="row-val">${o.delivery}</span></div>`:''}
-  <hr class="divider">
-  <div class="section-title">Products</div>
-  ${o.items.map(i=>`
-  <div class="product">
-    <div><div class="product-name">${i.name}</div><div class="product-sku">SKU: ${i.code||'-'}</div></div>
-    <div style="text-align:right"><div class="product-qty">×${i.qty}</div><div class="product-total">${L2(i.sp*i.qty)}</div></div>
-  </div>`).join('')}
-  <hr class="divider">
-  <div class="section-title">Summary</div>
-  ${disc>0?`<div class="total-row"><span style="color:#9090b8">Discount</span><span style="color:#16a34a">− ${L2(disc)}</span></div>`:''}
-  ${del>0?`<div class="total-row"><span style="color:#9090b8">Delivery</span><span>${L2(del)}</span></div>`:''}
-  ${fee>0?`<div class="total-row"><span style="color:#9090b8">Processing Fee</span><span>${L2(fee)}</span></div>`:''}
-  ${tax>0?`<div class="total-row"><span style="color:#9090b8">Tax / VAT</span><span>${L2(tax)}</span></div>`:''}
-  ${psc>0?`<div class="total-row"><span style="color:#9090b8">Payment Service Charge</span><span>${L2(psc)}</span></div>`:''}
-  <div class="total-row grand"><span>Total</span><span>${L2(grandTotal)}</span></div>
-  <div class="footer">Thank you for your purchase!</div>
-  </body></html>`;
+  <div class="body">
+    <div class="section">
+      <div class="section-title">Customer Details</div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-label">Name</div><div class="info-val">${o.customer||'—'}</div></div>
+        <div class="info-box"><div class="info-label">Phone</div><div class="info-val">${o.phone||'—'}</div></div>
+        <div class="info-box"><div class="info-label">City</div><div class="info-val">${o.city||'—'}</div></div>
+        <div class="info-box"><div class="info-label">Date</div><div class="info-val">${o.date||''} ${o.time||''}</div></div>
+        ${o.address?`<div class="info-box" style="grid-column:span 2"><div class="info-label">Address</div><div class="info-val">${o.address}</div></div>`:''}
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Order Info</div>
+      <div class="info-grid">
+        ${o.payment?`<div class="info-box"><div class="info-label">Payment</div><div class="info-val">${o.payment}</div></div>`:''}
+        ${o.delivery?`<div class="info-box"><div class="info-label">Delivery</div><div class="info-val">${o.delivery}</div></div>`:''}
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Products</div>
+      ${o.items.map(i=>`<div class="product-row">
+        <div><div class="p-name">${i.name}</div><div class="p-sku">SKU: ${i.code||'—'}</div></div>
+        <div style="text-align:right"><div class="p-qty">×${i.qty}</div><div class="p-total">${L2(i.sp*i.qty)}</div></div>
+      </div>`).join('')}
+    </div>
+    <div class="section">
+      <div class="section-title">Summary</div>
+      <hr class="divider">
+      ${disc>0?`<div class="summary-row"><span class="summary-label">Discount</span><span style="color:#16a34a;font-weight:700">− ${L2(disc)}</span></div>`:''}
+      ${del>0?`<div class="summary-row"><span class="summary-label">Delivery</span><span class="summary-val">${L2(del)}</span></div>`:''}
+      ${fee>0?`<div class="summary-row"><span class="summary-label">Processing Fee</span><span class="summary-val">${L2(fee)}</span></div>`:''}
+      ${tax>0?`<div class="summary-row"><span class="summary-label">Tax / VAT</span><span class="summary-val">${L2(tax)}</span></div>`:''}
+      ${psc>0?`<div class="summary-row"><span class="summary-label">Payment Service Charge</span><span class="summary-val">${L2(psc)}</span></div>`:''}
+      <div class="total-box"><span class="total-label">Total</span><span class="total-val">${L2(grandTotal)}</span></div>
+    </div>
+  </div>
+  <div class="footer">Thank you for your purchase! · ${biz.bizName||'Galaxy'}</div>
+  </div></body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
