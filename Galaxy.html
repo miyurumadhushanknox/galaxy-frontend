@@ -2034,7 +2034,8 @@ tbody tr:hover .row-actions{display:flex}
       <svg viewBox="0 0 24 24" fill="none" style="width:24px;height:24px;color:#e8220e"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5M12 16.5v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
     </div>
     <div style="font-size:17px;font-weight:900;color:#18182b;margin-bottom:8px">Are you sure?</div>
-    <div id="sc-confirm-text" style="font-size:13px;color:#9090b8;margin-bottom:24px;line-height:1.6"></div>
+    <div id="sc-confirm-text" style="font-size:13px;color:#9090b8;margin-bottom:12px;line-height:1.6"></div>
+    <div style="background:#fff4f3;border-radius:8px;padding:10px 14px;font-size:12px;color:#e8220e;font-weight:600;margin-bottom:20px">⚠️ This action cannot be reversed.</div>
     <div style="display:flex;gap:10px">
       <button onclick="document.getElementById('m-statusconfirm').classList.remove('open')" style="flex:1;padding:12px;background:#f5f5fa;color:#9090b8;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">Cancel</button>
       <button onclick="applyStatusChange()" style="flex:1;padding:12px;background:#e8220e;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">Confirm</button>
@@ -4144,7 +4145,8 @@ function openStatusChange(id){
   const o=orders.find(x=>x.id===id);if(!o)return;
   document.getElementById('sc-order-id').value=id;
   const sel=document.getElementById('sc-status-select');
-  sel.innerHTML=ORDER_STATUSES.map(s=>`<option value="${s.key}" ${s.key===o.status?'selected':''}>${s.label}</option>`).join('');
+  const curIdx=ORDER_STATUSES.findIndex(s=>s.key===o.status);
+  sel.innerHTML=ORDER_STATUSES.map((s,i)=>`<option value="${s.key}" ${s.key===o.status?'selected':''} ${i<curIdx?'disabled style="color:#ccc"':''}}>${i<curIdx?'🔒 '+s.label:s.label}</option>`).join('');
   sel.value=o.status;
   // Pre-fill existing reason if any
   const reasonEl=document.getElementById('sc-reason');
