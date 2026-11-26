@@ -1038,7 +1038,7 @@ setTimeout(function() {
       delivery: o.delivery_method
         ? o.delivery_method + (o.delivery_cost > 0 ? ' — LKR ' + o.delivery_cost : '')
         : 'No Delivery',
-      payment:  o.payment_method || '',
+      payment: o.payment_methods?.name || o.payment_method || '',
       discount: o.discount_amount || 0,
       status:   o.status || 'processing',
       reason:   o.status_reason || '',
