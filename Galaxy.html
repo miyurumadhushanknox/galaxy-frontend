@@ -3870,6 +3870,68 @@ function getFilteredOrders(){
   });
 }
 
+function downloadReceipt(o,grandTotal,disc,del,fee,tax,psc){
+  const biz=window.generalSettings||{};
+  const L2=v=>((biz.currency||'AUD')+' '+Number(v||0).toLocaleString());
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receipt ${o.code||o.id}</title><style>
+    body{font-family:Arial,sans-serif;margin:0;padding:24px;color:#18182b;font-size:13px}
+    .header{text-align:center;margin-bottom:20px}
+    .logo{max-height:60px;max-width:180px;margin-bottom:8px}
+    .biz-name{font-size:20px;font-weight:800;color:#18182b}
+    .biz-sub{font-size:12px;color:#9090b8;margin-top:2px}
+    .divider{border:none;border-top:1px solid #f0f0f6;margin:16px 0}
+    .section-title{font-size:11px;font-weight:800;color:#e8220e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f8f8fc}
+    .row-label{color:#9090b8;font-weight:600}
+    .row-val{font-weight:700;color:#18182b}
+    .product{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f6}
+    .product-name{font-weight:700;font-size:13px}
+    .product-sku{font-size:11px;color:#9090b8}
+    .product-qty{font-size:13px;font-weight:800;color:#e8220e}
+    .product-total{font-weight:700}
+    .total-row{display:flex;justify-content:space-between;padding:6px 0}
+    .grand{font-size:15px;font-weight:800;border-top:2px solid #18182b;margin-top:8px;padding-top:10px}
+    .footer{text-align:center;margin-top:24px;font-size:11px;color:#9090b8}
+    @media print{body{padding:0}}
+  </style></head><body>
+  <div class="header">
+    ${biz.bizLogo?`<img src="${biz.bizLogo}" class="logo"><br>`:''}
+    <div class="biz-name">${biz.bizName||'Galaxy'}</div>
+    <div class="biz-sub">${[biz.bizAddress,biz.bizPhone].filter(Boolean).join(' · ')}</div>
+  </div>
+  <hr class="divider">
+  <div class="section-title">Receipt</div>
+  <div class="row"><span class="row-label">Order ID</span><span class="row-val">${o.code||o.id}</span></div>
+  <div class="row"><span class="row-label">Date</span><span class="row-val">${o.date||''} ${o.time||''}</span></div>
+  <div class="row"><span class="row-label">Customer</span><span class="row-val">${o.customer||''}</span></div>
+  ${o.phone?`<div class="row"><span class="row-label">Phone</span><span class="row-val">${o.phone}</span></div>`:''}
+  ${o.address?`<div class="row"><span class="row-label">Address</span><span class="row-val">${o.address}${o.city?', '+o.city:''}</span></div>`:''}
+  ${o.payment?`<div class="row"><span class="row-label">Payment</span><span class="row-val">${o.payment}</span></div>`:''}
+  ${o.delivery?`<div class="row"><span class="row-label">Delivery</span><span class="row-val">${o.delivery}</span></div>`:''}
+  <hr class="divider">
+  <div class="section-title">Products</div>
+  ${o.items.map(i=>`
+  <div class="product">
+    <div><div class="product-name">${i.name}</div><div class="product-sku">SKU: ${i.code||'-'}</div></div>
+    <div style="text-align:right"><div class="product-qty">×${i.qty}</div><div class="product-total">${L2(i.sp*i.qty)}</div></div>
+  </div>`).join('')}
+  <hr class="divider">
+  <div class="section-title">Summary</div>
+  ${disc>0?`<div class="total-row"><span style="color:#9090b8">Discount</span><span style="color:#16a34a">− ${L2(disc)}</span></div>`:''}
+  ${del>0?`<div class="total-row"><span style="color:#9090b8">Delivery</span><span>${L2(del)}</span></div>`:''}
+  ${fee>0?`<div class="total-row"><span style="color:#9090b8">Processing Fee</span><span>${L2(fee)}</span></div>`:''}
+  ${tax>0?`<div class="total-row"><span style="color:#9090b8">Tax / VAT</span><span>${L2(tax)}</span></div>`:''}
+  ${psc>0?`<div class="total-row"><span style="color:#9090b8">Payment Service Charge</span><span>${L2(psc)}</span></div>`:''}
+  <div class="total-row grand"><span>Total</span><span>${L2(grandTotal)}</span></div>
+  <div class="footer">Thank you for your purchase!</div>
+  </body></html>`;
+  const blob=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`Receipt-${o.code||o.id}.html`;
+  a.click();
+}
+
 function cancelOrder(id){
   const o=orders.find(x=>x.id===id);
   if(!o||o.status!=='processing'){toast('Only processing orders can be cancelled.','err');return;}
@@ -3980,7 +4042,7 @@ function openViewOrder(id){
     </div>
     <!-- Buttons -->
     <div style="display:flex;gap:12px;padding-top:4px">
-      <button onclick="alert('Coming soon')" style="flex:1;padding:12px;border:1.5px solid #e0e0ef;border-radius:10px;background:#fff;color:#18182b;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
+      <button onclick="downloadReceipt(o,grandTotal,disc,del,fee,tax,psc)" style="flex:1;padding:12px;border:1.5px solid #e0e0ef;border-radius:10px;background:#fff;color:#18182b;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px">
         <svg viewBox="0 0 14 14" fill="none" style="width:13px;height:13px"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Download Receipt
       </button>
