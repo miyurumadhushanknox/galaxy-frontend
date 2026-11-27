@@ -1990,7 +1990,7 @@ tbody tr:hover .row-actions{display:flex}
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:10px">
-            <span id="m-vieworder-status" onclick="openStatusChange(document.getElementById('m-vieworder-code').textContent)" style="cursor:pointer"></span>
+            <span id="m-vieworder-status" onclick="openStatusChange(window._viewingOrderId)" style="cursor:pointer"></span>
             <button onclick="document.getElementById('m-vieworder').classList.remove('open')" style="width:28px;height:28px;border-radius:50%;border:none;background:#f5f5fa;cursor:pointer;font-size:16px;color:#9090b8;display:flex;align-items:center;justify-content:center">×</button>
           </div>
         </div>
@@ -4033,6 +4033,7 @@ function openViewOrder(id){
   const totalCost=pp+del+fee+tax+psc;
   const row=(label,val)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;color:#9090b8;font-weight:600">${label}</span><span style="font-size:12px;font-weight:700;color:#18182b;text-align:right;max-width:55%">${val}</span></div>`;
   document.getElementById('m-vieworder-code').textContent=o._raw?.order_code||o.code;
+  window._viewingOrderId=o.id;
   document.getElementById('m-vieworder-status').innerHTML=`<span style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;background:${st.bg};color:${st.color}"><span style="width:7px;height:7px;border-radius:50%;background:${st.color};display:inline-block"></span>${st.label}</span>`;
   document.getElementById('m-vieworder-body').innerHTML=`
     <!-- Two columns -->
