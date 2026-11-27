@@ -4408,8 +4408,9 @@ function openEditOrderModal(id){
   dcEl.value = '';
   eoDiscountAmount = 0;
   if(o.discount){
-    const entry = Object.entries(DISCOUNT_CODES||{}).find(([k,v])=>v===o.discount);
-    if(entry){ dcEl.value=entry[0]; eoDiscountAmount=o.discount; }
+    const codes = generalSettings.discountCodes||[];
+    const entry = codes.find(d=>d.value===o.discount||d.code===o.discount);
+    if(entry){ dcEl.value=entry.code||entry[0]; eoDiscountAmount=o.discount; }
   }
 
   document.getElementById('m-editorder').classList.add('open');
@@ -4487,7 +4488,7 @@ function eoAddItem(pid){
 
 function eoApplyDiscount(){
   const code = (document.getElementById('eo-discount-code').value||'').trim().toUpperCase();
-  eoDiscountAmount = (DISCOUNT_CODES&&DISCOUNT_CODES[code])||0;
+  eoDiscountAmount = ((generalSettings.discountCodes||[]).find(d=>d.code===code)?.value)||0;
   eoCalcOrder();
   const valEl = document.getElementById('eo-discount-val');
   if(eoDiscountAmount) valEl.textContent=`− ${generalSettings.currency} ${eoDiscountAmount.toLocaleString()}`;
@@ -4504,7 +4505,7 @@ function eoCalcOrder(){
     if(!p) return;
     const price=item.customPrice!=null?item.customPrice:p.price;
     productTotal+=price*item.qty;
-    rows.push(`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:600;color:#9090b8">${p.name} ×${item.qty}</span><span style="font-size:12px;font-weight:600;color:#18182b">${cur} ${fmt(price*item.qty)}</span></div>`);
+    rows.push(`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:600;color:#9090b8">${p.name} ×${item.qty}</span><span style="font-size:12px;font-weight:600;color:#18182b">${cur} ${(price*item.qty).toLocaleString()}</span></div>`);
   });
   document.getElementById('eo-items-rows').innerHTML=rows.join('');
 
