@@ -3714,13 +3714,15 @@ function closeStockHistory(){
 
 // ══════════════ MANAGE ORDERS ══════════════
 const ORDER_STATUSES = [
-  {key:'processing',  label:'Processing',     color:'#f59e0b', bg:'#fff9ed', desc:'Team is preparing the order'},
-  {key:'ready',       label:'Ready to Ship',  color:'#3b82f6', bg:'#eff6ff', desc:'Packed, waiting for courier'},
-  {key:'delivering',  label:'Delivering',     color:'#8b5cf6', bg:'#f5f3ff', desc:'With delivery person'},
-  {key:'delivered',   label:'Delivered',      color:'#16a34a', bg:'#e6f9ed', desc:'Customer received'},
-  {key:'cancelled',   label:'Cancelled',      color:'#e8220e', bg:'#fff0ed', desc:'Cancelled before delivery'},
-  {key:'returned',    label:'Returned',       color:'#dc2626', bg:'#fde8e8', desc:'Customer returned item'},
-  {key:'refunded',    label:'Refunded',       color:'#9090b8', bg:'#f5f5fa', desc:'Refund issued'},
+  {key:'processing',  label:'Processing',     color:'#f59e0b', bg:'#fff9ed', desc:'Team is preparing the order',    next:['ready','onhold','cancelled']},
+  {key:'ready',       label:'Ready to Ship',  color:'#3b82f6', bg:'#eff6ff', desc:'Packed, waiting for courier',   next:['delivering','onhold','cancelled']},
+  {key:'delivering',  label:'Delivering',     color:'#8b5cf6', bg:'#f5f3ff', desc:'With delivery person',          next:['delivered','rescheduled','returned','cancelled']},
+  {key:'onhold',      label:'On Hold',        color:'#f97316', bg:'#fff7ed', desc:'Order paused temporarily',      next:['processing','ready','cancelled']},
+  {key:'rescheduled', label:'Rescheduled',    color:'#6366f1', bg:'#eef2ff', desc:'Delivery rescheduled',          next:['delivering','returned','cancelled']},
+  {key:'delivered',   label:'Delivered',      color:'#16a34a', bg:'#e6f9ed', desc:'Customer received',             next:['refunded']},
+  {key:'cancelled',   label:'Cancelled',      color:'#e8220e', bg:'#fff0ed', desc:'Cancelled before delivery',     next:[]},
+  {key:'returned',    label:'Returned',       color:'#dc2626', bg:'#fde8e8', desc:'Customer returned item',        next:['refunded']},
+  {key:'refunded',    label:'Refunded',       color:'#9090b8', bg:'#f5f5fa', desc:'Refund issued',                 next:[]},
 ];
 
 let orders=[];
@@ -4144,9 +4146,9 @@ function scCheckReason(){
 function openStatusChange(id){
   const o=orders.find(x=>x.id===id);if(!o)return;
   document.getElementById('sc-order-id').value=id;
-  const sel=document.getElementById('sc-status-select');
-  const curIdx=ORDER_STATUSES.findIndex(s=>s.key===o.status);
-  sel.innerHTML=ORDER_STATUSES.map((s,i)=>`<option value="${s.key}" ${s.key===o.status?'selected':''} ${i<curIdx?'disabled style="color:#ccc"':''}}>${i<curIdx?'🔒 '+s.label:s.label}</option>`).join('');
+  const curSt=ORDER_STATUSES.find(s=>s.key===o.status);
+  const allowed=curSt?.next||[];
+  sel.innerHTML=ORDER_STATUSES.filter(s=>s.key===o.status||allowed.includes(s.key)).map(s=>`<option value="${s.key}" ${s.key===o.status?'selected':''}>${s.label}</option>`).join('');
   sel.value=o.status;
   // Pre-fill existing reason if any
   const reasonEl=document.getElementById('sc-reason');
