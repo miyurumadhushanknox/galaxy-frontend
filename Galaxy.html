@@ -1990,7 +1990,7 @@ tbody tr:hover .row-actions{display:flex}
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:10px">
-            <span id="m-vieworder-status" onclick="event.stopPropagation();openStatusChange(window._viewingOrderId)" style="cursor:pointer"></span>
+            <span id="m-vieworder-status" onclick="event.stopPropagation();document.getElementById('m-vieworder').classList.remove('open');openStatusChange(window._viewingOrderId)" style="cursor:pointer"></span>
             <button onclick="document.getElementById('m-vieworder').classList.remove('open')" style="width:28px;height:28px;border-radius:50%;border:none;background:#f5f5fa;cursor:pointer;font-size:16px;color:#9090b8;display:flex;align-items:center;justify-content:center">×</button>
           </div>
         </div>
