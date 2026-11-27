@@ -1199,6 +1199,162 @@ tbody tr:hover .row-actions{display:flex}
       <div class="page" id="page-billing">
         <div id="billing-root"></div>
       </div>
+
+
+      <!-- EDIT ORDER MODAL -->
+<div class="modal-bg" id="m-editorder">
+  <div class="modal" style="width:92vw;max-width:1100px;max-height:92vh;overflow-y:auto;padding:28px 28px 24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:17px;font-weight:900;color:#18182b">Edit Order <span id="eo-order-code" style="color:#e8220e"></span></div>
+      <button onclick="document.getElementById('m-editorder').classList.remove('open')" style="background:none;border:none;cursor:pointer;padding:4px">
+        <svg viewBox="0 0 16 16" fill="none" style="width:18px;height:18px"><path d="M3 3l10 10M13 3L3 13" stroke="#18182b" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start">
+
+      <!-- LEFT -->
+      <div>
+        <!-- Product Details -->
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title">Product Details</div>
+          <div id="eo-items-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px"></div>
+          <div style="border:2px dashed #e8220e;border-radius:12px;padding:14px;background:#fff8f6">
+            <button class="btn-add" onclick="eoToggleAddItem()" style="font-size:12px;padding:7px 14px" id="eo-add-item-btn">
+              <svg viewBox="0 0 16 16" fill="none" style="width:12px;height:12px"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+              Add New Item
+            </button>
+            <div id="eo-item-search-box" style="display:none;margin-top:12px">
+              <div class="search-wrap" style="margin-bottom:10px">
+                <svg class="search-icon" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <input class="search-input" type="text" id="eo-item-search-input" placeholder="Product Name or SKU" oninput="eoSearchItems()">
+              </div>
+              <div id="eo-item-search-results" style="display:flex;flex-direction:column;gap:8px"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Details -->
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title">Customer Details</div>
+          <div style="position:relative;margin-bottom:12px">
+            <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <input id="eo-name" type="text" placeholder="Customer Name *" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          </div>
+          <div style="position:relative;margin-bottom:12px">
+            <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.79 1 4 2.79 4 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="5" r="1.5" fill="currentColor" opacity=".4"/></svg>
+            <input id="eo-address" type="text" placeholder="Address" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          </div>
+          <div style="position:relative;margin-bottom:12px">
+            <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none;z-index:1" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.79 1 4 2.79 4 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="5" r="1.5" fill="currentColor" opacity=".4"/></svg>
+            <select id="eo-city" onchange="eoCalcOrder()" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+              <option value="">Select city</option>
+            </select>
+          </div>
+          <div style="position:relative;margin-bottom:12px">
+            <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M3.5 2h3l1 3-1.5 1.5a8 8 0 004.5 4.5L12 9.5l3 1v3A1.5 1.5 0 0113.5 15C6.5 15 1 9.5 1 2.5A1.5 1.5 0 012.5 1H5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <input id="eo-phone1" type="tel" placeholder="Phone Number 01 *" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          </div>
+          <div style="position:relative;margin-bottom:12px">
+            <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M3.5 2h3l1 3-1.5 1.5a8 8 0 004.5 4.5L12 9.5l3 1v3A1.5 1.5 0 0113.5 15C6.5 15 1 9.5 1 2.5A1.5 1.5 0 012.5 1H5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <input id="eo-phone2" type="tel" placeholder="Phone Number 02 (Optional)" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          </div>
+          <div style="position:relative;margin-bottom:12px">
+            <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 6l7 4 7-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <input id="eo-email" type="email" placeholder="Email (Optional)" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+          </div>
+          <div style="position:relative">
+            <svg style="position:absolute;left:12px;top:13px;width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M2 2h12v10H9l-3 2v-2H2V2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <textarea id="eo-note" placeholder="Special note (Optional)" rows="3" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;resize:vertical;line-height:1.5;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'"></textarea>
+          </div>
+        </div>
+
+        <!-- Order Options -->
+        <div class="card" style="margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:12px;margin-bottom:13px">
+            <div style="font-size:13px;font-weight:800;color:#18182b;display:flex;align-items:center;gap:7px">
+              <svg viewBox="0 0 16 16" fill="none" style="width:15px;height:15px"><rect x="1" y="5" width="9" height="7" rx="1.5" stroke="#e8220e" stroke-width="1.3"/><path d="M10 7l3 1.5V12h-3V7z" stroke="#e8220e" stroke-width="1.3" stroke-linejoin="round"/><circle cx="4" cy="13" r="1.2" stroke="#e8220e" stroke-width="1.2"/><circle cx="12" cy="13" r="1.2" stroke="#e8220e" stroke-width="1.2"/><path d="M1 9h9" stroke="#e8220e" stroke-width="1.2"/></svg>
+              Delivery method
+            </div>
+            <select id="eo-delivery" onchange="eoCalcOrder()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%"></select>
+            <span id="eo-delivery-cost" style="font-size:13px;font-weight:700;color:#18182b;text-align:right;min-width:85px"></span>
+          </div>
+          <div style="display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:12px;margin-bottom:13px">
+            <div style="font-size:13px;font-weight:800;color:#18182b;display:flex;align-items:center;gap:7px">
+              <svg viewBox="0 0 16 16" fill="none" style="width:15px;height:15px"><rect x="1" y="4" width="14" height="9" rx="2" stroke="#e8220e" stroke-width="1.3"/><circle cx="8" cy="8.5" r="2" stroke="#e8220e" stroke-width="1.2"/><path d="M3 6.5h.5M12.5 6.5H13M3 10.5h.5M12.5 10.5H13" stroke="#e8220e" stroke-width="1.2" stroke-linecap="round"/></svg>
+              Payment method
+            </div>
+            <select id="eo-payment" onchange="eoCalcOrder()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%"></select>
+            <span style="min-width:85px"></span>
+          </div>
+          <div style="display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:12px;margin-bottom:16px">
+            <div style="font-size:13px;font-weight:800;color:#18182b;display:flex;align-items:center;gap:7px">
+              <svg viewBox="0 0 16 16" fill="none" style="width:15px;height:15px"><circle cx="5" cy="5" r="2" stroke="#e8220e" stroke-width="1.3"/><circle cx="11" cy="11" r="2" stroke="#e8220e" stroke-width="1.3"/><path d="M13 3L3 13" stroke="#e8220e" stroke-width="1.3" stroke-linecap="round"/></svg>
+              Discount code
+            </div>
+            <input type="text" id="eo-discount-code" placeholder="Enter discount code" oninput="eoApplyDiscount()" style="padding:9px 12px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;width:100%" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
+            <span id="eo-discount-val" style="font-size:13px;font-weight:700;min-width:85px;text-align:right"></span>
+          </div>
+          <div style="height:1.5px;background:#e4e4f0;margin-bottom:12px"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:14px;font-weight:900;color:#18182b">Subtotal</span>
+            <span id="eo-subtotal" style="font-size:17px;font-weight:900;color:#e8220e"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title">Order Details</div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f0f0f6">
+              <span style="font-size:12px;font-weight:700;color:#9090b8">Order ID</span>
+              <span id="eo-id" style="font-size:13px;font-weight:800;color:#e8220e"></span>
+            </div>
+            <div style="font-size:10px;font-weight:800;color:#e8220e;letter-spacing:.08em;text-transform:uppercase;padding:12px 0 6px">Pricing Details</div>
+            <div style="font-size:12px;font-weight:700;color:#18182b;padding:10px 0 4px;margin-top:4px">Product Pricing</div>
+            <div id="eo-items-rows" style="display:flex;flex-direction:column;gap:0"></div>
+            <div style="font-size:12px;font-weight:700;color:#18182b;padding:10px 0 4px;margin-top:8px">Other Charges</div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
+              <span style="font-size:12px;font-weight:700;color:#9090b8">Discount</span>
+              <span id="eo-od-discount" style="font-size:13px;font-weight:600;color:#16a34a"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
+              <span style="font-size:12px;font-weight:700;color:#9090b8">Delivery charge</span>
+              <span id="eo-od-delivery" style="font-size:13px;font-weight:600;color:#18182b"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
+              <span style="font-size:12px;font-weight:700;color:#9090b8">Processing Fee</span>
+              <span id="eo-od-processing-fee" style="font-size:13px;font-weight:600;color:#18182b"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
+              <span style="font-size:12px;font-weight:700;color:#9090b8">Tax / VAT</span>
+              <span id="eo-od-tax" style="font-size:13px;font-weight:600;color:#18182b"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f6">
+              <span id="eo-od-service-charge-label" style="font-size:12px;font-weight:700;color:#9090b8">Payment Service Charge (0%)</span>
+              <span id="eo-od-service-charge" style="font-size:13px;font-weight:600;color:#18182b"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0">
+              <span style="font-size:14px;font-weight:900;color:#18182b">Total</span>
+              <span id="eo-od-total" style="font-size:16px;font-weight:900;color:#e8220e"></span>
+            </div>
+          </div>
+        </div>
+        <button onclick="submitEditOrder()" style="width:100%;padding:15px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:16px;font-weight:900;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;letter-spacing:.03em" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">Update Order</button>
+        <div id="eo-note-box" style="display:none;margin-top:12px;background:#fff0ed;border:1.5px solid #e8220e;border-radius:10px;padding:12px 14px">
+          <div style="font-size:12px;font-weight:800;color:#e8220e;margin-bottom:6px;display:flex;align-items:center;gap:6px">
+            <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M6 4v3M6 8.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Cannot update order — fix these first
+          </div>
+          <div id="eo-note-items"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     <!-- PLACE ORDER PAGE -->
     <div class="page" id="page-placeorder">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start">
@@ -4198,65 +4354,272 @@ function applyStatusChange(){
 // ── EDIT ORDER (basic — status processing only) ───────────────────────────────
 function openEditOrder(id){
   const o=orders.find(x=>x.id===id);
-  if(!o||o.status!=='processing'){toast('Only processing orders can be edited.','err');return;}
-
-  // Close view modal if open
+  if(!o){toast('Order not found','err');return;}
   document.getElementById('m-vieworder')?.classList.remove('open');
+  openEditOrderModal(id);
+}
 
-  // Navigate to place order page
-  navigate('placeorder');
+// ═══════════ EDIT ORDER MODAL ═══════════
+let orderItemsEdit = [];
+let eoEditingOrderId = null;
+let eoDiscountAmount = 0;
 
-  // Pre-fill after short delay to let page render
-  setTimeout(()=>{
-    // Reset first
-    initOrder();
+function openEditOrderModal(id){
+  const o = orders.find(x=>x.id===id);
+  if(!o){toast('Order not found','err');return;}
+  eoEditingOrderId = id;
+  orderItemsEdit = (o.items||[]).map(i=>{
+    const p = products.find(x=>x.code===i.code)||products.find(x=>x.name===i.name);
+    return p ? {pid:p.id, qty:i.qty, customPrice:i.sp!==p.price?i.sp:null} : null;
+  }).filter(Boolean);
 
-    // Mark as editing this order so submit updates instead of creating new
-    orderEditingId = id;
+  // Header
+  document.getElementById('eo-order-code').textContent = o._raw?.order_code||o.code||'';
+  document.getElementById('eo-id').textContent = o._raw?.order_code||o.code||'';
 
-    // Pre-fill order items
-    orderItems = o.items.map(i=>{
-      // Find product by code
-      const p = products.find(x=>x.code===i.code) || products.find(x=>x.name===i.name);
-      return p ? {pid:p.id, qty:i.qty, customPrice:i.sp!==p.price?i.sp:null} : null;
-    }).filter(Boolean);
+  // City options
+  const cityEl = document.getElementById('eo-city');
+  const cities = (generalSettings.deliveryZones||[]).map(z=>z.city||z.name).filter(Boolean);
+  cityEl.innerHTML = '<option value="">Select city</option>' + cities.map(c=>`<option value="${c}">${c}</option>`).join('');
 
-    // Pre-fill customer details
-    document.getElementById('c-name').value    = o.customer||'';
-    document.getElementById('c-address').value = o.address||'';
-    document.getElementById('c-phone1').value  = o.phone||'';
-    document.getElementById('c-phone2').value  = o.phone2||'';
-    document.getElementById('c-email').value   = o.email||'';
-    document.getElementById('c-note').value    = o.note||'';
-    document.getElementById('c-city').value    = o.city||'';
+  // Delivery options
+  const delEl = document.getElementById('eo-delivery');
+  delEl.innerHTML = (generalSettings.deliveryMethods||[]).map(d=>`<option value="${d.id}">${d.name}</option>`).join('');
 
-    // Pre-fill delivery, payment, discount
-    const delSel = document.getElementById('o-delivery');
-    if(delSel) delSel.value = o.delivery||'';
+  // Payment options
+  const payEl = document.getElementById('eo-payment');
+  payEl.innerHTML = (generalSettings.paymentMethods||[]).map(m=>`<option value="${m.id||m.name}">${m.name}</option>`).join('');
 
-    const paySel = document.getElementById('o-payment');
-    if(paySel) paySel.value = o.payment||'';
+  // Pre-fill customer
+  document.getElementById('eo-name').value   = o.customer||'';
+  document.getElementById('eo-address').value = o.address||'';
+  document.getElementById('eo-phone1').value  = o.phone||'';
+  document.getElementById('eo-phone2').value  = o.phone2||'';
+  document.getElementById('eo-email').value   = o.email||'';
+  document.getElementById('eo-note').value    = o.note||'';
+  if(o.city) cityEl.value = o.city;
 
-    // Discount — reverse lookup code from pct
-    const dcEl = document.getElementById('o-discount-code');
-    if(dcEl && o.discount){
-      const entry = Object.entries(DISCOUNT_CODES).find(([k,v])=>v===o.discount);
-      if(entry) dcEl.value = entry[0];
-    }
+  // Pre-fill delivery/payment
+  if(o.delivery) delEl.value = o.delivery;
+  if(o.payment)  payEl.value = o.payment;
 
-    // Update order ID display to show editing
-    const oid = document.getElementById('o-id');
-    if(oid) oid.textContent = o.code+' (editing)';
-    const sby = document.getElementById('o-by');
-    if(sby) sby.textContent = currentUser?currentUser.name:'—';
+  // Pre-fill discount
+  const dcEl = document.getElementById('eo-discount-code');
+  dcEl.value = '';
+  eoDiscountAmount = 0;
+  if(o.discount){
+    const entry = Object.entries(DISCOUNT_CODES||{}).find(([k,v])=>v===o.discount);
+    if(entry){ dcEl.value=entry[0]; eoDiscountAmount=o.discount; }
+  }
 
-    // Change submit button text
-    const submitBtn = document.querySelector('#page-placeorder button[onclick="submitOrder()"]');
-    if(submitBtn) submitBtn.textContent = 'Update Order';
+  document.getElementById('m-editorder').classList.add('open');
+  eoRenderItems();
+  eoCalcOrder();
+}
 
-    renderOrderItems();
-    calcOrder();
-  }, 80);
+function eoRenderItems(){
+  const list = document.getElementById('eo-items-list');
+  if(!list) return;
+  if(!orderItemsEdit.length){list.innerHTML='<div style="color:#9090b8;font-size:13px;text-align:center;padding:8px">No products added</div>';eoCalcOrder();return;}
+  list.innerHTML = orderItemsEdit.map((item,idx)=>{
+    const p = products.find(x=>x.id===item.pid);
+    if(!p) return '';
+    const price = item.customPrice!=null?item.customPrice:p.price;
+    const total = price*item.qty;
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px;background:#fafafa;border-radius:10px;border:1.5px solid #f0f0f6">
+      <img src="${p.image||''}" onerror="this.style.display='none'" style="width:40px;height:40px;border-radius:8px;object-fit:cover;flex-shrink:0">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:700;color:#18182b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+        <div style="font-size:11px;color:#9090b8">${generalSettings.currency} ${fmt(price)}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <button onclick="eoChangeQty(${idx},-1)" style="width:24px;height:24px;border-radius:6px;border:1.5px solid #e4e4f0;background:#fff;cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#18182b">−</button>
+        <span style="font-size:13px;font-weight:700;color:#18182b;min-width:20px;text-align:center">${item.qty}</span>
+        <button onclick="eoChangeQty(${idx},1)" style="width:24px;height:24px;border-radius:6px;border:1.5px solid #e4e4f0;background:#fff;cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#18182b">+</button>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:#18182b;min-width:70px;text-align:right">${generalSettings.currency} ${fmt(total)}</div>
+      <button onclick="eoRemoveItem(${idx})" style="background:none;border:none;cursor:pointer;color:#e8220e;padding:2px">
+        <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>`;
+  }).join('');
+  eoCalcOrder();
+}
+
+function eoChangeQty(idx,delta){
+  orderItemsEdit[idx].qty = Math.max(1, orderItemsEdit[idx].qty+delta);
+  eoRenderItems();
+}
+
+function eoRemoveItem(idx){
+  orderItemsEdit.splice(idx,1);
+  eoRenderItems();
+}
+
+function eoToggleAddItem(){
+  const box = document.getElementById('eo-item-search-box');
+  const btn = document.getElementById('eo-add-item-btn');
+  const isOpen = box.style.display!=='none';
+  box.style.display = isOpen?'none':'block';
+  document.getElementById('eo-item-search-input').value='';
+  document.getElementById('eo-item-search-results').innerHTML='';
+}
+
+function eoSearchItems(){
+  const q = document.getElementById('eo-item-search-input').value.toLowerCase();
+  const res = document.getElementById('eo-item-search-results');
+  if(!q){res.innerHTML='';return;}
+  const matches = products.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.code||'').toLowerCase().includes(q)).slice(0,8);
+  res.innerHTML = matches.map(p=>`<div onclick="eoAddItem('${p.id}')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#fff;border-radius:8px;border:1.5px solid #e4e4f0;cursor:pointer" onmouseover="this.style.borderColor='#e8220e'" onmouseout="this.style.borderColor='#e4e4f0'">
+    <img src="${p.image||''}" onerror="this.style.display='none'" style="width:32px;height:32px;border-radius:6px;object-fit:cover">
+    <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#18182b">${p.name}</div><div style="font-size:11px;color:#9090b8">${p.code} · ${generalSettings.currency} ${fmt(p.price)}</div></div>
+  </div>`).join('');
+}
+
+function eoAddItem(pid){
+  const existing = orderItemsEdit.find(x=>x.pid===pid);
+  if(existing){existing.qty++;} else {orderItemsEdit.push({pid,qty:1,customPrice:null});}
+  document.getElementById('eo-item-search-box').style.display='none';
+  document.getElementById('eo-item-search-input').value='';
+  document.getElementById('eo-item-search-results').innerHTML='';
+  eoRenderItems();
+}
+
+function eoApplyDiscount(){
+  const code = (document.getElementById('eo-discount-code').value||'').trim().toUpperCase();
+  eoDiscountAmount = (DISCOUNT_CODES&&DISCOUNT_CODES[code])||0;
+  eoCalcOrder();
+  const valEl = document.getElementById('eo-discount-val');
+  if(eoDiscountAmount) valEl.textContent=`− ${generalSettings.currency} ${fmt(eoDiscountAmount)}`;
+  else valEl.textContent='';
+}
+
+function eoCalcOrder(){
+  const cur = generalSettings.currency||'';
+  // Product total
+  let productTotal=0;
+  const rows=[];
+  orderItemsEdit.forEach(item=>{
+    const p=products.find(x=>x.id===item.pid);
+    if(!p) return;
+    const price=item.customPrice!=null?item.customPrice:p.price;
+    productTotal+=price*item.qty;
+    rows.push(`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f6"><span style="font-size:12px;font-weight:600;color:#9090b8">${p.name} ×${item.qty}</span><span style="font-size:12px;font-weight:600;color:#18182b">${cur} ${fmt(price*item.qty)}</span></div>`);
+  });
+  document.getElementById('eo-items-rows').innerHTML=rows.join('');
+
+  // Delivery cost
+  const delId = document.getElementById('eo-delivery')?.value;
+  const delMethod = (generalSettings.deliveryMethods||[]).find(d=>String(d.id)===String(delId));
+  let deliveryCost = delMethod?.price||0;
+  // City zone override
+  const city = document.getElementById('eo-city')?.value;
+  if(city){
+    const zone=(generalSettings.deliveryZones||[]).find(z=>(z.city||z.name)===city);
+    if(zone&&zone.price!=null) deliveryCost=zone.price;
+  }
+  document.getElementById('eo-delivery-cost').textContent=deliveryCost?`+ ${cur} ${fmt(deliveryCost)}`:'Free';
+
+  // Payment service charge
+  const payId = document.getElementById('eo-payment')?.value;
+  const payMethod = (generalSettings.paymentMethods||[]).find(m=>String(m.id||m.name)===String(payId));
+  const svcPct = payMethod?.serviceCharge||0;
+  const svcAmt = Math.round((productTotal+deliveryCost)*svcPct/100*100)/100;
+
+  // Tax
+  const taxPct = generalSettings.tax||0;
+  const taxAmt = Math.round(productTotal*taxPct/100*100)/100;
+
+  // Processing fee
+  const procFee = generalSettings.processingFee||0;
+
+  // Discount
+  const disc = eoDiscountAmount||0;
+
+  const total = productTotal + deliveryCost + svcAmt + taxAmt + procFee - disc;
+
+  document.getElementById('eo-od-discount').textContent = disc?`− ${cur} ${fmt(disc)}`:`${cur} 0`;
+  document.getElementById('eo-od-delivery').textContent = `${cur} ${fmt(deliveryCost)}`;
+  document.getElementById('eo-od-processing-fee').textContent = `${cur} ${fmt(procFee)}`;
+  document.getElementById('eo-od-tax').textContent = `${cur} ${fmt(taxAmt)}`;
+  document.getElementById('eo-od-service-charge-label').textContent = `Payment Service Charge (${svcPct}%)`;
+  document.getElementById('eo-od-service-charge').textContent = `${cur} ${fmt(svcAmt)}`;
+  document.getElementById('eo-od-total').textContent = `${cur} ${fmt(total)}`;
+  document.getElementById('eo-subtotal').textContent = `${cur} ${fmt(total)}`;
+}
+
+async function submitEditOrder(){
+  // Validate
+  const errors=[];
+  if(!orderItemsEdit.length) errors.push('Add at least one product.');
+  const name=(document.getElementById('eo-name').value||'').trim();
+  const phone1=(document.getElementById('eo-phone1').value||'').trim();
+  if(!name) errors.push('Customer name is required.');
+  if(!phone1) errors.push('Phone number is required.');
+
+  const noteBox=document.getElementById('eo-note-box');
+  const noteItems=document.getElementById('eo-note-items');
+  if(errors.length){
+    noteItems.innerHTML=errors.map(e=>`<div style="font-size:12px;font-weight:600;color:#e8220e">• ${e}</div>`).join('');
+    noteBox.style.display='block';
+    return;
+  }
+  noteBox.style.display='none';
+
+  // Build payload
+  const delId=document.getElementById('eo-delivery').value;
+  const payId=document.getElementById('eo-payment').value;
+  const city=document.getElementById('eo-city').value;
+  const delMethod=(generalSettings.deliveryMethods||[]).find(d=>String(d.id)===String(delId));
+  let deliveryCost=delMethod?.price||0;
+  if(city){const zone=(generalSettings.deliveryZones||[]).find(z=>(z.city||z.name)===city);if(zone&&zone.price!=null)deliveryCost=zone.price;}
+  const payMethod=(generalSettings.paymentMethods||[]).find(m=>String(m.id||m.name)===String(payId));
+  const svcPct=payMethod?.serviceCharge||0;
+  const taxPct=generalSettings.tax||0;
+  const procFee=generalSettings.processingFee||0;
+
+  let productTotal=0;
+  const items=orderItemsEdit.map(item=>{
+    const p=products.find(x=>x.id===item.pid);
+    if(!p) return null;
+    const price=item.customPrice!=null?item.customPrice:p.price;
+    productTotal+=price*item.qty;
+    return {pid:item.pid,code:p.code,name:p.name,qty:item.qty,sp:price};
+  }).filter(Boolean);
+
+  const svcAmt=Math.round((productTotal+deliveryCost)*svcPct/100*100)/100;
+  const taxAmt=Math.round(productTotal*taxPct/100*100)/100;
+  const disc=eoDiscountAmount||0;
+  const total=productTotal+deliveryCost+svcAmt+taxAmt+procFee-disc;
+
+  const payload={
+    items,
+    customer:name,
+    address:document.getElementById('eo-address').value||'',
+    city,
+    phone:phone1,
+    phone2:document.getElementById('eo-phone2').value||'',
+    email:document.getElementById('eo-email').value||'',
+    note:document.getElementById('eo-note').value||'',
+    delivery:delId,
+    payment:payId,
+    discount:disc,
+    deliveryCost,
+    serviceCharge:svcAmt,
+    tax:taxAmt,
+    processingFee:procFee,
+    total,
+  };
+
+  try{
+    const res=await apiFetch(`/orders/${eoEditingOrderId}`,'PUT',payload);
+    if(!res.ok) throw new Error(await res.text());
+    toast('Order updated successfully','ok');
+    document.getElementById('m-editorder').classList.remove('open');
+    await loadOrders();
+  } catch(e){
+    toast('Failed to update order: '+e.message,'err');
+  }
 }
 
 // ══════════════ DATE RANGE PICKER ══════════════
