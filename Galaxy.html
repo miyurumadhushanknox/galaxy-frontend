@@ -4148,6 +4148,7 @@ function openStatusChange(id){
   document.getElementById('sc-order-id').value=id;
   const curSt=ORDER_STATUSES.find(s=>s.key===o.status);
   const allowed=curSt?.next||[];
+  const sel=document.getElementById('sc-status-select');
   sel.innerHTML=ORDER_STATUSES.filter(s=>s.key===o.status||allowed.includes(s.key)).map(s=>`<option value="${s.key}" ${s.key===o.status?'selected':''}>${s.label}</option>`).join('');
   sel.value=o.status;
   // Pre-fill existing reason if any
