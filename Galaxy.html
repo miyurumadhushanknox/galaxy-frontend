@@ -1246,9 +1246,7 @@ tbody tr:hover .row-actions{display:flex}
           </div>
           <div style="position:relative;margin-bottom:12px">
             <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none;z-index:1" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.79 1 4 2.79 4 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="5" r="1.5" fill="currentColor" opacity=".4"/></svg>
-            <select id="eo-city" onchange="eoCalcOrder()" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;appearance:none;-webkit-appearance:none;box-sizing:border-box" onfocus="this.style.borderColor='#e8220e'" onblur="this.style.borderColor='#e4e4f0'">
-              <option value="">Select city</option>
-            </select>
+            <input id="eo-city" type="text" placeholder="City" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box">
           </div>
           <div style="position:relative;margin-bottom:12px">
             <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M3.5 2h3l1 3-1.5 1.5a8 8 0 004.5 4.5L12 9.5l3 1v3A1.5 1.5 0 0113.5 15C6.5 15 1 9.5 1 2.5A1.5 1.5 0 012.5 1H5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1340,10 +1338,6 @@ tbody tr:hover .row-actions{display:flex}
             </div>
           </div>
         </div>
-        <div style="display:flex;gap:12px;margin-top:16px">
-           <button onclick="document.getElementById('m-editorder').classList.remove('open')" style="flex:1;padding:14px;border-radius:12px;border:1.5px solid #e4e4f0;background:#f5f5fa;font-size:15px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Plus Jakarta Sans,sans-serif">Cancel</button>
-           <button onclick="submitEditOrder()" style="flex:2;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:Plus Jakarta Sans,sans-serif">Save Changes</button>
-        </div>
         <div id="eo-note-box" style="display:none;margin-top:12px;background:#fff0ed;border:1.5px solid #e8220e;border-radius:10px;padding:12px 14px">
           <div style="font-size:12px;font-weight:800;color:#e8220e;margin-bottom:6px;display:flex;align-items:center;gap:6px">
             <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M6 4v3M6 8.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -1353,6 +1347,10 @@ tbody tr:hover .row-actions{display:flex}
         </div>
       </div>
     </div>
+    <div style="display:flex;gap:12px;margin-top:16px">
+           <button onclick="document.getElementById('m-editorder').classList.remove('open')" style="flex:1;padding:14px;border-radius:12px;border:1.5px solid #e4e4f0;background:#f5f5fa;font-size:15px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Plus Jakarta Sans,sans-serif">Cancel</button>
+           <button onclick="submitEditOrder()" style="flex:2;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:Plus Jakarta Sans,sans-serif">Save Changes</button>
+        </div>
   </div>
 </div>
 
@@ -4379,14 +4377,12 @@ function openEditOrderModal(id){
   document.getElementById('eo-order-code').textContent = o._raw?.order_code||o.code||'';
   document.getElementById('eo-id').textContent = o._raw?.order_code||o.code||'';
 
-  // City options
-  const cityEl = document.getElementById('eo-city');
-  const cities = (generalSettings.deliveryZones||[]).map(z=>z.city||z.name||z.zone||z).filter(x=>typeof x==='string'&&x);
-  cityEl.innerHTML = '<option value="">Select city</option>' + cities.map(c=>`<option value="${c}">${c}</option>`).join('');
-
   // Delivery options
   const delEl = document.getElementById('eo-delivery');
   delEl.innerHTML = (generalSettings.deliveryMethods||[]).map(d=>`<option value="${d.name}">${d.name}</option>`).join('');
+
+  // City options
+  const cityEl = document.getElementById('eo-city');
 
   // Payment options
   const payEl = document.getElementById('eo-payment');
@@ -4399,7 +4395,7 @@ function openEditOrderModal(id){
   document.getElementById('eo-phone2').value  = o.phone2||'';
   document.getElementById('eo-email').value   = o.email||'';
   document.getElementById('eo-note').value    = o.note||'';
-  if(o.city) cityEl.value = o.city; else if(cityEl.options.length>1) cityEl.selectedIndex=1;
+  if(o.city) cityEl.value = o.city;
 
   // Pre-fill delivery/payment
   if(o.delivery) delEl.value = o.delivery;
