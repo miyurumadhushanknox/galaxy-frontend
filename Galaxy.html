@@ -1340,7 +1340,10 @@ tbody tr:hover .row-actions{display:flex}
             </div>
           </div>
         </div>
-        <button onclick="submitEditOrder()" style="width:100%;padding:15px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:16px;font-weight:900;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;letter-spacing:.03em" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">Update Order</button>
+        <div style="display:flex;gap:12px;margin-top:16px">
+           <button onclick="document.getElementById('m-editorder').classList.remove('open')" style="flex:1;padding:14px;border-radius:12px;border:1.5px solid #e4e4f0;background:#f5f5fa;font-size:15px;font-weight:700;cursor:pointer;color:#9090b8;font-family:Plus Jakarta Sans,sans-serif">Cancel</button>
+           <button onclick="submitEditOrder()" style="flex:2;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#ff5a30,#e8220e);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:Plus Jakarta Sans,sans-serif">Save Changes</button>
+        </div>
         <div id="eo-note-box" style="display:none;margin-top:12px;background:#fff0ed;border:1.5px solid #e8220e;border-radius:10px;padding:12px 14px">
           <div style="font-size:12px;font-weight:800;color:#e8220e;margin-bottom:6px;display:flex;align-items:center;gap:6px">
             <svg viewBox="0 0 12 12" fill="none" style="width:11px;height:11px"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M6 4v3M6 8.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -4378,7 +4381,7 @@ function openEditOrderModal(id){
 
   // City options
   const cityEl = document.getElementById('eo-city');
-  const cities = (generalSettings.deliveryZones||[]).map(z=>z.city||z.name).filter(Boolean);
+  const cities = (generalSettings.deliveryZones||[]).map(z=>z.city||z.name||z.zone||z).filter(x=>typeof x==='string'&&x);
   cityEl.innerHTML = '<option value="">Select city</option>' + cities.map(c=>`<option value="${c}">${c}</option>`).join('');
 
   // Delivery options
@@ -4396,7 +4399,7 @@ function openEditOrderModal(id){
   document.getElementById('eo-phone2').value  = o.phone2||'';
   document.getElementById('eo-email').value   = o.email||'';
   document.getElementById('eo-note').value    = o.note||'';
-  if(o.city) cityEl.value = o.city;
+  if(o.city) cityEl.value = o.city; else if(cityEl.options.length>1) cityEl.selectedIndex=1;
 
   // Pre-fill delivery/payment
   if(o.delivery) delEl.value = o.delivery;
