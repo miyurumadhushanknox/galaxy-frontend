@@ -3772,7 +3772,7 @@ function renderOrdersPage(){
     </div>
 
     <!-- Status stat cards — 7 statuses -->
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:14px">
+    <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:10px;margin-bottom:14px">
       ${ORDER_STATUSES.map(s=>`
         <div class="card" style="margin-bottom:0;padding:14px 14px;cursor:pointer;border:1.5px solid ${moStatusFilter===s.key?s.color:'#e4e4f0'};transition:border-color .15s"
           onclick="moStatusFilter=moStatusFilter==='${s.key}'?'all':'${s.key}';renderOrdersPage()">
