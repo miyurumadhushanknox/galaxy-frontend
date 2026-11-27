@@ -4430,14 +4430,14 @@ function eoRenderItems(){
       <img src="${p.image||''}" onerror="this.style.display='none'" style="width:40px;height:40px;border-radius:8px;object-fit:cover;flex-shrink:0">
       <div style="flex:1;min-width:0">
         <div style="font-size:13px;font-weight:700;color:#18182b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
-        <div style="font-size:11px;color:#9090b8">${generalSettings.currency} ${fmt(price)}</div>
+        <div style="font-size:11px;color:#9090b8">${generalSettings.currency} ${price.toLocaleString()}</div>
       </div>
       <div style="display:flex;align-items:center;gap:6px">
         <button onclick="eoChangeQty(${idx},-1)" style="width:24px;height:24px;border-radius:6px;border:1.5px solid #e4e4f0;background:#fff;cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#18182b">−</button>
         <span style="font-size:13px;font-weight:700;color:#18182b;min-width:20px;text-align:center">${item.qty}</span>
         <button onclick="eoChangeQty(${idx},1)" style="width:24px;height:24px;border-radius:6px;border:1.5px solid #e4e4f0;background:#fff;cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#18182b">+</button>
       </div>
-      <div style="font-size:13px;font-weight:700;color:#18182b;min-width:70px;text-align:right">${generalSettings.currency} ${fmt(total)}</div>
+      <div style="font-size:13px;font-weight:700;color:#18182b;min-width:70px;text-align:right">${generalSettings.currency} ${total.toLocaleString()}</div>
       <button onclick="eoRemoveItem(${idx})" style="background:none;border:none;cursor:pointer;color:#e8220e;padding:2px">
         <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
@@ -4472,7 +4472,7 @@ function eoSearchItems(){
   const matches = products.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.code||'').toLowerCase().includes(q)).slice(0,8);
   res.innerHTML = matches.map(p=>`<div onclick="eoAddItem('${p.id}')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#fff;border-radius:8px;border:1.5px solid #e4e4f0;cursor:pointer" onmouseover="this.style.borderColor='#e8220e'" onmouseout="this.style.borderColor='#e4e4f0'">
     <img src="${p.image||''}" onerror="this.style.display='none'" style="width:32px;height:32px;border-radius:6px;object-fit:cover">
-    <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#18182b">${p.name}</div><div style="font-size:11px;color:#9090b8">${p.code} · ${generalSettings.currency} ${fmt(p.price)}</div></div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#18182b">${p.name}</div><div style="font-size:11px;color:#9090b8">${p.code} · ${generalSettings.currency} ${p.price.toLocaleString()}</div></div>
   </div>`).join('');
 }
 
@@ -4490,7 +4490,7 @@ function eoApplyDiscount(){
   eoDiscountAmount = (DISCOUNT_CODES&&DISCOUNT_CODES[code])||0;
   eoCalcOrder();
   const valEl = document.getElementById('eo-discount-val');
-  if(eoDiscountAmount) valEl.textContent=`− ${generalSettings.currency} ${fmt(eoDiscountAmount)}`;
+  if(eoDiscountAmount) valEl.textContent=`− ${generalSettings.currency} ${eoDiscountAmount.toLocaleString()}`;
   else valEl.textContent='';
 }
 
@@ -4518,7 +4518,7 @@ function eoCalcOrder(){
     const zone=(generalSettings.deliveryZones||[]).find(z=>(z.city||z.name)===city);
     if(zone&&zone.price!=null) deliveryCost=zone.price;
   }
-  document.getElementById('eo-delivery-cost').textContent=deliveryCost?`+ ${cur} ${fmt(deliveryCost)}`:'Free';
+  document.getElementById('eo-delivery-cost').textContent=deliveryCost?`+ ${cur} ${deliveryCost.toLocaleString()}`:'Free';
 
   // Payment service charge
   const payId = document.getElementById('eo-payment')?.value;
@@ -4538,14 +4538,14 @@ function eoCalcOrder(){
 
   const total = productTotal + deliveryCost + svcAmt + taxAmt + procFee - disc;
 
-  document.getElementById('eo-od-discount').textContent = disc?`− ${cur} ${fmt(disc)}`:`${cur} 0`;
-  document.getElementById('eo-od-delivery').textContent = `${cur} ${fmt(deliveryCost)}`;
-  document.getElementById('eo-od-processing-fee').textContent = `${cur} ${fmt(procFee)}`;
-  document.getElementById('eo-od-tax').textContent = `${cur} ${fmt(taxAmt)}`;
+  document.getElementById('eo-od-discount').textContent = disc?`− ${cur} ${disc.toLocaleString()}`:`${cur} 0`;
+  document.getElementById('eo-od-delivery').textContent = `${cur} ${deliveryCost.toLocaleString()}`;
+  document.getElementById('eo-od-processing-fee').textContent = `${cur} ${procFee.toLocaleString()}`;
+  document.getElementById('eo-od-tax').textContent = `${cur} ${taxAmt.toLocaleString()}`;
   document.getElementById('eo-od-service-charge-label').textContent = `Payment Service Charge (${svcPct}%)`;
-  document.getElementById('eo-od-service-charge').textContent = `${cur} ${fmt(svcAmt)}`;
-  document.getElementById('eo-od-total').textContent = `${cur} ${fmt(total)}`;
-  document.getElementById('eo-subtotal').textContent = `${cur} ${fmt(total)}`;
+  document.getElementById('eo-od-service-charge').textContent = `${cur} ${svcAmt.toLocaleString()}`;
+  document.getElementById('eo-od-total').textContent = `${cur} ${total.toLocaleString()}`;
+  document.getElementById('eo-subtotal').textContent = `${cur} ${total.toLocaleString()}`;
 }
 
 async function submitEditOrder(){
