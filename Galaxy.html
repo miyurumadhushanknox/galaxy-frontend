@@ -4621,7 +4621,7 @@ async function submitEditOrder(){
     if(!p) return null;
     const price=item.customPrice!=null?item.customPrice:p.price;
     productTotal+=price*item.qty;
-    return {pid:item.pid,code:p.code,name:p.name,qty:item.qty,sp:p.price,price:price,image:p.images?.[0]||null};
+    return {pid:item.pid,code:p.code,name:p.name,qty:item.qty,sp:p.price,price:price,actual_selling_price:price,selling_price:p.price,image:p.images?.[0]||null};
   }).filter(Boolean);
 
   const svcAmt=Math.round((productTotal+deliveryCost)*svcPct/100*100)/100;
@@ -4653,7 +4653,24 @@ async function submitEditOrder(){
     if(res.error) throw new Error(res.error);
     toast('Order updated successfully','ok');
     document.getElementById('m-editorder').classList.remove('open');
-    const idx = orders.findIndex(o=>o.id===eoEditingOrderId); if(idx>-1) orders[idx]={...orders[idx], items:payload.items, customer:payload.customer, address:payload.address, city:payload.city, phone:payload.phone, phone2:payload.phone2, email:payload.email, note:payload.note, delivery:payload.delivery, payment:payload.payment, discount:payload.discount, deliveryCost:payload.deliveryCost, serviceCharge:payload.serviceCharge, tax:payload.tax, processingFee:payload.processingFee, total:payload.total}; renderOrdersPage();  } catch(e){
+    const idx = orders.findIndex(o=>o.id===eoEditingOrderId); if(idx>-1) orders[idx]={...orders[idx], 
+      items:payload.items, 
+      customer:payload.customer, 
+      address:payload.address, 
+      city:payload.city, 
+      phone:payload.phone, 
+      phone2:payload.phone2, 
+      email:payload.email, 
+      note:payload.note, 
+      delivery:payload.delivery, 
+      payment:payload.payment, 
+      discount:payload.discount, 
+      deliveryCost:payload.deliveryCost, 
+      serviceCharge:payload.serviceCharge, 
+      tax:payload.tax, 
+      processingFee:payload.processingFee, 
+      total:payload.total}; 
+      renderOrdersPage();  } catch(e){
     toast('Failed to update order: '+e.message,'err');
   }
 }
