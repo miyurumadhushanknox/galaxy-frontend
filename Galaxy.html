@@ -4383,7 +4383,7 @@ function openEditOrderModal(id){
 
   // City options
   const cityEl = document.getElementById('eo-city');
-  const cities = Object.values(SL_CITIES).flatMap(p=>Object.keys(p)).sort();
+  const cities = Object.values(SL_CITIES).flatMap(p=>Object.values(p).flatMap(d=>d)).sort();
   cityEl.innerHTML = '<option value="">Select city</option>' + cities.map(c=>`<option value="${c}">${c}</option>`).join('') + (o.city && !cities.includes(o.city) ? `<option value="${o.city}">${o.city}</option>` : '');
   if(o.city) cityEl.value = o.city;
 
