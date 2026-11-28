@@ -4561,14 +4561,14 @@ function eoCalcOrder(){
   const payId = document.getElementById('eo-payment')?.value;
   const payMethod = (generalSettings.paymentMethods||[]).find(m=>String(m.id||m.name)===String(payId));
   const svcPct = payMethod?.serviceCharge||0;
-  const svcAmt = Math.round((productTotal+deliveryCost)*svcPct/100*100)/100;
+  const svcAmt = payMethod&&svcPct>0&&payMethod.payByCustomer===true?Math.round(productTotal*(svcPct/100)*100)/100:0;
 
   // Tax
-  const taxPct = generalSettings.tax||0;
-  const taxAmt = Math.round(productTotal*taxPct/100*100)/100;
+  const taxPct = generalSettings.taxVat||0;
+  const taxAmt = generalSettings.taxVatEnabled?Math.round(productTotal*(taxPct/100)*100)/100:0;
 
   // Processing fee
-  const procFee = generalSettings.processingFee||0;
+  const procFee = generalSettings.processingFeeEnabled?(generalSettings.processingFeeType==='percentage'?Math.round(productTotal*(generalSettings.processingFee/100)*100)/100:generalSettings.processingFee||0):0;
 
   // Discount
   const disc = eoDiscountAmount||0;
