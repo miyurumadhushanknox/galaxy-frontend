@@ -4658,7 +4658,7 @@ async function submitEditOrder(){
     if(res.error) throw new Error(res.error);
     toast('Order updated successfully','ok');
     document.getElementById('m-editorder').classList.remove('open');
-    const idx = orders.findIndex(o=>o.id===eoEditingOrderId); if(idx>-1) orders[idx]={...orders[idx], customer:payload.customer, city:payload.city, phone:payload.phone, phone2:payload.phone2, email:payload.email, note:payload.note, delivery:payload.delivery, payment:payload.payment, discount:payload.discount, deliveryCost:payload.deliveryCost, serviceCharge:payload.serviceCharge, tax:payload.tax, processingFee:payload.processingFee, total:payload.total}; renderOrdersPage();  } catch(e){
+    const idx = orders.findIndex(o=>o.id===eoEditingOrderId); if(idx>-1) orders[idx]={...orders[idx], customer:payload.customer, address:payload.address, city:payload.city, phone:payload.phone, phone2:payload.phone2, email:payload.email, note:payload.note, delivery:payload.delivery, payment:payload.payment, discount:payload.discount, deliveryCost:payload.deliveryCost, serviceCharge:payload.serviceCharge, tax:payload.tax, processingFee:payload.processingFee, total:payload.total}; renderOrdersPage();  } catch(e){
     toast('Failed to update order: '+e.message,'err');
   }
 }
