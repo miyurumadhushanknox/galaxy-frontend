@@ -3927,17 +3927,6 @@ function renderOrdersPage(){
       ${moDateFilter ? `<button onclick="moDateFilter=null;renderOrdersPage()" style="padding:8px 12px;border:1.5px solid #e4e4f0;border-radius:10px;background:#fff;color:#e8220e;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">✕ Clear</button>` : ''}
     </div>
 
-    <!-- Status stat cards — 7 statuses -->
-    <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:10px;margin-bottom:14px">
-      ${ORDER_STATUSES.map(s=>`
-        <div class="card" style="margin-bottom:0;padding:14px 14px;cursor:pointer;border:1.5px solid ${moStatusFilter===s.key?s.color:'#e4e4f0'};transition:border-color .15s"
-          onclick="moStatusFilter=moStatusFilter==='${s.key}'?'all':'${s.key}';renderOrdersPage()">
-          <div style="font-size:10px;font-weight:700;color:#9090b8;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.label}</div>
-          <div style="font-size:22px;font-weight:900;color:${s.color};margin-bottom:2px">${counts[s.key]||0}</div>
-          <div style="width:100%;height:3px;background:#f0f0f6;border-radius:2px"><div style="height:100%;background:${s.color};border-radius:2px;width:${Math.min(100,Math.round(((counts[s.key]||0)/Math.max(1,orders.length))*100))}%"></div></div>
-        </div>`).join('')}
-    </div>
-
     <!-- Order history summary cards -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px">
       <div class="card" style="margin-bottom:0;padding:14px 16px">
@@ -3951,6 +3940,17 @@ function renderOrdersPage(){
         <div style="font-size:24px;font-weight:900;color:#e8220e">${totalCancel}</div>
         <div style="font-size:11px;color:#9090b8;font-weight:600;margin-top:2px">All time</div>
       </div>
+    </div>
+
+    <!-- Status stat cards — 7 statuses -->
+    <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:10px;margin-bottom:14px">
+      ${ORDER_STATUSES.map(s=>`
+        <div class="card" style="margin-bottom:0;padding:14px 14px;cursor:pointer;border:1.5px solid ${moStatusFilter===s.key?s.color:'#e4e4f0'};transition:border-color .15s"
+          onclick="moStatusFilter=moStatusFilter==='${s.key}'?'all':'${s.key}';renderOrdersPage()">
+          <div style="font-size:10px;font-weight:700;color:#9090b8;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.label}</div>
+          <div style="font-size:22px;font-weight:900;color:${s.color};margin-bottom:2px">${counts[s.key]||0}</div>
+          <div style="width:100%;height:3px;background:#f0f0f6;border-radius:2px"><div style="height:100%;background:${s.color};border-radius:2px;width:${Math.min(100,Math.round(((counts[s.key]||0)/Math.max(1,orders.length))*100))}%"></div></div>
+        </div>`).join('')}
     </div>
 
     <!-- Toolbar -->
