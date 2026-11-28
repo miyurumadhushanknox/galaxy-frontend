@@ -4658,7 +4658,7 @@ async function submitEditOrder(){
     if(res.error) throw new Error(res.error);
     toast('Order updated successfully','ok');
     document.getElementById('m-editorder').classList.remove('open');
-    const freshOrders = await apiFetch('/orders?limit=200'); if(Array.isArray(freshOrders)) orders.splice(0, orders.length, ...freshOrders); renderOrdersPage();
+    const freshData = await apiFetch('/orders?limit=200'); const freshOrders = Array.isArray(freshData) ? freshData : (freshData.orders || freshData.data || []); if(freshOrders.length) orders.splice(0, orders.length, ...freshOrders); renderOrdersPage();
   } catch(e){
     toast('Failed to update order: '+e.message,'err');
   }
