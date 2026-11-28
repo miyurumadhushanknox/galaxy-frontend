@@ -4655,7 +4655,7 @@ async function submitEditOrder(){
 
   try{
     const res=await apiFetch(`/orders/${eoEditingOrderId}`,{method:'PUT',body:JSON.stringify(payload)});
-    if(!res.ok) throw new Error(await res.text());
+    if(res.error) throw new Error(res.error);
     toast('Order updated successfully','ok');
     document.getElementById('m-editorder').classList.remove('open');
     await loadOrders();
