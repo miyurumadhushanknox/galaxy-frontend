@@ -343,6 +343,16 @@ if (typeof window.renderGeneralPage === 'function') {
   if (_billingPage && _billingPage.id === 'page-billing') {
     window.renderBillingPage();
   }
+
+  const _poPage = document.querySelector('.page.active');
+  if (_poPage && _poPage.id === 'page-placeorder') {
+  const _delEl = document.getElementById('o-delivery');
+  if (_delEl) _delEl.innerHTML = (generalSettings.deliveryMethods||[]).map(function(d){return '<option value="'+d.id+'">'+d.name+'</option>';}).join('');
+  const _payEl = document.getElementById('o-payment');
+  if (_payEl) _payEl.innerHTML = (generalSettings.paymentMethods||[]).filter(function(p){return !p.type||p.type==='manual'||p.isActive===true;}).map(function(p){return '<option value="'+p.id+'">'+p.name+'</option>';}).join('');
+  if (typeof calcOrder === 'function') calcOrder();
+  }
+
   }
   
 }
