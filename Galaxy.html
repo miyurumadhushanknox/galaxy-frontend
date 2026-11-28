@@ -4628,7 +4628,7 @@ async function submitEditOrder(){
       qty:item.qty,
       sp:price,
       origSp:p.price,
-      pp:(()=>{const o=orders.find(o=>o.id===eoEditingOrderId);const arr=o?.order_items||o?.items||[];const found=arr.find(i=>(i.product_id||i.pid)===item.pid);return found?.purchase_price||found?.pp||0;})(),
+      pp:price,
       price:price,
       actual_selling_price:price,
       selling_price:p.price,
