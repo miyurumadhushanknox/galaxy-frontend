@@ -1246,7 +1246,7 @@ tbody tr:hover .row-actions{display:flex}
           </div>
           <div style="position:relative;margin-bottom:12px">
             <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none;z-index:1" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.79 1 4 2.79 4 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="5" r="1.5" fill="currentColor" opacity=".4"/></svg>
-            <input id="eo-city" type="text" placeholder="City" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box">
+            <select id="eo-city" onchange="eoCalcOrder()" style="width:100%;padding:10px 12px 10px 34px;border:1.5px solid #e4e4f0;border-radius:10px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;color:#18182b;background:#fff;outline:none;box-sizing:border-box;appearance:none"><option value="">Select city</option></select>
           </div>
           <div style="position:relative;margin-bottom:12px">
             <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#ccc;pointer-events:none" viewBox="0 0 16 16" fill="none"><path d="M3.5 2h3l1 3-1.5 1.5a8 8 0 004.5 4.5L12 9.5l3 1v3A1.5 1.5 0 0113.5 15C6.5 15 1 9.5 1 2.5A1.5 1.5 0 012.5 1H5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -4383,6 +4383,13 @@ function openEditOrderModal(id){
 
   // City options
   const cityEl = document.getElementById('eo-city');
+  const citySet = new Set();
+  (generalSettings.deliveryMethods||[]).forEach(d=>{
+  if(d.districtPrices) Object.keys(d.districtPrices).forEach(c=>citySet.add(c));
+  if(d.provincePrices) Object.keys(d.provincePrices).forEach(c=>citySet.add(c));
+  });
+  const cities = [...citySet].sort();
+  cityEl.innerHTML = '<option value="">Select city</option>' + cities.map(c=>`<option value="${c}">${c}</option>`).join('');
 
   // Payment options
   const payEl = document.getElementById('eo-payment');
