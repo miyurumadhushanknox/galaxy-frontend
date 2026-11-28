@@ -4389,7 +4389,7 @@ function openEditOrderModal(id){
   if(d.provincePrices) Object.keys(d.provincePrices).forEach(c=>citySet.add(c));
   });
   const cities = [...citySet].sort();
-  cityEl.innerHTML = '<option value="">Select city</option>' + cities.map(c=>`<option value="${c}">${c}</option>`).join('');
+  cityEl.innerHTML = '<option value="">Select city</option>' + cities.map(c=>`<option value="${c}">${c}</option>`).join('') + (o.city && !cities.includes(o.city) ? `<option value="${o.city}">${o.city}</option>` : '');
   if(o.city) cityEl.value = o.city;
 
   // Payment options
