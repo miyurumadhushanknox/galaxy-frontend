@@ -3893,7 +3893,7 @@ function ordSubtotal(o){
   const disc = Math.round(items*(o.discount/100));
   return items + delivery - disc;
 }
-function ordProfit(o){ return o.items.reduce((a,i)=>a+(i.sp-i.pp)*i.qty,0); }
+function ordProfit(o){ return o.items.reduce((a,i)=>a+(i.sp-i.pp)*i.qty,0)-(o._raw?.discount_amount||0); }
 function ordFirstName(o){ return o.items[0]?.name||'—'; }
 function ordFirstCode(o){ return o.items[0]?.code||'—'; }
 
