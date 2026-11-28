@@ -3975,7 +3975,8 @@ function renderOrdersPage(){
               <th style="min-width:100px;text-align:center">Order code</th>
               <th style="min-width:140px;text-align:center">Status</th>
               <th style="text-align:center">Qty</th>
-              <th style="text-align:center">Sale price</th>
+              <th style="text-align:center">Total sale</th>
+              <th style="text-align:center">Product sale</th>
               ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Purchase price</th>' : ''}
               <th style="min-width:110px;text-align:center">Other fees</th>
               <th style="text-align:center">Discount</th>
@@ -3989,7 +3990,7 @@ function renderOrdersPage(){
               const canEdit = o.status==='processing';
               const pp = o.items.reduce((a,i)=>a+i.pp*i.qty,0);
               const sp = o.items.reduce((a,i)=>a+i.sp*i.qty,0);
-              const profit = sp - pp + (o._raw?.delivery_price||0) + (o._raw?.processing_fee||0) + (o._raw?.tax_amount||0) + (o._raw?.payment_service_charge||0) - (o._raw?.discount_amount||0);
+              const profit = sp + (o._raw?.delivery_price||0) + (o._raw?.processing_fee||0) + (o._raw?.tax_amount||0) + (o._raw?.payment_service_charge||0) - pp - (o._raw?.delivery_price||0) - (o._raw?.processing_fee||0) - (o._raw?.tax_amount||0) - (o._raw?.payment_service_charge||0) - (o._raw?.discount_amount||0);
               return `<tr style="transition:background .15s" onclick="const cb=this.querySelector('.order-row-chk');if(event.target!==cb&&!document.querySelector('.modal-bg.open')){cb.checked=!cb.checked;}this.style.backgroundColor=cb.checked?'#fff5f5':''">
               <td style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" class="order-row-chk" onchange="toggleOrderRow(this)" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></td>
                 <td class="sc3-first">
@@ -4010,6 +4011,7 @@ function renderOrdersPage(){
                 </td>
                 <td style="text-align:center;color:#777">${o.items.reduce((a,i)=>a+i.qty,0)}</td>
                 <td style="font-weight:700;text-align:center">${L(sp+(o._raw?.delivery_price||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_amount||0)+(o._raw?.payment_service_charge||0))}</td>
+                <td style="font-weight:700;text-align:center">${L(sp)}</td>
                 ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:#777;text-align:center">${L(pp)}</td>` : ''}
                 <td style="text-align:center;color:#777">${(()=>{const t=(o._raw?.discount_amount||0)+(o._raw?.delivery_price||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_amount||0)+(o._raw?.payment_service_charge||0);return L(t)})()}</td>
                 <td style="text-align:center;color:#777">${L(o._raw?.discount_amount||0)}</td>
