@@ -350,7 +350,7 @@ if (typeof window.renderGeneralPage === 'function') {
   if (_delEl) { const _delVal=_delEl.value; _delEl.innerHTML = (generalSettings.deliveryMethods||[]).map(function(d){return '<option value="'+d.id+'">'+d.name+'</option>';}).join(''); if(_delVal) _delEl.value=_delVal; }
   const _payEl = document.getElementById('o-payment');
   if (_payEl) { const _payVal=_payEl.value; _payEl.innerHTML = (generalSettings.paymentMethods||[]).filter(function(p){return !p.type||p.type==='manual'||p.isActive===true;}).map(function(p){return '<option value="'+p.id+'">'+p.name+'</option>';}).join(''); if(_payVal) _payEl.value=_payVal; }
-  if (typeof calcOrder === 'function') calcOrder();
+  if (typeof calcOrder === 'function') setTimeout(function(){ calcOrder(); }, 500);
   }
 
   }
