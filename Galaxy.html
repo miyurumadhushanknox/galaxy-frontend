@@ -4629,7 +4629,7 @@ async function submitEditOrder(){
       qty:item.qty,
       sp:price,
       origSp:p.price,
-      pp:(()=>{const arr=cachedOrder?.order_items||cachedOrder?.items||[];const f=arr.find(i=>(i.product_id||i.pid)===item.pid);return f?.purchase_price||f?.pp||0;})(),
+      pp:p.price,
       price:price,
       actual_selling_price:price,
       selling_price:p.price,
