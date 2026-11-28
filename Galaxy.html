@@ -4621,7 +4621,7 @@ async function submitEditOrder(){
     if(!p) return null;
     const price=item.customPrice!=null?item.customPrice:p.price;
     productTotal+=price*item.qty;
-    return {pid:item.pid,code:p.code,name:p.name,qty:item.qty,sp:price};
+    return {pid:item.pid,code:p.code,name:p.name,qty:item.qty,sp:p.price,price:price,image:p.image||null};
   }).filter(Boolean);
 
   const svcAmt=Math.round((productTotal+deliveryCost)*svcPct/100*100)/100;
