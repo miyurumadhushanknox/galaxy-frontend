@@ -2304,6 +2304,14 @@ function initApp(){buildWhFields();renderImages();autoCalc();renderProducts();na
 window.initApp=initApp;
 window.navigate=navigate;
 
+// ———————————— MANAGE ORDERS SORT ————————————
+let oSort=null,oDir=1;
+function sortO(col){
+  if(oSort===col){if(oDir===1){oDir=-1;}else{oSort=null;oDir=-1;}}else{oSort=col;oDir=1;}
+  ["code","status","qty","sp","pp","discount","profit","fees","total","date"].forEach(c=>{const el=document.getElementById("si-o-"+c);if(!el)return;el.textContent=c===oSort?(oDir===1?"\u2191":"\u2193"):"\u21c5";el.style.opacity=c===oSort?"1":"0.4";el.closest("th")?.classList.toggle("sort-active",c===oSort);});
+  renderOrdersPage();
+}
+
 // ══════════════ ITEM STOCK ══════════════
 function sortP(col){
 if(pSort===col){if(pDir===1){pDir=-1;}else{pSort=null;pDir=-1;}}else{pSort=col;pDir=1;}
@@ -3900,7 +3908,12 @@ function ordFirstCode(o){ return o.items[0]?.code||'—'; }
 // ── RENDER PAGE ───────────────────────────────────────────────────────────────
 function renderOrdersPage(){
   const root = document.getElementById('mo-root'); if(!root) return;
-  const filtered = getFilteredOrders();
+  let filtered = getFilteredOrders();
+  if(oSort){filtered=[...filtered].sort((a,b)=>{
+  const af=(o)=>({code:o._raw?.order_code||o.code||"",status:o.status||"",qty:o.items.reduce((s,i)=>s+i.qty,0),sp:o.items.reduce((s,i)=>s+i.sp*i.qty,0),pp:o.items.reduce((s,i)=>s+i.pp*i.qty,0),discount:o._raw?.discount_amount||0,profit:o.items.reduce((s,i)=>s+i.sp*i.qty,0)-o.items.reduce((s,i)=>s+i.pp*i.qty,0)-(o._raw?.discount_amount||0),fees:(o._raw?.delivery_price||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_amount||0)+(o._raw?.payment_service_charge||0),total:o.items.reduce((s,i)=>s+i.sp*i.qty,0)-(o._raw?.discount_amount||0)+(o._raw?.delivery_price||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_amount||0)+(o._raw?.payment_service_charge||0),date:o._raw?.created_at||o.date||""});
+  const av=af(a)[oSort],bv=af(b)[oSort];
+  return(typeof av==="string"?av.localeCompare(bv):av-bv)*oDir;
+});}
 
   // Apply date filter to stat cards too
   const _baseOrders = currentUser.role==='sales'?orders.filter(o=>o.addedBy.trim()===currentUser.name.trim()):orders;
@@ -3972,16 +3985,16 @@ function renderOrdersPage(){
             <tr>
               <th style="width:40px;padding:10px 8px;text-align:center"><input type="checkbox" id="chk-all-orders" onchange="document.querySelectorAll('.order-row-chk').forEach(c=>{c.checked=this.checked;toggleOrderRow(c)})" style="width:16px;height:16px;cursor:pointer;accent-color:#e8220e"></th>
               <th class="sc3-first">Order / Product</th>
-              <th style="min-width:100px;text-align:center">Order code</th>
-              <th style="min-width:140px;text-align:center">Status</th>
-              <th style="text-align:center">Qty</th>
-              <th style="text-align:center">Product sale</th>
-              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Purchase price</th>' : ''}
-              <th style="text-align:center">Discount</th>
-              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Profit</th>' : ''}
-              <th style="min-width:110px;text-align:center">Other fees</th>
-              <th style="text-align:center">Total sale</th>
-              <th style="min-width:110px;text-align:center">Date & Time</th>
+              <th class="sortable" onclick="sortO('code')" style="min-width:100px;text-align:center">Order code <span class="sort-ic" id="si-o-code">⇅</span></th>
+              <th class="sortable" onclick="sortO('status')" style="min-width:140px;text-align:center">Status <span class="sort-ic" id="si-o-status">⇅</span></th>
+              <th class="sortable" onclick="sortO('qty')" style="text-align:center">Qty <span class="sort-ic" id="si-o-qty">⇅</span></th>
+              <th class="sortable" onclick="sortO('sp')" style="text-align:center">Product sale <span class="sort-ic" id="si-o-sp">⇅</span></th>
+              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th class="sortable" onclick="sortO(\'pp\')" style="text-align:center">Purchase price <span class="sort-ic" id="si-o-pp">⇅</span></th>' : ''}
+              <th class="sortable" onclick="sortO('discount')" style="text-align:center">Discount <span class="sort-ic" id="si-o-discount">⇅</span></th>
+              ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th class="sortable" onclick="sortO(\'profit\')" style="text-align:center">Profit <span class="sort-ic" id="si-o-profit">⇅</span></th>' : ''}
+              <th class="sortable" onclick="sortO('fees')" style="min-width:110px;text-align:center">Other fees <span class="sort-ic" id="si-o-fees">⇅</span></th>
+              <th class="sortable" onclick="sortO('total')" style="text-align:center">Total sale <span class="sort-ic" id="si-o-total">⇅</span></th>
+              <th class="sortable" onclick="sortO('date')" style="min-width:110px;text-align:center">Date & Time <span class="sort-ic" id="si-o-date">⇅</span></th>
             </tr>
           </thead>
           <tbody id="orders-tbody">
