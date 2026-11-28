@@ -5771,7 +5771,7 @@ function slFindCity(cityName){
 
 function slGetDeliveryPrice(deliveryMethod, cityName){
   if(!deliveryMethod || !cityName) return 0;
-  if(!deliveryMethod.manualPrice) return 0;
+  if(deliveryMethod.manualPrice && !Object.keys(deliveryMethod.provincePrices||{}).length && !Object.keys(deliveryMethod.districtPrices||{}).length) return 0;
   const loc = slFindCity(cityName);
   if(!loc) return 0;
   if(deliveryMethod.pricingMode==='district')
