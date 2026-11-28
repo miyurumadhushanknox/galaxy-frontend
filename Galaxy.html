@@ -4621,7 +4621,18 @@ async function submitEditOrder(){
     if(!p) return null;
     const price=item.customPrice!=null?item.customPrice:p.price;
     productTotal+=price*item.qty;
-    return {pid:item.pid,code:p.code,name:p.name,qty:item.qty,sp:price,origSp:p.price,price:price,actual_selling_price:price,selling_price:p.price,image:p.images?.[0]||null};
+    return {
+      pid:item.pid,
+      code:p.code,
+      name:p.name,
+      qty:item.qty,
+      sp:price,
+      origSp:p.price,
+      pp:orders.find(o=>o.id===eoEditingOrderId)?.items?.find(i=>i.pid===item.pid||i.product_id===item.pid)?.pp||0,
+      price:price,
+      actual_selling_price:price,
+      selling_price:p.price,
+      image:p.images?.[0]||null};
   }).filter(Boolean);
 
   const svcAmt=Math.round((productTotal+deliveryCost)*svcPct/100*100)/100;
@@ -4654,7 +4665,7 @@ async function submitEditOrder(){
     toast('Order updated successfully','ok');
     document.getElementById('m-editorder').classList.remove('open');
     const idx = orders.findIndex(o=>o.id===eoEditingOrderId); if(idx>-1) orders[idx]={...orders[idx], 
-      items:payload.items, 
+      items:payload.items,
       customer:payload.customer, 
       address:payload.address, 
       city:payload.city, 
