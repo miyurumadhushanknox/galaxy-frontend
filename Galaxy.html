@@ -4390,6 +4390,7 @@ function openEditOrderModal(id){
   });
   const cities = [...citySet].sort();
   cityEl.innerHTML = '<option value="">Select city</option>' + cities.map(c=>`<option value="${c}">${c}</option>`).join('');
+  if(o.city) cityEl.value = o.city;
 
   // Payment options
   const payEl = document.getElementById('eo-payment');
@@ -4402,7 +4403,7 @@ function openEditOrderModal(id){
   document.getElementById('eo-phone2').value  = o.phone2||'';
   document.getElementById('eo-email').value   = o.email||'';
   document.getElementById('eo-note').value    = o.note||'';
-  if(o.city) cityEl.value = o.city;
+  
 
   // Pre-fill delivery/payment
   if(o.delivery) delEl.value = o.delivery;
