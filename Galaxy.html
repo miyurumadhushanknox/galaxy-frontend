@@ -4658,7 +4658,7 @@ async function submitEditOrder(){
     if(res.error) throw new Error(res.error);
     toast('Order updated successfully','ok');
     document.getElementById('m-editorder').classList.remove('open');
-    await renderOrdersPage();
+    await getFilteredOrders();
   } catch(e){
     toast('Failed to update order: '+e.message,'err');
   }
