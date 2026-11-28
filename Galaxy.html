@@ -9348,7 +9348,8 @@ function gsSaveDeliveryModal(){
   e.textContent='A delivery service with this name already exists.';
   return;
 }
-  delete gs.deliveryMethods[_gsDeliveryEditIdx]._isNew; saveGeneralSettings(); window._gsDeliveryEditBackup=null; document.getElementById('gs-delivery-modal').style.display='none'; renderGeneralPage();
+  delete gs.deliveryMethods[_gsDeliveryEditIdx]._isNew; saveGeneralSettings(); window._origDeliveryMethods=JSON.parse(JSON.stringify(generalSettings.deliveryMethods||[])); const _poDelEl=document.getElementById('o-delivery'); if(_poDelEl){_poDelEl.innerHTML=(generalSettings.deliveryMethods||[]).map(function(d){return '<option value="'+d.id+'">'+d.name+'</option>';}).join(''); if(typeof calcOrder==='function') calcOrder();} window._gsDeliveryEditBackup=null; document.getElementById('gs-delivery-modal').style.display='none'; renderGeneralPage();
+  
 }
 
 function gsRemoveDelivery(i){
