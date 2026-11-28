@@ -3978,6 +3978,7 @@ function renderOrdersPage(){
               <th style="text-align:center">Sale price</th>
               ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Purchase price</th>' : ''}
               <th style="min-width:110px;text-align:center">Other fees</th>
+              <th style="text-align:center">Discount</th>
               ${window._canAddOrder !== false && currentUser.role!=='sales' ? '<th style="text-align:center">Profit</th>' : ''}
               <th style="min-width:110px;text-align:center">Date & Time</th>
             </tr>
@@ -4011,6 +4012,7 @@ function renderOrdersPage(){
                 <td style="font-weight:700;text-align:center">${L(sp)}</td>
                 ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:#777;text-align:center">${L(pp)}</td>` : ''}
                 <td style="text-align:center;color:#777">${(()=>{const t=(o._raw?.discount_amount||0)+(o._raw?.delivery_cost||0)+(o._raw?.processing_fee||0)+(o._raw?.tax_vat||0)+(o._raw?.payment_service_charge||0);return t>0?L(t):'—';})()}</td>
+                <td style="text-align:center;color:#777">${L(o._raw?.discount_amount||0)}</td>
                 ${window._canAddOrder !== false && currentUser.role!=='sales' ? `<td style="color:${profit>=0?'#16a34a':'#e8220e'};font-weight:700;text-align:center">${L(profit)}</td>` : ''}
                 <td style="text-align:center;white-space:nowrap;font-size:11px;color:#9090b8">${o.date}<br>${o.time||''}</td>
               </tr>`;
